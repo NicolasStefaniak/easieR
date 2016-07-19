@@ -9,7 +9,7 @@
 
 
 ### easieR
-# Ã  faire : inclure dans easier l'installation  et la mise Ã  jour des packages
+# À faire : inclure dans easier l'installation et la mise à jour des packages
 # faire en sorte de pouvoir sourcer le code
 
 # si tu veux source()r ce script, il faudra ajouter un truc du genre :
