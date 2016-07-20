@@ -63,7 +63,6 @@ Les tests de compatibilité Linux suivront.
 
 ## Amélioration des fonctions existantes 
 - permettre au code d'être sourcé
-- intégrer directement à easieR l'installation des packages requis pour sa bonne utilisation
 - fournir les statistiques descriptives par effet dans l'analyse de variance
 - ajouter des fonctionnalités pour les contrastes d'interactions (effets simples/post hoc sur les interactions)
 - ajouter les conditions d'application de l'analyse de covariance
@@ -73,5 +72,5 @@ Les tests de compatibilité Linux suivront.
 A l'heure actuelle, easieR n'est pas totalement compatible avec une utilisation en ligne de commande. Une des évolutions de easieR sera de pouvoir l'utiliser soit par des boîtes de dialogues, soit en ligne de commande.
 
 # Pour finir
-toutes suggestions d'amélioration du code ou de développement de nouvelles fonctionnalités sont bienvenues.
-vous pouvez me contacter à l'adresse suivante : nicolas.stefaniak(at)univ-reims.fr
+Toutes suggestions d'amélioration du code ou de développement de nouvelles fonctionnalités sont bienvenues.
+Vous pouvez me contacter à l'adresse suivante : nicolas.stefaniak(at)univ-reims.fr
