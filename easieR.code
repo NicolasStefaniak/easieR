@@ -1,4 +1,3 @@
-#
 ################################
 ####                        ####
 ####          easieR        ####
@@ -7,35 +6,52 @@
 
 
 ### easieR
-# Ã  faire : inclure dans easier l'installation  et la mise Ã  jour des packages
+# À faire : inclure dans easier l'installation et la mise à jour des packages
 # faire en sorte de pouvoir sourcer le code
 
-# si tu veux source()r ce script, il faudra ajouter un truc du genre :
-message("easieR Ã©crit par Nicolas Stefaniak", "\nVersion 1.6.19, modifiÃ©e le 11/07/2016", "\nTaper 'easieR()' dans la console pour utiliser ce package", "\n") 
-
-pack.to.inst <- c("afex", "akima",  "asbio", "car", "cobs", "corpcor", "deldir", "DescTools", "epitools", "ggplot2", "gmodels", "GPArotation", "gsl", "lars", "lsr", "MBESS", "mc2d", "mlogit", "nFactors", "nortest", "outliers", "pgirmess", "phia", "plyr", "ppcor", "psych", "pwr", 
-                  "QuantPsyc", "quantreg", "Rcpp", "readxl", "Rfit", "reshape2", "rms", "robust", "robustbase", "rtf", "rrcov", "scatterplot3d", "sos", "sp", "stringi", "stringr", "svDialogs", "trimcluster", "wle", "WRS2")
-#install packages
-if(length(pack.uninst)>0) install.packages(pack.uninst)
-
-#WRS is a special case because it is not on CRAN
-if (!("WRS" %in% installed.packages())) install.packages("WRS", repos="http://R-Forge.R-project.org", type="source")
+writeLines(c("easieR écrit par Nicolas Stefaniak", "Version 1.7.0, modifiée le 20/07/2016", "Taper 'easieR()' dans la console pour utiliser ce package"))
+writeLines("Certaines opérations sont longues à effectuer ; une barre de progression indique parfois l'avancement. Mais parfois, il faut juste attendre ; soyez patient !")
 
 
-easieR<-function(info=TRUE){options (warn=-1)
-  # l'argument info permettra a terme de choisir les informations qui s'affichent dans la console ou non 
-  options(scipen=999)
-  require(svDialogs)
-  print("version 1.7.0 de easieR 06/07/2016")
-  dlgList(c("Donnees - Importation, tri, selection, pretraitements", 
-            "Analyses - Tests d hypothese", "Interface - objets en memoire, nettoyer la memoire, repertoire de travail"), preselect=NULL, multiple = FALSE, title="Que voulez vous?")$res->choix
-  if(length(choix)==0) return("Vous avez quitte easier")else{
-    if(choix=="Donnees - Importation, tri, selection, pretraitements") donnees()->Resultats
-    if(choix=="Analyses - Tests d hypothese") {analyse()->Resultats
-    }
-    if(choix=="Interface - objets en memoire, nettoyer la memoire, repertoire de travail") interfaceR()->Resultats
-  }
-  return(Resultats)
+easieR<-function(info=TRUE){
+	# 1. l'argument info permettra a terme de choisir les informations qui s'affichent dans la console ou non 
+	options (warn=1)
+	options(scipen=999)
+  	require(svDialogs)
+
+	# 2. installer les packages nécessaires et MAJ des packages installés
+	# 2a. packages à installer, par ordre alphabétique
+	pack.to.inst <- c("afex", "akima",  "asbio", "car", "cobs", "corpcor", "deldir", "DescTools", "epitools", "ggplot2", "gmodels", "GPArotation", "gsl", "lars", "lsr", "MBESS", "mc2d", "mlogit", "nFactors", "nortest", "outliers", "pgirmess", "phia", "plyr", "ppcor", "psych", "pwr", "QuantPsyc", "quantreg", "Rcpp", "readxl", "Rfit", "reshape2", "rms", "robust", "robustbase", "rtf", "rrcov", "scatterplot3d", "sos", "sp", "stringi", "stringr", "svDialogs", "trimcluster", "wle", "WRS2")
+		
+	# 2b. packages manquants
+	pack.uninst <- pack.to.inst[!(pack.to.inst %in% rownames(installed.packages()))]
+
+	# 2c. installer packages manquants si nécessaires et si utilisateur le souhaite
+	if(length(pack.uninst)>0){
+		inst <- menu(choices=c("oui","non"), graphics=TRUE, title="Voulez-vous installer les packages manquants ?")
+		if(length(inst)==0 || inst==2){
+			warning("Vous avez choisi de ne pas installer les packages manquants, cela peut gêner l'exécution de certaines fonctions. Relancez easieR() pour installer les packages.")
+		} else {
+			writeLines("Installation des packages")
+			install.packages(pack.uninst, quiet=TRUE)
+			#WRS is a special case because it is not on CRAN
+			if (!("WRS" %in% rownames(installed.packages()))) install.packages("WRS", repos="http://R-Forge.R-project.org", type="source", quiet=TRUE)
+		}
+	} 
+	flush.console()
+	
+	# 2d. mettre à jour les packages installés si utilisateur le souhaite
+	upd <- menu(choices=c("oui","non"), graphics=TRUE, title="Voulez-vous mettre à jour les packages installés ?")
+	if(length(upd)==0 || upd==2) warning("Vous avez choisi de ne pas mettre à jour les packages installés, cela peut gêner l'exécution de certaines fonctions. Relancez easieR() pour mettre à jour les packages.") else update.packages(ask=FALSE)
+	
+	# 3. choix du groupe de fonctions
+  	choix <- dlgList(c("Données - Importation, tri, sélection, prétraitements", "Analyses - Tests d'hypothèse", "Interface - objets en mémoire, nettoyer la mémoire, répertoire de travail"), preselect=NULL, multiple = FALSE, title="Que voulez vous ?")$res
+  	if(length(choix)==0) writeLines("Vous avez quitté easieR") else {
+    	if(choix=="Données - Importation, tri, sélection, prétraitements") Resultats <- donnees()
+    	if(choix=="Analyses - Tests d'hypothèse") Resultats <- analyse()
+    	if(choix=="Interface - objets en mémoire, nettoyer la mémoire, répertoire de travail") Resultats <- interfaceR()
+    	return(Resultats)
+  	}
 }
 
 
@@ -49,16 +65,15 @@ easieR<-function(info=TRUE){options (warn=-1)
 
 ### interface de R (rÃ©pertoire, donnÃ©es en mÃ©moire, connaÃ®tre les fonctions qui permettent de rÃ©aliser une analyse particuliÃ¨re)
 # il manque la possibilitÃ© de choisir en fonction de la nature des objets qu'on veut voir dans ls()
-interfaceR<-function(){options (warn=-1) 
-  require(svDialogs)
-  list()->Resultats
+interfaceR<-function(){
+	options (warn=-1) 
+  	require(svDialogs)
+  	list()->Resultats
   
-  dlgList(c("obtenir le repertoire de travail","specifier le repertoire de travail", 
-            "Suppression d objet en memoire", "liste des objets en memoire", "rechercher une nouvelle fonction"), preselect=NULL, multiple = FALSE, title="Quel est votre choix ?")$res->choix
-  while(length(choix)==0) {return(easieR())
-  }
+  	dlgList(c("obtenir le repertoire de travail","specifier le repertoire de travail", "Suppression d objet en memoire", "liste des objets en memoire", "rechercher une nouvelle fonction"), preselect=NULL, multiple = FALSE, title="Quel est votre choix ?")$res->choix
+  	while(length(choix)==0) return(easieR())
   
-  switch(choix, 
+  	switch(choix, 
          "obtenir le repertoire de travail" = getwd()->Resultats,
          "liste des objets en memoire"= ls(envir=.GlobalEnv)->Resultats,
          "specifier le repertoire de travail"={
