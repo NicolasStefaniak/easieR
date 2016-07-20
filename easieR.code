@@ -94,7 +94,7 @@ interfaceR<-function(){
            names(Resultats[[1]])<-"Liste des objects encore en memoire de R"
          },
          "rechercher une nouvelle fonction"={require(sos)
-           critere <- dlgInput("Quelle analyse recherchez vous", "Tapez le nom de l'analyse ici")$res
+           critere <- dlgInput("Quelle analyse recherchez vous", "Tapez le nom de l analyse ici")$res
            if(length(critere)==0) return(easieR())
            strsplit(critere, ":")->critere
            tail(critere[[1]],n=1)->critere
@@ -205,7 +205,7 @@ import<-function(info=TRUE){
   
   #simplifiÃ© car fait avant
   
-  c("svDialogs", "stringr", "readxl")->package
+  c("svDialogs",  "readxl", ,character.only=T)->package
   lapply(packages, require)
   
   #Ã  quoi Ã§a sert ? Voir aussi Ã  la fin
