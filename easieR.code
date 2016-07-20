@@ -10,19 +10,18 @@
 # faire en sorte de pouvoir sourcer le code
 
 writeLines(c("easieR écrit par Nicolas Stefaniak", "Version 1.7.0, modifiée le 20/07/2016", "Taper 'easieR()' dans la console pour utiliser ce package"))
-writeLines("Certaines opérations sont longues à effectuer ; une barre de progression indique parfois l'avancement. Mais parfois, il faut juste attendre ; soyez patient !")
+writeLines("Certaines opérations sont longues à effectuer. Dans ces cas là, il faut juste attendre ; soyez patient !")
 
 
 easieR<-function(info=TRUE){
 	# 1. l'argument info permettra a terme de choisir les informations qui s'affichent dans la console ou non 
 	options (warn=1)
 	options(scipen=999)
-  	require(svDialogs)
 
 	# 2. installer les packages nécessaires et MAJ des packages installés
 	# 2a. packages à installer, par ordre alphabétique
-	pack.to.inst <- c("afex", "akima",  "asbio", "car", "cobs", "corpcor", "deldir", "DescTools", "epitools", "ggplot2", "gmodels", "GPArotation", "gsl", "lars", "lsr", "MBESS", "mc2d", "mlogit", "nFactors", "nortest", "outliers", "pgirmess", "phia", "plyr", "ppcor", "psych", "pwr", "QuantPsyc", "quantreg", "Rcpp", "readxl", "Rfit", "reshape2", "rms", "robust", "robustbase", "rtf", "rrcov", "scatterplot3d", "sos", "sp", "stringi", "stringr", "svDialogs", "trimcluster", "wle", "WRS2")
-		
+	pack.to.inst <- c("afex", "akima",  "asbio", "car", "cobs", "corpcor", "deldir", "DescTools", "epitools", "ggplot2", "gmodels", "GPArotation", "gsl", "lars", "lsr", "MBESS", "mc2d", "mlogit", "nFactors", "nortest", "outliers", "pgirmess", "phia", "plyr", "ppcor", "psych", "pwr", "QuantPsyc", "quantreg", "Rcpp", "readxl", "Rfit", "reshape2", "rms", "robust", "robustbase", "rtf", "rrcov", "scatterplot3d", "sos", "sp", "stringi", "stringr", "svDialogs", "trimcluster", "wle", "WRS2")	
+	
 	# 2b. packages manquants
 	pack.uninst <- pack.to.inst[!(pack.to.inst %in% rownames(installed.packages()))]
 
@@ -33,7 +32,17 @@ easieR<-function(info=TRUE){
 			warning("Vous avez choisi de ne pas installer les packages manquants, cela peut gêner l'exécution de certaines fonctions. Relancez easieR() pour installer les packages.")
 		} else {
 			writeLines("Installation des packages")
+			print(pack.uninst)
+			flush.console()
 			install.packages(pack.uninst, quiet=TRUE)
+			# Barre de progression, pas intéressant
+				#pb <- txtProgressBar(min=0, max=length(pack.uninst), style=3)
+				#for (i in seq_along(pack.uninst)){
+				#	install.packages(pack.uninst[i], quiet=TRUE)
+				#	setTxtProgressBar(pb,i)
+				#}
+				#close(pb)
+			
 			#WRS is a special case because it is not on CRAN
 			if (!("WRS" %in% rownames(installed.packages()))) install.packages("WRS", repos="http://R-Forge.R-project.org", type="source", quiet=TRUE)
 		}
@@ -45,6 +54,7 @@ easieR<-function(info=TRUE){
 	if(length(upd)==0 || upd==2) warning("Vous avez choisi de ne pas mettre à jour les packages installés, cela peut gêner l'exécution de certaines fonctions. Relancez easieR() pour mettre à jour les packages.") else update.packages(ask=FALSE)
 	
 	# 3. choix du groupe de fonctions
+	require(svDialogs)
   	choix <- dlgList(c("Données - Importation, tri, sélection, prétraitements", "Analyses - Tests d'hypothèse", "Interface - objets en mémoire, nettoyer la mémoire, répertoire de travail"), preselect=NULL, multiple = FALSE, title="Que voulez vous ?")$res
   	if(length(choix)==0) writeLines("Vous avez quitté easieR") else {
     	if(choix=="Données - Importation, tri, sélection, prétraitements") Resultats <- donnees()
