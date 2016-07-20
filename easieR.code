@@ -79,7 +79,7 @@ interfaceR<-function(){options (warn=-1)
            names(Resultats[[1]])<-"Liste des objects encore en memoire de R"
          },
          "rechercher une nouvelle fonction"={require(sos)
-           critere <- dlgInput("Quelle analyse recherchez vous", "Tapez le nom de l'analyse ici")$res
+           critere <- dlgInput("Quelle analyse recherchez vous", "Tapez le nom de l analyse ici")$res
            if(length(critere)==0) return(easieR())
            strsplit(critere, ":")->critere
            tail(critere[[1]],n=1)->critere
@@ -187,30 +187,19 @@ exporterD<-function(data=NULL, nom=NULL){options (warn=-1)
 #### fonction d'importation de donnÃ©es
 import<-function(info=TRUE){
   options (warn=-1)
-  
-  #simplifiÃ© car fait avant
-  
-  c("svDialogs", "stringr", "readxl")->package
-  lapply(packages, require)
-  
-  #Ã  quoi Ã§a sert ? Voir aussi Ã  la fin
+  c("svDialogs",  "readxl")->packages
+  lapply(packages, require,character.only=T)
   Resultats <- list()
-  
   if(info==TRUE) print("Dans quel format est enregistre votre fichier?")
   choix <- dlgList(c("Fichier CSV", "Fichier txt", "Fichier Excel"), preselect="Fichier Excel", multiple = FALSE, title="Format du fichier?")$res
-  
-  #pourquoi utiliser return() ?
+
   if(length(choix)==0) return(easieR())
   fichier <- file.choose()
-
   setwd(dirname(fichier))
-  
-  #Ã§a pourrait Ãªtre aussi intÃ©ressant dans le cas d'un xls donc je l'ai sorti du 'if'
   if(info==TRUE) print("Est-ce que le nom des variables est sur la premiere ligne de votre base de donnees ? Choisir TRUE si c est le cas")
   noms <- dlgList(c(TRUE, FALSE), preselect=TRUE, multiple = FALSE, title="Nom de variables?")$res
   if(length(noms)==0) noms <- TRUE
-  
-  #idem
+
   if(info==TRUE) print("Si certaines donnees sont manquantes, comment sont-elles definies ? Vous pouvez laisser NA si les cellule sont vides")
   manquant <- dlgInput("Par quelle valeur sont definies les valeurs manquantes ?", "NA")$res
   if(length(manquant)==0) manquant <- "NA"
@@ -234,8 +223,7 @@ import<-function(info=TRUE){
   if(choix=="Fichier txt") data1 <- read.table(fichier, header=as.logical(noms), sep=sep, dec=dec, na.strings=manquant)
   if(choix=="Fichier Excel"){
     fichier2 <- dlgInput("Quelle est le nom ou le numero de la feuille de calcul?", 1)$res
-    
-    #pourquoi utiliser return() ?
+
     if(length(fichier2)==0) return(import())
     fichier2 <- strsplit(fichier2, ":")
     fichier2 <- tail(fichier2[[1]],n=1)
@@ -257,8 +245,6 @@ import<-function(info=TRUE){
   fichier <- tail(fichier[[1]],n=1)
   assign(x=fichier, value=data1, envir=.GlobalEnv)
   View(data1, "donnees que vous venez d importer")
-  
-  #pourquoi ne pas simplement faire un 'print' ? J'imagine que c'est par rapport Ã  easierR(), mais ce n'est peut-Ãªtre pas nÃ©cessaire ici
   Resultats <- "les donnees ont ete importees correctement"
   return(Resultats)
   
