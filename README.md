@@ -1,15 +1,15 @@
 # Présentation générale d'easieR
 
 easieR() est un ensemble de fonction R qui permettent de réaliser les analyses statistiques classiques en utilisant des boîtes de dialogues. 
-Contrairement à une interface graphique complète, easieR permet plus de possibilités car chaque fonction peut-être utilisé dans la console indépendamment de l'arborescence des menus. 
-easieR s'appuie sur les fonctions qui ont déjà été développées dans R et les intégèrent en un tout cohérent avec une présentation des résultats homogènes. L'intérêt de cette approche est que easieR peut se développer rapidement en proposant les fonctions qui sont parmi les flexibles/intéressantes pour chaque type d'analyse. 
+Contrairement à une interface graphique complète, easieR permet plus de possibilités car chaque fonction peut-être utilisée dans la console indépendamment de l'arborescence des menus. 
+easieR s'appuie sur les fonctions qui ont déjà été développées dans R et les intégère en un tout cohérent avec une présentation des résultats homogène. L'intérêt de cette approche est que easieR peut se développer rapidement en proposant les fonctions qui sont parmi les plus flexibles/intéressantes pour chaque type d'analyse. 
 
-Les résultats renvoyés par easieR renvoie systématiquement les statistiques descriptives, la vérification des conditions d'application, l'analyse principale, et les tailles d'effets.
+easieR renvoie systématiquement les statistiques descriptives, la vérification des conditions d'application, l'analyse principale, et les tailles d'effets.
 Pour chaque analyse, il y a la possibilité d'obtenir les résultats pour des alternatives plus robustes lorsque les conditions d'application ne sont pas respectées. Par ailleurs, un algorithme adapté à chaque type d'analyse permet d'identifier les valeurs influentes et de les supprimer. Cette manière de procéder permet à l'utilisateur de s'assurer que ses résultats sont robustes et réplicables, et ne dépendent pas de la présence de quelques observations qui pourraient modifier les résultats. 
 
 # Les fonctionnalités de easieR
 A l'heure actuelle, easieR permet de réaliser :
-- des opérations d'importation (y compris des fichiers excel)/exportation de données et de résultats, 
+- des opérations d'importation (y compris des fichiers Excel)/exportation de données et de résultats, 
 - de sélection d'observations et de variables, 
 - de réaliser des opérations mathématiques basiques,
 - de centrer/centrer réduire des variables
@@ -19,29 +19,29 @@ D'obtenir le répertoire de travail, de modifier le répertoire de travail, d'ob
 Au niveau des analyses, easieR permet de réaliser :
 - les différentes formes de chi carré (ajustement, indépendance, McNemar), 
 - les corrélations (Bravais-Pearson, Sperman, Kendall, tetrachorique, polychorique, mixte, comparaison de corrélations dépendantes et indépendantes
-- les différentes formes de t de Student (comparaison à la norme, échantillons appariés, échantillons indépendants) et leur équivalent non paramétrique et robustes
-- les analyses de variances et de covariance, avec leur équivalent non paramétrique et robuste lorsque cela est possible, 
+- les différentes formes de t de Student (comparaison à la norme, échantillons appariés, échantillons indépendants) et leurs équivalents non paramétriques et robustes
+- les analyses de variances et de covariance, avec leurs équivalents non paramétriques et robustes lorsque cela est possible, 
 - les régressions simples, multiples, avec possibilité de tester les interactions, ainsi que les médiations simples ou distantes,
 - les regressions logistiques, 
 - les analyses factorielles exploratoires, 
-- les analyses en composante principale,
+- les analyses en composantes principales,
 - les indices de fiabilité (alpha de Cronbach, coefficient d'accord de Kendall, corrélation intra-classe)
  
 
 # Evolutions et correction
-Une version anglophone de easieR va être développée
+Une version anglophone de easieR va être développée.
 
 ## Compatibilité avec les OS
-easieR est compatible avec windows 10 64 bits. 
-Les tests de compatibilité avec les mac OS et les autres versions de windows sont en cours et certains bugs sont en cours de résolution. 
-Les tests de compatibilité Linux suivront
+easieR est compatible avec Windows 10 64 bits. 
+Les tests de compatibilité avec les Mac OS et les autres versions de Windows sont en cours et certains bugs sont en cours de résolution. 
+Les tests de compatibilité Linux suivront.
 
 
 ## Bugs identifiés et qui doivent être corrigés
-- les corrélations tétrachoriques polychoriques ne sont pas compatibles avec mac
-- les fonctionnalités pour centrer centrer/réduire ne sont pas compatible avec mac
+- les corrélations tétrachoriques polychoriques ne sont pas compatibles avec Mac
+- les fonctionnalités pour centrer centrer/réduire ne sont pas compatible avec Mac
 - l'annulation de certaines boîtes de dialogue dans l'analyse de variance fait planter la fonction
-- la sauvegarde des résultats intégrées à easieR n'est pas totalement compatible avec mac
+- la sauvegarde des résultats intégrées à easieR n'est pas totalement compatible avec Mac
 
 ## Fonctions qui vont être développées 
 - fonctions de manipulation de données
@@ -74,4 +74,4 @@ A l'heure actuelle, easieR n'est pas totalement compatible avec une utilisation 
 
 # Pour finir
 toutes suggestions d'amélioration du code ou de développement de nouvelles fonctionnalités sont bienvenues.
-vous pouvez me contacter à l'adresse suivante : nicolas.stefaniak(a)univ-reims.fr
+vous pouvez me contacter à l'adresse suivante : nicolas.stefaniak(at)univ-reims.fr
