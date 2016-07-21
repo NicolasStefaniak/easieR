@@ -31,18 +31,21 @@ easieR<-function(info=TRUE){
 		if(length(inst)==0 || inst==2){
 			warning("Vous avez choisi de ne pas installer les packages manquants, cela peut gêner l'exécution de certaines fonctions. Relancez easieR() pour installer les packages.")
 		} else {
-			writeLines("Installation des packages")
+			writeLines("Installation des packages :")
 			print(pack.uninst)
 			flush.console()
-			install.packages(pack.uninst, quiet=TRUE)
-			# Barre de progression, pas intéressant
-				#pb <- txtProgressBar(min=0, max=length(pack.uninst), style=3)
-				#for (i in seq_along(pack.uninst)){
-				#	install.packages(pack.uninst[i], quiet=TRUE)
-				#	setTxtProgressBar(pb,i)
-				#}
-				#close(pb)
+			#install.packages(pack.uninst, quiet=TRUE) ## si on enlève la barre de progression
 			
+			# Barre de progression
+				require(tcltk)
+				pb <- tkProgressBar(min=0, max=length(pack.uninst), title="Installation des packages")
+				for (i in seq_along(pack.uninst)){
+					prog <- sprintf("environ %d%% effectués", round(100/length(pack.uninst)*i))
+					setTkProgressBar(pb,i, label=prog)
+					install.packages(pack.uninst[i], quiet=TRUE)
+				}
+				close(pb)
+							
 			#WRS is a special case because it is not on CRAN
 			if (!("WRS" %in% rownames(installed.packages()))) install.packages("WRS", repos="http://R-Forge.R-project.org", type="source", quiet=TRUE)
 		}
