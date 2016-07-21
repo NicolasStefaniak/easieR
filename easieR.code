@@ -2090,7 +2090,7 @@ factor.an<-function(X, nfactors=2, n.iter=300, scores="regression", residuals=TR
                                                                                                                 "Donnees sans valeur influentes"),
                     missing=TRUE,impute="mean", cor="Pearson", oblique.scores=TRUE, sauvegarde=FALSE, data=NULL, scor.fac=FALSE){options (warn=-1)
   
-  packages<-c("svDialogs", "GPArotation","psych")
+  packages<-c("svDialogs", "GPArotation","psych","lavaan")
   if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
     require(packages)} 
   .e <- environment()
@@ -2184,12 +2184,11 @@ factor.an<-function(X, nfactors=2, n.iter=300, scores="regression", residuals=TR
   tail(Critere_saturation[[1]],n=1)->Critere_saturation
   as.numeric(Critere_saturation)->Critere_saturation
   
-  if(type=="dichotomiques"){Matrice<-tetrachoric(data[,X],correct=TRUE,smooth=TRUE,global=FALSE,weight=NULL,na.rm=TRUE, delete=TRUE)$rho
+  if(type=="dichotomiques"){Matrice<-Matrice<-lavCor(data[,X], ordered=names(data)[X])
   cor="tet"
   methode<-c("minres")}
   
-  if(type=="ordinales"){Matrice<-polychoric(data[,X],smooth=TRUE,global=FALSE,polycor=FALSE, ML = FALSE,
-                                            std.err=FALSE,weight=NULL,progress=TRUE,na.rm=TRUE, delete=TRUE)$rho
+  if(type=="ordinales"){Matrice<-Matrice<-lavCor(data[,X], ordered=names(data)[X])
   cor="poly"
   methode<-c("minres")}   
   
@@ -2370,9 +2369,9 @@ factor.an<-function(X, nfactors=2, n.iter=300, scores="regression", residuals=TR
                    PCA$chi, PCA$EPVAL, PCA$STATISTIC, PCA$PVAL, PCA$n.obs), ncol=1),4)->stats
     
     
-    c("DegrÃ©s de libertÃ© du modele null", "fonction objective du modele null",
-      "degrÃ©s de libertÃ© du modele", "fonction objective du modele",
-      "RMSR",  "AdÃ©quation basee sur les valeurs en dehors de la diagonale", "chi carre empirique", "valeur de la proabilite du chi carre empirique",
+    c("Degrés de liberté du modele null", "fonction objective du modele null",
+      "degrés de liberté du modele", "fonction objective du modele",
+      "RMSR",  "Adéquation basee sur les valeurs en dehors de la diagonale", "chi carre empirique", "valeur de la proabilite du chi carre empirique",
       "chi carre du maximum de vraisemblance", "valeur de la probabilite du chi carre du maximum de vraisemblance", "nombre total d'observations")->dimnames(stats)[[1]]
     
     "valeurs"->dimnames(stats)[[2]]
@@ -2501,10 +2500,9 @@ fiabilite<-function(x, data=NULL, choix="Alpha de Cronbach", type="continues",de
                         "continues", "mixte"), preselect=NULL, multiple = FALSE, title="Nature des variables ?")$res
         if(length(type)==0) type<-"continues"
         
-        if(type=="dichotomiques")Matrice<-tetrachoric(data[,X],correct=TRUE,smooth=TRUE,global=FALSE,weight=NULL,na.rm=TRUE, delete=TRUE)$rho
+        if(type=="dichotomiques") Matrice<-lavCor(data[,X], ordered=names(data)[X])
         
-        if(type=="ordinales"){Matrice<-polychoric(data[,X],smooth=TRUE,global=FALSE,polycor=FALSE, ML = FALSE,
-                                                  std.err=FALSE,weight=NULL,progress=TRUE,na.rm=TRUE, delete=TRUE)$rho}   
+        if(type=="ordinales"){Matrice<-lavCor(data[,X], ordered=names(data)[X])}   
         
         if(type=="continues") Matrice<-corr.test(data[,X])$r
         
