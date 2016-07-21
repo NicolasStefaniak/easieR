@@ -141,17 +141,20 @@ Centrer.red<-function(x, data=NULL, info=TRUE){options (warn=-1)
       names(data)[length(data)]<-paste(Y, ".centree")
     }
     
-    if(any(choix=="centrer reduire")){scale(data[,Y])->data$centree
+    if(any(choix=="centrer reduire")){scale(data[,Y])->centree
+    	centree[1:length(centree)]->data$centree
       names(data)[length(data)]<-paste(Y, ".centree.reduite")
     }
     
     if(any(choix=="probabilite inferieure")){scale(data[,Y])->centree
-      pnorm(centree, lower.tail = TRUE)->data$p.inf
+      pnorm(centree, lower.tail = TRUE)->centree
+    	centree[1:length(centree)]->data$centree
       names(data)[length(data)]<-paste(Y, ".p.inferieure")
     }
     
     if(any(choix=="probabilite superieure")){scale(data[,Y])->centree
-      pnorm(centree, lower.tail = FALSE)->data$p.sup
+      pnorm(centree, lower.tail = FALSE)->centree
+    	centree[1:length(centree)]->data$centree
       names(data)[length(data)]<-paste(Y, ".p.superieure")
     }
     assign(nom, data, envir=.GlobalEnv)
@@ -160,7 +163,7 @@ Centrer.red<-function(x, data=NULL, info=TRUE){options (warn=-1)
     return(Resultats)
   }}
 
-#### function qui permet de choisir l'opÃ©ration qu'on veut rÃ©aliser
+#### function qui permet de choisir l'opération qu'on veut réaliser
 donnees<-function(){options (warn=-1)
   require(svDialogs)
   dlgList(c("importer des donnees", "voir des donnees", "importer des resultats",
@@ -281,7 +284,7 @@ import.results<-function(){
 
 
 
-#### RÃ©aliser les opÃ©rations mathÃ©matiques
+#### Réaliser les opÃ©rations mathÃ©matiques
 # il manque la possibilitÃ© de faire les analyses avec des valeurs particuliÃ¨res (ajouter ou soustraire une valeur)
 # les exponentielles, les log, les fonctions gÃ©omÃ©triques 
 maths<-function(info=TRUE){
@@ -672,7 +675,11 @@ voir<-function(){
   data <- Filter( function(x) 'data.frame' %in% class( get(x) ), ls(envir=.GlobalEnv) )
   data<-dlgList(data, multiple = TRUE, title="Choix du dataframe")$res
   if(length(data)==0) return(donnees())
-  View(get(data))
+  get(data)->data
+  for(i in 1:ncol(data)) {
+  	if(class(data[,i])!="factor"){
+  	attributes(data[,i])<-NULL}}
+  View(data)
 }
 
 
@@ -3885,11 +3892,11 @@ test.t<-function(X=NULL, Y=NULL, group=NULL,
   return(Resultats)
 }
 
-#### corrÃ©lations tÃ©trachoriques et polychoriques (+ mixtes)
-# devrait bugger ... Ã  vÃ©rifier
+#### corrélations tétrachoriques et polychoriques (+ mixtes)
+# devrait bugger ... à vérifier
 tetrapoly<-function(data=NULL, save=F){
   options (warn=-1) 
-  c("psych", "svDialogs")->packages
+  c("lavaan", "svDialogs")->packages
   if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
     require(packages)} 
   .e<- environment()
@@ -3904,7 +3911,7 @@ tetrapoly<-function(data=NULL, save=F){
   X<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), "autres donnees","annuler"), multiple = TRUE, 
              title="Entetes de colonnes")$res
   if(length(X)==0) X<-"autres donnees"
-  if(X==annuler) return(tetrapoly())}
+  if(X=="annuler") return(tetrapoly())}
   listes<-data.frame(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), 1:length(data))
   subset(listes, listes[,1] %in% X)[,2]->X
   
@@ -3924,21 +3931,16 @@ tetrapoly<-function(data=NULL, save=F){
                             Resultats$Avertissement[[i]]<-paste("la variable", names(data)[i], "a ete convertie en variable numerique")
     }}}  
   
-  if(method=="correlations tetrachoriques"){tetrachoric(data[,X],correct=TRUE,smooth=TRUE,global=FALSE,weight=NULL,na.rm=TRUE, delete=TRUE)->poly
-    poly$rho->Resultats$"Matrice de correlation tetrachorique"
-    poly$tau->Resultats$"Matrice des tau"}   
+  if(method=="correlations tetrachoriques"  | method=="correlations polychoriques") {Matrice<-lavCor(data[,X], ordered=names(data)[X])->poly
+    poly->Resultats$"Matrice de correlation tetrachorique/polychorique"
+    }    
   
-  
-  if(method=="correlations polychoriques"){polychoric(data[,X],smooth=TRUE,global=FALSE,polycor=FALSE, ML = FALSE,
-                                                      std.err=FALSE,weight=NULL,progress=TRUE,na.rm=TRUE, delete=TRUE)->poly
-    poly$rho->Resultats$"Matrice de correlation polychorique"
-    poly$tau->Resultats$"Matrice des tau"}   
-  if(method=="correlations mixtes") {mixed.cor(x = data[,X],smooth=TRUE, correct=.5,global=FALSE,
+   if(method=="correlations mixtes") {mixed.cor(x = data[,X],smooth=TRUE, correct=.5,global=FALSE,
                                                ncat=8,use="pairwise",method="pearson",weight=NULL)$rho->Resultats$"Matrice mixte"
     Resultats$Information<-"correlations tetrachoriques pour les variables a 2 modalites, polychoriques pour 3 a 8 modalites, Bravais-Pearson pour plus de 8 modalites "}
   
   if(save) save(Resultats=Resultats, choix=method, env=.e)
-  print(Resultats,short=FALSE) }
+  print(Resultats) }
 
 
 #### permet d'identifier et enlever les valeurs influentes ####
