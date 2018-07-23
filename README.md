@@ -1,3 +1,24 @@
+# Presentation of easieR (English/French below)
+
+easieR is R metapckage. The aim is to provide a GUI able to perform classical statistical analyses. However, easieR is more flexible than most R GUI given that it can also be used directly in command line : each individual function can be used either with a GUI or with command line. Moreover, there are a lot of possibilities with R, but each author print their results differently, which might cause discomfort to beginners. easieR avoid this problem by providing a nice (Rmarkdown) standard presentation for all the analyses. easieR can progress quite quickly since the functions is based on the functions developed in other R packages.
+
+Concerning the presentation, easieR systematically prints : descriptive statistics, assumptions, the main analysis, and effect sizes. For each analysis, it is possible to obtain less common analyses (e.g., Wilcox test instead of t test) and identify and remove these outliers automatically. This approach aims to increase robustness of analyses and improve replication of results.
+
+# Functions already present in easieR
+
+easieR has many capabilities for the moment : import/export data, sort, select, scale, ranking, multiple imputation for missing data, mathematical operations, descriptive statistics, t test, correlations, anova, regressions, logistic regressions, exploratory factor analyses, confirmatory factor analyses, principal component analyses, reliability analyses.
+
+It is possible to split analyses by group (regressions, correlations) for some analyses. Plots are also automatically generated, most often using ggplot2.
+
+
+
+# Evolutions and correction
+The English version is under development. 
+
+# The most important
+Most functions works quite well, and many new functions will be developed soon but if there bugs, just let me know.
+
+
 # Présentation générale d'easieR
 
 easieR() est un ensemble de fonction R qui permettent de réaliser les analyses statistiques classiques en utilisant des boîtes de dialogues. 
@@ -31,17 +52,7 @@ Au niveau des analyses, easieR permet de réaliser :
 # Evolutions et correction
 Une version anglophone de easieR va être développée.
 
-## Compatibilité avec les OS
-easieR est compatible avec Windows 10 64 bits. 
-Les tests de compatibilité avec les Mac OS et les autres versions de Windows sont en cours et certains bugs sont en cours de résolution. 
-Les tests de compatibilité Linux suivront.
 
-
-## Bugs identifiés et qui doivent être corrigés
-- les corrélations tétrachoriques polychoriques ne sont pas compatibles avec Mac
-- les fonctionnalités pour centrer centrer/réduire ne sont pas compatible avec Mac
-- l'annulation de certaines boîtes de dialogue dans l'analyse de variance fait planter la fonction
-- la sauvegarde des résultats intégrées à easieR n'est pas totalement compatible avec Mac
 
 ## Fonctions qui vont être développées 
 - fonctions de manipulation de données
@@ -61,16 +72,10 @@ Les tests de compatibilité Linux suivront.
 9) analyse du cas unique
 ...
 
-## Amélioration des fonctions existantes 
-- permettre au code d'être sourcé
-- intégrer directement à easieR l'installation des packages requis pour sa bonne utilisation
-- fournir les statistiques descriptives par effet dans l'analyse de variance
-- ajouter des fonctionnalités pour les contrastes d'interactions (effets simples/post hoc sur les interactions)
-- ajouter les conditions d'application de l'analyse de covariance
 
 
 ## Utiliser easieR en ligne de commande
-A l'heure actuelle, easieR n'est pas totalement compatible avec une utilisation en ligne de commande. Une des évolutions de easieR sera de pouvoir l'utiliser soit par des boîtes de dialogues, soit en ligne de commande.
+A l'heure actuelle, easieR n'est pas totalement compatible avec une utilisation en ligne de commande. Une des évolutions de easieR sera de pouvoir l'utiliser soit par des boîtes de dialogues, soit en ligne de commande. Cette fonctions est en cours de développement, avec pour avantage, lorsque l'utilisateur se trompe d'avoir la boîte de dialogue qui prend le relais. 
 
 # Pour finir
 toutes suggestions d'amélioration du code ou de développement de nouvelles fonctionnalités sont bienvenues.
