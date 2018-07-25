@@ -774,7 +774,15 @@ VI.multiples<-function(data){ require("pych")
 
 
 
-
+ref1 <-
+function(packages){
+  require("bibtex")
+  c("base", packages, "bibtex")->packages
+  write.bib(packages, file='references')
+  bibtex::read.bib('references.bib')->Resultats
+  file.remove('references.bib')
+  return(Resultats)
+}
 
 
 
