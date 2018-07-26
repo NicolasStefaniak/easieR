@@ -147,7 +147,7 @@ function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=NULL, inf=T
       Resultats$"Tests de multicolinéarité"$Tests<-data.frame("Tolérance"=round(1/FIV,4) , FIV= round(FIV,4))
       Resultats$"Tests de multicolinéarité"$Information<-"FIV : facteur d'inflation de la variance"
       dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
-      Resultats$"Test de Durbin-Watson - autocorrélations"<-round(data.frame(Autocorrélation=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur p"=DWT.results[3]),4)->DWT.results
+      Resultats$"Test de Durbin-Watson - autocorrélations"<-round(data.frame("Autocorrélation"=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur p"=DWT.results[3]),4)->DWT.results
       ncvTest(lm.r1)->var.err
       Resultats$"Vérification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$ChiSquare,
                                                                                                                ddl=var.err$Df,valeur.p=var.err$p)
