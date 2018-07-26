@@ -439,9 +439,9 @@ function(data=NULL, X=NULL, nF=NULL, rotation="none", methode="ml", sat=0.3, out
     PCA<-fa.sort(PCA,polar=FALSE)
     loadfa<-round(as(PCA$loadings, "matrix"),3)
     loadfa[which(abs(loadfa)<sat)]<-" " 
-    data.frame(communauté=round(PCA$communality,3),
-               spécifité=round(PCA$uniquenesses,3),
-               complexité=round(PCA$complexity,2))->communaute
+    data.frame("communauté"=round(PCA$communality,3),
+               "spécifité"=round(PCA$uniquenesses,3),
+               "complexité"=round(PCA$complexity,2))->communaute
     Resultats$"saturations standardisées basées sur la matrice de corrélations"<-data.frame(loadfa, communaute)
     var.ex<-round(PCA$Vaccounted,3)
     
