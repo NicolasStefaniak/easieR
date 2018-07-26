@@ -266,7 +266,7 @@ function(X=NULL, Y=NULL, group=NULL, choix=NULL,
                             valeur.p=round(ttest$p.value,4), 
                             IC.inf=ttest$conf.int[[1]], 
                             IC.sup=ttest$conf.int[[2]], 
-                            R.carré=round(R_carre,4), 
+                            "R.carré"=round(R_carre,4), 
                             D.Cohen=round(dc,3)))}
         data.frame(data[,X])->Y
         
@@ -772,7 +772,7 @@ function(X=NULL, Y=NULL, group=NULL, choix=NULL,
   
   if(sauvegarde){save(Resultats=Resultats ,choix =choix, env=.e)}
   
-  ref1(packages)->Resultats$Références
+  ref1(packages)->Resultats$"Références"
   ez.html(Resultats)
   ### Obtenir les Resultats
   return(Resultats) 
