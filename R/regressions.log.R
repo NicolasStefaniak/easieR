@@ -448,7 +448,7 @@ function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=NULL, inf=T
   .add.history(data=data, command=Resultats$Call, nom=nom)
   .add.result(Resultats=Resultats, name =paste("Régressions.logistique", Sys.time() ))  
   if(sauvegarde)   if(sauvegarde) save(Resultats=Resultats, choix="Régressions.logistique", env=.e)
-  Resultats$Références<-ref1(packages)
+  Resultats$"Références"<-ref1(packages)
   ez.html(Resultats)
   return(Resultats)
   
