@@ -7,7 +7,7 @@ function(){
                       "trimcluster", "wle", "WRS","WRS2")
 
           list()->Resultats
-    Resultats$packages.installés.correctement<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
-    Resultats$Package.mal.installés<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
+    Resultats$"packages.installés.correctement"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
+    Resultats$"Package.mal.installés"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
     return(Resultats)
 }
