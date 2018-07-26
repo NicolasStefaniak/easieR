@@ -13,7 +13,7 @@ function(longdata, inter=NULL, intra=NULL){
                Les contrastes peuvent etre specifiés manuellement. Dans ce cas, veuillez choisir spécifier les contrastes")
     cont.exemple<-list()
     contr.helmert(3)->cont.exemple$Orthogonaux
-    apply(contr.helmert(3), 2, rev)->cont.exemple$Orthogonaux.inversés
+    apply(contr.helmert(3), 2, rev)->cont.exemple$Orthogonaux.inverses
     contr.poly(3)->cont.exemple$Polynomiaux
     contr.treatment(3, contrasts = TRUE, sparse = FALSE)->cont.exemple$comparaison.ligne.de.base
     print(cont.exemple)
