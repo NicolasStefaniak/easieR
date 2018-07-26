@@ -619,8 +619,8 @@ function(option=T, longdata=NULL, inter=NULL, intra=NULL, VD=NULL, cov=NULL, des
         round(data.frame(KW$statistic,KW$parameter,KW$p.value),4)->KW
         names(KW)<-c("H","ddl","valeur.p")
         round((KW$H-nlevels(longdata[,inter])+1)/(length(longdata[,1])-nlevels(longdata[,inter])),4)->eta
-        if(eta<0.0001) "<0.001"->KW$eta.carré.de.H else KW$eta.carré.de.H
-        round(KW$H/((length(longdata[,1])^2-1)/(length(longdata[,1])+1)),4)->KW$espilon.carré
+        if(eta<0.0001) "<0.001"->KW$eta.2.de.H else KW$eta.2.de.H
+        round(KW$H/((length(longdata[,1])^2-1)/(length(longdata[,1])+1)),4)->KW$espilon.carre
         KW->Resultats$"Analyse non paramétrique"$"Test de Kruskal-Wallis"
         
         if(!is.null(contrastes) && any(rowSums((contrastes[[1]]!=0))==0)) {kruskalmc( as.formula(paste0(VD, "~",inter[1])), 
