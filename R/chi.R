@@ -359,7 +359,7 @@ function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, sauvegarde=F,choix=NULL, data=N
   
   if(chi.options$sauvegarde){save(Resultats=Resultats ,choix ="chi.deux", env=.e)}
   
-  ref1(packages)->Resultats$Références
+  ref1(packages)->Resultats$"Références"
   ### Obtenir les Resultats
   try(ez.html(Resultats))
   return(Resultats) 
