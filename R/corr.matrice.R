@@ -368,7 +368,7 @@ function(X=NULL, Y=NULL, Z=NULL,data=NULL, group=NULL,method="pearson",param=c("
   
   
   if(sauvegarde) save(Resultats=Resultats, choix=paste("corrélation de", method), env=.e)
-  ref1(packages)->Resultats$Références
+  ref1(packages)->Resultats$"Références"
   if(html) ez.html(Resultats)
   return(Resultats)
   }
