@@ -80,6 +80,6 @@ function(data=NULL,X=NULL, sauvegarde=F, ord=NULL ,info=T, group=NULL, estimator
   
   if(sauvegarde) save(Resultats=Resultats, choix="cor.polychorique", env=.e)
   
-  ref1(packages)->Resultats$Références
+  ref1(packages)->Resultats$"Références"
   if(html) ez.html(Resultats)
   return(Resultats) }
