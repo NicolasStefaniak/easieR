@@ -506,7 +506,7 @@ function(X=NULL, Y=NULL, Z=NULL,data=NULL,  group=NULL, param=c("test paramétri
   
   if(sauvegarde){save(Resultats=Resultats ,choix =choix, env=.e)}
   
-  ref1(packages)->Resultats$Références
+  ref1(packages)->Resultats$"Références"
   if(html) try(ez.html(Resultats), silent=T)
   ### Obtenir les Resultats
   return(Resultats) 
