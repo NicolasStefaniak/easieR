@@ -171,7 +171,7 @@ function(X=NULL,Y=NULL, data=NULL, choix=NULL, ord=NULL,outlier="Données compl�
   
   
   if(sauvegarde)save(Resultats=Resultats, choix=choix, env=.e)
-  ref1(packages)->Resultats$Références
+  ref1(packages)->Resultats$"Références"
   ez.html(Resultats)
   return(Resultats)
 }
