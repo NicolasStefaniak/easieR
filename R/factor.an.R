@@ -392,9 +392,9 @@ function(data=NULL, X=NULL, nF=NULL, rotation="none", methode="ml", sat=0.3, out
       FA.results<-fa.sort(FA.results,polar=FALSE)
       loadfa<-round(as(FA.results$loadings, "matrix"),3)
       loadfa[which(abs(loadfa)<sat)]<-" "
-      data.frame(communauté=round(FA.results$communality,3),
-                 spécifité=round(FA.results$uniquenesses,3),
-                 complexité=round(FA.results$complexity,2))->communaute
+      data.frame("communauté"=round(FA.results$communality,3),
+                 "spécifité"=round(FA.results$uniquenesses,3),
+                 "complexité"=round(FA.results$complexity,2))->communaute
       Resultats$"Analyse factorielle hiérarchique"$"saturations standardisées basées sur la matrice de corrélations"<-data.frame(loadfa, communaute)
       
       var.ex <- round(FA.results$Vaccounted,3)
