@@ -190,7 +190,7 @@ function(info=T){
   dlgList(c("TRUE","FALSE"), preselect="FALSE", multiple = FALSE, title="voulez-vous sauvegarder?")$res->sauvegarde
   if(length(sauvegarde)==0) sauvegarde<-FALSE  
   if(sauvegarde) save(Resultats=Resultats, choix=choix, env=.e)
-  ref1(packages)->Resultats$Références 
+  ref1(packages)->Resultats$"Références" 
   ez.html(Resultats)
   return(Resultats)  
   
