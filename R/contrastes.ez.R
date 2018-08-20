@@ -2,8 +2,8 @@ contrastes.ez <-
   function(longdata, inter=NULL, intra=NULL){
     Resultats<-list()
     writeLines("Les contrastes a priori correspondent aux contrastes sans correction de la probabilite en suivant les regles de contrastes.
-               Les contrastes 2 à 2 permettent de faire toutes les comparaisons 2 à 2 en appliquant ou non une correction à la probabilite")
-    type.cont<- dlgList(c("a priori",  "Comparaison 2 à 2", "aucun"), preselect="a priori",multiple = FALSE, title="Quel types de contraste voulez-vous ?")$res
+               Les contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction a la probabilite")
+    type.cont<- dlgList(c("a priori",  "Comparaison 2 a 2", "aucun"), preselect="a priori",multiple = FALSE, title="Quel types de contraste voulez-vous ?")$res
     if(length(type.cont)==0) return(NULL)
     Resultats$type.cont<-type.cont
     c(inter, unlist(intra))->interintra
@@ -20,16 +20,16 @@ contrastes.ez <-
       
       for (i in 1:length(interintra)){
         if(i>1) {
-          type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison à une ligne de base", "specifier les contrastes"), 
+          type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison a une ligne de base", "specifier les contrastes"), 
                                preselect=c("orthogonaux"), multiple = FALSE, title=paste("Quels contrastes pour la variable",names(longdata[interintra])[i],"?"))$res} else {
-                                 type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison à une ligne de base", 
+                                 type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison a une ligne de base", 
                                                         "specifier les contrastes"),preselect=c("orthogonaux"), multiple = FALSE, title=paste("Quels contrastes pour la variable",names(longdata[interintra])[i],"?"))$res                      
                                }
         if(length(type.cont2)==0) return(contrastes.ez()) 
         if(type.cont2=="orthogonaux") contr.helmert(nlevels(longdata[,interintra[i]]))->contrastes[[i]]
         if(type.cont2=="orthogonaux inverses") apply(contr.helmert(nlevels(longdata[,interintra[i]])), 2, rev)->contrastes[[i]]
         if(type.cont2=="polynomiaux")  contr.poly(nlevels(longdata[,interintra[i]]))->contrastes[[i]]
-        if(type.cont2=="comparaison à une ligne de base") { 
+        if(type.cont2=="comparaison a une ligne de base") { 
           base<- dlgList(levels(longdata[, interintra[i]]), preselect=levels(longdata[,interintra[i]])[1],
                          multiple = FALSE, title="Quelle est la ligne de base?")$res
           which(levels(longdata[, interintra[i]])==base)->base
@@ -60,7 +60,7 @@ contrastes.ez <-
       Resultats$contrastes<-contrastes
       
     }
-    if(type.cont== "Comparaison 2 à 2"){
+    if(type.cont== "Comparaison 2 a 2"){
       list()->p.adjust
       writeLines("Quelle correction de la probabilite voulez-vous appliquer ? Pour ne pas appliquer de correction, choisir +none+")
       dlgList(c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none"), preselect="holm", multiple = FALSE, title="Type de correction ?")$res->p.adjust
