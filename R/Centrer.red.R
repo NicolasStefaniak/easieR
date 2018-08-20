@@ -19,9 +19,9 @@ Centrer.red <-
     
     
     if(info==TRUE) {writeLines(
-      "Centrer permet d'avoir une moyenne à zero en maintenant l'ecart-type. Centrer reduire correspond à la formule du z. 
-      La moyenne est de 0 et l'ecart-type vaut 1. La probabilite inferieure correspond à la probabilite d'avoir un z inferieur ou egal au z.
-      La probabilite superieure correspond à la probabilite d'avoir un z superieur ou egal au z")}
+      "Centrer permet d'avoir une moyenne a zero en maintenant l'ecart-type. Centrer reduire correspond a la formule du z. 
+      La moyenne est de 0 et l'ecart-type vaut 1. La probabilite inferieure correspond a la probabilite d'avoir un z inferieur ou egal au z.
+      La probabilite superieure correspond a la probabilite d'avoir un z superieur ou egal au z")}
     dlgList(c("centrer", "centrer reduire", "probabilite inferieure", "probabilite superieure"), preselect="centrer reduire", multiple = TRUE, title="Que voulez-vous faire ?")$res->choix
     if(length(choix)==0) return(preprocess())
     
