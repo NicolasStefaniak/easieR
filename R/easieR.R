@@ -80,7 +80,7 @@ function(info=TRUE){
 
 easieR.msg<-function(msg=1){
   if(msg==1){
-if(grepl("French",Sys.setlocale())) {msg<-"Pour que easieR fonctionne correctement, 
+if(grepl("French",Sys.setlocale()) | grepl("Fr",Sys.setlocale())) {msg<-"Pour que easieR fonctionne correctement, 
 il faut installer Pandoc disponible à l'url suivant : https://github.com/jgm/pandoc/releases/tag/2.2.3.2" } else {
     msg<-"In order to ensure that easieR is properly installed, please install Pandoc at the following url :
 https://github.com/jgm/pandoc/releases/tag/2.2.3.2" }}
