@@ -33,7 +33,7 @@ function(){
 'nortest',
 'olsrr',
 'outliers',
-'pander'                      
+'pander' ,                     
 'pgirmess',
 'phia',
 'pkgmaker',
