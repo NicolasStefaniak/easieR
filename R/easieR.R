@@ -815,4 +815,5 @@ function(packages){
   packageStartupMessage("##############\n Welcome in easieR -  For more information, please visit :https://theeasierproject.wordpress.com/")
   packageStartupMessage(" If you are using easieR for the first time, please use the function ez.install in order to ensure that easieR will work properly.\n Si vous utilisez easieR pour la 1e fois, veuillez utiliser la fonction ez.install pour vous assurer de bon fonctionnement de easieR.")
   packageStartupMessage("##############")
+  options(encoding="UTF-8")
 }
