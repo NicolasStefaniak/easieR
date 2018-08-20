@@ -4,11 +4,72 @@ function(){
   
   # # 2. installer les packages nécessaires et MAJ des packages installés
   # # 2a. packages à installer, par ordre alphabétique
-  pack.to.inst <- c("afex", "akima",  "Amelia", "asbio","BayesFactor", "bibtex","car", "cobs", "corpcor", "DAAG","deldir", "DescTools","devtools", "doBy","dplyr", "epitools", "foreign", 
-                    "ggplot2", "gmodels", "GPArotation", "gsl", "lars", "lsr", "MBESS", "mc2d", "mgcv","mlogit", "nFactors", "nortest", 
-                    "outliers", "pgirmess", "phia", "pkgmaker", "plyr", "ppcor", "psych", "pwr", "QuantPsyc", "quantreg", "Rcpp", "readxl", "Rfit", 
-                    "reshape2", "rms", "robust", "robustbase","rpivotTable", "rtf", "rrcov", "scatterplot3d","semPlot", "sos", "sp", "stringi", "stringr", "svDialogs", "TeachingDemos",
-                    "trimcluster", "wle", "WRS","WRS2")
+  pack.to.inst <- c('afex',
+'akima',
+'Amelia',
+'asbio',
+'BayesFactor',
+'bibtex',
+'car',
+'cobs',
+'corpcor',
+'DAAG',
+'deldir',
+'DescTools',
+'doBy',
+'dplyr',
+'emmeans',
+'epitools',
+'foreign',
+'ggplot2',
+'gmodels',
+'GPArotation',
+'gsl',
+'knitr',
+'lars',
+'lsr',
+'MBESS',
+'mc2d',
+'mgcv',
+'mlogit',
+'nFactors',
+'nortest',
+'olsrr',
+'outliers',
+'pgirmess',
+'phia',
+'pkgmaker',
+'plyr',
+'ppcor',
+'psych',
+'pwr',
+'QuantPsyc',
+'quantreg',
+'Rcpp',
+'readxl',
+'reshape2',
+'Rfit',
+'RGtk2',
+'RGtk2Extras',
+'rmarkdown',
+'rms',
+'robust',
+'robustbase',
+'rpivotTable',
+'rrcov',
+'rtf',
+'scatterplot3d',
+'semPlot',
+'sos',
+'sp',
+'stringi',
+'stringr',
+'svDialogs',
+'TeachingDemos',
+'trimcluster',
+ 'WRS',                   
+'WRS2'
+)
   
   # 2b. packages manquants
   pack.uninst <- pack.to.inst[!(pack.to.inst %in% rownames(installed.packages()))]
@@ -31,12 +92,20 @@ function(){
       }
     }
   } 
+  
   library(rmarkdown)
   if(is.null(pandoc_version())){
+     if(grepl("mac",  .Platform$pkgType)){
+     return(easieR.msg(msg=1))
+  }else{
+  
     install.packages("installr")
     library(installr)
     install.pandoc()
   }
+}
+  
+ 
   flush.console()
   vef.pack()->Resultats
   return(Resultats)
