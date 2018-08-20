@@ -81,7 +81,6 @@ Imports: afex,
          trimcluster, 
          wle, 
          WRS2
-
 License: GPL-2
 encoding: UTF-8
 RoxygenNote: 6.0.1
