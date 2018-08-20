@@ -46,8 +46,8 @@ VI.multiples <-
     
     
     if(pourcent!=0){
-      writeLines("Supprimer l'ensemble des outliers supprime l'ensemble des valeurs au-delà p(chi.deux)< 0.001.   
-                 Supprimer une observation à la fois permet de faire une analyse detaillee de chaque observation  
+      writeLines("Supprimer l'ensemble des outliers supprime l'ensemble des valeurs au-dela p(chi.deux)< 0.001.   
+                 Supprimer une observation a la fois permet de faire une analyse detaillee de chaque observation  
                  consideree comme influente en partant de la valeur la plus extreme. La procedure s'arrete  
                  quand plus aucune observation n'est consideree comme influente")  
       
