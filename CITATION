@@ -1,0 +1,19 @@
+citHeader("To cite easieR in publications use:")
+
+citEntry(entry="Manual",
+         title = "easieR: An R metapackage.",
+         author = personList(as.person("Nicolas Stefaniak")),
+         organization = "University of Reims Champagne-Ardenne",
+         address      = "Reims, France",
+         year         = version$year,
+         url          = "https://github.com/NicolasStefaniak/easieR",
+
+         textVersion =
+         paste("Stefaniak, N. (", version$year, "). ",
+               "easieR: An R metapackage.",
+               "Retrieved from",
+               "https://github.com/NicolasStefaniak/easieR",
+               sep = "")
+         )
+
+
