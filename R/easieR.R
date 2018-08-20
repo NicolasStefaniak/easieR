@@ -48,6 +48,16 @@ function(info=TRUE){
   
   # 3. choix du groupe de fonctions
 #  require(svDialogs)
+  
+  library(rmarkdown)
+  if(is.null(pandoc_version())){
+    install.packages("installr")
+    library(installr)
+    install.pandoc()
+  }
+  
+  
+  
   choix <- dlgList(c("Données - (Importation, exportation, sauvegarde)", "Prétraitements (tri, sélection, opérations mathématiques, valeurs manquantes", 
                      "Analyses - Tests d'hypothèse", "Graphiques",
                      "Interface - objets en mémoire, nettoyer la mémoire, répertoire de travail", 
