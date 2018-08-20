@@ -1,9 +1,9 @@
 AN.C.OVA <-
   function(option=T, longdata=NULL, inter=NULL, intra=NULL, VD=NULL, cov=NULL, desires=c("Donnees completes","Identification des outliers", "Donnees sans valeur influente"),
            desires2=c("Modele parametrique","Modele lineaire mixte"),ES="ges", sauvegarde=F, SumS=3, p.adjust=NULL, type.cont="aucun"){
-    # option : logique, si TRUE, permet de specifier à l'aide de boîtes de dialogue les options suivantes : desires, desires2, sauvegarde, SumS, ES par des boîtes de dialogue, 
+    # option : logique, si TRUE, permet de specifier a l'aide de boîtes de dialogue les options suivantes : desires, desires2, sauvegarde, SumS, ES par des boîtes de dialogue, 
     #          Dans le cas contraire, ce sont les valeurs specifiees ou celles par defaut qui sont utilisees
-    # longdata : donnees en format long (necessaire le cas pour anova à groupes independants)
+    # longdata : donnees en format long (necessaire le cas pour anova a groupes independants)
     # inter : variables intergroupes 
     # intra : variables intragroupes
     # VD : variable dependante
@@ -13,7 +13,7 @@ AN.C.OVA <-
     # ES : taille d'effet qui doit etre calculee. "ges" pour eta carre generalise, et "pes" pour eta carre partiel
     # sauvegarde : logique, indique si les resultats doivent etre sauvegardes
     # Sums : choix du type des sommes des carres calculees. Peut etre 2 ou 3
-    # p.adjust : type de correction de la probabilite si type.cont vaut "Comparaison 2 à 2". La correction peut etre "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none"
+    # p.adjust : type de correction de la probabilite si type.cont vaut "Comparaison 2 a 2". La correction peut etre "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none"
     
     packages<-c( "DescTools","outliers", "nortest", "psych", "reshape2", "car", "lawstat", "pgirmess","WRS","svDialogs", "WRS2", "nlme", "afex")
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
@@ -79,7 +79,7 @@ AN.C.OVA <-
     options.aov<-function(inter, intra){
       list()->Resultats
       writeLines("le modele parametrique renvoie l'anova classique,le non parametrique calcule le test de Kruskal Wallis
-                 si c'est un modele à groupes independants, ou une anova de Friedman pour un modele en mesure repetee.
+                 si c'est un modele a groupes independants, ou une anova de Friedman pour un modele en mesure repetee.
                  Le modele mixte est l'equivalent du modele teste dans l'anova par un modele lineaire mixte,
                  les statistiques robustes sont des anovas sur des medianes avec ou sans bootstrap.")
       if(!is.null(cov)) {
@@ -133,8 +133,8 @@ AN.C.OVA <-
     contrastes.ez<-function(longdata, inter=NULL, intra=NULL){
       Resultats<-list()
       writeLines("Les contrastes a priori correspondent aux contrastes sans correction de la probabilite en suivant les regles de contrastes.
-                 Les contrastes 2 à 2 permettent de faire toutes les comparaisons 2 à 2 en appliquant ou non une correction à la probabilite")
-      type.cont<- dlgList(c("a priori",  "Comparaison 2 à 2", "aucun"), preselect="a priori",multiple = FALSE, title="Quel types de contraste voulez-vous ?")$res
+                 Les contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction a la probabilite")
+      type.cont<- dlgList(c("a priori",  "Comparaison 2 a 2", "aucun"), preselect="a priori",multiple = FALSE, title="Quel types de contraste voulez-vous ?")$res
       if(length(type.cont)==0) return(NULL)
       Resultats$type.cont<-type.cont
       c(inter, unlist(intra))->interintra
@@ -151,16 +151,16 @@ AN.C.OVA <-
         
         for (i in 1:length(interintra)){
           if(i>1) {
-            type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison à une ligne de base", "specifier les contrastes"),
+            type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison a une ligne de base", "specifier les contrastes"),
                                  preselect=c("orthogonaux"), multiple = FALSE, title=paste("Quels contrastes pour la variable",names(longdata[interintra])[i],"?"))$res} else {
-                                   type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison à une ligne de base",
+                                   type.cont2<- dlgList(c("orthogonaux", "orthogonaux inverses", "polynomiaux","comparaison a une ligne de base",
                                                           "specifier les contrastes"),preselect=c("orthogonaux"), multiple = FALSE, title=paste("Quels contrastes pour la variable",names(longdata[interintra])[i],"?"))$res
                                  }
           if(length(type.cont2)==0) return(contrastes.ez())
           if(type.cont2=="orthogonaux") {contr.helmert(nlevels(longdata[,interintra[i]]))->contrastes[[i]]}
           if(type.cont2=="orthogonaux inverses") {apply(contr.helmert(nlevels(longdata[,interintra[i]])), 2, rev)->contrastes[[i]]}
           if(type.cont2=="polynomiaux")  contr.poly(nlevels(longdata[,interintra[i]]))->contrastes[[i]]
-          if(type.cont2=="comparaison à une ligne de base") {
+          if(type.cont2=="comparaison a une ligne de base") {
             base<- dlgList(levels(longdata[, interintra[i]]), preselect=levels(longdata[,interintra[i]])[1],
                            multiple = FALSE, title="Quelle est la ligne de base?")$res
             which(levels(longdata[, interintra[i]])==base)->base
@@ -192,7 +192,7 @@ AN.C.OVA <-
         Resultats$contrastes<-contrastes
         
       }
-      if(type.cont== "Comparaison 2 à 2"){
+      if(type.cont== "Comparaison 2 a 2"){
         list()->p.adjust
         writeLines("Quelle correction de la probabilite voulez-vous appliquer ? Pour ne pas appliquer de correction, choisir +none+")
         dlgList(c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none"), preselect="holm", multiple = FALSE, title="Type de correction ?")$res->p.adjust
@@ -216,7 +216,7 @@ AN.C.OVA <-
       if(all(type.v!="Mesure repetee") & any(type.v== "Groupes independants"))plan<-"Groupes independants" else {
         if(any(type.v=="Mesure repetee") & all(type.v!= "Groupes independants")) plan<-"Mesure repetee"
         else {
-          writeLines("il est indispensable d'avoir au minimum des variables à groupes independants ou en mesure repetee")
+          writeLines("il est indispensable d'avoir au minimum des variables a groupes independants ou en mesure repetee")
           return(AN.C.OVA())
         }
       }
@@ -240,7 +240,7 @@ AN.C.OVA <-
       if(any(type.v=="Mesure repetee")) {
         VIR<-"autres"
         while(any(VIR=="autres")){
-          writeLines("veuillez selectionner les variables OU les modalites de la (des) variables à mesure(s) repetee(s).")
+          writeLines("veuillez selectionner les variables OU les modalites de la (des) variables a mesure(s) repetee(s).")
           VIR<-dlgList(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), multiple = TRUE, 
                        title="Mesures repetees")$res
           if(length(VIR)==0) return(AN.C.OVA())
@@ -285,14 +285,14 @@ AN.C.OVA <-
       setdiff(names(longdata), c("IDeasy", "variable", "value", intra))->diffs
       inter<-"autres donnees"
       while(inter=="autres donnees"){ 
-        writeLines("Veuillez choisir les variable-s à groupes independants")
+        writeLines("Veuillez choisir les variable-s a groupes independants")
         if(length(diffs)==1) {inter<-dlgList(paste(diffs, "(format :",class(longdata[,diffs]),")"), multiple = TRUE, 
-                                             title="Variables à groupes independants")$res} else {
+                                             title="Variables a groupes independants")$res} else {
                                                inter<-dlgList(paste(diffs, "(format :", sapply(longdata[,diffs], class), ")", sep=" "), multiple = TRUE, 
-                                                              title="Variables à groupes independants")$res}
+                                                              title="Variables a groupes independants")$res}
         
         if(length(inter)==0) {
-          if(okCancelBox("Vous n avez pas choisi de variable à groupes independants. Voulez-vous continuer  (ok) ou abandonner (annuler) cette analyse ?"))  inter<-"autres donnees" else return(AN.C.OVA())
+          if(okCancelBox("Vous n avez pas choisi de variable a groupes independants. Voulez-vous continuer  (ok) ou abandonner (annuler) cette analyse ?"))  inter<-"autres donnees" else return(AN.C.OVA())
         }
         if(inter!="autres donnees") {subset(listes, listes[,1] %in% inter)[,2]->inter
           as.character(inter)->inter}
@@ -599,7 +599,7 @@ AN.C.OVA <-
           
         }
         
-        if(type.cont== "Comparaison 2 à 2"){
+        if(type.cont== "Comparaison 2 a 2"){
           c(inter, unlist(intra))->interintra
           list()[1:length(interintra)]->comparaisons
           names(comparaisons)<-interintra
@@ -608,7 +608,7 @@ AN.C.OVA <-
               pairwise.t.test(longdata[,VD],longdata[,interintra[[i]]], paired=F,p.adj=p.adjust)$p.value->comparaisons[[i]]$"table des probabilites"
             }
           }
-          Resultats$"Comparaisons 2 à 2"<-comparaisons
+          Resultats$"Comparaisons 2 a 2"<-comparaisons
         }
       }
       
@@ -624,8 +624,8 @@ AN.C.OVA <-
           KW->Resultats$"Analyse non parametrique"$"Test de Kruskal-Wallis"
           
           if(!is.null(contrastes) && any(rowSums((contrastes[[1]]!=0))==0)) {kruskalmc( as.formula(paste0(VD, "~",inter[1])), 
-                                                                                        data=longdata, cont='two-tailed')->Resultats$"Analyse non parametrique"$"Test de Kruskal-Wallis - Comparaison à une ligne de base"} else{
-                                                                                          kruskalmc( as.formula( paste0(VD, "~",inter[1])), data=longdata)->Resultats$"Analyse non parametrique"$"Test de Kruskal-Wallis - Comparaison deux à deux"   
+                                                                                        data=longdata, cont='two-tailed')->Resultats$"Analyse non parametrique"$"Test de Kruskal-Wallis - Comparaison a une ligne de base"} else{
+                                                                                          kruskalmc( as.formula( paste0(VD, "~",inter[1])), data=longdata)->Resultats$"Analyse non parametrique"$"Test de Kruskal-Wallis - Comparaison deux a deux"   
                                                                                           
                                                                                         }
         }else{
@@ -634,7 +634,7 @@ AN.C.OVA <-
           names(friedman)<-c("chi.deux","ddl","valeur.p")
           round(friedman$chi.deux/(length(longdata[,1])*(nlevels(longdata[,unlist(intra)])-1)),4)->friedman$W.de.Kendall
           friedman->Resultats$"Analyse non parametrique"$"Anova de Friedman"
-          friedmanmc(longdata[,VD], longdata[,intra[[1]]], longdata$IDeasy)->Resultats$"Comparaison 2 à 2 pour ANOVA de Friedman"
+          friedmanmc(longdata[,VD], longdata[,intra[[1]]], longdata$IDeasy)->Resultats$"Comparaison 2 a 2 pour ANOVA de Friedman"
         }
       }
       
@@ -660,7 +660,7 @@ AN.C.OVA <-
             data.frame(AR1[[2]],AR1[[3]],AR1[[1]],AR2[[2]],AR2[[3]],AR2[[4]], AR2[[5]])->AR1
             names(AR1)<-c("ddl.num","ddl.denom","Stat","valeur.p","Var.expliquee","Taille.effet","Nombre.bootstrap" )
             AR1->Resultats$"Anova basee sur les moyennes tronquees"$"Analyse principale"
-            "Les probabilites et les IC sont estimes sur la base d'un bootsrap. L'IC est corrige pour comparaison multiple, contrairement à la probabilite reportee"->Resultats$"Anova basee sur les moyennes tronquees"$"Information"
+            "Les probabilites et les IC sont estimes sur la base d'un bootsrap. L'IC est corrige pour comparaison multiple, contrairement a la probabilite reportee"->Resultats$"Anova basee sur les moyennes tronquees"$"Information"
             try(WRS::lincon(robuste, tr=.2, con=contrastes),silent=T)->cont
             try(WRS::mcppb20(robuste, tr=.2, nboot=2000, con=contrastes),silent=T)->cont2
             if(class(cont)!= "try-error") {data.frame(cont$psihat[,2],cont$test[,4],cont$test[,5],cont$test[,2],cont$test[,3],cont2$psihat[,4],cont2$psihat[,5],cont2$psihat[,6])->cont
@@ -711,21 +711,21 @@ AN.C.OVA <-
           try( rmanova(longdata$value,longdata[,intra[[1]]] ,longdata$IDeasy), silent=T)->ANOVA.tr
           if(class(ANOVA.tr)!="try-error"){
             round(data.frame("Valeur.test"= ANOVA.tr$test,"ddl1"=ANOVA.tr$df1, "ddl2"=ANOVA.tr$df2,"valeur.p"=ANOVA.tr$p.value),4)->ANOVA.tr
-            ANOVA.tr->Resultats$"Statistiques robustes"$"Anova sur moyennes tronquees à 20%"
+            ANOVA.tr->Resultats$"Statistiques robustes"$"Anova sur moyennes tronquees a 20%"
             if((nlevels(longdata[,intra[[1]]]))>2) {rmmcp(longdata[,VD],longdata[, intra[[1]]],longdata$IDeasy)->comp
               comp$call<-paste0("rmmcp(longdata$", VD, ", longdata$", intra[[1]], ",longdata$IDeasy")
-              comp->Resultats$"Statistiques robustes"$"Comparaisons 2 à 2 sur moyennes tronquees à 20%"}else Resultats$"Statistiques robustes"<-"Desole, nous n'avons pas pu calcule l'anova robuste"
+              comp->Resultats$"Statistiques robustes"$"Comparaisons 2 a 2 sur moyennes tronquees a 20%"}else Resultats$"Statistiques robustes"<-"Desole, nous n'avons pas pu calcule l'anova robuste"
           }
           try( rmanovab(longdata[,VD],longdata[,intra[[1]]] ,longdata$IDeasy), silent=T)->ANOVA.tr
           if(class(ANOVA.tr)!="try-error"){
             data.frame("Valeur.test"=ANOVA.tr[[1]],"Valeur critique"=ANOVA.tr[[2]], "significativite"=if(ANOVA.tr[[1]]<ANOVA.tr[[2]]){"non significatif"}else"significatif")->ANOVA.tr
-            ANOVA.tr->Resultats$"Statistiques robustes"$"Anova sur moyennes tronquees à 20% avec bootstrap"   
+            ANOVA.tr->Resultats$"Statistiques robustes"$"Anova sur moyennes tronquees a 20% avec bootstrap"   
           }else Resultats$"Statistiques robustes"<-"Desole, nous n'avons pas pu calcule l'anova robuste"
           
           if((nlevels(longdata[,intra[[1]]]))>2) {
             try(pairdepb(longdata[,VD],longdata[,intra[[1]]] ,longdata$IDeasy), silent=T)->comp
             if(class(comp)!="try-error") {paste0("pairdepb(y = longdata$", VD, ", groups = longdata$", intra[[1]],", blocks = longdata$IDeasy)" )->comp$call
-              comp->Resultats$"Statistiques robustes"$"Comparaisons 2 à 2 sur les moyennes tronquees à 20% avec bootsrap"}else Resultats$"Statistiques robustes"<-"Desole, nous n'avons pas pu calcule l'anova robuste"
+              comp->Resultats$"Statistiques robustes"$"Comparaisons 2 a 2 sur les moyennes tronquees a 20% avec bootsrap"}else Resultats$"Statistiques robustes"<-"Desole, nous n'avons pas pu calcule l'anova robuste"
           }
         } 
         
