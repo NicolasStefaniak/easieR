@@ -1,9 +1,9 @@
 ez.mediation <-
-function(info=T){
-  options (warn=-1) 
-  mediation.effect.bar.plot2 <-function (x, mediator, dv, main = "Mediation Effect Bar Plot", 
-              width = 1, left.text.adj = 0, right.text.adj = 0, rounding = 3, 
-              file = "", save.pdf = FALSE, save.eps = FALSE, save.jpg = FALSE){
+  function(info=T){
+    options (warn=-1) 
+    mediation.effect.bar.plot2 <-function (x, mediator, dv, main = "Mediation Effect Bar Plot", 
+                                           width = 1, left.text.adj = 0, right.text.adj = 0, rounding = 3, 
+                                           file = "", save.pdf = FALSE, save.eps = FALSE, save.jpg = FALSE){
       Mediation.Results <- mediation(x = x, mediator = mediator, 
                                      dv = dv, conf.level = 0.95,complete.set=TRUE)
       observed.c <- Mediation.Results$Y.on.X$Regression.Table[2, 
@@ -110,88 +110,88 @@ function(info=T){
                       getwd()))
       }
     }
-  
-  
-  
-  .e <- environment()
-  c("boot", "MBESS","QuantPsyc", "svDialogs")->packages
-  try(lapply(packages, library, character.only=T), silent=T)->test2
-  if(class(test2)== "try-error") return(ez.install())
-  Resultats<-list()
-  dlgList(c("Effets de médiation simple", 
-            "Effet de médiation distante"), preselect=NULL, multiple = FALSE, title="Quel type de médiation ?")$res->choix
-  if(length(choix)==0) return(analyse())
-  choix.data(nom=T)->data
-  if(is.null(data)) return(ez.mediation())
-  data[[1]]->nom
-  data[[2]]->data
-  listes<-data.frame(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), names(data))
-  if(info) writeLines("veuillez préciser le prédicteur")
-  X<-dlgList(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), multiple = F, 
-             title="Prédicteur")$res
-  if(length(X)==0) return(ez.mediation())
-  subset(listes, listes[,1] %in% X)[,2]->X
-  as.character(X)->X
-  if(info) writeLines("veuillez choisir le médiateur")
-  Mediator<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" ")), multiple = F, 
-                    title="Médiateur")$res
-  if(length(Mediator)==0) return(ez.mediation())
-  subset(listes, listes[,1] %in% Mediator)[,2]->Mediator
-  as.character(Mediator)->Mediator
-  if(choix=="Effet de médiation distante"){
-    writeLines("veuillez préciser le second médiateur.")
-    Mediator2<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" ")), multiple = F, title="Mediateur 2")$res
-    if(length(Mediator2)==0) return(ez.mediation())
-    subset(listes, listes[,1] %in% Mediator2)[,2]->Mediator2
-    as.character(Mediator2)->Mediator2
+    
+    
+    
+    .e <- environment()
+    c("boot", "MBESS","QuantPsyc", "svDialogs")->packages
+    try(lapply(packages, library, character.only=T), silent=T)->test2
+    if(class(test2)== "try-error") return(ez.install())
+    Resultats<-list()
+    dlgList(c("Effets de mediation simple", 
+              "Effet de mediation distante"), preselect=NULL, multiple = FALSE, title="Quel type de mediation ?")$res->choix
+    if(length(choix)==0) return(analyse())
+    choix.data(nom=T)->data
+    if(is.null(data)) return(ez.mediation())
+    data[[1]]->nom
+    data[[2]]->data
+    listes<-data.frame(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), names(data))
+    if(info) writeLines("veuillez preciser le predicteur")
+    X<-dlgList(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), multiple = F, 
+               title="Predicteur")$res
+    if(length(X)==0) return(ez.mediation())
+    subset(listes, listes[,1] %in% X)[,2]->X
+    as.character(X)->X
+    if(info) writeLines("veuillez choisir le mediateur")
+    Mediator<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" ")), multiple = F, 
+                      title="Mediateur")$res
+    if(length(Mediator)==0) return(ez.mediation())
+    subset(listes, listes[,1] %in% Mediator)[,2]->Mediator
+    as.character(Mediator)->Mediator
+    if(choix=="Effet de mediation distante"){
+      writeLines("veuillez preciser le second mediateur.")
+      Mediator2<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" ")), multiple = F, title="Mediateur 2")$res
+      if(length(Mediator2)==0) return(ez.mediation())
+      subset(listes, listes[,1] %in% Mediator2)[,2]->Mediator2
+      as.character(Mediator2)->Mediator2
+    }
+    
+    if(info) writeLines("veuillez choisir la variable dependante")
+    VD<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" ")), multiple = F, 
+                title="Variable dependante")$res
+    subset(listes, listes[,1] %in% VD)[,2]->VD
+    as.character(VD)->VD
+    writeLines("veuillez preciser le nombre de bootstrap. Un minimum de 500 est idealement requis. Peut prendre du temps pour N>1000")
+    n.boot<-dlgInput("Nombre de bootstrap ?", 1)$res
+    if(length(n.boot)==0) n.boot<-"0"
+    strsplit(n.boot, ":")->n.boot
+    tail(n.boot[[1]],n=1)->n.boot
+    as.numeric(n.boot)->n.boot
+    if(!is.na(n.boot) && any(n.boot>50)) bootstrap<-TRUE else bootstrap<-FALSE
+    
+    if(choix=="Effets de mediation simple"){
+      mediation(data[,X], data[,Mediator], data[,VD], conf.level = 0.95, bootstrap = bootstrap, B = n.boot, which.boot="both", save.bs.replicates=TRUE, complete.set=TRUE)->mediation.out
+      for(i in 1:length(mediation.out)){
+        if(class(mediation.out[[i]])== "list") for(j in 1 : length(mediation.out[[i]])){
+          round(mediation.out[[i]][[j]], 4)->mediation.out[[i]][[j]]} else {
+            round(mediation.out[[i]], 4)->mediation.out[[i]]}
+      }  
+      Resultats$Analyse.mediation<-mediation.out
+      Resultats$Information<-"Pour une description detaillee des resultats, ?mediation"
+      mediation.effect.bar.plot2(data[,X], data[,Mediator], data[,VD],main = "Mediation Effect Bar Plot", width = 1, left.text.adj = 0,right.text.adj = 0, rounding = 3, file = "", save.pdf = FALSE,save.eps = FALSE, save.jpg = FALSE)
+    }else { data2<-data[,c(X, Mediator, Mediator2, VD)]
+    names(data2)<-c("x", "m1","m2","y")
+    distal.med(data2)->results
+    data.frame(results)->results
+    round(as.numeric(as.character(results$Effect)),4)->results$Effect
+    round(as.numeric(as.character(results$SE)),4)->results$SE
+    round(as.numeric(as.character(results[,3])),3)->results$t.ratio
+    round(as.numeric(as.character(results$Med.Ratio)),4)->results$Med.Ratio 
+    names(results)<-c("Effet", "Erreur.st","test.t", "Ratio.med")
+    results->Resultats$"Mediation a distance"
+    Resultats$Information<-"Pour une description detaillee des resultats, ?distal.med"
+    distmed.boot <- boot(data2, distInd.ef, R=n.boot)
+    boot.ci(distmed.boot, conf=.95, type=c("basic","perc", "norm"))->IC.boot
+    round(matrix(c(IC.boot$normal[,2:3],IC.boot$basic[,4:5],IC.boot$percent[,4:5]), ncol=2 ),4)->IC.boot
+    dimnames(IC.boot)[[1]]<-c("normal","basic","percentile")
+    dimnames(IC.boot)[[2]]<-c("limite.inf","limite.sup")
+    IC.boot->Resultats$"Intervalle de confiance estime par bootstrap"}
+    
+    dlgList(c("TRUE","FALSE"), preselect="FALSE", multiple = FALSE, title="voulez-vous sauvegarder?")$res->sauvegarde
+    if(length(sauvegarde)==0) sauvegarde<-FALSE  
+    if(sauvegarde) save(Resultats=Resultats, choix=choix, env=.e)
+    ref1(packages)->Resultats$"References" 
+    ez.html(Resultats)
+    return(Resultats)  
+    
   }
-  
-  if(info) writeLines("veuillez choisir la variable dépendante")
-  VD<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" ")), multiple = F, 
-              title="Variable dépendante")$res
-  subset(listes, listes[,1] %in% VD)[,2]->VD
-  as.character(VD)->VD
-  writeLines("veuillez préciser le nombre de bootstrap. Un minimum de 500 est idéalement requis. Peut prendre du temps pour N>1000")
-  n.boot<-dlgInput("Nombre de bootstrap ?", 1)$res
-  if(length(n.boot)==0) n.boot<-"0"
-  strsplit(n.boot, ":")->n.boot
-  tail(n.boot[[1]],n=1)->n.boot
-  as.numeric(n.boot)->n.boot
-  if(!is.na(n.boot) && any(n.boot>50)) bootstrap<-TRUE else bootstrap<-FALSE
-  
-  if(choix=="Effets de médiation simple"){
-    mediation(data[,X], data[,Mediator], data[,VD], conf.level = 0.95, bootstrap = bootstrap, B = n.boot, which.boot="both", save.bs.replicates=TRUE, complete.set=TRUE)->mediation.out
-    for(i in 1:length(mediation.out)){
-      if(class(mediation.out[[i]])== "list") for(j in 1 : length(mediation.out[[i]])){
-        round(mediation.out[[i]][[j]], 4)->mediation.out[[i]][[j]]} else {
-          round(mediation.out[[i]], 4)->mediation.out[[i]]}
-    }  
-    Resultats$Analyse.mediation<-mediation.out
-    Resultats$Information<-"Pour une description détaillée des résultats, ?mediation"
-    mediation.effect.bar.plot2(data[,X], data[,Mediator], data[,VD],main = "Mediation Effect Bar Plot", width = 1, left.text.adj = 0,right.text.adj = 0, rounding = 3, file = "", save.pdf = FALSE,save.eps = FALSE, save.jpg = FALSE)
-  }else { data2<-data[,c(X, Mediator, Mediator2, VD)]
-  names(data2)<-c("x", "m1","m2","y")
-  distal.med(data2)->results
-  data.frame(results)->results
-  round(as.numeric(as.character(results$Effect)),4)->results$Effect
-  round(as.numeric(as.character(results$SE)),4)->results$SE
-  round(as.numeric(as.character(results[,3])),3)->results$t.ratio
-  round(as.numeric(as.character(results$Med.Ratio)),4)->results$Med.Ratio 
-  names(results)<-c("Effet", "Erreur.st","test.t", "Ratio.med")
-  results->Resultats$"Médiation à distance"
-  Resultats$Information<-"Pour une description détaillée des résultats, ?distal.med"
-  distmed.boot <- boot(data2, distInd.ef, R=n.boot)
-  boot.ci(distmed.boot, conf=.95, type=c("basic","perc", "norm"))->IC.boot
-  round(matrix(c(IC.boot$normal[,2:3],IC.boot$basic[,4:5],IC.boot$percent[,4:5]), ncol=2 ),4)->IC.boot
-  dimnames(IC.boot)[[1]]<-c("normal","basic","percentile")
-  dimnames(IC.boot)[[2]]<-c("limite.inf","limite.sup")
-  IC.boot->Resultats$"Intervalle de confiance éstimé par bootstrap"}
-  
-  dlgList(c("TRUE","FALSE"), preselect="FALSE", multiple = FALSE, title="voulez-vous sauvegarder?")$res->sauvegarde
-  if(length(sauvegarde)==0) sauvegarde<-FALSE  
-  if(sauvegarde) save(Resultats=Resultats, choix=choix, env=.e)
-  ref1(packages)->Resultats$"Références" 
-  ez.html(Resultats)
-  return(Resultats)  
-  
-}
