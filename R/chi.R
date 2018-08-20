@@ -91,7 +91,7 @@ chi <-
         if(sum(p)!=1 | any(p)>1 | any(p)<0) p<-NULL
         
         while(is.null(p)){
-          if(info==T) writeLines("Veuillez entrer les probabilites correspondant à chaque modalite de la variable.")
+          if(info==T) writeLines("Veuillez entrer les probabilites correspondant a chaque modalite de la variable.")
           dlgForm(setNames(as.list(rep(1/nlevels(data[,X]),times=nlevels(data[,X]))), levels(data[,X])), "Vecteur des probabilites. Attention : ne pas entrer des fractions")$res->niveaux
           stack(niveaux)[,1]->p
           if(sum(p)!=1 ||length(p)!=nlevels(data[,X]) | any(p)>1 | any(p)<0){
@@ -125,7 +125,7 @@ chi <-
             writeLines("L'option Effectif total fixe pour les lignes* doit etre choisi si les effectifs pour chaque ligne est identique, 
                        comme lorsqu'on veut s'assurer d'un appariement entre groupes. La distribution est une distribution multinomiale independante")
             print(matrix(c(15,40,55, 85,60,145, 100,100,200), nrow=3, ncol=3, dimnames=list(c("A.1", "A.2", "total"), c("B.1", "B.2", "total")) ))
-            writeLines("L'option Effectif total fixe pour les colonnes* est identique à la precedente pour les colonnes")
+            writeLines("L'option Effectif total fixe pour les colonnes* est identique a la precedente pour les colonnes")
             writeLines("L'option *Effectif total fixe pour les lignes et les colonnes* lorsque les totaux pour les lignes et les colonnes sont fixes.La distribution est hypergeometrique")
             print(matrix(c(15,85,100, 85,15,100, 100,100,200), nrow=3, ncol=3, dimnames=list(c("A.1", "A.2", "total"), c("B.1", "B.2", "total")) ))
           } 
