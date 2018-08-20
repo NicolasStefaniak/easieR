@@ -63,7 +63,7 @@ Imports: afex,
          reshape2, 
          RGtk2, 
          RGtk2Extras,
-         rmarkdown
+         rmarkdown,
          rms, 
          robust, 
          robustbase,
