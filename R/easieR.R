@@ -51,11 +51,15 @@ function(info=TRUE){
   
   library(rmarkdown)
   if(is.null(pandoc_version())){
+     if(grepl("mac",  .Platform$pkgType)){
+     return(easieR.msg(msg=1))
+  }else{
+  
     install.packages("installr")
     library(installr)
     install.pandoc()
   }
-  
+  }
   
   
   choix <- dlgList(c("Données - (Importation, exportation, sauvegarde)", "Prétraitements (tri, sélection, opérations mathématiques, valeurs manquantes", 
@@ -72,6 +76,16 @@ function(info=TRUE){
     return(Resultats)
 
   }
+}
+
+easieR.msg<-function(msg=1){
+  if(msg==1){
+if(grepl("French",Sys.setlocale())) {msg<-"Pour que easieR fonctionne correctement, 
+il faut installer Pandoc disponible à l'url suivant : https://github.com/jgm/pandoc/releases/tag/2.2.3.2" } else {
+    msg<-"In order to ensure that easieR is properly installed, please install Pandoc at the following url :
+https://github.com/jgm/pandoc/releases/tag/2.2.3.2" }}
+
+return(msg)
 }
 
 
