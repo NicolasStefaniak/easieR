@@ -63,7 +63,7 @@ aov.plus <-
       aov.plus.list[[grep("modele.lme1", names(aov.plus.list))]]<-NULL
       writeLines("Cette fonction permet de fournir les statistiques descriptives detaillees par variable avec le choix statistiques
                  descriptives completes. Vous pouvez afficher les moyennes et erreurs-types ajustees ainsi que le graphique correspondant.
-                 Avec le choix post hoc sur les interactions, vous pouvez tester les effets d'interaction 2 à 2 et les effet simpes.")
+                 Avec le choix post hoc sur les interactions, vous pouvez tester les effets d'interaction 2 a 2 et les effet simpes.")
       choix<-dlgList(c("statistiques descriptives detaillees","moyennes et erreurs-types ajustees","contrastes sur les interactions"), 
                      multiple = TRUE, title="Quelles donnees voulez-vous analyser?")$res 
       if(length(choix)==0) return(analyse())
@@ -92,22 +92,22 @@ descriptives completes.")
     }
     
     if(any(choix=="contrastes sur les interactions")){
-      writeLines("Vous pouvez selectionner plusieurs options. Quelles options, voulez-vous specifier ? Les comparaisons 2 à 2 vous permettent d'avoir les comparaisons 2 à 2;
+      writeLines("Vous pouvez selectionner plusieurs options. Quelles options, voulez-vous specifier ? Les comparaisons 2 a 2 vous permettent d'avoir les comparaisons 2 a 2;
                  Specifier les contrastes vous permettent de tester virtuelle n'importe quel contraste. Si plusieurs variables sont introduites pour 
                  l'ensemble des deux options, seuls les contrastes d'interaction seront calcules.
-                 La decomposition des effets va vous peremttre d'obtenir les comparaisons specifiees dans les deux options precedentes pour chaque modalite des variables specifiees à ce niveau.
+                 La decomposition des effets va vous peremttre d'obtenir les comparaisons specifiees dans les deux options precedentes pour chaque modalite des variables specifiees a ce niveau.
                  Toutes les variables ne doivent pas necessairement etre introduites dans l'analyse. Dans ce cas, les contrastes choisis seront calcules sur
                  l'ensemble des modalites confondues")
-      choix<-dlgList(c("Comparaison 2 à 2", "Specifier contrastes", "Decomposer les effets par modalite"), multiple = TRUE, title="Que voulez-vous specifier ?")$res
+      choix<-dlgList(c("Comparaison 2 a 2", "Specifier contrastes", "Decomposer les effets par modalite"), multiple = TRUE, title="Que voulez-vous specifier ?")$res
       if(length(choix)==0) return(aov.plus())
       facteurs<-names(modele.lme$contrasts)
-      if(any(choix=="Comparaison 2 à 2")) {   
-        paires<-dlgList(facteurs, multiple = TRUE, title="Comparaison 2 à 2 ?")$res
+      if(any(choix=="Comparaison 2 a 2")) {   
+        paires<-dlgList(facteurs, multiple = TRUE, title="Comparaison 2 a 2 ?")$res
         if(length(paires)==0) return(aov.plus())
       }else paires<-NULL
       setdiff(facteurs, paires)->diff
       if(length(diff)!=0 & any(choix=="Specifier contrastes")) {   
-        cont.spe1<-dlgList(diff, multiple = TRUE, title="Variables à specifier ?")$res
+        cont.spe1<-dlgList(diff, multiple = TRUE, title="Variables a specifier ?")$res
         if(length(cont.spe1)==0) return(aov.plus())
         contrastes.ez2(longdata=modele.lme$data, var=cont.spe1)->cont.spe
       }else {cont.spe<-NULL
@@ -115,7 +115,7 @@ descriptives completes.")
       setdiff(diff, cont.spe1)->diff
       
       if(length(diff)!=0 & any(choix=="Decomposer les effets par modalite")){
-        fixed1<-dlgList(diff, multiple = TRUE, title="Variable à decomposer ?")$res
+        fixed1<-dlgList(diff, multiple = TRUE, title="Variable a decomposer ?")$res
         if(length(fixed1)==0) return(aov.plus())}else {
           fixed1<-NULL 
         }
