@@ -16,4 +16,5 @@ citEntry(entry="Manual",
                sep = "")
          )
 
+citFooter("For using easieR, just enter easieR()")
 
