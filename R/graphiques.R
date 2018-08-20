@@ -9,7 +9,7 @@ function(){
   nom<-data[[1]]
   data<-data[[2]]
   
-  msgBox("Ne pas oublier de fermer la fenêtre htmlt (firexfox, chrome, internet explorer...) pour revenir à la session R")
+  msgBox("Ne pas oublier de fermer la fenetre htmlt (firexfox, chrome, internet explorer...) pour revenir à la session R")
    print(ref1(packages))
   ggplot_shiny(dataset=data)
  
