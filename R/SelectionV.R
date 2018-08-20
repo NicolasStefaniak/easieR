@@ -6,7 +6,7 @@ SelectionV <-
     list()->Resultats
     choix.data()->data
     if(length(data)==0) return(preprocess())
-    if(info==TRUE) print("Quelles sont les variables à selectionner ?")
+    if(info==TRUE) print("Quelles sont les variables a selectionner ?")
     X<-dlgList(c(paste(names(data), "(format :", sapply(data, class), ")", sep=" "), "autres donnees"), multiple = TRUE, 
                title="Variable")$res
     if(length(X)==0) return(preprocess())
