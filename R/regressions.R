@@ -202,7 +202,7 @@ regressions <-
                             SC.res=ols.out$ess,
                             r.carre=ols.out$rsq,
                             r.carre.adj=ols.out$arsq,
-                            Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", "variable supprimee"))
+                            Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", c(" ","variable supprimee")))
           )
           
           Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
