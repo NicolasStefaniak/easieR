@@ -206,8 +206,6 @@ regressions <-
           )
           
           Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
-          modele<-as.formula(attributes(steps$anova)$heading[5])
-          pred<-attributes(terms(modele))$term.labels
           
         }
         
