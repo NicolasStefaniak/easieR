@@ -165,9 +165,9 @@ regressions <-
           select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
                            "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
           
-         if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(model,penter = 0.3, details=F)})
-         if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(model, prem=0.15, details=F)})
-         if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(model,pent=0.15, details=F)})
+         if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = 0.3, details=F)})
+         if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=0.15, details=F)})
+         if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=0.15, details=F)})
           predname<-if(!is.null(ols.out$predictors)) rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]]) )
           methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[1]]) )
           ols.frame<-data.frame(etape=1:ols.out$steps,
