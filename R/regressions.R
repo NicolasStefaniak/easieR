@@ -572,7 +572,7 @@ regressions <-
     writeLines("Voulez-vous preciser d'autres options ? Vous pouvez en selectionner plusieurs.
                Les methodes de selection permettent de selectionner le meilleur modele sur la base de criteres statistiques.
                Les modeles hierarchiques permettent de comparer plusieurs modeles. 
-               Les validations croisees permettent de verifier si un modele n'est pas dependant des donnees. Cette option est à utiliser notamment 
+               Les validations croisees permettent de verifier si un modele n'est pas dependant des donnees. Cette option est a utiliser notamment 
                avec les methodes de selection. L'analyse par groupe permet de realiser la meme regression pour des sous-groupes.
                Les mesures d'influences sont les autres mesures habituellement utilisees pour identifier les valeurs influentes.")
     autres.options<-c("Methodes de selection", "Modeles hierarchiques", "Validation croisee","Mesure d influence",  "aucune")
@@ -603,10 +603,10 @@ regressions <-
     }
   }
   
-  if(any(autres.options=="Methodes de selection") || select.m!="none" & length(select.m)!=1 | !select.m%in%c("none","forward", "backward", "bidirectional","Forward - pas-à-pas ascendant",
-                                                                                                             "Backward- pas-à-pas descendant", "Bidirectionnel")){
+  if(any(autres.options=="Methodes de selection") || select.m!="none" & length(select.m)!=1 | !select.m%in%c("none","forward", "backward", "bidirectional","Forward - pas-a-pas ascendant",
+                                                                                                             "Backward- pas-a-pas descendant", "Bidirectionnel")){
     if(info) writeLines("Veuillez choisir la methode de selection que vous souhaitez utiliser")
-    select.m<- dlgList(c("Forward - pas-à-pas ascendant","Backward- pas-à-pas descendant", "Bidirectionnel"), 
+    select.m<- dlgList(c("Forward - pas-a-pas ascendant","Backward- pas-a-pas descendant", "Bidirectionnel"), 
                        preselect=NULL, multiple = FALSE, title="Choix de la methode")$res
     if(length(select.m)==0) return(.regressions.options(data=data, modele=modele))
   } 
@@ -619,7 +619,7 @@ regressions <-
     }
     
     if(select.m!="none" & (method=="valeur du F" | method=="F")){
-      if(!is.null(criteria) && (!is.numeric(criteria) || criteria<1)) {msgBox("Vous devez specifier la valeur du F. Cette valeur doit etre superieure à 1")
+      if(!is.null(criteria) && (!is.numeric(criteria) || criteria<1)) {msgBox("Vous devez specifier la valeur du F. Cette valeur doit etre superieure a 1")
         criteria<-NULL}
       
       if(is.null(criteria)) {
@@ -630,7 +630,7 @@ regressions <-
           tail(criteria[[1]],n=1)->criteria
           as.numeric(criteria)->criteria
           if(is.na(criteria) || criteria<1) {criteria<-NULL
-          msgBox("Vous devez specifier la valeur du F. Cette valeur doit etre superieure à 1")
+          msgBox("Vous devez specifier la valeur du F. Cette valeur doit etre superieure a 1")
           }
           criteria<-df(criteria, df1=1, df2=(length(data[,1])-1-length(step1)), log = FALSE)
         }
@@ -666,7 +666,7 @@ regressions <-
       }
     }         
     if(is.null(step)){
-      if(info) writeLines("Veuillez choisir les variables à utiliser pour chaque etape")      
+      if(info) writeLines("Veuillez choisir les variables a utiliser pour chaque etape")      
       step<-list()
       step[[1]]<- dlgList(step1, preselect=NULL, multiple = TRUE, title="Variable(s) de cette etape")$res
       if(length(step[[1]])==0) return(.regressions.options(data=data, modele=modele))
