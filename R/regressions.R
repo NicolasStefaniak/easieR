@@ -194,7 +194,7 @@ regressions <-
           if(select.m=="Both")     t0<-capture.output({  ols.out <- ols_step_both_aic(lm.r1, details=T)})
 
           predname<-if(select.m!="Backward") rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]])+1 )
-          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[1]]) )
+          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[4]]) )
           ols.frame<-data.frame(etape=1:ols.out$steps,
                             predicteurs=ifelse(predname,ols.out$predictors, c("Modele complet", ols.out$predictor)) ,
                             Somme.Carre=ols.out$rss,
