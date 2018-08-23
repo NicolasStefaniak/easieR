@@ -434,7 +434,7 @@ test.t <-
                                            fill="grey", colour="White")+stat_summary(fun.data="mean_sdl", geom="errorbar", position=position_dodge(width=0.90), width=0.2)
         aj<-aj+theme(plot.title = element_text(size = 12))+ggtitle("Donnees ajustees (Loftus & Masson, 1994)")
         Resultats$"Moyenne et ecart-type pour les donnees ajustees"<-aj
-        multiplot(nonaj,aj, cols=2 )
+        .multiplot(nonaj,aj, cols=2 )
       }
       
       if(any(param=="Bayes") | any(param=="Facteurs bayesiens") ){
