@@ -15,7 +15,6 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   # IV.levels : list with the levels of the independant variables created in the long format  
   
   options (warn=-1) 
-  info<-T
   # chargement des packages
   packages<-c( "svDialogs", "reshape2")
   try(lapply(packages, library, character.only=T), silent=T)->test2
@@ -130,7 +129,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
                         idvar = "id",  IV.names=NULL, IV.levels=list()) {
   resultats<-list()
   # completer les dial
-  data<-choix.data(data=data, info=info, nom=T)
+  data<-choix.data(data=data, info=T, nom=T)
   if(length(data)==0) return(NULL)
   nom<-data[[1]]
   data<-data[[2]]
@@ -148,7 +147,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
       as.numeric(n.var)->n.var
       if(is.na(n.var)) msgBox(.ez.reshape.msg("msg",5))  
     }
-    varying2<-.var.type(X= unlist(varying) , info=info, data=data, type=NULL, check.prod=F, message=.ez.reshape.msg("msg",1),  multiple=T, title=.ez.reshape.msg("title",1), out=NULL)
+    varying2<-.var.type(X= unlist(varying) , info=T, data=data, type=NULL, check.prod=F, message=.ez.reshape.msg("msg",1),  multiple=T, title=.ez.reshape.msg("title",1), out=NULL)
     if(is.null(varying2)) {
       return(ez.reshape())}
     
