@@ -75,13 +75,14 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
     IV.levels.call0<-paste0(IV.levels.call0, "')")
     IV.levels.call<-paste(IV.levels.call, IV.levels.call0)
   }
-  }else IV.levels.call<-"NULL"
+    IV.levels.call<-paste0(list(", IV.levels.call ,"))" )
+  }else IV.levels.call<-"NULL)"
  
   
   
   Call<-paste0("ez.reshape(data=",nom, ", varying =list(", varying.call,"), v.names =c('",v.names.call, 
                "'),idvar =c('", idvar.call,"'),IV.names=list('", IV.names.call,
-               "'), IV.levels=list(" , IV.levels.call, "))"  )
+               "'), IV.levels=" , IV.levels.call)
   
   writeLines(Call)
   .add.history(data=data, command=Call, nom=nom)
@@ -209,7 +210,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
     } 
   }
   
-  if(is.null(IV.names)| (length(IV.names>1) & is.null(IV.levels)) |
+  if(is.null(IV.names)| (length(IV.names)>1 & is.null(IV.levels)) |
      (!is.null(IV.levels) & length(unlist(IV.levels))!=length(varying[[1]])) ) {
     if(length(varying[[1]])>3) N.facteurs <- dlgInput(.ez.reshape.msg("title",4), 1)$res else N.facteurs<-"1"
      while(length(N.facteurs)=="0"){
