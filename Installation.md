@@ -1,3 +1,9 @@
+# French
+Pour les utisateurs francophones, la procédure d'installation de easieR est décrite ici :
+https://theeasierproject.wordpress.com/2017/05/05/comment-installer-easier/
+
+# English
+
 For the installation of easieR, you must :
 
 1) install the 'devtools' package and load it 
