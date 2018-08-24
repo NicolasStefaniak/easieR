@@ -75,7 +75,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
     IV.levels.call0<-paste0(IV.levels.call0, "')")
     IV.levels.call<-paste(IV.levels.call, IV.levels.call0)
   }
-    IV.levels.call<-paste0(list(", IV.levels.call ,"))" )
+    IV.levels.call<-paste0("list(", IV.levels.call ,"))" )
   }else IV.levels.call<-"NULL)"
  
   
