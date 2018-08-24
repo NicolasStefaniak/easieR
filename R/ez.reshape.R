@@ -3,7 +3,8 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
                      idvar = "id",  IV.names=NULL, IV.levels=NULL  ){
   #data 	: a data frame
   # varying : names of sets of variables in the wide format that correspond to single variables in long format (‘time-varying’). 
-  #This is canonically a list of vectors of variable names, but it can optionally be a matrix of names, or a single vector of names. 
+  #This is canonically a list of vectors of variable names, 
+  #but it can optionally be a matrix of names, or a single vector of names. 
   #In each case, the names can be replaced by indices which are interpreted as referring to names(data). 
   #v.names : names of variables in the long format that correspond to multiple variables in the wide format. 
   # timevar : the variable in long format that differentiates multiple records from the same group or individual. 
@@ -102,7 +103,8 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
              "Appuyez [entree] pour continuer")
       
              
-             title<-c("Colonnes en mesures repetees" ,"Nombre de variables mesurees", "Nom de la variable mesuree", "Combien de facteurs en mesure repetee ?",
+             title<-c("Colonnes en mesures repetees" ,"Nombre de variables mesurees", "Nom de la variable mesuree", 
+                      "Combien de facteurs en mesure repetee ?",
                       "Nom du facteur","Combien de modalites","modalite", "Noms des modalites pour", 
                       "Est-ce que la structure dans un format long de vos donnees est correcte ?")
       
@@ -115,8 +117,10 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
              "you have selected","columns",
              "The product of the number of levels of each factor must  equal to the number of selected columns.",
              "Press [enter] to continue")
-        title<-c("Columns in repeated measures", "Number of measured variables", "Name of measured variable", "How many repeated measures variables ?",
-                 "name of the factor", "How many levels", "level", "Name of levels for", "Is the long format data frame correct ?")
+        title<-c("Columns in repeated measures", "Number of measured variables", "Name of measured variable", 
+                 "How many repeated measures variables ?",
+                 "name of the factor", "How many levels", "level", "Name of levels for", 
+                 "Is the long format data frame correct ?")
     }
      
       ifelse(type=="msg", r<-msg, r<-title)
@@ -147,7 +151,9 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
       as.numeric(n.var)->n.var
       if(is.na(n.var)) msgBox(.ez.reshape.msg("msg",5))  
     }
-    varying2<-.var.type(X= unlist(varying) , info=T, data=data, type=NULL, check.prod=F, message=.ez.reshape.msg("msg",1),  multiple=T, title=.ez.reshape.msg("title",1), out=NULL)
+    varying2<-.var.type(X= unlist(varying) , info=T, data=data, type=NULL, 
+                        check.prod=F, message=.ez.reshape.msg("msg",1),  multiple=T, 
+                        title=.ez.reshape.msg("title",1), out=NULL)
     if(is.null(varying2)) {
       return(ez.reshape())}
     
@@ -247,7 +253,8 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
         as.numeric(N.modalites)->N.modalites
         if(is.na(N.modalites)) writeLines(.ez.reshape.msg("msg",5))
         c(N.modalites2,N.modalites)->N.modalites2
-        dlgForm(setNames(as.list(paste(.ez.reshape.msg("title",7), 1:N.modalites2[i])), paste(.ez.reshape.msg("title",7), 1:N.modalites2[i])),
+        dlgForm(setNames(as.list(paste(.ez.reshape.msg("title",7), 1:N.modalites2[i])), 
+                         paste(.ez.reshape.msg("title",7), 1:N.modalites2[i])),
                 paste(.ez.reshape.msg("title",8), IV.names[[i]]) )$res->IV.levels[[i]]
       }
       
@@ -283,7 +290,8 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
       if(i==length(IV.names)){a<-1} else {
         a<-prod(N.modalites2[(i+1):length(IV.names)])
       }
-      gl(n=N.modalites2[[i]], k=length(data[,1])*a, length=length(data[,1])*prod(N.modalites2), labels=IV.levels[[i]])->longdata$variable1
+      gl(n=N.modalites2[[i]], k=length(data[,1])*a, length=length(data[,1])*prod(N.modalites2), 
+         labels=IV.levels[[i]])->longdata$variable1
       names(longdata)<-c(names(longdata[1:(length(longdata)-1)]),IV.names[[i]])
     }
    }
