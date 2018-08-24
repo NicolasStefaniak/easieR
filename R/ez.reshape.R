@@ -47,7 +47,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   if(length(IV.names)>1){
   cat (.ez.reshape.msg("msg",9))
   line <- readline()
-  dlgMessage(.ez.reshape.msg(title, 9), "yesno")$res->suppression
+  dlgMessage(.ez.reshape.msg("title", 9), "yesno")$res->suppression
   if(suppression=="no") return(ez.reshape(data=data, varying=varying))  
   }
 
