@@ -15,7 +15,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   # IV.levels : list with the levels of the independant variables created in the long format  
   
   options (warn=-1) 
-  
+  info<-T
   # chargement des packages
   packages<-c( "svDialogs", "reshape2")
   try(lapply(packages, library, character.only=T), silent=T)->test2
