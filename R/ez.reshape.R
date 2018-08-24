@@ -44,10 +44,13 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   
   assign(paste0(nom, ".long"),longdata)
   View(longdata)
+  if(length(IV.names)>1){
   cat (.ez.reshape.msg("msg",9))
   line <- readline()
   dlgMessage(.ez.reshape.msg(title, 9), "yesno")$res->suppression
-  if(suppression=="no") return(ez.reshape(data=data, varying=varying)) 
+  if(suppression=="no") return(ez.reshape(data=data, varying=varying))  
+  }
+
   
   assign("intra",IV.names,envir=.e)
   
@@ -85,7 +88,6 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   
   return(longdata)
 }
-
 
 .ez.reshape.msg<-function(type, number){
   # type : either "msg" or "title"
