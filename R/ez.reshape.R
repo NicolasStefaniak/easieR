@@ -165,7 +165,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
         v.names<-c(v.names, var.name)
       }
       varying[[n.var]]<-varying2
-      var.name <- dlgInput(paste(.ez.reshape.msg("title",3),n.var), paste("Variable.", n.var))$res
+      var.name <- dlgInput(paste(.ez.reshape.msg("title",3),n.var), paste0("Variable.", n.var))$res
       if(length(var.name)==0) { return(ez.reshape())}
       strsplit(var.name, ":")->var.name
       tail(var.name[[1]],n=1)->var.name
