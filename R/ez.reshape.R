@@ -217,10 +217,10 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   
   
   }
-  
+   c()->N.modalites2 
    if(is.null(IV.names) || !is.character(unlist(IV.names))){
   list()->IV.names # liste pour stocker le nom des facteurs 
-  c()->N.modalites2 
+ 
 
       if(N.facteurs==1){
     dlgInput(.ez.reshape.msg("title",5), "Variable.1")$res->IV.names[[1]]
