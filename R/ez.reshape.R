@@ -209,7 +209,8 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
     } 
   }
   
-  if(is.null(IV.names)| length(IV.names>1) & is.null(IV.levels) |length(unlist(IV.levels))!=length(varying[[1]]) ) {
+  if(is.null(IV.names)| (length(IV.names>1) & is.null(IV.levels)) |
+     (!is.null(IV.levels) & length(unlist(IV.levels))!=length(varying[[1]])) ) {
     if(length(varying[[1]])>3) N.facteurs <- dlgInput(.ez.reshape.msg("title",4), 1)$res else N.facteurs<-"1"
      while(length(N.facteurs)=="0"){
        writeLines(.ez.reshape.msg("msg",3))
