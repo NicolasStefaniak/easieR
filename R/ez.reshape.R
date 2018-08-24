@@ -41,7 +41,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
                             idvar = idvar,times=times, 
                             IV.names=IV.names,IV.levels=IV.levels, N.modalites2=N.modalites2 )  
   
-  assign(paste0(nom, ".long"),longdata)
+  assign(paste0(nom, ".long"),longdata, envir = .GlobalEnv)
   View(longdata)
   if(length(IV.names)>1){
   cat (.ez.reshape.msg("msg",9))
