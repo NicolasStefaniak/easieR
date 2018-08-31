@@ -13,16 +13,16 @@ ez.html <-
         wd.decomp<-unlist(wd.decomp)
         new.wd<-wd.decomp[1:(special.chr-1)]
         new.wd.<-str_flatten(new.wd, "/")
-        new.wd.<-(paste0(new.wd., "/res.easieR")
+        new.wd.<-paste0(new.wd., "/res.easieR")
         dir.create( new.wd., showWarnings = FALSE)
         test<-try(setwd(new.wd.))
         if(class(test)== "try-error"){
           new.wd.<-str_flatten(new.wd, '\\')   
-          new.wd.<-(paste0(new.wd., "\\res.easieR")
+          new.wd.<-paste0(new.wd., "\\res.easieR")
           dir.create( new.wd., showWarnings = FALSE)
           setwd( new.wd.)
             }
-           dir.create(getwd(), res.easieR, showWarnings = FALSE)
+          
             
        
         msgBox(paste0("Des caracteres non autorises (e.g. des accents) ont ete utilises pour le chemin d'acces.\nLes resultats ont ete sauvegardes dans le repertoire suivant", getwd()))   
