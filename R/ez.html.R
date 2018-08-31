@@ -7,27 +7,27 @@ ez.html <-
     wd<-getwd()
     
     if(grepl("[^[:alnum:]]", wd)) {
-        wd.decomp<-str_split(wd, "/")
-        special.chr<-grepl("[^[:alnum:]]",unlist(wd.decomp) )
-        special.chr<-which(special.chr)[2]
-        special.chr<-special.chr-1
-        wd.decomp<-unlist(wd.decomp)
-        new.wd<-wd.decomp[1:special.chr]
-        new.wd.<-str_flatten(new.wd, "/")
-        new.wd.<-paste0(new.wd., "/res.easieR")
+      wd.decomp<-str_split(wd, "/")
+      special.chr<-grepl("[^[:alnum:]]",unlist(wd.decomp) )
+      special.chr<-which(special.chr)[2]
+      special.chr<-special.chr-1
+      wd.decomp<-unlist(wd.decomp)
+      new.wd<-wd.decomp[1:special.chr]
+      new.wd.<-str_flatten(new.wd, "/")
+      new.wd.<-paste0(new.wd., "/res.easieR")
+      dir.create( new.wd., showWarnings = FALSE)
+      test<-try(setwd(new.wd.))
+      if(class(test)== "try-error"){
+        new.wd.<-str_flatten(new.wd, '\\')   
+        new.wd.<-paste0(new.wd., "\\res.easieR")
         dir.create( new.wd., showWarnings = FALSE)
-        test<-try(setwd(new.wd.))
-        if(class(test)== "try-error"){
-          new.wd.<-str_flatten(new.wd, '\\')   
-          new.wd.<-paste0(new.wd., "\\res.easieR")
-          dir.create( new.wd., showWarnings = FALSE)
-          setwd( new.wd.)
-            }
-          
-            
-       
-        msgBox(paste0("Des caracteres non autorises (e.g. des accents) ont ete utilises pour le chemin d'acces.\nLes resultats ont ete sauvegardes dans le repertoire suivant", getwd()))   
+        setwd( new.wd.)
       }
+      
+      
+      
+      msgBox(paste0("Des caracteres non autorises (e.g. des accents) ont ete utilises pour le chemin d'acces.\nLes resultats ont ete sauvegardes dans le repertoire suivant", getwd()))   
+    }
       
 
     outputb<-c("---","title: 'Resultats de vos analyses'",
