@@ -10,8 +10,9 @@ ez.html <-
         wd.decomp<-str_split(wd, "/")
         special.chr<-grepl("[^[:alnum:]]",unlist(wd.decomp) )
         special.chr<-which(special.chr)[2]
+        special.chr<-special.chr-1
         wd.decomp<-unlist(wd.decomp)
-        new.wd<-wd.decomp[1:(special.chr-1)]
+        new.wd<-wd.decomp[1:special.chr]
         new.wd.<-str_flatten(new.wd, "/")
         new.wd.<-paste0(new.wd., "/res.easieR")
         dir.create( new.wd., showWarnings = FALSE)
