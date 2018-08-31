@@ -4,8 +4,26 @@ ez.html <-
     packages<-c("rmarkdown", "knitr","ggplot2","stringr" )
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
       require(packages)}
+    wd<-getwd()
     
-    
+    if(grepl("[^[:alnum:]]", wd)) {
+        wd.decomp<-str_split(wd, "/")
+        special.chr<-grepl("[^[:alnum:]]",unlist(wd.decomp) )
+        special.chr<-which(special.chr)[2]
+        wd.decomp<-unlist(wd.decomp)
+        new.wd<-wd.decomp[1:(special.chr-1)]
+        new.wd.<-str_flatten(new.wd, "/")
+        test<-try(setwd(new.wd.))
+        if(class(test)== "try-error"){
+          new.wd.<-str_flatten(new.wd, '\\')   
+          setwd( new.wd.)
+           dir.create(file.path(getwd(), res.easieR), showWarnings = FALSE)
+            
+         }
+        msgBox(paste0("Des caracteres non autorises (e.g. des accents) ont ete utilises pour le chemin d'acces.\nLes resultats ont ete sauvegardes dans le repertoire suivant", getwd()))   
+      }
+      
+
     outputb<-c("---","title: 'Resultats de vos analyses'",
                "author: 'Genere automatiquement par easieR'",
                paste("date:","'", date(),"'"),
