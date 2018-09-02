@@ -4,7 +4,8 @@ ez.html <-
     packages<-c("rmarkdown", "knitr","ggplot2","stringr" )
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
       require(packages)}
-    
+    dir.create(path= paste0(tempdir(),"\\easieR") , showWarnings = FALSE)
+
     outputb<-c("---","title: 'Resultats de vos analyses'",
                "author: 'Genere automatiquement par easieR'",
                paste("date:","'", date(),"'"),
