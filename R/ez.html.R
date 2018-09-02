@@ -4,32 +4,7 @@ ez.html <-
     packages<-c("rmarkdown", "knitr","ggplot2","stringr" )
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
       require(packages)}
-    wd<-getwd()
     
-    if(grepl("[^[:alnum:]]", wd)) {
-      wd.decomp<-str_split(wd, "/")
-      special.chr<-grepl("[^[:alnum:]]",unlist(wd.decomp) )
-      special.chr<-which(special.chr)[2]
-      special.chr<-special.chr-1
-      wd.decomp<-unlist(wd.decomp)
-      new.wd<-wd.decomp[1:special.chr]
-      new.wd.<-str_flatten(new.wd, "/")
-      new.wd.<-paste0(new.wd., "/res.easieR")
-      dir.create( new.wd., showWarnings = FALSE)
-      test<-try(setwd(new.wd.))
-      if(class(test)== "try-error"){
-        new.wd.<-str_flatten(new.wd, '\\')   
-        new.wd.<-paste0(new.wd., "\\res.easieR")
-        dir.create( new.wd., showWarnings = FALSE)
-        setwd( new.wd.)
-      }
-      
-      
-      
-      msgBox(paste0("Des caracteres non autorises (e.g. des accents) ont ete utilises pour le chemin d'acces.\nLes resultats ont ete sauvegardes dans le repertoire suivant", getwd()))   
-    }
-      
-
     outputb<-c("---","title: 'Resultats de vos analyses'",
                "author: 'Genere automatiquement par easieR'",
                paste("date:","'", date(),"'"),
@@ -95,12 +70,12 @@ ez.html <-
           
           if(any(class(Resultats[[i]])=="ggplot")) {
             essai<-Resultats[[i]]
-            dire<-dir()
+            dire<-dir(paste0(tempdir(), "\\easieR\\"))
             if(any(str_detect(dire, "ezplot"))) {
               ezplot<-str_detect(dire, "ezplot")
               n<-length(which(ezplot==TRUE))
-              nom<-paste0("ezplot", n+1, ".png")
-            }else{nom<-"ezplot1.png"}
+              nom<-paste0(tempdir(), "\\easieR\\ezplot", n+1, ".png")
+            }else{nom<-paste0(tempdir(), "\\easieR\\ezplot1.png")}
             ggsave(filename=nom, plot=essai)
             
             essai<-paste0("<img src='", nom, "'alt='Drawing' style='width: 700px;'/>")
@@ -140,11 +115,25 @@ ez.html <-
     }
     output2<-to.html(Resultats=ez.results)
     listes<-c(output2$listes)
-    dput(listes,'ez.results.txt' )
+    
+    wd<-getwd() 
+    if(grepl("[^[:alnum:]]", wd)) {
+  
+    }
+    
+    
+    file.nametxt<-paste0(tempdir(), "\\easieR\\ez.results.txt")
+    dput(listes, file.nametxt )
+    
+    
+  #  dput(listes,'ez.results.txt' )
     output<-c(outputb, output2$output)
-    writeLines(output, "Rapport.easieR.Rmd")
-    render("Rapport.easieR.Rmd" )
-    browseURL(file.path("file:/", getwd(), "Rapport.easieR.html"))
+    file.nameRmd<-paste0(tempdir(), "\\easieR\\Rapport.easieR.Rmd")
+    writeLines(output, file.nameRmd)
+    #writeLines(output, file.nameRmd)
+    render(file.nameRmd)
+#    render("Rapport.easieR.Rmd" )
+    browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
     
     
     dire<-dir()
