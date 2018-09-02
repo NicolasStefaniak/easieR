@@ -516,10 +516,13 @@ test.t <-
             WRS::ydbt(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], tr=0.2, nboot=n.boot)->moy.tr.bt
             moy.tr->Resultats$Robustes$"Comparaison basee sur les moyennes tronquees"
             round(unlist(moy.tr.bt),4)->Resultats$Robustes$"bootstrap studentise sur les moyennes tronquees"
-            if(length(data[,1])>20) {WRS::bootdpci(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], 
+            if(length(data[,1])>20) {
+              try({WRS::bootdpci(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], 
                                                    nboot=n.boot, BA=T)$output[,2:6]->Mest
-              names(Mest)<-c("statistique", "valeur.p", "p.crit", "CI inf", "CI sup")
-              Mest->Resultats$Robustes$"Bootstrap de type BCa sur le M-estimator"}}} else Resultats$Robustes<-"Les statistiques robustes n'ont pas pu etre realisees"
+                names(Mest)<-c("statistique", "valeur.p", "p.crit", "CI inf", "CI sup")
+              Mest->Resultats$Robustes$"Bootstrap de type BCa sur le M-estimator"}
+                , silent=T)
+              }}} else Resultats$Robustes<-"Les statistiques robustes n'ont pas pu etre realisees"
       }
       
       
