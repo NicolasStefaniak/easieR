@@ -11,11 +11,11 @@ analyse <-
     if(choix=="t de Student") test.t()->Resultats
     if(choix=="analyse de variance et covariance") {
       Filter( function(x) 'aovplus' %in% class( get(x) ), ls(envir=.GlobalEnv))->nom1
-      if(length(nom1)==0) AN.C.OVA()->Resultats else {
+      if(length(nom1)==0) ez.anova()->Resultats else {
         dlgList(c("Analyse principale", 
                   "Resultats complementaires (e.g. contrastes d'interaction et moyennes ajustees)"), 
                 preselect=NULL, multiple = FALSE, title="Quelle analyse voulez-vous realiser?")$res->choix
-        if(choix== "Analyse principale") AN.C.OVA()->Resultats else aov.plus()->Resultats
+        if(choix== "Analyse principale") ez.anova()->Resultats else aov.plus()->Resultats
         
       }
       
