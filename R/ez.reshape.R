@@ -189,8 +189,8 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   
   
   if(!is.null(setdiff(names(data),unlist(varying)))) idvar<-setdiff(names(data),unlist(varying)) 
-    paste("p", 1:length(data[,1]))->data$IDeasy
-    factor(data$IDeasy)->data$IDeasy
+    data$IDeasy<-paste0("p", 1:nrow(data))
+    data$IDeasy<-factor(data$IDeasy)
     idvar<-c(idvar,"IDeasy")
   
   if(n.var==1) times=unlist(varying) else {
