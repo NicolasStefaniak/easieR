@@ -424,6 +424,7 @@ ez.cfa <-
       
       return(Resultats)  
     }
+    
     cfa.out<-function(cfa.options){
       .e <- environment()
       list()->Resultats
@@ -465,8 +466,8 @@ ez.cfa <-
       
       
       fit<-try( lavaan::cfa(modele, data = data, ordered=ord,estimator=estimator, test=test,
-                            bootstrap=n.boot,meanstructure="default", check="start",zero.cell.warn=F, 
-                            missing=missing, group=group, ifelse(!is.null(group), group.equal=group.equal,group.equal="mean"),
+                            bootstrap=n.boot,meanstructure="default",zero.cell.warn=F, 
+                            missing=missing, group=group, #ifelse(!is.null(group), group.equal=group.equal,group.equal="means"),
                             group.w.free= group.w.free,fixed.x=fixed.x,information=information,se=se,std.ov=as.logical(std.ov),
                             orthogonal=as.logical(orthogonal),likelihood=likelihood, link=link, int.ov.free=as.logical(int.ov.free),
                             int.lv.free=as.logical(int.lv.free),std.lv=as.logical(std.lv),zero.add=zero.add, zero.keep.margins=zero.keep.margins), silent=T)
@@ -495,7 +496,6 @@ ez.cfa <-
       
       
     } 
-    
     
     packages<-c("svDialogs", "psych","lavaan","semPlot")
     try(lapply(packages, library, character.only=T), silent=T)->test2
@@ -548,4 +548,4 @@ ez.cfa <-
     Resultats$ref<-ref1(packages)
     ez.html(Resultats)
     return(Resultats)
-    }
+  }
