@@ -476,7 +476,7 @@ ez.cfa <-
       
       if(any(output== "default") | any(output== "Sorties par defaut"))  {
         print(summary(fit, fit.measures = TRUE, standardized=T))
-        Resultats<-"Pour afficher les résultats, veuillez utiliser summary(modele.cfa)"
+        Resultats<-"Pour afficher les resultats, veuillez utiliser summary(modele.cfa)"
         summary(fit)->>fit
         if(length(output)==1) fit->>modele.cfa
         }
