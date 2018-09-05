@@ -59,7 +59,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     aov.plus.in->aov.plus.list$"Donnees completes"}
   
   if(any(outlier %in% c("id", "removed" , "Identification of outliers", "Dataset with outliers removed",
-                      "Identification des valeurs influentes", "Donnees sans valeur influente"))) { 
+                        "Identification des valeurs influentes", "Donnees sans valeur influente"))) { 
     if(is.null(data$residu)) {
       Resultats[[.ez.anova.msg("title", 55)]]<-.ez.anova.msg("msg", 34)
       return(Resultats)}
@@ -139,14 +139,14 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
            "Veuillez choisir les variable-s a groupes independants",
            "Vous n avez pas choisi de variable. Voulez-vous continuer  (ok) ou abandonner (annuler) cette analyse ?",
            "Veuillez choisir la variable dependante.", 
-           "Certains participants ont des valeurs manquantes sur les facteurs en mesures repetees. Ils vont être supprimes des analyses",
+           "Certains participants ont des valeurs manquantes sur les facteurs en mesures repetees. Ils vont etre supprimes des analyses",
            "Veuillez choisir la ou les covariables",
            "Il n'y a pas assez d'observations pour realiser l'analyse. Veuillez verifier vos donnees \net vous assurer qu'il y a au moins trois observations par modalite de chaque facteur",
            "le modele parametrique renvoie l'anova classique,le non parametrique calcule le test de Kruskal Wallis \nsi c'est un modele a groupes independants, ou une anova de Friedman pour un modele en Mesures repetees.\nLe modele bayesien est l'equivalent du modele teste dans l'anova en adoptant une approche bayesienne,\nles statistiques robustes sont des anovas sur des medianes ou les moyennes tronquees avec ou sans bootstrap.",
            "Les donnees completes representent l'analyse realisee sur l'ensemble des observations. L'analyse sans les valeurs influentes
            est une analyse pour laquelle les valeurs influentes ont ete supprimees.\nL'identification des valeurs influentes est realisee sur la base du test de Grubbs",
            "Vous ne pouvez pas avoir a la fois des arguments dans within et RML",
-           "la taille d'effet la plus frequente est le êta carre partiel - pes.\nLa taille d'effet la plus precise est le êta carre generalise - ges",
+           "la taille d'effet la plus frequente est le eta carre partiel - pes.\nLa taille d'effet la plus precise est le eta carre generalise - ges",
            "Il existe plusieurs maniere de calculer la somme des carres. Le choix par defaut des logiciels commerciaux est une somme des carres\nde type 3, mettant la priorite sur les interactions plutot que sur les effets principaux.",
            "Voulez-vous sauvegarder les resultats de l'analyse ?",
            "La variable dependante a moins de trois valeurs differentes. Verifiez vos donnees ou l'analyse que vous tentez de realiser n'est pas pertinente.",
@@ -357,7 +357,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       
     }else{
       if(type.cont %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun"))  { Resultats$contrastes<-type.cont
-                                                                                          contrastes<-type.cont}
+      contrastes<-type.cont}
       
     }
   }else{
@@ -377,8 +377,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     
   }
   if((dial & contrastes == "pairwise") || (!p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", 
-                                                           "fdr","tukey","scheffe",
-                                                           "sidak","dunnettx","mvt" ,"none" ))){
+                                                            "fdr","tukey","scheffe",
+                                                            "sidak","dunnettx","mvt" ,"none" ))){
     list()->p.adjust
     writeLines(.ez.anova.msg("msg", 26) )
     dlgList(c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
@@ -838,64 +838,64 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       
       Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",42)]]<-table.cont
       
-    
-    
-    
-    if(!is.null(within) & is.null(between) & is.null(cov)) {
-      if(length(within)==1) nlevels(data[,unlist(within)])->N.modalites2 else {
-        sapply(data[,within],nlevels)->N.modalites2 
-      }
       
-      data[do.call("order", data[unlist(within)]), ]->data
-      list()->combinaison
-      for(i in 1:length(contrasts)){ combn(1:length(contrasts), i)->combinaison[[i]]        }
-      Table.contrasts<-c()
-      for(i in 1:length(combinaison) ){
-        
-        for(j in 1:ncol(combinaison[[i]])){
-          M1<-matrix(rep(1, length(data[,DV])), ncol=1)
-          for(k in 1:nrow(combinaison[[i]])){
-            M2<-c()
-            for(l in 1:ncol(contrasts[[combinaison[[i]][k,j]]])){
-              rep(contrasts[[combinaison[[i]][k,j]]][,l], each=length(data[,DV])/prod(N.modalites2[1:combinaison[[i]][k,j]]), len =length(data[,DV]))->coef1
-              cbind(M2,coef1)->M2
-              
-            }
-            M4<-c()
-            for(m in 1:ncol(M1))  {
-              for(n in 1 : ncol(M2)){
-                M1[,m]*M2[,n]->M3
-                cbind(M4, M3)->M4
-              }
-              
-            }
-            M4->M1
-          }
-          for(o in 1:ncol(M1)){
-            data[,DV]*M1[,o]->coef1
-            t.test(rowSums( matrix(coef1, ncol=prod(N.modalites2))), mu = 0, paired = FALSE, conf.level = 0.95)->C1
-            rbind(Table.contrasts,c(C1$estimate, C1$parameter, C1$statistic, C1$p.value))->Table.contrasts
-            
-          }
+      
+      
+      if(!is.null(within) & is.null(between) & is.null(cov)) {
+        if(length(within)==1) nlevels(data[,unlist(within)])->N.modalites2 else {
+          sapply(data[,within],nlevels)->N.modalites2 
         }
         
-      }
+        data[do.call("order", data[unlist(within)]), ]->data
+        list()->combinaison
+        for(i in 1:length(contrasts)){ combn(1:length(contrasts), i)->combinaison[[i]]        }
+        Table.contrasts<-c()
+        for(i in 1:length(combinaison) ){
+          
+          for(j in 1:ncol(combinaison[[i]])){
+            M1<-matrix(rep(1, length(data[,DV])), ncol=1)
+            for(k in 1:nrow(combinaison[[i]])){
+              M2<-c()
+              for(l in 1:ncol(contrasts[[combinaison[[i]][k,j]]])){
+                rep(contrasts[[combinaison[[i]][k,j]]][,l], each=length(data[,DV])/prod(N.modalites2[1:combinaison[[i]][k,j]]), len =length(data[,DV]))->coef1
+                cbind(M2,coef1)->M2
+                
+              }
+              M4<-c()
+              for(m in 1:ncol(M1))  {
+                for(n in 1 : ncol(M2)){
+                  M1[,m]*M2[,n]->M3
+                  cbind(M4, M3)->M4
+                }
+                
+              }
+              M4->M1
+            }
+            for(o in 1:ncol(M1)){
+              data[,DV]*M1[,o]->coef1
+              t.test(rowSums( matrix(coef1, ncol=prod(N.modalites2))), mu = 0, paired = FALSE, conf.level = 0.95)->C1
+              rbind(Table.contrasts,c(C1$estimate, C1$parameter, C1$statistic, C1$p.value))->Table.contrasts
+              
+            }
+          }
+          
+        }
+        
+        round(Table.contrasts,4)->Table.contrasts
+        data.frame(Table.contrasts)->Table.contrasts  
+        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
+          names(Table.contrasts)<-c("estimateur", "ddl","t", "p")}else names(Table.contrasts)<-c("estimate", "df","t", "p.value")
+        
+        
+        dimnames(Table.contrasts)[[1]]<-table.cont[,1]
+        Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$ddl)->Table.contrasts$R.2
+        round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen
+        Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",43)]]<-Table.contrasts
+        
+        
+      } 
       
-      round(Table.contrasts,4)->Table.contrasts
-      data.frame(Table.contrasts)->Table.contrasts  
-      if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-        names(Table.contrasts)<-c("estimateur", "ddl","t", "p")}else names(Table.contrasts)<-c("estimate", "df","t", "p.value")
-      
-      
-      dimnames(Table.contrasts)[[1]]<-table.cont[,1]
-      Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$ddl)->Table.contrasts$R.2
-      round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen
-      Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",43)]]<-Table.contrasts
-      
-      
-    } 
-    
-  }
+    }
   }
   ##### Bayes 
   if(any(param %in% c("bayes","Facteurs bayesiens", "Bayes Factors")) )  {
