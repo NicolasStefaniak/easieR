@@ -769,7 +769,7 @@ ez.anova2<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=N
     em.out<-emmeans(aov.out, withinbetween)
     aov.plus.in$em.out<-em.out
     try(assign("aov.plus.in",aov.plus.in,envir=.e),silent=T)->assign0
-    if(class(assign0=="try-error")){
+    if(class(assign0)=="try-error"){
       try(assign("aov.plus.in",aov.plus.in,envir=easieR),silent=T)
     }
     
