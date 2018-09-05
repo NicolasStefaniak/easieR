@@ -474,7 +474,7 @@ ez.cfa <-
       if(class(fit)=="try-error") {msgBox("Nous n'avons pas pu terminer correctement l'analyse. Veuillez tenter de respecifier les parametres")
         return(ez.cfa())}
       
-      if(any(output== "default") | any(output== "Sorties par defaut"))  {summary(fit, fit.measures = TRUE, standardized=T)->Resultats$"Resultats de l'analyse factorielle confirmatoire"
+      if(any(output== "default") | any(output== "Sorties par defaut"))  {print(summary(fit, fit.measures = TRUE, standardized=T))->Resultats$"Resultats de l'analyse factorielle confirmatoire"
         if(length(output)==1) fit->>modele.cfa}
       if(any(output== "parEst") | any(output=="Parametres estimes")) parameterEstimates(fit)->Resultats$"Parametres estimes non standardises"
       if(any(output== "parSt") | any(output=="Parametres standardises")) standardizedSolution(fit)->Resultats$"Parametres estimes standardises"
@@ -484,7 +484,7 @@ ez.cfa <-
       if(any(output== "vcov") | any(output=="Matrice de covariance estimee")) vcov(fit)->Resultat$"Matrice de covariance estimee"
       if(any(output== "AIC") ) AIC(fit)->Resultats$AIC
       if(any(output== "BIC") ) BIC(fit)->Resultats$BIC
-      if(any(output== "Mesures d'ajustement") | any(output=="fitM")) fitMeasures(fit)->Resultat$"Mesure d'ajustement"
+      if(any(output== "Mesures d'adequation") | any(output=="fitM")) fitMeasures(fit)->Resultats$"Mesure d'ajustement"
       if(any(output== "Inspecter les valeurs de depart") | any(output=="start"))inspect(fit, what=start)->Resultats$"Valeurs de depart"
       if(any(output== "Inspecter les matrices du modele") | any(output=="modmat")) inspect(fit)->Resultats$"Matrices du modeles"
       if(any(output== "Inspecter la representation du modele") | any(output=="modrep"))inspect(fit, what=list)->Resultats$"Representation du modele"
@@ -512,9 +512,8 @@ ez.cfa <-
     AFC<-cfa.out(cfa.options)
     if(!is.null(AFC)) Resultats$AFC<-AFC
     
-    
-    
-    def.values<-list(mimic="default", fixed.x="default", missing="default",information="default", zero.keep.margins="default",zero.add=c(0.5,0),
+   try({
+      def.values<-list(mimic="default", fixed.x="default", missing="default",information="default", zero.keep.margins="default",zero.add=c(0.5,0),
                      estimator="ml",group=NULL, test="standard",se="standard",std.ov=T, orthogonal=F, likelihood="default",
                      link="probit",int.ov.free=FALSE, int.lv.free=FALSE,fixed.x="default", std.lv=FALSE, n.boot=1000, group.w.free=F,
                      group.equal=c("loadings", "intercepts", "means", "thresholds", "regressions", "residuals", "residual.covariances", 
@@ -543,6 +542,9 @@ ez.cfa <-
     
     .add.history(data=cfa.options$data, command=Resultats$Call, nom=cfa.options$nom)
     .add.result(Resultats=Resultats, name =paste("AFC", Sys.time() ))  
+   }, silent=T) 
+    
+   
     
     if(sauvegarde) save(Resultats=Resultats, choix="AFC", env=.e)
     Resultats$ref<-ref1(packages)
