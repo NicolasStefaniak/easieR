@@ -475,7 +475,7 @@ ez.cfa <-
         return(ez.cfa())}
       
       if(any(output== "default") | any(output== "Sorties par defaut"))  {
-        lavaan::print(summary(fit, fit.measures = TRUE, standardized=T))
+        print(summary(fit, fit.measures = TRUE, standardized=T))
         Resultats<-"Default ouput"
         if(length(output)==1) fit->>modele.cfa
         }
@@ -514,6 +514,7 @@ ez.cfa <-
     if(is.null(cfa.options)) return(analyse())
     AFC<-cfa.out(cfa.options)
     if(!is.null(AFC)) Resultats$AFC<-AFC
+    if(AFC[[1]]=="Default ouput") print(summary(modele.cfa))
     
    try({
       def.values<-list(mimic="default", fixed.x="default", missing="default",information="default", zero.keep.margins="default",zero.add=c(0.5,0),
