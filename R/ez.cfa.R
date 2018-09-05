@@ -548,6 +548,6 @@ ez.cfa <-
     
     if(sauvegarde) save(Resultats=Resultats, choix="AFC", env=.e)
     Resultats$ref<-ref1(packages)
-    ez.html(Resultats)
+    try(ez.html(Resultats), silent=T)
     return(Resultats)
   }
