@@ -73,7 +73,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         factor(nettoyees[,id])->nettoyees[,id]
         nett<-.ez.anova.out(data=nettoyees, DV=DV, between=between, within=within,id=id, cov=cov,  
                             ES=ES, SumS=SumS, contrasts=contrasts,p.adjust=p.adjust, rscaleFixed=rscaleFixed , rscaleRandom= rscaleRandom, n.boot=n.boot, param=param) 
-        aov.plus.in<-complet[[aov.plus.in]]
+        aov.plus.in<-nett[["aov.plus.in"]]
         nett[["data"]]<-NULL
         nett[["aov.plus.in"]]<-NULL
         Resultats[[.ez.anova.msg("title", 14)]]<-nett
