@@ -65,7 +65,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       return(Resultats)}
     valeurs.influentes(X="residu", critere="Grubbs",z=3.26, data=data)->influentes
     
-    if(any(param %in% c("Identification des outliers","id","Identification of outliers" ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
+    if(any(param %in% c("Identification des valeurs influentes","id","Identification of outliers" ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
     if(any(param %in% c( "Donnees sans valeur influente",  "Dataset with outliers removed","removed" ))){
       if(!is.null(influentes$"observations influentes"[,id])){
         setdiff(data[,id],influentes$"observations influentes"[,id])->diffs
