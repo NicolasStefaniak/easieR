@@ -475,7 +475,7 @@ ez.cfa <-
         return(ez.cfa())}
       
       if(any(output== "default") | any(output== "Sorties par defaut"))  {
-        print(summary(fit, fit.measures = TRUE, standardized=T))
+        lavaan::print(summary(fit, fit.measures = TRUE, standardized=T))
         Resultats<-"Default ouput"
         if(length(output)==1) fit->>modele.cfa
         }
