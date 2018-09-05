@@ -147,7 +147,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
            est une analyse pour laquelle les valeurs influentes ont ete supprimees.\nL'identification des valeurs influentes est realisee sur la base du test de Grubbs",
            "Vous ne pouvez pas avoir a la fois des arguments dans within et RML",
            "la taille d'effet la plus frequente est le êta carre partiel - pes.\nLa taille d'effet la plus precise est le êta carre generalise - ges",
-           "Il existe plusieurs maniere de calculer la somme des carres. Le choix par defaut des logiciels commerciaux est une somme des carres\nde type 3, mettant la priorite sur les interactions plutôt que sur les effets principaux.",
+           "Il existe plusieurs maniere de calculer la somme des carres. Le choix par defaut des logiciels commerciaux est une somme des carres\nde type 3, mettant la priorite sur les interactions plutot que sur les effets principaux.",
            "Voulez-vous sauvegarder les resultats de l'analyse ?",
            "La variable dependante a moins de trois valeurs differentes. Verifiez vos donnees ou l'analyse que vous tentez de realiser n'est pas pertinente.",
            "Les contrastes a priori correspondent aux contrastes qui permettent de tester des hypotheses a priori.\nLes contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction a la probabilite",
