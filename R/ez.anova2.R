@@ -1,4 +1,4 @@
-ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL, RML=NULL, 
+ez.anova2<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL, RML=NULL, 
                    RML.factor=NULL, param=c("param","bayes"),outlier=c("complete","id", "removed"), 
                    ES="ges", SumS="3", save=F , html=T, contrasts="none",p.adjust="none", n.boot=1000, rscaleFixed = 0.5, rscaleRandom = 1 ){
   # data = a data frame
