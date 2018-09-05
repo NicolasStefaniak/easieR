@@ -48,8 +48,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   
   complet<-.ez.anova.out(data=data, DV=DV, between=between, within=within,id=id, cov=cov,  
                          ES=ES, SumS=SumS, contrasts=contrasts,p.adjust=p.adjust, rscaleFixed=rscaleFixed , rscaleRandom= rscaleRandom, n.boot=n.boot, param=param) 
-  data<-complet[[data]]
-  aov.plus.in<-complet[[aov.plus.in]]
+  data<-complet[["data"]]
+  aov.plus.in<-complet[["aov.plus.in"]]
   complet[["data"]]<-NULL
   complet[["aov.plus.in"]]<-NULL
   
