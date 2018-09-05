@@ -356,7 +356,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       Resultats$contrastes<-contrastes     
       
     }else{
-      contrastes<-ifelse(type.cont %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun"))      Resultats$contrastes<-contrastes
+      if(type.cont %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun"))   Resultats$contrastes<-type.cont
       
     }
   }else{
