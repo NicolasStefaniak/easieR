@@ -130,7 +130,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
            "Chaque participant doit apparaître une et une seule fois pour chaque combinaison des modalites",
            "Pour un facteur en mesures repetees en format large, il faut au moins deux colonnes",
            "Si vos donnees sont en format large, les mesures doivent toutes etre numeriques ou des entiers (integer)",
-           "Veuillez choisir les variable-s à groupes independants",
+           "Veuillez choisir les variable-s a groupes independants",
            "Vous n avez pas choisi de variable. Voulez-vous continuer  (ok) ou abandonner (annuler) cette analyse ?",
            "Veuillez choisir la variable dependante.", 
            "Certains participants ont des valeurs manquantes sur les facteurs en mesures repetees. Ils vont être supprimes des analyses",
