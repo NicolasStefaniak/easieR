@@ -41,7 +41,7 @@ corr.complet <-
       data<-Y$data
       Y<-Y$X 
       if(choix=="Correlations partielle et semi partielle"){
-        msg6<-"Veuillez preciser la ou les variables a contrôler" 
+        msg6<-"Veuillez preciser la ou les variables a controler" 
         Z<-.var.type(X=Y, info=info, data=data, type="numeric", check.prod=F, message=msg6,  multiple=T, title="Variable-s a contrôler", out=c(X1,Y))
         if(is.null(Z)) {
           corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
