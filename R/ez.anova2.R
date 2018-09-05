@@ -1,4 +1,4 @@
-ez.anova2<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL, RML=NULL, 
+ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL, RML=NULL, 
                    RML.factor=NULL, param=c("param","bayes"),outlier=c("complete","id", "removed"), 
                    ES="ges", SumS="3", save=F , html=T, contrasts="none",p.adjust="none", n.boot=1000, rscaleFixed = 0.5, rscaleRandom = 1 ){
   # data = a data frame
@@ -125,7 +125,7 @@ ez.anova2<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=N
   if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
     msg<-c("Veuillez preciser le(s) type(s) de variable(s) que vous souhaitez inclure dans l'analyse.\nVous pouvez en choisir plusieurs (e.g., pour anova mixte ou des ancova",
            "Il est indispensable d'avoir au minimum des variables a groupes independants ou en mesures repetees",
-           "Veuillez selectionner les variables OU les modalites de la (des) variables à mesure(s) repetee(s).",
+           "Veuillez selectionner les variables OU les modalites de la (des) variables a mesure(s) repetee(s).",
            "Quelle est la variable identifiant les participants ?",
            "Chaque participant doit apparaître une et une seule fois pour chaque combinaison des modalites",
            "Pour un facteur en mesures repetees en format large, il faut au moins deux colonnes",
@@ -136,15 +136,15 @@ ez.anova2<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=N
            "Certains participants ont des valeurs manquantes sur les facteurs en mesures repetees. Ils vont être supprimes des analyses",
            "Veuillez choisir la ou les covariables",
            "Il n'y a pas assez d'observations pour realiser l'analyse. Veuillez verifier vos donnees \net vous assurer qu'il y a au moins trois observations par modalite de chaque facteur",
-           "le modele parametrique renvoie l'anova classique,le non parametrique calcule le test de Kruskal Wallis \nsi c'est un modele à groupes independants, ou une anova de Friedman pour un modele en Mesures repetees.\nLe modele bayesien est l'equivalent du modele teste dans l'anova en adoptant une approche bayesienne,\nles statistiques robustes sont des anovas sur des medianes ou les moyennes tronquees avec ou sans bootstrap.",
+           "le modele parametrique renvoie l'anova classique,le non parametrique calcule le test de Kruskal Wallis \nsi c'est un modele a groupes independants, ou une anova de Friedman pour un modele en Mesures repetees.\nLe modele bayesien est l'equivalent du modele teste dans l'anova en adoptant une approche bayesienne,\nles statistiques robustes sont des anovas sur des medianes ou les moyennes tronquees avec ou sans bootstrap.",
            "Les donnees completes representent l'analyse realisee sur l'ensemble des observations. L'analyse sans les valeurs influentes
            est une analyse pour laquelle les valeurs influentes ont ete supprimees.\nL'identification des valeurs influentes est realisee sur la base du test de Grubbs",
-           "Vous ne pouvez pas avoir à la fois des arguments dans within et RML",
+           "Vous ne pouvez pas avoir a la fois des arguments dans within et RML",
            "la taille d'effet la plus frequente est le êta carre partiel - pes.\nLa taille d'effet la plus precise est le êta carre generalise - ges",
            "Il existe plusieurs maniere de calculer la somme des carres. Le choix par defaut des logiciels commerciaux est une somme des carres\nde type 3, mettant la priorite sur les interactions plutôt que sur les effets principaux.",
            "Voulez-vous sauvegarder les resultats de l'analyse ?",
            "La variable dependante a moins de trois valeurs differentes. Verifiez vos donnees ou l'analyse que vous tentez de realiser n'est pas pertinente.",
-           "Les contrastes a priori correspondent aux contrastes qui permettent de tester des hypotheses a priori.\nLes contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction à la probabilite",
+           "Les contrastes a priori correspondent aux contrastes qui permettent de tester des hypotheses a priori.\nLes contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction a la probabilite",
            "Vous pouvez choisir les contrastes predefinis ou les specifier manuellement. Dans ce dernier cas, veuillez choisir specifier les contrastes",
            "Les contrastes doivent respecter l orthogonalite. Voulez-vous continuer ?",
            "Les contrates doivent etre des matrices de coefficients placees dans une list dont le nom de chaque niveau correspond a un facteur",
@@ -155,12 +155,12 @@ ez.anova2<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=N
            "il y a moins de 3 observations pour un des groupes ou \nla variance d'au moins un groupe vaut 0. Les resultats risquent d'etre considerablement biaises" ,
            "Les facteurs bayesiens n'ont pas pu etre calcules.",
            "Desole, nous n'avons pas pu calcule l'anova sur les medianes, possiblement en raison d'un nombre important d'ex aequo.",
-           "Les probabilites et les IC sont estimes sur la base d'un bootsrap. L'IC est corrige pour comparaison multiple, contrairement à la probabilite reportee.",
+           "Les probabilites et les IC sont estimes sur la base d'un bootsrap. L'IC est corrige pour comparaison multiple, contrairement a la probabilite reportee.",
            "Desole, nous n'avons pas pu calcule l'anova robuste.", "L'analyse n'a pas pu aboutir"
     )
     
     
-    title<-c("Quel-s type-s de variables ?", "Mesures repetees","Identifiant participant","Variables à groupes independants",
+    title<-c("Quel-s type-s de variables ?", "Mesures repetees","Identifiant participant","Variables a groupes independants",
              "Variable dependante", "Covariable-s ?",
              "Modele parametrique", "Modele non parametrique","Facteurs bayesiens", "Statistiques robustes - peut prendre du temps",
              "Quelle(s) analyses voulez-vous  ?","Donnees completes","Identification des valeurs influentes", "Donnees sans valeur influente",
@@ -768,7 +768,10 @@ ez.anova2<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=N
     
     em.out<-emmeans(aov.out, withinbetween)
     aov.plus.in$em.out<-em.out
-    assign("aov.plus.in",aov.plus.in,envir=.e)
+    try(assign("aov.plus.in",aov.plus.in,envir=.e),silent=T)->assign0
+    if(class(assign0=="try-error")){
+      try(assign("aov.plus.in",aov.plus.in,envir=easieR),silent=T)
+    }
     
     if(!is.list(contrasts) && contrasts=="pairwise"){
       pair<-pairs(em.out, adjust=p.adjust)
