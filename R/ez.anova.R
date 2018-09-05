@@ -18,7 +18,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   # html = logical. Do you want easieR to output the results in nice html document ? 
   # contrast = list. The names in the list corresponds to the names of the factors and the values is a matrix of coefficients for the contrasts. "pairs" or "none" are also possible
   # p.adjust = adjust p values for multiples comparisons. see <code>p.adjust</code>
-  packages<-c("BayesFactor", "car","afex", "DescTools","emmeans","nortest", "outliers","PMCMRplus"
+  packages<-c("BayesFactor", "car","afex", "DescTools","emmeans","nortest", "outliers",
               "pgirmess",  "psych", "reshape2", "svDialogs",  "WRS", "WRS2" )
   test2<-try(lapply(packages, library, character.only=T), silent=T)
   if(class(test2)== "try-error") return(ez.install())
@@ -356,7 +356,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       Resultats$contrastes<-contrastes     
       
     }else{
-      contrastes<-ifelse(type.cont %in% c("Comparaison 2 a 2","Pairwise"), "pairwise", "none")
+      contrastes<-ifelse(type.cont %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun"))
       Resultats$contrastes<-contrastes
       
     }
