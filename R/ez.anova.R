@@ -72,7 +72,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         data[which(data[,id] %in% diffs), ]->nettoyees
         factor(nettoyees[,id])->nettoyees[,id]
         nett<-.ez.anova.out(data=nettoyees, DV=DV, between=between, within=within,id=id, cov=cov,  
-                             ES=ES, SumS=SumS, contrasts=contrasts,p.adjust=p.adjust, rscaleFixed=rscaleFixed , rscaleRandom= rscaleRandom, n.boot=n.boot, param=param) 
+                            ES=ES, SumS=SumS, contrasts=contrasts,p.adjust=p.adjust, rscaleFixed=rscaleFixed , rscaleRandom= rscaleRandom, n.boot=n.boot, param=param) 
         aov.plus.in<-complet[[aov.plus.in]]
         nett[["data"]]<-NULL
         nett[["aov.plus.in"]]<-NULL
@@ -699,7 +699,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(!is.null(cov)) factorize<-FALSE else factorize<-TRUE
     aov.out<-aov_4(as.formula(modele),data=data, es_aov=ES, type=SumS,factorize=factorize)
     data$residu<-c(aov.out$lm$residuals)
-
+    
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X="residu", Y=NULL)
     
     
@@ -771,7 +771,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     
     em.out<-emmeans(aov.out, withinbetween)
     aov.plus.in$em.out<-em.out
-
+    
     
     if(!is.list(contrasts) && contrasts=="pairwise"){
       pair<-pairs(em.out, adjust=p.adjust)
@@ -838,7 +838,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       
       Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",42)]]<-table.cont
       
-    }
+    
     
     
     if(!is.null(within) & is.null(between) & is.null(cov)) {
@@ -896,7 +896,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     } 
     
   }
-  
+  }
   ##### Bayes 
   if(any(param %in% c("bayes","Facteurs bayesiens", "Bayes Factors")) )  {
     modeleBF<-paste0(DV,"~")
