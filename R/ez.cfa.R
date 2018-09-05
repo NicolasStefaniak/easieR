@@ -474,9 +474,11 @@ ez.cfa <-
       if(class(fit)=="try-error") {msgBox("Nous n'avons pas pu terminer correctement l'analyse. Veuillez tenter de respecifier les parametres")
         return(ez.cfa())}
       
-      if(any(output== "default") | any(output== "Sorties par defaut"))  {cat(summary(fit, fit.measures = TRUE, standardized=T))
-                                                                         Resultats<-"Default ouput"
-        if(length(output)==1) fit->>modele.cfa}
+      if(any(output== "default") | any(output== "Sorties par defaut"))  {
+        print(summary(fit, fit.measures = TRUE, standardized=T))
+        Resultats<-"Default ouput"
+        if(length(output)==1) fit->>modele.cfa
+        }
       if(any(output== "parEst") | any(output=="Parametres estimes")) parameterEstimates(fit)->Resultats$"Parametres estimes non standardises"
       if(any(output== "parSt") | any(output=="Parametres standardises")) standardizedSolution(fit)->Resultats$"Parametres estimes standardises"
       if(any(output== "Matrice de covariance ajustee") | any(output=="fitted.cov")) fitted(fit)->Resultats$"Matrice de covariance ajustee"
