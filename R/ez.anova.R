@@ -58,15 +58,15 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     Resultats[[.ez.anova.msg("title", 12)]]<-complet
     aov.plus.in->aov.plus.list$"Donnees completes"}
   
-  if(any(param %in% c("id", "removed" , "Identification of outliers", "Dataset with outliers removed",
+  if(any(outlier %in% c("id", "removed" , "Identification of outliers", "Dataset with outliers removed",
                       "Identification des valeurs influentes", "Donnees sans valeur influente"))) { 
     if(is.null(data$residu)) {
       Resultats[[.ez.anova.msg("title", 55)]]<-.ez.anova.msg("msg", 34)
       return(Resultats)}
     valeurs.influentes(X="residu", critere="Grubbs",z=3.26, data=data)->influentes
     
-    if(any(param %in% c("Identification des valeurs influentes","id","Identification of outliers" ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
-    if(any(param %in% c( "Donnees sans valeur influente",  "Dataset with outliers removed","removed" ))){
+    if(any(outlier %in% c("Identification des valeurs influentes","id","Identification of outliers" ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
+    if(any(outlier %in% c( "Donnees sans valeur influente",  "Dataset with outliers removed","removed" ))){
       if(!is.null(influentes$"observations influentes"[,id])){
         setdiff(data[,id],influentes$"observations influentes"[,id])->diffs
         data[which(data[,id] %in% diffs), ]->nettoyees
