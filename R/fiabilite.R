@@ -113,7 +113,7 @@ fiabilite <-
                 return(Resultats)
               }
             }else ord<-X
-            Matrice<-tetrapoly(data=data[,X],X=X,info=T, ord=ord,group=NULL,estimator='two.step',output='cor', imp=imp)[[1]]
+            Matrice<-tetrapoly(data=data[,X],X=X,info=T, ord=ord,group=NULL,estimator='two.step',output='cor', imp=imp,html=F)[[1]]
             if(all(class(Matrice)!="matrix")) {
               sortie<-dlgMessage("Vous essayez de faire un alpha sur autre chose qu'un matrice. Voulez-vous sortir de cette analyse?", type="yesno")$res
               if(sortie=="yes") return(analyse()) else Matrice<-tetrapoly(data=data[,X],X=X,info=T, ord=ord,group=NULL,estimator='two.step',output='cor', imp="rm")[[1]]
