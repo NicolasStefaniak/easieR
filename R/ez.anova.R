@@ -375,9 +375,9 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     Resultats$contrastes<-contrastes
     
   }
-  if((dial & contrastes == "pairwise") || !p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", 
+  if((dial & contrastes == "pairwise") || (!p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", 
                                                            "fdr","tukey","scheffe",
-                                                           "sidak","dunnettx","mvt" ,"none" )){
+                                                           "sidak","dunnettx","mvt" ,"none" ))){
     list()->p.adjust
     writeLines(.ez.anova.msg("msg", 26) )
     dlgList(c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
