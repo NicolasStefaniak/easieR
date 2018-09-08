@@ -16,7 +16,7 @@ It is possible to split analyses by group (regressions, correlations) for some a
 The English version is under development. 
 
 # The most important
-Most functions works quite well, and many new functions will be developed soon but if there bugs, just let me know.
+Most functions works quite well, and many new functions will be developed soon but if there bugs, just let me know by posting in the issues part of this github repository.
 
 
 # Présentation générale d'easieR
@@ -61,15 +61,14 @@ Une version anglophone de easieR va être développée.
 3) des fonctionnalités de manipulation de données textuelles
 - fonctions graphiques
 - les analyses suivantes :
-1) analyse factorielle confirmatoire
-2) SEM
-3) analyse en cluster
-4) manova
-5) modèle linéaire généralisé
-6) analyse en série temporelle
-7) analyse de puissance
-8) théorie de réponse à l'item
-9) analyse du cas unique
+1) SEM
+2) analyse en cluster
+3) manova
+4) modèle linéaire généralisé
+5) analyse en série temporelle
+6) analyse de puissance
+7) théorie de réponse à l'item
+8) analyse du cas unique
 ...
 
 
@@ -79,4 +78,4 @@ A l'heure actuelle, easieR n'est pas totalement compatible avec une utilisation 
 
 # Pour finir
 toutes suggestions d'amélioration du code ou de développement de nouvelles fonctionnalités sont bienvenues.
-vous pouvez me contacter à l'adresse suivante : nicolas.stefaniak(at)univ-reims.fr
+vous pouvez les déposer en français ou en anglais dans l'onglet issues
