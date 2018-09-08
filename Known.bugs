@@ -1,0 +1,5 @@
+
+1) Contrasts for anova with two or more within variables fail. 
+2) the mediation function fails due to the plot
+3) the anova function does not remove outliers
+4) the import function does not assign the object to the Global environment as expected 
