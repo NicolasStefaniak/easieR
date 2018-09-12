@@ -254,12 +254,12 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   c(between, unlist(within))->betweenwithin
   if(contrasts!="none" & contrasts!="pairwise" & class(contrasts)!="list") {
     okCancelBox( .ez.anova.msg("msg", 27))
-    return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", P.adjust="none", dial=T))
+    return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T))
   }
   if(class(contrasts)=="list"){
     if(length(betweenwithin) != length(contrasts) | !any(betweenwithin %in% names(contrasts)) ){
       okCancelBox( .ez.anova.msg("msg", 25))
-      return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", P.adjust="none", dial=T))
+      return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T))
     }
     
     for(i in 1:length(betweenwithin)){
@@ -267,12 +267,12 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       j<-which(betweenwithin[[i]]==names(contrasts))
       if(!all(class(contrasts[[j]]) %in% c("matrix", "data.frame")) || !is.numeric(as.matrix(contrasts[[j]]))){
         okCancelBox( .ez.anova.msg("msg", 24))
-        return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", P.adjust="none", dial=T)) 
+        return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T)) 
       }
       
       if(nrow(contrasts[[j]])!=nlevels(data[, betweenwithin[i]])| any(is.na(contrasts[[j]]))){
         okCancelBox( .ez.anova.msg("msg", 28))
-        return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", P.adjust="none", dial=T)) 
+        return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T)) 
       }   
     }
   }
