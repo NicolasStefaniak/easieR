@@ -37,13 +37,13 @@ ez.mediation <-
         }
       }
       if (save.pdf == TRUE) 
-        pdf(file = paste(file, ".pdf", sep = ""), ...)
+        pdf(file = paste(file, ".pdf", sep = ""))
       if (save.eps == TRUE) 
-        jpeg(filename = paste(file, ".eps", sep = ""), ...)
+        jpeg(filename = paste(file, ".eps", sep = ""))
       if (save.jpg == TRUE) 
-        jpeg(filename = paste(file, ".jpg", sep = ""), ...)
+        jpeg(filename = paste(file, ".jpg", sep = ""))
       plot(c(-2, 2), seq(0, 1), ylab = "", xlab = "", xaxt = "n", 
-           yaxt = "n", bty = "n", type = "n", main = main, ...)
+           yaxt = "n", bty = "n", type = "n", main = main)
       segments(x0 = -0.5 * width, y0 = 0, x1 = -0.5 * width, y1 = 1)
       segments(x0 = 0.5 * width, y0 = 0, x1 = 0.5 * width, y1 = 1)
       segments(x0 = 0.5 * width, y0 = 0, x1 = -0.5 * width, y1 = 0)
