@@ -21,7 +21,7 @@ ez.reshape(data=NULL, varying = NULL, v.names = NULL, idvar = "id", IV.names=NUL
 \item{IV.levels}{ list with the levels of the independant variables created in the long format   }
 
 }
-}
+
 \details{
 This function is mainly based on the reshape function from base. 
 It allows to return a data.frame in a long format. 
