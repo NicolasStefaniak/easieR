@@ -773,7 +773,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     aov.plus.in$em.out<-em.out
     
     
-    if(!is.list(contrasts) && contrasts=="pairwise"){
+    if(!is.list(contrasts) && contrasts %in% c("pairwise",  "Comparaison 2 a 2" )){
       pair<-pairs(em.out, adjust=p.adjust)
       Resultats[[.ez.anova.msg("title",39)]]<-summary(pair)
     }
