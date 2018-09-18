@@ -369,6 +369,6 @@ corr.matrice <-
     
     if(sauvegarde) save(Resultats=Resultats, choix=paste("correlation de", method), env=.e)
     ref1(packages)->Resultats$"References"
-    if(html) ez.html(Resultats)
+    if(html) try(ez.html(Resultats), silent=T)
     return(Resultats)
     }
