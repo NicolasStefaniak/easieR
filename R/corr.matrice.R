@@ -281,7 +281,7 @@ corr.matrice <-
       r1[which(is.na(r1))]<-"-" 
       nice.mat<-list()
       nice.mat$"Matrice de correlations"<-(r1)
-      ez.html(nice.mat)
+      if(html) try(ez.html(nice.mat), silent =T)
       if(sauvegarde) {
         tps<-as.character(Sys.time())
         tps<-gsub(":",".",tps)
