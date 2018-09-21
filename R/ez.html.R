@@ -122,19 +122,31 @@ ez.html <-
   
     }
     
-    
+    if(Sys.info()[[1]]=="Windows"){
     file.nametxt<-paste0(tempdir(), "\\easieR\\ez.results.txt")
+      } else {
+      file.nametxt<-paste0(tempdir(), "/easieR/ez.results.txt")
+      }
     dput(listes, file.nametxt )
     
     
-  #  dput(listes,'ez.results.txt' )
+
     output<-c(outputb, output2$output)
+  if(Sys.info()[[1]]=="Windows"){
     file.nameRmd<-paste0(tempdir(), "\\easieR\\Rapport.easieR.Rmd")
+    } else {
+    file.nameRmd<-paste0(tempdir(), "/easieR/Rapport.easieR.Rmd")
+  }
     writeLines(output, file.nameRmd)
     #writeLines(output, file.nameRmd)
     render(file.nameRmd)
 #    render("Rapport.easieR.Rmd" )
+      if(Sys.info()[[1]]=="Windows"){
     browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
+        } else {
+         browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.html"))
+        }
+        
     
     
     dire<-dir()
