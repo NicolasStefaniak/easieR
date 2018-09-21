@@ -125,6 +125,7 @@ ez.html <-
     if(Sys.info()[[1]]=="Windows"){
     file.nametxt<-paste0(tempdir(), "\\easieR\\ez.results.txt")
       } else {
+      dir.create(paste0(tempdir(), "/easieR/")
       file.nametxt<-paste0(tempdir(), "/easieR/ez.results.txt")
       }
     dput(listes, file.nametxt )
