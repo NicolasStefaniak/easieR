@@ -67,12 +67,9 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     
     if(any(outlier %in% c("Identification des valeurs influentes","id","Identification of outliers" ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
     if(any(outlier %in% c( "Donnees sans valeur influente",  "Dataset with outliers removed","removed" ))){
-#      print(!is.null(influentes$"observations influentes"[,id]))
-#      print(influentes$"observations influentes"[,id])
       
       if(!is.null(influentes$"observations influentes"[,id])){
         setdiff(data[,as.character(id)],influentes$"observations influentes"[,as.character(id)])->diffs
-        print(diffs)
         data[which(data[,id] %in% diffs), ]->nettoyees
         factor(nettoyees[,id])->nettoyees[,id]
         nett<-.ez.anova.out(data=nettoyees, DV=DV, between=between, within=within,id=id, cov=cov,  
@@ -83,7 +80,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         Resultats[[.ez.anova.msg("title", 14)]]<-nett
         aov.plus.in->aov.plus.list$"Donnees sans valeur influente"
       }
-      if(all(outlier!="Donnees completes"))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
+    if(!all(outlier %in% c("complete", "Donnees completes","Complete dataset"))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
       
     }
     
