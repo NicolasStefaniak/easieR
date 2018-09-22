@@ -1,6 +1,6 @@
 
 1) Contrasts for anova with two or more within variables fail. (fixed 09/13/2018)
 2) the mediation function fails due to the plot (fixed 09/13/2018)
-3) the anova function does not remove outliers
+3) the anova function does not remove outliers (fixed 09/22/2018)
 4) the import function does not assign the object to the Global environment as expected 
 5) html output does not work on mac OS (fixed 09/21/2018)
