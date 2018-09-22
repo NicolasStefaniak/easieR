@@ -85,10 +85,12 @@ import <-
       col.char <-sapply(data1, is.character)
       if(any(col.char)) data1[col.char] <- lapply(data1[which(col.char)], factor)
     }
-    if(dial)   name <- dlgInput("Quel nom voulez-vous donner aux donnees ?", "data1")$res
+    if(dial)  { 
+      name <- dlgInput("Quel nom voulez-vous donner aux donnees ?", "data1")$res
     if(length(name)==0) name <- "data1"
     name <- strsplit(name, ":")
     name <- tail(name[[1]],n=1)
+    }
     if(grepl("[^[:alnum:]]", name)) {
       writeLines("Des caracteres non autorises ont ete utilises pour le nom. Ces caracteres ont ete remplaces par des points")
       gsub("[^[:alnum:]]", ".", name)->name
@@ -141,5 +143,3 @@ import <-
     return(Resultats)
     
   }
-
-
