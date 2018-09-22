@@ -80,6 +80,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         Resultats[[.ez.anova.msg("title", 14)]]<-nett
         aov.plus.in->aov.plus.list$"Donnees sans valeur influente"
       }
+      print(!all(outlier %in% c("complete", "Donnees completes","Complete dataset")))
     if(!all(outlier %in% c("complete", "Donnees completes","Complete dataset")))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
       
     }
