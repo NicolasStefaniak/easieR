@@ -191,8 +191,8 @@ regressions <-
           select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
                            "forward"="Forward", "bidirectional"="Both","backward"="Backward" )
           lm.r1<-lm(modele, data=data)
-          
-          if(select.m=="Forward") t0<-capture.output({  ols.out <- ols_step_forward_aic(lm.r1, details=T)}) 
+          if(select.m=="Forward") ols.out <- ols_step_forward_aic(lm.r1, details=T)
+         # if(select.m=="Forward") t0<-capture.output({  ols.out <- ols_step_forward_aic(lm.r1, details=T)}) 
           if(select.m=="Backward") t0<-capture.output({  ols.out <- ols_step_backward_aic(lm.r1, details=T)})
           if(select.m=="Both")     t0<-capture.output({  ols.out <- ols_step_both_aic(lm.r1, details=T)})
 
