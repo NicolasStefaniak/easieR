@@ -165,7 +165,8 @@ regressions <-
           select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
                            "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
           print(Resultats)
-         if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = 0.3, details=F)})
+                   if(select.m=="Forward") ols.out <- ols_step_forward_p(lm.r1,penter = 0.3, details=F)
+#         if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = 0.3, details=F)})
          if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=0.15, details=F)})
          if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=0.15, details=F)})
            print("ok")
