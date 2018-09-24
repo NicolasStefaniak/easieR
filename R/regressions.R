@@ -210,7 +210,7 @@ regressions.out<-function(data1=NULL, modele=NULL,  VC=F, select.m="none", metho
     if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
       BF.out<-try(regressionBF(modele, data=data1,progress=F, rscaleCont=rscale), silent=T)
       if(class(BF.out)!="try-error") {
-        plot(BF.out) 
+       Resultats$"Methodes de selection : graphique des facteurs bayesiens"<-plot(BF.out) 
        BF.out<-extractBF(BF.out)
        BF.out<-BF.out[sort(BF.out[,1], decreasing=T), ]
        BF.out<-BF.out[complete.cases(BF.out),1:2]
