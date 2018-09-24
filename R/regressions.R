@@ -210,11 +210,11 @@ regressions.out<-function(data1=NULL, modele=NULL,  VC=F, select.m="none", metho
     if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
       BF.out<-try(regressionBF(modele, data=data1,progress=F, rscaleCont=rscale), silent=T)
       if(class(BF.out)!="try-error") {
-       Resultats$"Methodes de selection : graphique des facteurs bayesiens"<-plot(BF.out) 
+       plot(BF.out) 
        BF.out<-extractBF(BF.out)
-       BF.out<-BF.out[sort(BF.out[,1], decreasing=T), ]
-       BF.out<-BF.out[complete.cases(BF.out),1:2]
-        Resultats$"Methodes de selection : facteurs bayesiens"<-head(BF.out)
+        BF.out<-head(BF.out[order(BF.out[,1], decreasing=T), ])
+        BF.out<-BF.out[,1:2]
+        Resultats$"Methodes de selection : facteurs bayesiens"<-BF.out
       } else Resultats$"Methodes de selection : facteurs bayesiens"<-"Les methodes de selection pour les facteurs bayesiens ne s'appliquent pas pour des modeles complexes."
     } 
   }
