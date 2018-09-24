@@ -148,7 +148,7 @@ regressions <-
         names(FIV)<-c("Test de multicolinearite", "Indice des valeurs propres")
         names(FIV$`Test de multicolinearite`)<-c("variables", "Tolerance", "FIV")
         Resultats$"Tests de multicolinearite"<-FIV$`Test de multicolinearite`
-        Resultats$"Tests de multicolinearite"$Information<-"FIV : facteur d'inflation de la variance"
+       # Resultats$"Tests de multicolinearite"$Information<-"FIV : facteur d'inflation de la variance"
         Resultats$"Graphique testant la linearite entre les predicteurs et la variable dependante"<-ols_plot_comp_plus_resid(lm.r1)
         Resultats$"Indice des valeurs propres"<-FIV$`Indice des valeurs propres`
         dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
