@@ -1,4 +1,4 @@
-regressions2 <-
+regressions <-
   function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=NULL, inf=T, CV=F, select.m="none", method="p", step=NULL, group=NULL, criteria=0.15 , scale=T, dial=T, info=T,
            sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353){
     
@@ -217,6 +217,9 @@ regressions.out<-function(data1=NULL, modele=NULL,  VC=F, select.m="none", metho
       BF.out<-try(regressionBF(modele, data=data1,progress=F, rscaleCont=rscale), silent=T)
       if(class(BF.out)!="try-error") {
         plot(BF.out) 
+        BF.out<- BF.out[sort(BF.out[,1], decreasing=T), ]
+        BF.out<-BF.out[complete.cases(BF.out),1:2]
+
         Resultats$"Methodes de selection : facteurs bayesiens"<-head(BF.out)
       } else Resultats$"Methodes de selection : facteurs bayesiens"<-"Les methodes de selection pour les facteurs bayesiens ne s'appliquent pas pour des modeles complexes."
     } 
