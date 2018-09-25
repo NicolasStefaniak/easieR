@@ -755,7 +755,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
    # aov.out3<-nice(aov.out, correction="none", intercept=T, es=ES,type=SumS)
     aov.out3<-aov.out[[1]]
     aov.out3<-data.frame(aov.out3)
-    aov.out3<-round.ps(aov.out3[,6])
+    aov.out3[,6]<-round.ps(aov.out3[,6])
     if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
       names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
