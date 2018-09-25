@@ -93,7 +93,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   # type : either "msg" or "title"
   # number : number of message 
   if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
-    msg<-c("Veuillez choisir l'ensemble des colonnes correspondant aux modalités des variables en mesures repetees",
+    msg<-c("Veuillez choisir l'ensemble des colonnes correspondant aux modalites des variables en mesures repetees",
            "Colonnes correspondant à la variable",
            "vous devez specifier le nombre de facteurs en mesure repetee",
            "Vous n avez pas precise le nombre de facteurs en mesure repetee, voulez-vous quitte ?",
