@@ -278,7 +278,8 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
 
 .ez.reshape.out<-function(data, varying = NULL, v.names = NULL, 
                           idvar = "id", times, IV.names=NULL,IV.levels=NULL,N.modalites2=NULL )    {
-  longdata<-reshape(data, direction="long",idvar= idvar, varying=varying, v.names=v.names, times = times) 
+    longdata<-reshape(data, direction="long",idvar= idvar, varying=varying, v.names=v.names, times = times,
+                      new.row.names =paste0("p", 1:(nrow(data)*length(varying[[1]])) ))
   rownames(longdata)<-c()
   if(is.null(N.modalites2)) { 
     for(i in 1:length(IV.levels)){
