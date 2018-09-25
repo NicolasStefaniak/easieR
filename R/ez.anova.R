@@ -750,9 +750,12 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     
     aov.out2<-summary(aov.out)
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
-      Resultats[[.ez.anova.msg("title",36)]]<-round(aov.out2$sphericity.test,5)
+      aov.out2b<-round(aov.out2$sphericity.test,5)
+      aov.out2b<-matrix(aov.out2b, ncol=2)
+      attributes(aov.out2b)<-attributes(aov.out2$sphericity.test)
+      Resultats[[.ez.anova.msg("title",36)]]<-aov.out2b
     }
-   # aov.out3<-nice(aov.out, correction="none", intercept=T, es=ES,type=SumS)
+
     aov.out3<-aov.out[[1]]
     aov.out3<-data.frame(aov.out3)
     aov.out3[,6]<-round.ps(aov.out3[,6])
