@@ -752,9 +752,12 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       Resultats[[.ez.anova.msg("title",36)]]<-round(aov.out2$sphericity.test,5)
     }
-    aov.out3<-nice(aov.out, correction="none", intercept=T, es=ES,type=SumS)
+   # aov.out3<-nice(aov.out, correction="none", intercept=T, es=ES,type=SumS)
+    aov.out3<-aov.out[[1]]
+    aov.out3<-data.frame(aov.out3)
+    aov.out3<-round.ps(aov.out3[,6])
     if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-      names(aov.out3)<-c("Effet","ddl.num, ddl.denom", "CME", "F", ES, "valeur.p" )
+      names(aov.out3)<-c("ddl.num, ddl.denom", "CME", "F", ES, "valeur.p" )
     }
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
@@ -1105,3 +1108,11 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   Resultats[["aov.plus.in"]]<-aov.plus.in
   return(Resultats)
 }  
+
+round.ps<-function (x) 
+{
+    substr(as.character(ifelse(x < 0.0001, " <.0001", ifelse(round(x, 
+        2) == 1, " >.99", formatC(x, digits = 4, format = "f")))), 
+        2, 7)
+}
+  
