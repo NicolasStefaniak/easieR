@@ -752,7 +752,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       aov.out2b<-round(aov.out2$sphericity.test,5)
       aov.out2b<-matrix(aov.out2b, ncol=2)
-      attributes(aov.out2b)<-attributes(aov.out2$sphericity.test)
+      dimnames(aov.out2b)<-dimnames(aov.out2$sphericity.test)
       Resultats[[.ez.anova.msg("title",36)]]<-aov.out2b
     }
 
