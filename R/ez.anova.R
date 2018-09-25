@@ -757,7 +757,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     aov.out3<-data.frame(aov.out3)
     aov.out3<-round.ps(aov.out3[,6])
     if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-      names(aov.out3)<-c("ddl.num, ddl.denom", "CME", "F", ES, "valeur.p" )
+      names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
