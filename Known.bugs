@@ -4,3 +4,4 @@
 3) the anova function does not remove outliers (fixed 09/22/2018)
 4) the import function does not assign the object to the Global environment as expected (fixed 09/22/2018)
 5) html output does not work on mac OS (fixed 09/21/2018)
+6) error occurred for stewise regressions (fixed 09/24/2018)
