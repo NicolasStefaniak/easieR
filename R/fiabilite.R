@@ -1,5 +1,8 @@
 fiabilite <-
-  function(X=NULL,Y=NULL, data=NULL, choix=NULL, ord=NULL,outlier="Donnees completes", keys=NULL, n.boot=NULL, sauvegarde=F, info=T, imp=NULL){options (warn=-1)
+  function(X=NULL,Y=NULL, data=NULL, choix=NULL, ord=NULL,outlier="Donnees completes", keys=NULL, n.boot=NULL, sauvegarde=F, imp=NULL){
+    # choix
+    
+    options (warn=-1)
     packages<-c("svDialogs", "psych", "lavaan")
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== "try-error") return(ez.install())
@@ -9,7 +12,7 @@ fiabilite <-
     if(is.null(data) | is.null(X))  {dial<-TRUE}else dial<-F
     if(dial || is.null(choix) || length(choix)!=1 ||choix %in% c("Alpha de Cronbach","alpha","ICC","CCK","Correlation intra-classe","Coefficient de concordance de Kendall")==FALSE){
       dial<-T  
-      if(info) writeLines("Veuillez choisir l'analyse que vous desirez realiser.")
+      writeLines("Veuillez choisir l'analyse que vous desirez realiser.")
       dlgList(c("Alpha de Cronbach", "Correlation intra-classe","Coefficient de concordance de Kendall"), preselect=NULL, multiple = FALSE, title="Quelle analyse voulez-vous realiser?")$res->choix
       if(length(choix)==0) return(analyse())
     }
@@ -38,15 +41,15 @@ fiabilite <-
     
     X<-.var.type(X=X, info=info, data=data, type=type, check.prod=F, message=msg3,  multiple=multiple, title=title, out=NULL)
     if(is.null(X)) {
-      Resultats<-fiabilite(data=NULL,X=NULL, sauvegarde=F, info=T, rev=NULL)
+      Resultats<-fiabilite()
       return(Resultats)}
     data<-X$data
     X<-X$X
     
     if(choix %in% c("Alpha de Cronbach","Correlation intra-classe","ICC","alpha") ){
       if(dial || length(outlier)>1 || outlier %in% c("Donnees completes", "Donnees sans valeur influente") ==FALSE){
-        if(info) writeLines("Desirez-vous l'analyse sur les donnees completes ou sur les donnees pour lesquelles les valeurs influentes ont ete enlevees ?")
-        if(info) writeLines("les valeurs influentes sont identifiees sur la base de la distance de Mahalanobis avec un seuil du chi a 0.001")
+     writeLines("Desirez-vous l'analyse sur les donnees completes ou sur les donnees pour lesquelles les valeurs influentes ont ete enlevees ?")
+     writeLines("les valeurs influentes sont identifiees sur la base de la distance de Mahalanobis avec un seuil du chi a 0.001")
         outlier<- dlgList(c("Donnees completes", "Donnees sans valeur influente"), preselect="Donnees completes",multiple = FALSE, title="Quels resultats voulez-vous obtenir ?")$res
         if(length(outlier)==0) { Resultats<-fiabilite()
         return(Resultats)}
@@ -61,26 +64,28 @@ fiabilite <-
       
       if(choix %in% c("Alpha de Cronbach","alpha"))  {
         if(dial){
-          if(info) writeLines("Veuillez preciser le type de variables. Des correlations tetra/polychoriques seront realisees sur les variables ordinales et Bravais-Pearson sur les variables continues")
+         writeLines("Veuillez preciser le type de variables. Des correlations tetra/polychoriques seront realisees sur les variables ordinales et Bravais-Pearson sur les variables continues")
           type<-dlgList(c("dichotomiques/ordinales", "continues", "mixte"), preselect=NULL, multiple = FALSE, title="Nature des variables ?")$res
           if(length(type)==0) {Resultats<-fiabilite()
           return(Resultats)
           }} else{if(is.null(ord)) type<-"continues" else type<-"dichotomiques/ordinales"}
         
         if(dial){
-          if(info) writeLines("Y a-t-il des items inverses ?") 
-          rev<-dlgList(c(TRUE,FALSE), multiple = TRUE, title="items inverses?")$res
-          if(length(rev)==0) {Resultats<-fiabilite()
-          return(Resultats)
-          }  } else rev<-FALSE
+          writeLines("Y a-t-il des items inverses ?") 
+          rev<-dlgList(c(TRUE,FALSE), multiple = FALSE, title="items inverses?")$res
+          if(length(rev)==0) {
+            Resultats<-fiabilite()
+            return(Resultats)
+          }  } 
           
           if(rev=="TRUE" || !is.null(keys) && any(keys %in% X==FALSE)){
-            if(info) writeLines("Veuillez preciser les items inverses")
+            writeLines("Veuillez preciser les items inverses")
             keys<-dlgList(X, multiple = TRUE, title="items inverses?")$res
-            if(length(keys)==0) {Resultats<-fiabilite()
+            if(length(keys)==0) {
+              Resultats<-fiabilite()
             return(Resultats)
-            }else keys<-NULL
-          }
+            }
+          }else keys<-NULL
           
           
           
@@ -141,7 +146,7 @@ fiabilite <-
       msg4<-"Veuilez choisir le second juge"
       Y<-.var.type(X=Y, info=info, data=data, type=type, check.prod=F, message=msg4,  multiple=F, title="Juge 2", out=X)
       if(is.null(Y)) {
-        Resultats<-fiabilite(data=NULL,X=NULL, sauvegarde=F, info=T, rev=NULL)
+        Resultats<-fiabilite()
         return(Resultats)}
       data<-Y$data
       Y<-Y$X
@@ -154,7 +159,7 @@ fiabilite <-
     
     if(dial) dlgList(c("TRUE","FALSE"), preselect="FALSE", multiple = FALSE, title="voulez-vous sauvegarder?")$res->sauvegarde
     if(length(sauvegarde)==0) {
-      Resultats<-fiabilite(data=NULL,X=NULL, sauvegarde=F, info=T, rev=NULL)
+      Resultats<-fiabilite()
       return(Resultats)
     }
     
@@ -172,6 +177,6 @@ fiabilite <-
     
     if(sauvegarde)save(Resultats=Resultats, choix=choix, env=.e)
     ref1(packages)->Resultats$"References"
-    ez.html(Resultats)
+   try(ez.html(Resultats), silent=T)
     return(Resultats)
   }
