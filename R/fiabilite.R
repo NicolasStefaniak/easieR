@@ -1,3 +1,6 @@
+.fiabilite.msg<-
+
+
 fiabilite <-
   function(X=NULL,Y=NULL, data=NULL, choix=NULL, ord=NULL,outlier="Donnees completes", keys=NULL, n.boot=NULL, sauvegarde=F, imp=NULL){
     # choix
@@ -19,7 +22,7 @@ fiabilite <-
     
     
     if(dial || class(data)!="data.frame"){
-      data<-choix.data(data=data, info=info, nom=T)
+      data<-choix.data(data=data, nom=T)
       if(length(data)==0) return(analyse())
       nom<-data[[1]]
       data<-data[[2]]  
@@ -39,7 +42,7 @@ fiabilite <-
       title<-"variables"
     }
     
-    X<-.var.type(X=X, info=info, data=data, type=type, check.prod=F, message=msg3,  multiple=multiple, title=title, out=NULL)
+    X<-.var.type(X=X, data=data, type=type, check.prod=F, message=msg3,  multiple=multiple, title=title, out=NULL)
     if(is.null(X)) {
       Resultats<-fiabilite()
       return(Resultats)}
@@ -111,7 +114,7 @@ fiabilite <-
           }else{
             n.boot<-0
             if(type=="mixte") {
-              if(info) writeLines("Veuillez preciser les variables ordinales ?") 
+              writeLines("Veuillez preciser les variables ordinales ?") 
               ord<-dlgList(X, multiple = TRUE, title="Variables ordinales ?")$res
               if(length(ord)==0){
                 Resultats<-fiabilite()
@@ -144,7 +147,7 @@ fiabilite <-
     
     if(choix=="Coefficient de concordance de Kendall"){  
       msg4<-"Veuilez choisir le second juge"
-      Y<-.var.type(X=Y, info=info, data=data, type=type, check.prod=F, message=msg4,  multiple=F, title="Juge 2", out=X)
+      Y<-.var.type(X=Y, data=data, type=type, check.prod=F, message=msg4,  multiple=F, title="Juge 2", out=X)
       if(is.null(Y)) {
         Resultats<-fiabilite()
         return(Resultats)}
@@ -169,7 +172,7 @@ fiabilite <-
     
     Resultats$Call<-paste0("fiabilite(X=c('", X,"'),Y=", ifelse(is.null(Y), "NULL", paste0("'",Y,"'")), ",data=", nom, ",choix='", choix,"',ord=", 
                            ifelse(!is.null(ord),paste0("c('", ord, "')"), "NULL" ), ",outlier='", outlier, "', keys=", ifelse(!is.null(keys), paste0("c('",keys,"')"), "NULL"),
-                           ",n.boot=", ifelse(!is.null(n.boot), n.boot, "NULL"), ", sauvegarde=", sauvegarde, ", info=T)")
+                           ",n.boot=", ifelse(!is.null(n.boot), n.boot, "NULL"), ", sauvegarde=", sauvegarde, ")")
     
     .add.history(data=data, command=Resultats$Call, nom=nom)
     .add.result(Resultats=Resultats, name =paste("cor.polychorique", Sys.time() ))  
