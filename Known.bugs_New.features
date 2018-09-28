@@ -6,3 +6,7 @@
 5) html output does not work on mac OS (fixed 09/21/2018)
 6) error occurred for stewise regressions (fixed 09/24/2018)
 7) several minor corrections on ez.anova (09/25/2018)
+8) automatic attribution of row.names in ez.reshape has been fixed (09/26/2018)
+9) reversed items are not reversed in alpha
+10) aov.plus() is not working at the moment
+11) confirmatory factor analysis failed on mac OS
