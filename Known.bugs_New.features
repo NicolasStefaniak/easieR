@@ -10,3 +10,4 @@
 9) reversed items are not reversed in alpha (fixed 09/28/2018)
 10) aov.plus() is not working at the moment
 11) confirmatory factor analysis failed on mac OS
+12) paired comparison for non parametric test in anova return an error
