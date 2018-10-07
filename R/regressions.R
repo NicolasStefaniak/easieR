@@ -1,3 +1,4 @@
+
 regressions <-
   function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=NULL, inf=T, CV=F, select.m="none", method="p", step=NULL, group=NULL, criteria=0.15 , scale=T, dial=T, info=T,
            sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353){
@@ -112,266 +113,266 @@ regressions <-
       
     }
     
-regressions.out<-function(data1=NULL, modele=NULL,  VC=F, select.m="none", method=NULL, step=NULL, group=NULL, criteria=NULL , scale=T,
-                          sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353){
-  
-  Resultats<-list()
-  variables<-terms(as.formula(modele))
-  variables<-as.character( attributes(variables)$variables)[-1]
-  pred<-attributes(terms(as.formula(modele)))$term.labels
-  Resultats$"Statistiques descriptives"<-.stat.desc.out(X=variables, groupes=NULL, data=data1, tr=.1, type=3, plot=T)
-  
-  if(scale==T || scale=="Centre") {Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
-  
-  which(sapply(data1[,pred[which(pred %in% variables)]],class)!="factor")->centre
-  if(length(centre)==1) data1[,names(centre)]-mean(data1[,names(centre)],na.rm=T)->data1[,names(centre)] else{
-    sapply(X=data1[,names(centre)], fun<-function(X){X-mean(X, na.rm=T)})->data1[,names(centre)]
-  }
-  }
-  
-  
-  mod<-list()
-  modele1<-as.formula(paste0(variables[1], "~", pred[1]))
-  lm( modele1,na.action=na.exclude, data=data1)->lm.r1
-  lm.r1->mod[[1]]
-  if(length(pred)>1) {
-    for(i in 2:length(pred)){update(lm.r1, as.formula(paste0(".~.+",pred[i])))->lm.r1
-      lm.r1->mod[[i]]}
-  }
-  resid(lm.r1)->data1$residu
-  Resultats$"Tests de normalite"<-.normalite(data=data1, X="residu", Y=NULL)
-  if(length(variables)>1)  {
-    cont<-variables[which(sapply(data1[,variables],class)!="factor")]
-    Resultats$"Normalite multivariee"<-.normalite(data=data1, X=cont, Y=NULL)
-    ols_plot_resid_fit(lm.r1)
-    FIV<-ols_coll_diag(lm.r1) # calcul du facteur d inflation de la variance 
-    names(FIV)<-c("Test de multicolinearite", "Indice des valeurs propres")
-    names(FIV$`Test de multicolinearite`)<-c("variables", "Tolerance", "FIV")
-    Resultats$"Tests de multicolinearite"<-FIV$`Test de multicolinearite`
-    # Resultats$"Tests de multicolinearite"$Information<-"FIV : facteur d'inflation de la variance"
-    Resultats$"Graphique testant la linearite entre les predicteurs et la variable dependante"<-ols_plot_comp_plus_resid(lm.r1)
-    Resultats$"Indice des valeurs propres"<-FIV$`Indice des valeurs propres`
-    dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
-    Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur p"=DWT.results[3]),4)->DWT.results
-    ols_test_breusch_pagan(lm.r1)->var.err
-    Resultats$"Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$bp,
-                                                                                                             ddl=1,valeur.p=var.err$p)
-    
-    
-    try(ceresPlots(lm.r1, main="Graphique de Ceres testant la linearite"), silent=T)
-  }
-  if(select.m!="none"){
-    data1<<-data1
-    if(method %in% c("F", "valeur du F", "p", "valeur de la probabilite")){
-      select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
-                       "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
-
-      if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = 0.3, details=F)})
-      if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=0.15, details=F)})
-      if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=0.15, details=F)})
-      predname<-if(!is.null(ols.out$predictors)) rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]]) )
-      methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[1]]) )
-      ols.frame<-data.frame(etape=1:ols.out$steps,
-                            predicteurs=ifelse(predname,ols.out$predictors,ols.out$removed) ,
-                            mallows_cp=ols.out$ mallows_cp,
-                            AIC=ols.out$aic,
-                            BIC=ols.out$sbc,
-                            RMSE=ols.out$rmse,
-                            r.carre=ols.out$rsquare,
-                            r.carre.adj=ols.out$adjr,
-                            Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", "variable supprimee"))
-      )
-      Resultats$"Methode de selection"<-ols.frame 
-    }
-    
-    if(method %in% c("AIC - Akaike Information criterion","AIC")){ 
-      select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
-                       "forward"="Forward", "bidirectional"="Both","backward"="Backward" )
-      lm.r1<-lm(modele, data=data1)
-      if(select.m=="Forward") t0<-capture.output({  ols.out <- ols_step_forward_aic(lm.r1, details=T)}) 
-      if(select.m=="Backward") t0<-capture.output({  ols.out <- ols_step_backward_aic(lm.r1, details=T)})
-      if(select.m=="Both")     t0<-capture.output({  ols.out <- ols_step_both_aic(lm.r1, details=T)})
+    regressions.out<-function(dtrgeasieR=NULL, modele=NULL,  VC=F, select.m="none", method=NULL, step=NULL, group=NULL, criteria=NULL , scale=T,
+                              sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353){
       
-      predname<-if(select.m!="Backward") rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]])+1 )
-      methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[4]]) )
-      ols.frame<-data.frame(etape=1:ols.out$steps,
-                            predicteurs=ifelse(predname,ols.out$predictors, c("Modele complet", ols.out$predictor)) ,
-                            Somme.Carre=ols.out$rss,
-                            AIC=ols.out$aic,
-                            SC.res=ols.out$ess,
-                            r.carre=ols.out$rsq,
-                            r.carre.adj=ols.out$arsq,
-                            Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", c(" ","variable supprimee")))
-      )
+      Resultats<-list()
+      variables<-terms(as.formula(modele))
+      variables<-as.character( attributes(variables)$variables)[-1]
+      pred<-attributes(terms(as.formula(modele)))$term.labels
+      Resultats$"Statistiques descriptives"<-.stat.desc.out(X=variables, groupes=NULL, data=dtrgeasieR, tr=.1, type=3, plot=T)
       
-      Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
-      rm(data1, envir = .GlobalEnv)
-    }
-    
-    if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
-      BF.out<-try(regressionBF(modele, data=data1,progress=F, rscaleCont=rscale), silent=T)
-      if(class(BF.out)!="try-error") {
-       plot(BF.out) 
-       BF.out<-extractBF(BF.out)
-        BF.out<-head(BF.out[order(BF.out[,1], decreasing=T), ])
-        BF.out<-BF.out[,1:2]
-        Resultats$"Methodes de selection : facteurs bayesiens"<-BF.out
-      } else Resultats$"Methodes de selection : facteurs bayesiens"<-"Les methodes de selection pour les facteurs bayesiens ne s'appliquent pas pour des modeles complexes."
-    } 
-  }
-  
-  if(!is.null(step)){
-    
-    as.formula(paste0(variables[1]," ~ ",step[[1]][1]))->modele.H
-    list()->modele.H1
-    list()->formule.H1
-    for(i in 1:length(step)){
+      if(scale==T || scale=="Centre") {Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
       
-      for(j in 1:length(step[[i]])){update(modele.H, as.formula(paste0(".~. + ",step[[i]][j])))->modele.H}
-      formule.H1[[i]]<-modele.H
-      lm(modele.H, data=data1, na.action=na.exclude )->lm.H
-      lm.H->modele.H1[[i]]}
-    
-    if(any(param=="param")|any(param=="Test parametrique")) {
-      hier<-paste0("anova(modele.H1[[1]],modele.H1[[2]]")
-      if(length(modele.H1)>2){
-        for(i in 3: length(modele.H1)){
-          hier<-paste0(hier, ",modele.H1[[", i, "]]")
+      which(sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)!="factor")->centre
+      if(length(centre)==1) dtrgeasieR[,names(centre)]-mean(dtrgeasieR[,names(centre)],na.rm=T)->dtrgeasieR[,names(centre)] else{
+        sapply(X=dtrgeasieR[,names(centre)], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,names(centre)]
+      }
+      }
+      
+      
+      mod<-list()
+      modele1<-as.formula(paste0(variables[1], "~", pred[1]))
+      lm( modele1,na.action=na.exclude, data=dtrgeasieR)->lm.r1
+      lm.r1->mod[[1]]
+      if(length(pred)>1) {
+        for(i in 2:length(pred)){update(lm.r1, as.formula(paste0(".~.+",pred[i])))->lm.r1
+          lm.r1->mod[[i]]}
+      }
+      resid(lm.r1)->dtrgeasieR$residu
+      Resultats$"Tests de normalite"<-.normalite(data=dtrgeasieR, X="residu", Y=NULL)
+      if(length(variables)>1)  {
+        cont<-variables[which(sapply(dtrgeasieR[,variables],class)!="factor")]
+        Resultats$"Normalite multivariee"<-.normalite(data=dtrgeasieR, X=cont, Y=NULL)
+        ols_plot_resid_fit(lm.r1)
+        FIV<-ols_coll_diag(lm.r1) # calcul du facteur d inflation de la variance 
+        names(FIV)<-c("Test de multicolinearite", "Indice des valeurs propres")
+        names(FIV$`Test de multicolinearite`)<-c("variables", "Tolerance", "FIV")
+        Resultats$"Tests de multicolinearite"<-FIV$`Test de multicolinearite`
+        # Resultats$"Tests de multicolinearite"$Information<-"FIV : facteur d'inflation de la variance"
+        Resultats$"Graphique testant la linearite entre les predicteurs et la variable dependante"<-ols_plot_comp_plus_resid(lm.r1)
+        Resultats$"Indice des valeurs propres"<-FIV$`Indice des valeurs propres`
+        dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
+        Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur p"=DWT.results[3]),4)->DWT.results
+        ols_test_breusch_pagan(lm.r1)->var.err
+        Resultats$"Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$bp,
+                                                                                                                 ddl=1,valeur.p=var.err$p)
+        
+        
+        try(ceresPlots(lm.r1, main="Graphique de Ceres testant la linearite"), silent=T)
+      }
+      if(select.m!="none"){
+        dtrgeasieR<<-dtrgeasieR
+        if(method %in% c("F", "valeur du F", "p", "valeur de la probabilite")){
+          select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
+                           "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
+          
+          if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = 0.3, details=F)})
+          if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=0.15, details=F)})
+          if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=0.15, details=F)})
+          predname<-if(!is.null(ols.out$predictors)) rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]]) )
+          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[1]]) )
+          ols.frame<-data.frame(etape=1:ols.out$steps,
+                                predicteurs=ifelse(predname,ols.out$predictors,ols.out$removed) ,
+                                mallows_cp=ols.out$ mallows_cp,
+                                AIC=ols.out$aic,
+                                BIC=ols.out$sbc,
+                                RMSE=ols.out$rmse,
+                                r.carre=ols.out$rsquare,
+                                r.carre.adj=ols.out$adjr,
+                                Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", "variable supprimee"))
+          )
+          Resultats$"Methode de selection"<-ols.frame 
         }
+        
+        if(method %in% c("AIC - Akaike Information criterion","AIC")){ 
+          select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
+                           "forward"="Forward", "bidirectional"="Both","backward"="Backward" )
+          lm.r1<-lm(modele, data=dtrgeasieR)
+          if(select.m=="Forward") t0<-capture.output({  ols.out <- ols_step_forward_aic(lm.r1, details=T)}) 
+          if(select.m=="Backward") t0<-capture.output({  ols.out <- ols_step_backward_aic(lm.r1, details=T)})
+          if(select.m=="Both")     t0<-capture.output({  ols.out <- ols_step_both_aic(lm.r1, details=T)})
+          
+          predname<-if(select.m!="Backward") rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]])+1 )
+          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[4]]) )
+          ols.frame<-data.frame(etape=1:ols.out$steps,
+                                predicteurs=ifelse(predname,ols.out$predictors, c("Modele complet", ols.out$predictor)) ,
+                                Somme.Carre=ols.out$rss,
+                                AIC=ols.out$aic,
+                                SC.res=ols.out$ess,
+                                r.carre=ols.out$rsq,
+                                r.carre.adj=ols.out$arsq,
+                                Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", c(" ","variable supprimee")))
+          )
+          
+          Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
+          rm(dtrgeasieR, envir = .GlobalEnv)
+        }
+        
+        if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
+          BF.out<-try(regressionBF(modele, data=dtrgeasieR,progress=F, rscaleCont=rscale), silent=T)
+          if(class(BF.out)!="try-error") {
+            plot(BF.out) 
+            BF.out<-extractBF(BF.out)
+            BF.out<-head(BF.out[order(BF.out[,1], decreasing=T), ])
+            BF.out<-BF.out[,1:2]
+            Resultats$"Methodes de selection : facteurs bayesiens"<-BF.out
+          } else Resultats$"Methodes de selection : facteurs bayesiens"<-"Les methodes de selection pour les facteurs bayesiens ne s'appliquent pas pour des modeles complexes."
+        } 
       }
-      hier<-paste0(hier,")")
-      hier<-eval(parse(text=hier))
-      attributes(hier)$heading[1]<-"Table de l'analyse de variance des modeles hierarchiques"
-      names(hier)<-c("ddl.resid", "SC.resid","ddl.effet", "SC", "F", "p")
-      Resultats$"Analyse hierarchique des modeles "<-hier
       
-      
-      
-      c(summary(modele.H1[[1]])$sigma, summary(modele.H1[[1]])$r.squared, summary(modele.H1[[1]])$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
-      pf(summary(modele.H1[[1]])$fstatistic[1], summary(modele.H1[[1]])$fstatistic[2],summary(modele.H1[[1]])$fstatistic[3], lower.tail=F)->p.value #permet de savoir si le F est significatif
-      c(significativite_modele , p.value)->modele_avec_outliers 
-      
-      for(i in 2:(length(modele.H1))){
-        c(summary(modele.H1[[i]])$sigma, summary(modele.H1[[i]])$r.squared, summary(modele.H1[[i]])$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
-        pf(summary(modele.H1[[i]])$fstatistic[1], summary(modele.H1[[i]])$fstatistic[2],summary(modele.H1[[i]])$fstatistic[3], lower.tail=F)->valeur.p #permet de savoir si le F est significatif
-        rbind(modele_avec_outliers, c(significativite_modele ,valeur.p))->modele_avec_outliers  
+      if(!is.null(step)){
+        
+        as.formula(paste0(variables[1]," ~ ",step[[1]][1]))->modele.H
+        list()->modele.H1
+        list()->formule.H1
+        for(i in 1:length(step)){
+          
+          for(j in 1:length(step[[i]])){update(modele.H, as.formula(paste0(".~. + ",step[[i]][j])))->modele.H}
+          formule.H1[[i]]<-modele.H
+          lm(modele.H, data=dtrgeasieR, na.action=na.exclude )->lm.H
+          lm.H->modele.H1[[i]]}
+        
+        if(any(param=="param")|any(param=="Test parametrique")) {
+          hier<-paste0("anova(modele.H1[[1]],modele.H1[[2]]")
+          if(length(modele.H1)>2){
+            for(i in 3: length(modele.H1)){
+              hier<-paste0(hier, ",modele.H1[[", i, "]]")
+            }
+          }
+          hier<-paste0(hier,")")
+          hier<-eval(parse(text=hier))
+          attributes(hier)$heading[1]<-"Table de l'analyse de variance des modeles hierarchiques"
+          names(hier)<-c("ddl.resid", "SC.resid","ddl.effet", "SC", "F", "p")
+          Resultats$"Analyse hierarchique des modeles "<-hier
+          
+          
+          
+          c(summary(modele.H1[[1]])$sigma, summary(modele.H1[[1]])$r.squared, summary(modele.H1[[1]])$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
+          pf(summary(modele.H1[[1]])$fstatistic[1], summary(modele.H1[[1]])$fstatistic[2],summary(modele.H1[[1]])$fstatistic[3], lower.tail=F)->p.value #permet de savoir si le F est significatif
+          c(significativite_modele , p.value)->modele_avec_outliers 
+          
+          for(i in 2:(length(modele.H1))){
+            c(summary(modele.H1[[i]])$sigma, summary(modele.H1[[i]])$r.squared, summary(modele.H1[[i]])$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
+            pf(summary(modele.H1[[i]])$fstatistic[1], summary(modele.H1[[i]])$fstatistic[2],summary(modele.H1[[i]])$fstatistic[3], lower.tail=F)->valeur.p #permet de savoir si le F est significatif
+            rbind(modele_avec_outliers, c(significativite_modele ,valeur.p))->modele_avec_outliers  
+          }
+          round(modele_avec_outliers,3)->modele_avec_outliers 
+          c("Erreur residuelle", "R.deux", "F", "Ddl(1)", "Ddl(2)","valeur.p")->dimnames(modele_avec_outliers)[[2]]
+          paste("etape", 1:length(modele_avec_outliers[,1]))->dimnames(modele_avec_outliers)[[1]]
+          Resultats$"Modeles hierarchique - significativite du modele complet a chaque etape"<-modele_avec_outliers
+          
+        }
+        
+        if(any(param=="Bayes")|any(param=="Facteurs bayesiens")) {
+          BF<-lmBF(formula= as.formula(formule.H1[[1]]), data=dtrgeasieR, rscaleFixed=rscale)
+          BF.modele<-extractBF(BF, onlybf=T)
+          BF.hier<-c(NA)
+          for(i in 2:length(formule.H1)){
+            numBF<-lmBF(formula= as.formula(formule.H1[[i]]), data=dtrgeasieR, rscaleFixed=rscale)
+            BF.modele<-c(BF.modele, extractBF(numBF, onlybf=T))
+            denomBF<-lmBF(formula= as.formula(formule.H1[[i-1]]), data=dtrgeasieR, rscaleFixed=rscale)
+            OddBF<-numBF/denomBF
+            BF.hier<-c(BF.hier, extractBF(OddBF, onlybf=T))}
+          
+          # BF.out[formule.H1[[i]]]/BF.out[formule.H1[[i-1]]]->BF.comp
+          
+          BF.hier<-data.frame("Rapport des FB entre les modeles"=BF.hier, "FB du modele"= BF.modele)
+          dimnames(BF.hier)[[1]]<- unlist(as.character(formule.H1))
+          Resultats$"Approche bayesienne des modeles hierarchique"<-BF.hier
+        }
+        
       }
-      round(modele_avec_outliers,3)->modele_avec_outliers 
-      c("Erreur residuelle", "R.deux", "F", "Ddl(1)", "Ddl(2)","valeur.p")->dimnames(modele_avec_outliers)[[2]]
-      paste("etape", 1:length(modele_avec_outliers[,1]))->dimnames(modele_avec_outliers)[[1]]
-      Resultats$"Modeles hierarchique - significativite du modele complet a chaque etape"<-modele_avec_outliers
-      
-    }
-    
-    if(any(param=="Bayes")|any(param=="Facteurs bayesiens")) {
-      BF<-lmBF(formula= as.formula(formule.H1[[1]]), data=data1, rscaleFixed=rscale)
-      BF.modele<-extractBF(BF, onlybf=T)
-      BF.hier<-c(NA)
-      for(i in 2:length(formule.H1)){
-        numBF<-lmBF(formula= as.formula(formule.H1[[i]]), data=data1, rscaleFixed=rscale)
-        BF.modele<-c(BF.modele, extractBF(numBF, onlybf=T))
-        denomBF<-lmBF(formula= as.formula(formule.H1[[i-1]]), data=data1, rscaleFixed=rscale)
-        OddBF<-numBF/denomBF
-        BF.hier<-c(BF.hier, extractBF(OddBF, onlybf=T))}
-      
-      # BF.out[formule.H1[[i]]]/BF.out[formule.H1[[i-1]]]->BF.comp
-      
-      BF.hier<-data.frame("Rapport des FB entre les modeles"=BF.hier, "FB du modele"= BF.modele)
-      dimnames(BF.hier)[[1]]<- unlist(as.character(formule.H1))
-      Resultats$"Approche bayesienne des modeles hierarchique"<-BF.hier
-    }
-    
-  }
-  # "test parametrique", "test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens"   
-  if(any(param=="param")|any(param=="Test parametrique")) {
-    c(summary(lm.r1)$sigma, summary(lm.r1)$r.squared, summary(lm.r1)$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
-    pf(summary(lm.r1)$fstatistic[1], summary(lm.r1)$fstatistic[2],summary(lm.r1)$fstatistic[3], lower.tail=F)->p.value #permet de savoir si le F est significatif
-    c(significativite_modele , p.value)->modele.F # on combine les precedents 
-    round(modele.F,3)->modele.F # on arrondit les nombres a la 3e decimale
-    c("Erreur residuelle", "R.deux", "F", "Ddl (num)", "Ddl (dnom)","valeur.p")->names(modele.F)# attribue le nom aux colonnes
-    modele.F->Resultats$"Estimation  du modele global"
-    
-    
-    data.frame(summary(lm.r1)$coefficients)->table # fournit le b, le t et la valeur de la probabilite. On le stocke dans table
-    round(table[,1:4],3)->table # on arrondit les valeurs a 3 decimales 
-    
-    beta<-coef(lm.r1)*sapply(data.frame(model.matrix(lm.r1)),sd) /sd(data[,variables[1]])
-    c("",round(beta[-1],5))->table$beta # fournit les betas qu on inclut a la table 
-    names(table)<-c("b","erreur.standard","t","valeur.p","beta")
-    
-    r_carre<- matrix(c(0,0,0),1)
-    for(i in 1:length(mod)){
-      rep(summary(mod[[i]])$r.squared, (length(coef(mod[[i]]))-length(r_carre[,1])))->r_carre2
-      summary(mod[[i]])$r.squared-r_carre[length(r_carre[,2]),1]->diff
-      rep(diff, (length(coef(mod[[i]]))-length(r_carre[,1])))->diff
-      rep(summary(mod[[i]])$adj.r.squared, (length(coef(mod[[i]]))-length(r_carre[,1])))->r_carre_adj
-      
-      round(cbind(r_carre2, diff, r_carre_adj), 4)->r_carre2
-      rbind(r_carre,r_carre2 )->r_carre
-      
-    }
-    
-    dimnames(r_carre)<-list(ligne=NULL, c("R.deux", "Delta R.deux", "R.deux.aj"))
-    data.frame(table,r_carre)->table
-    table[is.na(table)]<-""
-    table->Resultats$"table des betas"
-    ols.corr<-ols_correlations(lm.r1)
-    Resultats$"Contribution des variables au modele"<-ols.corr
-    Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)
-  }
-  
-  if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
-    
-    lmBF(modele1, data=data1)->BF.out
-    BF.table<-extractBF(BF.out)[1:2]
-    if(length(pred)>1) { for(i in 2:length(pred)){
-      modele1<-update(modele1, as.formula(paste0(".~.+",pred[i])))
-      lmBF(modele1, data=data1)->BF.out
-      BF.table<-rbind(BF.table, extractBF(BF.out)[1:2])
-    }
-    } 
-    Resultats$"Facteurs bayesiens"<-BF.table
-    
-  }
-  
-  if(any(param=="robustes"| any(param=="Test robustes - impliquant des bootstraps"))){
-    
-    rlm(formula=modele, data=data1)->modele_robuste
-    summary(modele_robuste)->res_modele_robuste
-    (1-pt(abs(res_modele_robuste$coefficients[,3]), (length(data1[,1])-1-length(pred)), lower.tail=TRUE))*2->proba
-    round(cbind(res_modele_robuste$coefficients, proba),3)->M_estimator
-    data.frame(M_estimator)->M_estimator
-    noms<-c("b (M estimator)", "SE", "t.value", "p.valeur")
-    
-    
-    if(n.boot>100){ 
-      bootReg<-function(formula, data1, i)
-      {  d <- data1[i,]
-      fit <- lm(formula, data = d)
-      return(coef(fit))}
-      bootResults<-boot(statistic=bootReg, formula= modele , data=data1, R=n.boot) # cree le bootstrap
-      intervalle<-c()
-      try(for(i in 1: length(lm.r1$coefficients)){boot.ci(bootResults, type = "bca", index = i)$bca[,4:5]->IC1
-        rbind(intervalle, IC1)->intervalle}, silent=T)
-      if(is.null(intervalle)){
-        for(i in 1: length(lm.r1$coefficients)){boot.ci(bootResults, type = "perc", index = i)$percent[,4:5]->resultats
-          rbind(intervalle, resultats)->intervalle}
-        noms<-c(noms, "Percentile.lim.inf", "Percentile.lim.sup")
-      } else{
-        noms<-c(noms, "Bca.lim.inf", "Bca.lim.sup")
+      # "test parametrique", "test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens"   
+      if(any(param=="param")|any(param=="Test parametrique")) {
+        c(summary(lm.r1)$sigma, summary(lm.r1)$r.squared, summary(lm.r1)$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
+        pf(summary(lm.r1)$fstatistic[1], summary(lm.r1)$fstatistic[2],summary(lm.r1)$fstatistic[3], lower.tail=F)->p.value #permet de savoir si le F est significatif
+        c(significativite_modele , p.value)->modele.F # on combine les precedents 
+        round(modele.F,3)->modele.F # on arrondit les nombres a la 3e decimale
+        c("Erreur residuelle", "R.deux", "F", "Ddl (num)", "Ddl (dnom)","valeur.p")->names(modele.F)# attribue le nom aux colonnes
+        modele.F->Resultats$"Estimation  du modele global"
+        
+        
+        data.frame(summary(lm.r1)$coefficients)->table # fournit le b, le t et la valeur de la probabilite. On le stocke dans table
+        round(table[,1:4],3)->table # on arrondit les valeurs a 3 decimales 
+        
+        beta<-coef(lm.r1)*sapply(data.frame(model.matrix(lm.r1)),sd) /sd(data[,variables[1]])
+        c("",round(beta[-1],5))->table$beta # fournit les betas qu on inclut a la table 
+        names(table)<-c("b","erreur.standard","t","valeur.p","beta")
+        
+        r_carre<- matrix(c(0,0,0),1)
+        for(i in 1:length(mod)){
+          rep(summary(mod[[i]])$r.squared, (length(coef(mod[[i]]))-length(r_carre[,1])))->r_carre2
+          summary(mod[[i]])$r.squared-r_carre[length(r_carre[,2]),1]->diff
+          rep(diff, (length(coef(mod[[i]]))-length(r_carre[,1])))->diff
+          rep(summary(mod[[i]])$adj.r.squared, (length(coef(mod[[i]]))-length(r_carre[,1])))->r_carre_adj
+          
+          round(cbind(r_carre2, diff, r_carre_adj), 4)->r_carre2
+          rbind(r_carre,r_carre2 )->r_carre
+          
+        }
+        
+        dimnames(r_carre)<-list(ligne=NULL, c("R.deux", "Delta R.deux", "R.deux.aj"))
+        data.frame(table,r_carre)->table
+        table[is.na(table)]<-""
+        table->Resultats$"table des betas"
+        ols.corr<-ols_correlations(lm.r1)
+        Resultats$"Contribution des variables au modele"<-ols.corr
+        Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)
       }
-      data.frame(M_estimator, round(intervalle,4))->M_estimator
+      
+      if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
+        
+        lmBF(modele1, data=dtrgeasieR)->BF.out
+        BF.table<-extractBF(BF.out)[1:2]
+        if(length(pred)>1) { for(i in 2:length(pred)){
+          modele1<-update(modele1, as.formula(paste0(".~.+",pred[i])))
+          lmBF(modele1, data=dtrgeasieR)->BF.out
+          BF.table<-rbind(BF.table, extractBF(BF.out)[1:2])
+        }
+        } 
+        Resultats$"Facteurs bayesiens"<-BF.table
+        
+      }
+      
+      if(any(param=="robustes"| any(param=="Test robustes - impliquant des bootstraps"))){
+        
+        rlm(formula=modele, data=dtrgeasieR)->modele_robuste
+        summary(modele_robuste)->res_modele_robuste
+        (1-pt(abs(res_modele_robuste$coefficients[,3]), (length(dtrgeasieR[,1])-1-length(pred)), lower.tail=TRUE))*2->proba
+        round(cbind(res_modele_robuste$coefficients, proba),3)->M_estimator
+        data.frame(M_estimator)->M_estimator
+        noms<-c("b (M estimator)", "SE", "t.value", "p.valeur")
+        
+        
+        if(n.boot>100){ 
+          bootReg<-function(formula, dtrgeasieR, i)
+          {  d <- dtrgeasieR[i,]
+          fit <- lm(formula, data = d)
+          return(coef(fit))}
+          bootResults<-boot(statistic=bootReg, formula= modele , data=dtrgeasieR, R=n.boot) # cree le bootstrap
+          intervalle<-c()
+          try(for(i in 1: length(lm.r1$coefficients)){boot.ci(bootResults, type = "bca", index = i)$bca[,4:5]->IC1
+            rbind(intervalle, IC1)->intervalle}, silent=T)
+          if(is.null(intervalle)){
+            for(i in 1: length(lm.r1$coefficients)){boot.ci(bootResults, type = "perc", index = i)$percent[,4:5]->resultats
+              rbind(intervalle, resultats)->intervalle}
+            noms<-c(noms, "Percentile.lim.inf", "Percentile.lim.sup")
+          } else{
+            noms<-c(noms, "Bca.lim.inf", "Bca.lim.sup")
+          }
+          data.frame(M_estimator, round(intervalle,4))->M_estimator
+        }
+        names(M_estimator)<-noms
+        Resultats$"Statistiques robustes"<-M_estimator
+      }  
+      
+      
+      if(CV) CVlm(data=dtrgeasieR, form.lm=modele, m=2, plotit=FALSE)
+      
+      return(Resultats) 
+      
     }
-    names(M_estimator)<-noms
-    Resultats$"Statistiques robustes"<-M_estimator
-  }  
-  
-  
-  if(CV) CVlm(data=data1, form.lm=modele, m=2, plotit=FALSE)
-  
-  return(Resultats) 
-  
-}
     options (warn=-1) 
     .e <- environment()
     c("BayesFactor","boot","car","DAAG","ggplot2","gsl", "MBESS","olsrr","nortest","psych","QuantPsyc","svDialogs")->packages
@@ -651,7 +652,7 @@ regressions.out<-function(data1=NULL, modele=NULL,  VC=F, select.m="none", metho
           msgBox("Vous devez specifier la valeur de la probabilite. Cette valeur doit etre entre 0 et 1")}
         }
       }
-     
+      
     }
   }
   if(any(autres.options=="Modeles hierarchiques")| !is.null(step)) {
