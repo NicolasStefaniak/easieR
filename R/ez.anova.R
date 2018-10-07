@@ -947,7 +947,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
        comp<-expand.grid(dimnames(ans$p.value))
        comp<- paste0(comp[,1],"-", comp[,2])
        KW.MC<-data.frame(comp.= comp, stat=c(ans$statistic), p=c(ans$p.value))
-       KW.MC[complete.cases(KW.MC),]
+       KW.MC<-KW.MC[complete.cases(KW.MC),]
        Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",49)]]<- KW.MC
     }else{
       friedman<-friedman.test(as.formula(paste0(DV,"~", within[[1]], "|", id )),data=data)
