@@ -423,12 +423,13 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   }
   
   
-  if(dial | any(param %in% c("Modele parametrique", "Parametric", "param"))){
+  if(any(param %in% c("Modele parametrique", "Parametric", "param"))){
+    if(!ES %in% c("ges", "pes") | dial){
     writeLines(.ez.anova.msg("msg",17))
     ES<- dlgList(c("ges", "pes"), preselect=c("ges"),multiple = FALSE, title=.ez.anova.msg("title",16))$res
     if(length(ES)==0) return(.options.aov(between=between, within=within, cov=cov))
-    
-    if(dial | !any(SumS %in% c("2", "3"))){
+    }
+    if(dial | SumS %in% c("2", "3")){
       writeLines(.ez.anova.msg("msg",18))
       SumS<- dlgList(c(2,3), preselect=3,multiple = FALSE, title=.ez.anova.msg("title",16))$res
       if(length(SumS)==0) return(.options.aov(between=between, within=within, cov=cov))
