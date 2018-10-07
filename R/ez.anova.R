@@ -423,19 +423,17 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   }
   
   
-  if(dial | any(param %in% c("Modele parametrique", "Parametric, param"))){
+  if(dial | any(param %in% c("Modele parametrique", "Parametric", "param"))){
     writeLines(.ez.anova.msg("msg",17))
     ES<- dlgList(c("ges", "pes"), preselect=c("ges"),multiple = FALSE, title=.ez.anova.msg("title",16))$res
     if(length(ES)==0) return(.options.aov(between=between, within=within, cov=cov))
     
-    if(dial | any(SumS %in% c("2", "3"))){
+    if(dial | !any(SumS %in% c("2", "3"))){
       writeLines(.ez.anova.msg("msg",18))
       SumS<- dlgList(c(2,3), preselect=3,multiple = FALSE, title=.ez.anova.msg("title",16))$res
       if(length(SumS)==0) return(.options.aov(between=between, within=within, cov=cov))
     }
-    
-    
-    
+     
   }
   if(dial | class(save)!="logical"){
     writeLines(.ez.anova.msg("msg",19))
@@ -945,7 +943,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       if(eta<0.0001) "<0.001"->KW$eta.2.H else KW$eta.2.H
       KW$espilon.2<-round(KW$H/((length(data[,1])^2-1)/(length(data[,1])+1)),4)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",46)]]<-KW
-       ans <- kwAllPairsConoverTest(as.formula( paste0(DV, "~",between[1])), data = data,p.adjust.method = "single-step")
+       ans <- kwAllPairsConoverTest(as.formula( paste0(DV, "~",between[1])), data = data,p.adjust.method = p.adjust)
        comp<-expand.grid(dimnames(ans$p.value))
        comp<- paste0(comp[,1],"-", comp[,2])
        KW.MC<-data.frame(comp.= comp, stat=c(ans$statistic), p=c(ans$p.value))
