@@ -945,7 +945,11 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       if(eta<0.0001) "<0.001"->KW$eta.2.H else KW$eta.2.H
       KW$espilon.2<-round(KW$H/((length(data[,1])^2-1)/(length(data[,1])+1)),4)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",46)]]<-KW
-      Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",49)]]<-kruskalmc( as.formula( paste0(DV, "~",between[1])), data=data)
+       ans <- kwAllPairsConoverTest(as.formula( paste0(DV, "~",between[1])), data = data,p.adjust.method = "single-step")
+       comp<-expand.grid(dimnames(ans$p.value))
+       comp<- paste0(comp[,1],"-", comp[,2])
+        KW.MC<-data.frame(comp.= comp, stat=c(ans$statistic), p=c(ans$p.value))
+      Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",49)]]<- KW.MC
     }else{
       friedman<-friedman.test(as.formula(paste0(DV,"~", within[[1]], "|", id )),data=data)
       friedman<-round(data.frame(friedman$statistic,friedman$parameter,friedman$p.value),4)
