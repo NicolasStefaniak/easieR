@@ -411,7 +411,7 @@ regressions <-
     
     
     if(any(outlier==  "Donnees completes")){
-      Resultats$"Donnees completes"<-regressions.out(data=data, modele=modele,  VC=VC, select.m=select.m, method=method, step=step, group=group, criteria=criteria , scale=scale,
+      Resultats$"Donnees completes"<-regressions.out(dtrgeasieR=data, modele=modele,  VC=VC, select.m=select.m, method=method, step=step, group=group, criteria=criteria , scale=scale,
                                                      sauvegarde=sauvegarde, n.boot=n.boot, param=param, rscale=rscale)
       if(!is.null(group))   {  
         R1<-list()
@@ -490,7 +490,7 @@ regressions <-
       }
       if(any(outlier== "Donnees sans valeur influente")) {
         if(N_retire!=0 | all(outlier!="Donnees completes")){
-          Resultats$"Donnees sans valeur influente"<-regressions.out(data=nettoyees, modele=modele,  VC=VC, select.m=select.m, method=method, step=step, group=group, criteria=criteria , scale=scale,
+          Resultats$"Donnees sans valeur influente"<-regressions.out(dtrgeasieR=nettoyees, modele=modele,  VC=VC, select.m=select.m, method=method, step=step, group=group, criteria=criteria , scale=scale,
                                                                      sauvegarde=sauvegarde, n.boot=n.boot, param=param, rscale=rscale)
           
           if(!is.null(group))   {  
