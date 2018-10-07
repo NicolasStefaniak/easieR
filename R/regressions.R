@@ -161,6 +161,7 @@ regressions.out<-function(data1=NULL, modele=NULL,  VC=F, select.m="none", metho
     try(ceresPlots(lm.r1, main="Graphique de Ceres testant la linearite"), silent=T)
   }
   if(select.m!="none"){
+    data1<<-data1
     if(method %in% c("F", "valeur du F", "p", "valeur de la probabilite")){
       select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
                        "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
@@ -204,7 +205,7 @@ regressions.out<-function(data1=NULL, modele=NULL,  VC=F, select.m="none", metho
       )
       
       Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
-      
+      rm(data1, envir = .GlobalEnv)
     }
     
     if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
