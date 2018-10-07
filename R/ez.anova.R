@@ -946,7 +946,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
        ans <- kwAllPairsConoverTest(as.formula( paste0(DV, "~",between[1])), data = data,p.adjust.method = p.adjust)
        comp<-expand.grid(dimnames(ans$p.value))
        comp<- paste0(comp[,1],"-", comp[,2])
-       KW.MC<-data.frame(comp.= comp, stat=c(ans$statistic), p=c(ans$p.value))
+       KW.MC<-data.frame(stat=c(ans$statistic), p=c(ans$p.value))
+       dimnames(KW.MC)[[1]]<-comp
        KW.MC<-KW.MC[complete.cases(KW.MC),]
        Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",49)]]<- KW.MC
     }else{
