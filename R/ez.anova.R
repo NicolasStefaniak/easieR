@@ -950,6 +950,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
        KW.MC<-data.frame(stat=c(ans$statistic), p=c(ans$p.value))
        dimnames(KW.MC)[[1]]<-comp
        KW.MC<-KW.MC[complete.cases(KW.MC),]
+      KW.MC$p<-round.ps(KW.MC$p)
        Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",49)]]<- KW.MC
     }else{
       friedman<-friedman.test(as.formula(paste0(DV,"~", within[[1]], "|", id )),data=data)
@@ -959,7 +960,14 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         names(friedman)<-c("chi.2","ddl","valeur.p", "W.de.Kendall")
       }else { names(friedman)<-c("chi.2","df","p.value","Kendall's W") }
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",47)]]<-friedman
-      Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",48)]]<-friedmanmc(data[,DV], data[,within[[1]]], data[,id])
+      ans<-frdAllPairsExactTest(y=data[,DV],groups=data[,within], blocks=data[,id], p.adjust = p.adjust)
+      comp<-expand.grid(dimnames(ans$p.value))
+      comp<- paste0(comp[,1],"-", comp[,2])
+      F.MC<-data.frame(stat=c(ans$statistic), p=c(ans$p.value))
+       dimnames(F.MC)[[1]]<-comp
+       F.MC<-F.MC[complete.cases(KW.MC),]
+      F.MC$p<-round.ps(F.MC$p)
+      Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",48)]]<-F.MC
       
       
     }
