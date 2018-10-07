@@ -206,7 +206,7 @@ regressions <-
           )
           
           Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
-          rm("dtrgeasieR", envir = .GlobalEnv)
+          
         }
         
         if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
@@ -218,7 +218,8 @@ regressions <-
             BF.out<-BF.out[,1:2]
             Resultats$"Methodes de selection : facteurs bayesiens"<-BF.out
           } else Resultats$"Methodes de selection : facteurs bayesiens"<-"Les methodes de selection pour les facteurs bayesiens ne s'appliquent pas pour des modeles complexes."
-        } 
+        }
+        rm( "dtrgeasieR", envir = .GlobalEnv)
       }
       
       if(!is.null(step)){
