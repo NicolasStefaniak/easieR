@@ -167,9 +167,9 @@ regressions <-
           select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
                            "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
           
-          if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = 0.3, details=F)})
-          if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=0.15, details=F)})
-          if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=0.15, details=F)})
+          if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = criteria, details=F)})
+          if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=criteria, details=F)})
+          if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=criteria, details=F)})
           predname<-if(!is.null(ols.out$predictors)) rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]]) )
           methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[1]]) )
           ols.frame<-data.frame(etape=1:ols.out$steps,
@@ -275,9 +275,7 @@ regressions <-
             denomBF<-lmBF(formula= as.formula(formule.H1[[i-1]]), data=dtrgeasieR, rscaleFixed=rscale)
             OddBF<-numBF/denomBF
             BF.hier<-c(BF.hier, extractBF(OddBF, onlybf=T))}
-          
-          # BF.out[formule.H1[[i]]]/BF.out[formule.H1[[i-1]]]->BF.comp
-          
+
           BF.hier<-data.frame("Rapport des FB entre les modeles"=BF.hier, "FB du modele"= BF.modele)
           dimnames(BF.hier)[[1]]<- unlist(as.character(formule.H1))
           Resultats$"Approche bayesienne des modeles hierarchique"<-BF.hier
@@ -640,7 +638,7 @@ regressions <-
     }
     
     if(select.m!="none" & (method=="valeur de la probabilite" | method=="p")){
-      if(!is.null(criteria) && (!is.numeric(criteria) || criteria<0 || criteria>1)) {msgBox("Vous devez specifier la valeur de la probabilite. Cette valeur doit etre entre 0 et 1")
+      if(dial | !is.null(criteria) && (!is.numeric(criteria) || criteria<0 || criteria>1)) {msgBox("Vous devez specifier la valeur de la probabilite. Cette valeur doit etre entre 0 et 1")
         criteria<-NULL}
       if(is.null(criteria)) {
         while(is.null(criteria)){
