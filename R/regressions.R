@@ -206,7 +206,7 @@ regressions <-
           )
           
           Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
-          rm(dtrgeasieR, envir = .GlobalEnv)
+          rm("dtrgeasieR", envir = .GlobalEnv)
         }
         
         if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
