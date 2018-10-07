@@ -963,9 +963,9 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       ans<-frdAllPairsExactTest(y=data[,DV],groups=data[,within], blocks=data[,id], p.adjust = p.adjust)
       comp<-expand.grid(dimnames(ans$p.value))
       comp<- paste0(comp[,1],"-", comp[,2])
-      F.MC<-data.frame(stat=c(ans$statistic), p=c(ans$p.value))
+      F.MC<-data.frame(D.exact.test=c(ans$statistic), p=c(ans$p.value))
        dimnames(F.MC)[[1]]<-comp
-       F.MC<-F.MC[complete.cases(KW.MC),]
+       F.MC<-F.MC[complete.cases(F.MC),]
       F.MC$p<-round.ps(F.MC$p)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",48)]]<-F.MC
       
