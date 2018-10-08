@@ -578,7 +578,7 @@ regressions <-
                avec les methodes de selection. L'analyse par groupe permet de realiser la meme regression pour des sous-groupes.
                Les mesures d'influences sont les autres mesures habituellement utilisees pour identifier les valeurs influentes.")
     autres.options<-c("Validation croisee","Mesure d influence",  "aucune")
-    if(dim(model.matrix(model))[2]>2) autres.options<-c("Methodes de selection", "Modeles hierarchiques", autres.options)
+    if(dim(model.matrix(modele))[2]>2) autres.options<-c("Methodes de selection", "Modeles hierarchiques", autres.options)
     if(length(step2)<length(data))  autres.options<-c("analyse par groupes",autres.options)
     
     autres.options<- dlgList( autres.options, preselect=c("aucune"), multiple = TRUE, title="Autres options?")$res 
