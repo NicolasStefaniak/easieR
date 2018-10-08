@@ -315,9 +315,11 @@ regressions <-
         data.frame(table,r_carre)->table
         table[is.na(table)]<-""
         table->Resultats$"table des betas"
+        if(length(pred)>1){
         ols.corr<-ols_correlations(lm.r1)
         Resultats$"Contribution des variables au modele"<-ols.corr
         Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)
+          }
       }
       
       if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
