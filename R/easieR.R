@@ -554,11 +554,11 @@ VI.multiples<-function(data){ require("pych")
                  "kurtosis"=mardia.results$kurtosis,"p.kurtosis"=mardia.results$p.kurt )->n2
     } else {
       msgBox("La matrice est singuliere et le test de Mardia ne peut etre realise. Seules les analyses univariees peuvent etre realisees")
-      n2<-data.frame("W de Shapiro-Wilk"=NULL, "valeur.p SW"=NULL, "D de Lilliefors"=NULL, "valeur.p Llfrs"=NULL)
+       n2<-data.frame("W de Shapiro-Wilk"=NULL, "valeur.p SW"=NULL, "D de Lilliefors"=NULL, "valeur.p Llfrs"=NULL)
       for(i in 1:length(X)){
         X[i]->Z
         .normalite(data=data, X=Z,Y=Y)->nor1
-        normalite<-rbind(n2, nor1)
+        n2<-rbind(n2, nor1[[1]])
       }
       dimnames(n2)[[1]]<-X
     }
