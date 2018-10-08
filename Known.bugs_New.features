@@ -13,3 +13,5 @@
 12) paired comparison for non parametric test in anova returns an error (fixed 10/07/2018)
 13) omega squared must be added in ez.anova (added 10/07/2018)
 14) regression does not work when there is only one predictor (fixed 10/08/2018)
+15) in regression, a message box appears when multicolinearity makes the model instable 
+   and the function returns the results of tolerance (10/08/2018)
