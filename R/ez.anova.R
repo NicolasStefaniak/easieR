@@ -26,8 +26,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   Resultats<-list()
   if(!is.null(data) & class(data)!="character") data<-deparse(substitute(data))
   x11()
-  ez.aov.out<-.ez.anova.in(data=data, DV=DV, between=between, within=within,id=within, cov=within, RML=within, 
-                           RML.factor=within, param=param,outlier=outlier, 
+  ez.aov.out<-.ez.anova.in(data=data, DV=DV, between=between, within=within,id=id, cov=cov, RML=RML, 
+                           RML.factor= RML.factor, param=param,outlier=outlier, 
                            ES=ES, SumS=SumS, save=save, contrasts=contrasts,p.adjust=p.adjust)
   data<-ez.aov.out$data
   DV<-ez.aov.out$DV
@@ -559,6 +559,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id) else return(NULL)
     }
     between<-between$X
+    data<-between$data
     diffs<-c(diffs, between)
   }
   
