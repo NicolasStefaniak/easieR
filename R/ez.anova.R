@@ -558,8 +558,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(is.null(between)) {
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id) else return(NULL)
     }
-    between<-between$X
     data<-between$data
+    between<-between$X
     diffs<-c(diffs, between)
   }
   
