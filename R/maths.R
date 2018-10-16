@@ -193,7 +193,7 @@ maths <-
         }
         }
       X1-Y1->new.var
-      names(new.var)<-paste0(names(X), ".moins.", names(Y))
+      names(new.var)<-paste0(X, ".moins.", Y)
       data<-data.frame(data, new.var)
       assign(nom1, data, envir=.GlobalEnv)
       #nom(data=data, info=info,nom1=nom1)->Resultats
