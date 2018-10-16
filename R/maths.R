@@ -165,8 +165,8 @@ maths <-
         if(info=="TRUE") writeLines("Veuillez selectionner la -les- variable(s) a gauche du symbole *moins*")
         variable(multiple=TRUE)->X
         if(length(X)==0|| any(X=="annuler")) return(maths())
-        data[,X]->X
-        data.frame(X)->X
+        data[,X]->X1
+        data.frame(X1)->X1
       }
       
       if(info=="TRUE") writeLines("Les valeurs a droite du symbole *moins* sont-elles une/des variable(s) ou une valeur  ? ")
@@ -178,10 +178,10 @@ maths <-
         while(is.null(Y)){
           variable(multiple=TRUE)->Y
           if(length(Y)==0|| any(Y=="annuler")) return(maths())
-          data[,Y]->Y
-          data.frame(Y)->Y 
-          if(length(X)!=1 & length(Y)!=1 & length(X)!=length(Y)) {
-            writeLines("Il ne doity avoir qu'une colonne ou le nombre de colonnes a droite du symbole *moins* doit etre egal 
+          data[,Y]->Y1
+          data.frame(Y1)->Y1 
+          if(length(X1)!=1 & length(Y1)!=1 & length(X1)!=length(Y1)) {
+            writeLines("Il ne doit y avoir qu'une colonne ou le nombre de colonnes a droite du symbole *moins* doit etre egal 
                        au nombre de colonnes a gauche du symbole *moins*")
             Y<-NULL} else Y<-Y
         }
