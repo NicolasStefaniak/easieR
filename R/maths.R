@@ -49,6 +49,12 @@ maths <-
       if(length(variable)==0) variable<-"nouvelle.variable"
       strsplit(variable, ":")->variable
       tail(variable[[1]],n=1)->variable
+      if(grepl("[^[:alnum:]]", variable)) {
+      writeLines("Des caracteres non autorises ont ete utilises pour le nom. Ces caracteres ont ete remplaces par des points")
+      gsub("[^[:alnum:]]", ".", variable)->variable
+}
+      
+      
       names(data)<-c(names(data)[1:(length(data)-1)], variable)
       assign(nom1, data, envir=.GlobalEnv)
       Resultats<-paste("La variable", variable, "a ete ajoutee a", nom1)
