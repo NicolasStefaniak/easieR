@@ -271,6 +271,6 @@ maths <-
       nom(data=data,info=info, nom1=nom1)->Resultats
       
     }
-    
+    View(data)
     return(Resultats)
     }
