@@ -216,7 +216,7 @@ regressions <-
         if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
           BF.out<-try(regressionBF(modele, data=dtrgeasieR,progress=F, rscaleCont=rscale), silent=T)
           if(class(BF.out)!="try-error") {
-            plot(BF.out) 
+            try(plot(BF.out) , silent=T)
             BF.out<-extractBF(BF.out)
             BF.out<-head(BF.out[order(BF.out[,1], decreasing=T), ])
             BF.out<-BF.out[,1:2]
