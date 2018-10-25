@@ -792,7 +792,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         mod<-data.frame(withinbetween = levels(data[,withinbetween])) 
         names(mod)<-withinbetween
       }else {
-        mod<-sapply(data[, withinbetween], levels)
+        mod<-lapply(data[, withinbetween], levels)
         mod<-expand.grid(mod)
       }
       
