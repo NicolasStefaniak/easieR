@@ -920,7 +920,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       
     }
     BF.out<-try(generalTestBF(as.formula(modeleBF), whichRandom=id,data=data, rscaleFixed=rscaleFixed , 
-                              rscaleRandom= rscaleRandom, iterations=1), silent=T)
+                              rscaleRandom= rscaleRandom, iterations=1000), silent=T)
     
     
     if(class(BF.out)=="try-error") Resultats[[.ez.anova.msg("title",43)]]<-.ez.anova.msg("msg",30) else{
@@ -1042,7 +1042,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       
       try( WRS2::t2way(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, tr = 0.2), silent=T)->T2
       if(class(T2)!="try-error"){
-        T2<-matrix(unlist(T3[c(1:6)]), ncol=2, byrow=T)
+        T2<-matrix(unlist(T2[c(1:6)]), ncol=2, byrow=T)
         if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
           dimnames(T2)[[2]]<-c("valeur", "valeur.p")
         }
@@ -1133,4 +1133,3 @@ round.ps<-function (x)
         2) == 1, " >.99", formatC(x, digits = 4, format = "f")))), 
         2, 7)
 }
-  
