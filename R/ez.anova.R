@@ -919,7 +919,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       } else {modeleBF<-paste0( modeleBF, withinbetween[i],"+", id)}
       
     }
-    BF.out<-try(generalTestBF(as.formula(modeleBF), whichRandom=id,data=data, rscaleFixed=rscaleFixed , rscaleRandom= rscaleRandom), silent=T)
+    BF.out<-try(generalTestBF(as.formula(modeleBF), whichRandom=id,data=data, rscaleFixed=rscaleFixed , 
+                              rscaleRandom= rscaleRandom, iterations=1000), silent=T)
     
     
     if(class(BF.out)=="try-error") Resultats[[.ez.anova.msg("title",43)]]<-.ez.anova.msg("msg",30) else{
