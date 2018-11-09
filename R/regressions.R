@@ -139,7 +139,7 @@ regressions <-
         for(i in 2:length(pred)){update(lm.r1, as.formula(paste0(".~.+",pred[i])))->lm.r1
           lm.r1->mod[[i]]}
       }
-      lm.r1<<-lm.r1
+      assign("lm.r1",lm.r1, env= .GlobalEnv)
       resid(lm.r1)->dtrgeasieR$residu
       Resultats$"Tests de normalite"<-.normalite(data=dtrgeasieR, X="residu", Y=NULL)
       if(length(variables)>1)  {
