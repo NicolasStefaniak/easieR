@@ -25,7 +25,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   .e <- environment()
   Resultats<-list()
   if(!is.null(data) & class(data)!="character") data<-deparse(substitute(data))
-  x11()
+   try( windows(record=T), silent=T)->win
+   if(class(win)=="try-error") quartz()
   ez.aov.out<-.ez.anova.in(data=data, DV=DV, between=between, within=within,id=id, cov=cov, RML=RML, 
                            RML.factor= RML.factor, param=param,outlier=outlier, 
                            ES=ES, SumS=SumS, save=save, contrasts=contrasts,p.adjust=p.adjust)
