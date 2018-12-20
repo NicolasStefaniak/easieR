@@ -611,7 +611,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   data<-data[complete.cases(data[,c(between,unlist(within), DV, cov)]),]
   if(min(table(data[,id])) !=max(table(data[,id]))){
      id.out<-which(table(data[,id])!=max(table(data[,id])))
-     data<-data[which(data[,id]!=names(id.out)), ]
+     data<-data[which(!data[,id]%in% names(id.out)), ]
      }
 
   ftable(data[,c(between,unlist(within))])->aov.check
