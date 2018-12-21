@@ -768,7 +768,9 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
       names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
-    aov.out3$omega.2<-omega_sq(aov.out$aov)$omegasq
+    omega.out<-omega_sq(aov.out$aov)
+    aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(omega.out), test$term),2])
+    
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       GG.HF<-data.frame(round(aov.out2$pval.adjustments,5))
