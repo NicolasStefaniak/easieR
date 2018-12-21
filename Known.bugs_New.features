@@ -18,4 +18,4 @@
 16) the Breusch-Pagan test could report erroneous degree of freedom
 17) the function anova does not allow to choose the number of iterations for Bayes Factors
 18) the interaction failed in logistic regression
-19) missing values could return an error in anova
+19) missing values could return an error in anova (fixed 21/12/2018) 
