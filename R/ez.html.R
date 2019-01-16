@@ -41,7 +41,13 @@ ez.html <-
                      "pandoc.table(data.frame(tableau), style='simple',split.tables=150)","```")
             output<-c(output, essai)
           }
-          
+          if(any(class(Resultats[[i]])=="ftable")) {
+            Resultats[[i]] ->essai
+            listes[[length(listes)+1]]<-essai
+            essai<-c("```{r, echo=F, results='asis'}", "i<-i+1", "tableau<-data.results[[i]]", 
+                     "pandoc.table(tableau, style='simple',split.tables=150)","```")
+            output<-c(output, essai)
+          }
           if(any(class(Resultats[[i]])=="data.frame") && length(Resultats[[i]])!=0) {
             essai<-data.frame(Resultats[[i]])
             
