@@ -671,7 +671,7 @@ ref1 <-
 
 .onAttach <- function(libname, pkgname) {
   textVersion =
-         paste("Pour citer easieR dans vos publication / to cite easieR in you publications use :\n  Stefaniak, N. (", version$year, "). ",
+         paste("Pour citer easieR dans vos publication / to cite easieR in you publications use :\n  Stefaniak, N. ( 2019). ",
                "easieR: An R metapackage. Retrieved from https://github.com/NicolasStefaniak/easieR",
                sep = "")
 
