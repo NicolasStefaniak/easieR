@@ -458,7 +458,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
                        ES="ges", SumS="3", save=F, contrasts="none",p.adjust="none"){
   .e <- environment()
   Resultats<-list()
-  
+  reshape.data<-FALSE  
   
   choix.data(data=data, info=TRUE, nom=TRUE)->data
   if(length(data)==0) return(NULL)
