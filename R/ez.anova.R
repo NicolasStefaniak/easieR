@@ -44,6 +44,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   save<-ez.aov.out$save
   contrasts<-ez.aov.out$contrastes$contrastes
   p.adjust<-ez.aov.out$contrastes$p.adjust
+  reshape.data<-ez.aov.out$reshape.data
   list(ez.aov.out)->aov.plus.list
   
   
@@ -647,6 +648,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
   Resultats$save<-options.out$save
   Resultats$p.adjust<-p.adjust
   Resultats$contrastes<-contrasts
+  Resultats$reshape.data<-reshape.data
   return(Resultats)
 }
 
