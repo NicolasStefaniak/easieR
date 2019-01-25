@@ -11,7 +11,7 @@ GUI for analysis of variance and covariance, with contrasts
 ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL, RML=NULL, 
                    RML.factor=NULL, param=c("param","bayes"),outlier=c("complete","id", "removed"), 
                    ES="ges", SumS="3", save=F , html=T, contrasts="none",p.adjust="none", n.boot=1000, rscaleFixed = 0.5,
-                   rscaleRandom = 1 ){
+                   rscaleRandom = 1 )
 
 }
 %- maybe also 'usage' for other objects documented here.
