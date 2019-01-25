@@ -92,6 +92,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   assign("aov.plus.in", aov.plus.list,envir=.GlobalEnv) 
   
   
+if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
   
   if(!is.null(between)) between<-paste(unique(between), collapse="','", sep="") 
   if(!is.null(within)) within<-paste(unique(within), collapse="','", sep="") 
