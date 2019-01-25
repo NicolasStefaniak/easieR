@@ -27,29 +27,40 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
 \item{RML.factor}{ list. The names in the list corresponds to the names of the factors and the values 
                  at each level correspond to the levels of each factor. The product of the number of levels must equal the length of RML. 
                  If RML is not NULL and RML.factor is NULL, it is assumed that there is only one factor and the name of the factor is "variable.1"}
-
-
-\item{type}{ Which estimate for skew and kurtosis. Value between 1 and 3. See ?describe }
-\item{plot}{ Logical. Should the plot be printed ? }
-\item{ref}{ Logical. Should references be printed ? }
-\item{save}{ Logical. Should results be saved ? }
-\item{html}{Logical. Should results be knit in html? 
+\item{param} {character. One or several among "param", "bayes", "non param", and "robust"}
+\item{outlier} {character. One or several among "complete", "id", or "removed"}
+\item{ges}{one among "ges" or "pes"}
+\item{SumS} {Type of sum of squares, one among "2" or "3"} 
+\item{save} {logical. Do you want to save the results}
+\item{html}{logical. Do you want easieR to output the results in nice html document ?}
+\item{contrast}{list. The names in the list corresponds to the names of the factors and the values is a matrix of coefficients for the contrasts. "pairs" or "none" are also possible}
+\item{p.adjust}{adjust p values for multiples comparisons. see <code>p.adjust</code>}
+\item{n.boot}{number of bootstrap for bayes and robust analyses. Default is 1000}
+\item{rscaleFixed}{rscale for the fixed effect in Bayes analyses. Default = 0.5. It is not possible to state it in dialog box}  
+\item{rscaleRandom}{ rscale for the fixed effect in Bayes analyses. Default = 1. It is not possible to state it in dialog box}  
 
 }
 }
 \details{
-Results from describeBy from psych package or summary function, depending on variable type.
-Violin plots are created by ggplot2. The red point is the mean and point range one SD. Each value is also plotted
-If saved is true, an rtf document and compatible R file are created in the working directory.
-The value 'FALSE' for ref is used in internal easieR function, in order to avoid packages used for this function to be printed.
-Note : If the groupes argument is not a factor variable, a message box asks whether you want to convert the variable in a factor.
+ez.anova relies on the packages 'afex', 'emmeans', 'WRS2', 'WRS', 'BayesFactor' and 'PMCMRplus' for performing parmatric 
+  and non parametric analyses, as well as Bayes and robust analyses
 }
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\item{Model}{The model that has been tested}
+\item{Descriptive }{Descriptive statistics}
+\item{normality}{Shapiro test, Lilliefors test, graphical distribution of residuals and QQplot}
+\item{Homogenity of variance}{Levene test testing the homogenity of variance}
+\item{Plot}{The ggplot that summarizes the analysis}
+\item{Mauchly test}{Mauchly test that allows to assess the sphericity of the covariance matrix}
+\item{principal analysis}{The main anova table}
+\item{Contrast}{Give the matrix of contrasts for each variable and the contrasts computed by emmeans}
+\item{Bayes factor}{Bayes factor for the analysis}
+\item{Non paramtric test}{Non parametric test. The test of Kruskall-Wallis or anova of Friedman depending on the nature of the variable}
+ \item{Robust analyses}{Anova on trimmed means or on medians}
+\item{Grubbs test}{Grubbs' test allowing to determine whether there are outlier in the analysis}  
+  %% ...
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -67,13 +78,7 @@ Nicolas Stefaniak
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-require(psych)
-data(sat.act)
-stat.desc(X=c("education","age","ACT","SATV","SATQ"), groupes="gender", data=sat.act, tr=.1, type=3, plot=T, ref=T, save=F)
-### is the same as 
-psych::describeBy(sat.act,sat.act$gender) #just one grouping variable
-### can also be used as follow 
-stat.desc() # open GUI
+ez.anova() # open GUI
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
