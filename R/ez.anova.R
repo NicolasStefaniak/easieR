@@ -432,7 +432,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     ES<- dlgList(c("ges", "pes"), preselect=c("ges"),multiple = FALSE, title=.ez.anova.msg("title",16))$res
     if(length(ES)==0) return(.options.aov(between=between, within=within, cov=cov))
     }
-    if(dial | SumS %in% c("2", "3")){
+    if(dial | !SumS %in% c("2", "3")){
       writeLines(.ez.anova.msg("msg",18))
       SumS<- dlgList(c(2,3), preselect=3,multiple = FALSE, title=.ez.anova.msg("title",16))$res
       if(length(SumS)==0) return(.options.aov(between=between, within=within, cov=cov))
