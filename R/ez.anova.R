@@ -529,6 +529,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     }
     data<-ez.reshape(data=nom, varying= list(RML), v.names =c('value'),idvar =idvar,
                      IV.names=IV.names, IV.levels=RML.factor) 
+    nom<-paste0(nom, ".long")
     DV<-"value"
     within<-setdiff(names(data), c(idvar, "value","IDeasy"))
     if(length(within)>1) {
