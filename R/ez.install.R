@@ -70,7 +70,7 @@ ez.install <-
                       'WRS',                   
                       'WRS2'
     )
-     if(Sys.info()[[1]]=="Windows"){pack.to.inst<-c(pack.to.inst,'RGtk2','RGtk2Extras'}
+     if(Sys.info()[[1]]=="Windows"){pack.to.inst<-c(pack.to.inst,'RGtk2','RGtk2Extras')}
     # 2b. packages manquants
     pack.uninst <- pack.to.inst[!(pack.to.inst %in% rownames(installed.packages()))]
     
