@@ -1,15 +1,25 @@
 donnees <-
   function(){options (warn=-1)
     require(svDialogs)
-    dlgList(c("importer des donnees","nouveau set de donnees", "voir des donnees", "importer des resultats","exporter des donnees",
-              "generer un rapport"), preselect=NULL, multiple = FALSE, 
-            title="Quelle analyse voulez-vous realiser?")$res->choix
+  if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
+     choix<- c("importer des donnees", "voir des donnees", "importer des resultats","exporter des donnees",
+              "generer un rapport")   
+     if(Sys.info()[[1]]=="Windows") choix<-c("nouveau set de donnees", choix)
+     title<-"Que voulez-vous realiser ?"
+       }else{
+    choix<- c("import data", "View data", "import results","export data", "Compile the report of the session")   
+     if(Sys.info()[[1]]=="Windows") choix<-c("new data set", choix)
+    title<-"What do you want to do?"
+  }
+    dlgList(choix, preselect=NULL, multiple = FALSE, 
+            title=title)$res->choix
     if(length(choix)==0) return(easieR())
-    if(choix=="nouveau set de donnees") blank.data()->Resultats
-    if(choix=="voir des donnees") voir()->Resultats
-    if(choix=="importer des resultats") import.results()->Resultats
-    if(choix=="importer des donnees") import()->Resultats
-    if(choix=="exporter des donnees") exporterD()->Resultats
-    if(choix=="generer un rapport") ez.html(ez.results)
+    if(choix %in% c("nouveau set de donnees", "new data set") blank.data()->Resultats
+    if(choix %in% c("voir des donnees","View data")) voir()->Resultats
+    if(choix %in% c("importer des resultats", "import results")) import.results()->Resultats
+    if(choix %in% c("importer des donnees","import data") ) import()->Resultats
+    if(choix %in% c("exporter des donnees", "export data")) exporterD()->Resultats
+    if(choix %in% c("generer un rapport", "Compile the report of the session")) ez.html(ez.results)
     return(Resultats)
   }
+
