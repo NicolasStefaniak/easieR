@@ -14,7 +14,7 @@ donnees <-
     dlgList(choix, preselect=NULL, multiple = FALSE, 
             title=title)$res->choix
     if(length(choix)==0) return(easieR())
-    if(choix %in% c("nouveau set de donnees", "new data set") blank.data()->Resultats
+    if(choix %in% c("nouveau set de donnees", "new data set")) blank.data()->Resultats
     if(choix %in% c("voir des donnees","View data")) voir()->Resultats
     if(choix %in% c("importer des resultats", "import results")) import.results()->Resultats
     if(choix %in% c("importer des donnees","import data") ) import()->Resultats
