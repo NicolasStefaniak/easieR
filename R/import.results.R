@@ -1,7 +1,7 @@
 import.results <-
 function(){
   fichier <- try(file.choose(), silent=TRUE)
-  if(class(fichier)=="try-error") return(import())
+  if(class(fichier)=="try-error") return(donnees())
   dget(fichier)->data1
   fichier<- dlgInput("Quel nom voulez-vous donner au fichier?", "Resultats")$res
   if(length(fichier)==0) fichier<-"data1"
