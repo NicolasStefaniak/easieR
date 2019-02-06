@@ -4,11 +4,11 @@ donnees <-
   if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
      choix<- c("importer des donnees", "voir des donnees", "importer des resultats","exporter des donnees",
               "generer un rapport")   
-     if(Sys.info()[[1]]=="Windows") choix<-c("nouveau set de donnees", choix)
+     if( "RGtk2Extras" %in% installed.packages()) choix<-c("nouveau set de donnees", choix)
      title<-"Que voulez-vous realiser ?"
        }else{
     choix<- c("import data", "View data", "import results","export data", "Compile the report of the session")   
-     if(Sys.info()[[1]]=="Windows") choix<-c("new data set", choix)
+     if( "RGtk2Extras" %in% installed.packages()) choix<-c("new data set", choix)
     title<-"What do you want to do?"
   }
     dlgList(choix, preselect=NULL, multiple = FALSE, 
