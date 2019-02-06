@@ -36,14 +36,14 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   nom<-output$nom
   N.modalites2<-output$N.modalites2
   times<-output$times
-  
+  dostop<-output$dostop
   longdata<-.ez.reshape.out(data=data, varying = varying, v.names = v.names, 
                             idvar = idvar,times=times, 
                             IV.names=IV.names,IV.levels=IV.levels, N.modalites2=N.modalites2 )  
   
   assign(paste0(nom, ".long"),longdata, envir = .GlobalEnv)
   View(longdata)
-  if(length(IV.names)>1){
+  if(length(IV.names)>1 & dostop){
     cat (.ez.reshape.msg("msg",9))
     line <- readline()
     dlgMessage(.ez.reshape.msg("title", 9), "yesno")$res->suppression
@@ -132,6 +132,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
 .ez.reshape.in<-function(data, varying = NULL, v.names = NULL, 
                          idvar = "id",  IV.names=NULL, IV.levels=list()) {
   resultats<-list()
+  dostop<-F
   # completer les dial
   data<-choix.data(data=data, info=T, nom=T)
   if(length(data)==0) return(NULL)
@@ -142,6 +143,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   if(is.null(varying) || !unlist(varying) %in%names(data) ){
     varying<-list()
     n.var<-NA
+    dostop<-T
     while(is.na(n.var)){
       n.var <- dlgInput(.ez.reshape.msg("title",2), 1)$res
       if(length(n.var)==0) { 
@@ -211,6 +213,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   
   if(is.null(IV.names)| (length(IV.names)>1 & is.null(IV.levels)) |
      (!is.null(IV.levels) & length(unlist(IV.levels))!=length(varying[[1]])) ) {
+    dostop<-T
     if(is.null("IV.names") & length(varying[[1]])>3) N.facteurs <- dlgInput(.ez.reshape.msg("title",4), 1)$res else {
       N.facteurs<-"1"
     }
@@ -274,6 +277,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   if(length(IV.names)>1) resultats$IV.levels<-IV.levels else resultats$IV.levels<-NULL
   resultats$N.modalites2<-N.modalites2
   resultats$times<-times
+  resultats$dostop<-dostop
   return(resultats)
 }       
 
