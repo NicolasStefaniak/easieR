@@ -404,7 +404,7 @@ VI.multiples<-function(data){ require("pych")
     while(is.null(n.boot)){
       writeLines("Veuillez preciser le nombre de bootstrap. Pour ne pas avoir de bootstrap, choisir 1")
       
-      n.boot<-dlgInput("Nombre de bootstrap ?", 1)$res
+      n.boot<-dlgInput("Nombre de bootstrap ?", 1000)$res
       if(length(n.boot)==0) {.ez.options(options=options, n.boot=NULL,param=param, non.param=non.param, robust=robust, 
                                          Bayes=Bayes, msg.options1=msg.options1, msg.options2=msg.options2, info=T, dial=T, 
                                          choix=choix,sauvegarde=F, outlier=NULL,rscale=rscale)->Resultats
