@@ -214,7 +214,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   if(is.null(IV.names)| (length(IV.names)>1 & is.null(IV.levels)) |
      (!is.null(IV.levels) &&  prod(sapply(IV.levels, length))!=length(varying[[1]])) ) {
     dostop<-T
-    if(is.null("IV.names") & length(varying[[1]])>3) N.facteurs <- dlgInput(.ez.reshape.msg("title",4), 1)$res else {
+    if(is.null(IV.names) & length(varying[[1]])>3) N.facteurs <- dlgInput(.ez.reshape.msg("title",4), 1)$res else {
       N.facteurs<-"1"
     }
     while(length(N.facteurs)=="0"){
