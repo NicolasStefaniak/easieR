@@ -671,7 +671,7 @@ ref1 <-
 
 .onAttach <- function(libname, pkgname) {
   textVersion =
-         paste("Pour citer easieR dans vos publication / to cite easieR in you publications use :\n  Stefaniak, N. ( 2019). ",
+         paste("Pour citer easieR dans vos publication / to cite easieR in you publications use :\n  Stefaniak, N. (2019). ",
                "easieR: An R metapackage. Retrieved from https://github.com/NicolasStefaniak/easieR",
                sep = "")
 
@@ -679,7 +679,7 @@ ref1 <-
   packageStartupMessage(" If you are using easieR for the first time, please use the function ez.install in order to ensure that easieR will work properly.\n Si vous utilisez easieR pour la 1e fois, veuillez utiliser la fonction ez.install pour vous assurer de bon fonctionnement de easieR.")
   packageStartupMessage("Les accents / caracteres speciaux ont volontairement ete supprimes pour assurer la portabilite de easieR sur tous les ordinateurs.")
   packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 02/06/2019")
+  packageStartupMessage("Last update 02/27/2019")
   packageStartupMessage("##############")
 
 }
