@@ -22,3 +22,4 @@
 20) Descriptive statistics for factor variable have been corrected so that it appears in the html output
 21) Rgtk2 is not anymore considered as a missing package on mac OS (02/06/2019)
 22) ez.anova does not require anymore that WRS is installed (02/06/2019)
+23) the ICC functions is explictly associated to the 'psych' package in order to avoir error message due to other packages
