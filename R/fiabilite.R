@@ -139,7 +139,7 @@ fiabilite <-
           
       }
       
-      if(choix=="Correlation intra-classe"| choix=="ICC"){ICC(data[,X], missing=FALSE)->ICC.out
+      if(choix=="Correlation intra-classe"| choix=="ICC"){psych::ICC(data[,X], missing=FALSE)->ICC.out
         ICC.out[[1]]->Resultats$"correlation intra-classe"
         Resultats$"informations"<-paste("le nombre de juge =", length(X), "et le nombre d'observations =", ICC.out$n.obs) } 
     }
