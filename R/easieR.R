@@ -668,8 +668,8 @@ ref1 <-
       }
     
     write.bib(packages, file=file.nametxt)
-    bibtex::read.bib('references.bib')->Resultats
-    file.remove('references.bib')
+    bibtex::read.bib(file.nametxt)->Resultats
+    file.remove(file.nametxt)
     return(Resultats)
   }
 
