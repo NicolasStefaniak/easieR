@@ -661,7 +661,13 @@ ref1 <-
   function(packages){
     require("bibtex")
     c("base", packages, "bibtex")->packages
-    write.bib(packages, file='references')
+     if(Sys.info()[[1]]=="Windows"){
+    file.nametxt<-paste0(tempdir(), "\\references.bib")
+      } else {
+      file.nametxt<-paste0(tempdir(), "/references.bib")
+      }
+    
+    write.bib(packages, file=file.nametxt)
     bibtex::read.bib('references.bib')->Resultats
     file.remove('references.bib')
     return(Resultats)
