@@ -479,6 +479,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     type.v2<-dlgList(type.v[,index], multiple = TRUE, title=.ez.anova.msg("title", 1))$res
     if(length(type.v2)==0) return(.ez.anova.in())
     type.v<-type.v[which(type.v[, index]==type.v2),1]
+print(type.v)
     if(!any(type.v %in% c("Groupes independants", "Mesures repetees"))) {
       writeLines(.ez.anova.msg("msg",2))
       return(.ez.anova.in())
