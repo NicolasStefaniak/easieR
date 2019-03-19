@@ -159,7 +159,9 @@ regressions <-
         Resultats$"Indice des valeurs propres"<-FIV$`Indice des valeurs propres`
         dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
         Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur p"=DWT.results[3]),4)->DWT.results
-        var.err<-bptest(lm.r1)
+       
+        ncvTest(model, ~charme+humour+intelligence)
+var.err<-bptest(lm.r1)
         Resultats$"Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$statistic,
                                                                                                                  ddl=var.err$parameter,valeur.p=var.err$p.value)
         
