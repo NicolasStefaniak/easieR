@@ -159,9 +159,9 @@ regressions <-
         Resultats$"Indice des valeurs propres"<-FIV$`Indice des valeurs propres`
         dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
         Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur p"=DWT.results[3]),4)->DWT.results
-        ols_test_breusch_pagan(lm.r1)->var.err
-        Resultats$"Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$bp,
-                                                                                                                 ddl=1,valeur.p=var.err$p)
+        var.err<-bptest(model)
+        Resultats$"Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$statistic,
+                                                                                                                 ddl=var.err$parameter,valeur.p=var.err$p.value)
         
         
         try(ceresPlots(lm.r1, main="Graphique de Ceres testant la linearite"), silent=T)
@@ -381,7 +381,7 @@ regressions <-
     }
     options (warn=-1) 
     .e <- environment()
-    c("BayesFactor","boot","car","DAAG","ggplot2","gsl", "MBESS","olsrr","nortest","psych","QuantPsyc","svDialogs")->packages
+    c("BayesFactor","boot","car","DAAG","ggplot2","gsl","lmtest", "MBESS","olsrr","nortest","psych","QuantPsyc","svDialogs")->packages
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== "try-error") return(ez.install())
     Resultats<-list() 
