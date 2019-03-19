@@ -381,7 +381,7 @@ regressions <-
     }
     options (warn=-1) 
     .e <- environment()
-    c("BayesFactor","boot","car","DAAG","ggplot2","gsl","lmtest", "MBESS","olsrr","nortest","psych","QuantPsyc","svDialogs")->packages
+    c("BayesFactor","boot","car","DAAG","ggplot2","gsl", "MBESS","olsrr","nortest","psych","QuantPsyc","svDialogs")->packages
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== "try-error") return(ez.install())
     Resultats<-list() 
