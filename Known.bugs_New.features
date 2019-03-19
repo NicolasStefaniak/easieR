@@ -9,17 +9,17 @@
 8) automatic attribution of row.names in ez.reshape has been fixed (09/26/2018)
 9) reversed items are not reversed in alpha (fixed 09/28/2018)
 10) aov.plus() is not working at the moment
-11) confirmatory factor analysis failed on mac OS
+11) confirmatory factor analysis failed on mac OS (fixed)
 12) paired comparison for non parametric test in anova returns an error (fixed 10/07/2018)
 13) omega squared must be added in ez.anova (added 10/07/2018)
 14) regression does not work when there is only one predictor (fixed 10/08/2018)
 15) in regression, a message box appears when multicolinearity makes the model instable 
    and the function returns the results of tolerance (10/08/2018)
-16) the Breusch-Pagan test could report erroneous degree of freedom
+16) the Breusch-Pagan test could report erroneous degree of freedom (fixed 03/19/2019)
 17) the function anova does not allow to choose the number of iterations for Bayes Factors
 18) the interaction failed in logistic regression
 19) missing values could return an error in anova (fixed 21/12/2018) 
 20) Descriptive statistics for factor variable have been corrected so that it appears in the html output
 21) Rgtk2 is not anymore considered as a missing package on mac OS (02/06/2019)
 22) ez.anova does not require anymore that WRS is installed (02/06/2019)
-23) the ICC functions is explictly associated to the 'psych' package in order to avoir error message due to other packages
+23) the ICC functions is explictly associated to the 'psych' package in order to avoir error message due to other packages (19/03/2019)
