@@ -629,7 +629,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     return(NULL)
   }
   
-  if(c( any(options.out$param %in% c("param", "Modele parametrique", "Parametric, param")))){
+  if(c( any(options.out$param %in% c("param", "Modele parametrique", "Parametric", "param")))){
     contrasts<-.contrastes.ez(data=data, between=between, within=within, contrasts=contrasts, dial=dial, p.adjust=p.adjust)
     if(is.null(contrasts)) return(.ez.anova.in()) 
   } else contrasts<-NULL
