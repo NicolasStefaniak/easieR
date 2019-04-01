@@ -517,8 +517,6 @@ VI.multiples<-function(data){ require("pych")
   if(length(X)==1){
     if(is.null(Y)){
       scale(data[,X], center=T, scale=F)->res
-      print(res)
-      print(class(res))
       res[1:length(res),]->data$res
     } else {
       tapply(data[,X], data[,Y], scale, center=T, scale=F)->res
