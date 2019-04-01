@@ -721,7 +721,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
                           data$match<-paste0(data[,IDeasy], data[,within[1]])
                           if(length(within)>1){
                              for(i in 2:length(within)){
-                                 data$match<-paste0(data$match, "_", within[i])
+                                 data$match<-paste0(data$match, "_", data[,within[i]])
                                                         }
                                                }
                           }else{
