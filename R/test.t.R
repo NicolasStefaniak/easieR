@@ -732,7 +732,7 @@ test.t <-
                "Deux echantillons apparies"=R1$"Donnees completes"<-apparies(X=X1, Y=Y, data=data1, param=param,alternative=alternative, n.boot=n.boot, rscale=rscale),
                "Deux echantillons independants"= R1$"Donnees completes"<-indpdts(X=X1, Y=Y, data=data1, param=param,alternative=alternative, n.boot=n.boot, rscale=rscale))
       }
-      print(Resultats)
+
       if(any(outlier=="Identification des valeurs influentes")|any(outlier=="Donnees sans valeur influente")){
         if(choix=="Comparaison a une norme") {
           if(class(data1)!="data.frame"){data1<-data.frame(data1)
