@@ -228,8 +228,12 @@ test.t <-
     
     norme<-function(X, mu, data, param=c("param", "non param", "robustes"), group=NULL, alternative="two.sided", n.boot=NULL, rscale=0.707){
       if(class(data)!="data.frame") data<-data.frame(data)
+      print(class(data))
+      print(X)
+      print(data)
       Resultats<-list()
       .e <- environment()
+      print(.stat.desc.out(X=X, groupes=NULL, data=data, tr=.1, type=3, plot=F))
       Resultats$"statistiques descriptives"<-.stat.desc.out(X=X, groupes=NULL, data=data, tr=.1, type=3, plot=F)
 print(Resultats)      
       cutoff <- data.frame(x = c(-Inf, Inf), y = mu, cutoff = factor(mu) )
