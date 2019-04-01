@@ -243,8 +243,6 @@ test.t <-
       p2<-p2+theme(plot.title = element_text(size = 12))+ggtitle("Moyenne et ecart-type")
       # print(p2)
       Resultats$"statistiques descriptives"$Graphique<-p2
-      print(Resultats)
-         print(class(data))   
       
       if(!is.null(group)) {Resultats$"statistiques descriptives par groupe"<-.stat.desc.out(X=X, groupes=group, data=data, tr=.1, type=3, plot=T) }
       if(any(param=="param") | any(param=="Test parametrique")){
@@ -394,7 +392,8 @@ test.t <-
             "La troncature sur le M-estimator s'adapte en fonction des caracteristiques de l'echantillon.")->Resultats$infos
         } else Resultats$Robustes<-"Les statistiques robustes n'ont pu etre realisees. Verifiez que le packages WRS est correctement installe"
       }
-      
+            print(Resultats)
+         print(class(data))   
       return(Resultats)
     }
     apparies<-function(X, Y, data=NULL, param=c("param", "non param", "robustes"),alternative="two.sided", n.boot=NULL, rscale=0.707){
