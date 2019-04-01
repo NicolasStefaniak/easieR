@@ -655,6 +655,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
 
 .ez.anova.out<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL,  
                         ES="ges", SumS="3", contrasts="none",p.adjust="none", rscaleFixed=0.5 , rscaleRandom= 1, n.boot=1000, param=c("param", "bayes")){
+  data<-data[,c(DV,between, within, id, cov)]
   list()->Resultats
   cov1<-NULL
   if(!is.null(cov)) { 
