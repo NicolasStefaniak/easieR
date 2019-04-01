@@ -18,8 +18,9 @@
 16) the Breusch-Pagan test could report erroneous degree of freedom (fixed 03/19/2019)
 17) the function anova does not allow to choose the number of iterations for Bayes Factors
 18) the interaction failed in logistic regression
-19) missing values could return an error in anova (fixed 21/12/2018) 
+19) missing values could return an error in anova (fixed 12/21/2018) 
 20) Descriptive statistics for factor variable have been corrected so that it appears in the html output
-21) Rgtk2 is not anymore considered as a missing package on mac OS (02/06/2019)
-22) ez.anova does not require anymore that WRS is installed (02/06/2019)
-23) the ICC functions is explictly associated to the 'psych' package in order to avoir error message due to other packages (19/03/2019)
+21) Rgtk2 is not anymore considered as a missing package on mac OS (06/02/2019)
+22) ez.anova does not require anymore that WRS is installed (06/02/2019)
+23) the ICC functions is explictly associated to the 'psych' package in order to avoir error message due to other packages (03/19/2019)
+24) correction for t.test when there is only one variable in the data.frame (fixed 04/01/2019)
