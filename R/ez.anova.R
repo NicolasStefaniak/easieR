@@ -725,7 +725,8 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
                                                         }
                                                }
                           }else{
-      names(residus)<-c("residu", IDeasy)
+      names(residus)<-c("residu", "match")
+      data$match<-data$IDeasy
       }
 
     data<-merge(x=data, y=residus, by="match")
