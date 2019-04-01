@@ -715,6 +715,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     residus<-data.frame(aov.out$lm$residuals)
     residus[,"match"] <-aov.out$data$wide[,IDeasy]
     if(!is.null(within)){ residus<-melt(residus, id.vars="match") 
+                         names(residu)["value"]<-"residu"
                           residus$match<-paste0(residus[,1], residus[,2])
                           data$match<-paste0(data[,IDeasy], data[,within[1]])
                           if(length(within)>1){
@@ -722,11 +723,11 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
                                  data$match<-paste0(data$match, "_", within[i])
                                                         }
                                                }
-                          }
-print(names(data))
-    print(names(residus))
-data<-merge(x=data, y=residus, by="match")
-    
+                          }else{
+      names(residus)<-"residu"
+      }
+    data<-merge(x=data, y=residus, by="match")
+  
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X="residu", Y=NULL)
     
     
