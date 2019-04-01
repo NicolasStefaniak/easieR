@@ -227,6 +227,7 @@ test.t <-
       }
     
     norme<-function(X, mu, data, param=c("param", "non param", "robustes"), group=NULL, alternative="two.sided", n.boot=NULL, rscale=0.707){
+      if(class(data)!="data.frame") data<-data.frame(data)
       Resultats<-list()
       .e <- environment()
       Resultats$"statistiques descriptives"<-.stat.desc.out(X=X, groupes=NULL, data=data, tr=.1, type=3, plot=F)
