@@ -712,6 +712,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     options(contrasts=c("contr.sum","contr.poly"))
     if(!is.null(cov)) factorize<-FALSE else factorize<-TRUE
     aov.out<-aov_4(as.formula(modele),data=data, es_aov=ES, type=SumS,factorize=factorize)
+     data<-data[order(data$IDeasy),]
     data$residu<-c(aov.out$lm$residuals)
     
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X="residu", Y=NULL)
