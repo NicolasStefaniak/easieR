@@ -715,7 +715,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     residus<-data.frame(aov.out$lm$residuals)
     residus[,"match"] <-aov.out$data$wide[,IDeasy]
     if(!is.null(within)){ residus<-melt(residus, id.vars="match") 
-                         names(residus)["value"]<-"residu"
+                         names(residus)[3]<-"residu"
                           residus$match<-paste0(residus[,1], residus[,2])
                           data$match<-paste0(data[,IDeasy], data[,within[1]])
                           if(length(within)>1){
