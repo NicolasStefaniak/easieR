@@ -231,7 +231,7 @@ test.t <-
       Resultats<-list()
       .e <- environment()
       Resultats$"statistiques descriptives"<-.stat.desc.out(X=X, groupes=NULL, data=data, tr=.1, type=3, plot=F)
-      
+print(Resultats)      
       cutoff <- data.frame(x = c(-Inf, Inf), y = mu, cutoff = factor(mu) )
       p2<- ggplot(data)
       p2<-p2+ eval(parse(text=paste0("aes(x=factor(0), y=", X,")"))) + geom_violin()
