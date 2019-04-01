@@ -735,7 +735,9 @@ test.t <-
       }
       print(Resultats)
       if(any(outlier=="Identification des valeurs influentes")|any(outlier=="Donnees sans valeur influente")){
-        if(choix=="Comparaison a une norme") {print(class(data1))
+        if(choix=="Comparaison a une norme") {
+          if(class(data1)!="data.frame"){data1<-data.frame(data1)
+                                       names(data1)[1]<-X1}
           data1$residu<-data1[,X1]
                                               print("ok")
                                              }else data1$residu<-unlist(tapply(data1[,X1], data1[,Y], scale, center=T, scale=F))
