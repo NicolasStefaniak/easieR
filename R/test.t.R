@@ -392,8 +392,7 @@ test.t <-
             "La troncature sur le M-estimator s'adapte en fonction des caracteristiques de l'echantillon.")->Resultats$infos
         } else Resultats$Robustes<-"Les statistiques robustes n'ont pu etre realisees. Verifiez que le packages WRS est correctement installe"
       }
-            print(Resultats)
-         print(class(data))   
+   
       return(Resultats)
     }
     apparies<-function(X, Y, data=NULL, param=c("param", "non param", "robustes"),alternative="two.sided", n.boot=NULL, rscale=0.707){
@@ -739,7 +738,6 @@ test.t <-
           if(class(data1)!="data.frame"){data1<-data.frame(data1)
                                        names(data1)[1]<-X1}
           data1$residu<-data1[,X1]
-                                              print("ok")
                                              }else data1$residu<-unlist(tapply(data1[,X1], data1[,Y], scale, center=T, scale=F))
         critere<-ifelse(is.null(z), "Grubbs", "z")
         valeurs.influentes(X="residu", critere=critere,z=z, data=data1)->influentes
