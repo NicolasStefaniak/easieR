@@ -727,7 +727,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
       names(residus)<-"residu"
       }
     data<-merge(x=data, y=residus, by="match")
-  
+   print(names(data))
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X="residu", Y=NULL)
     
     
