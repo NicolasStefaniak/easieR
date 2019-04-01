@@ -228,7 +228,6 @@ test.t <-
     
     norme<-function(X, mu, data, param=c("param", "non param", "robustes"), group=NULL, alternative="two.sided", n.boot=NULL, rscale=0.707){
       if(class(data)!="data.frame") data<-data.frame(data)
-      print(class(data))
       Resultats<-list()
       .e <- environment()
       Resultats$"statistiques descriptives"<-.stat.desc.out(X=X, groupes=NULL, data=data, tr=.1, type=3, plot=F)
@@ -244,8 +243,8 @@ test.t <-
       p2<-p2+theme(plot.title = element_text(size = 12))+ggtitle("Moyenne et ecart-type")
       # print(p2)
       Resultats$"statistiques descriptives"$Graphique<-p2
-      
-      
+      print(Resultats)
+         print(class(data))   
       
       if(!is.null(group)) {Resultats$"statistiques descriptives par groupe"<-.stat.desc.out(X=X, groupes=group, data=data, tr=.1, type=3, plot=T) }
       if(any(param=="param") | any(param=="Test parametrique")){
