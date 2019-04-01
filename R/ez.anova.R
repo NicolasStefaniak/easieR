@@ -712,8 +712,20 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     options(contrasts=c("contr.sum","contr.poly"))
     if(!is.null(cov)) factorize<-FALSE else factorize<-TRUE
     aov.out<-aov_4(as.formula(modele),data=data, es_aov=ES, type=SumS,factorize=factorize)
-     data<-data[order(data$IDeasy),]
-    data$residu<-c(aov.out$lm$residuals)
+    residus<-data.frame(aov.out$lm$residuals)
+    residus[,IDeasy] <-aov.out$data$wide[,IDeasy]
+    if(!is.null(within)){ residus<-melt(residus, id.vars=IDeasy) 
+                          residus$match<-paste0(residus[,1], residus[,2])
+                          data$match<-paste0(data[,IDeasy], data[,within[1]])
+                          if(length(within)>1){
+                             for(i in 2:length(within)){
+                                 data$match<-paste0(data$match, "_", within[i])
+                                                        }
+                                               }
+                          }
+
+
+data<-merge(data, residus, by="match")
     
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X="residu", Y=NULL)
     
