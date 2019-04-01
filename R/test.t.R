@@ -227,6 +227,7 @@ test.t <-
       }
     
     norme<-function(X, mu, data, param=c("param", "non param", "robustes"), group=NULL, alternative="two.sided", n.boot=NULL, rscale=0.707){
+      print(data)
       if(class(data)!="data.frame") data<-data.frame(data)
       print(class(data))
       print(X)
@@ -717,6 +718,9 @@ print(Resultats)
     n.boot<-test.t.options$options$n.boot
     sauvegarde<-test.t.options$options$sauvegarde
     outlier<-test.t.options$options$desires
+      print(class(data))
+      print(X)
+      print(data)
     
     for(i in 1 : length(X)) {
       
