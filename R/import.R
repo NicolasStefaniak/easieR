@@ -87,7 +87,7 @@ import <-
     }
     if(dial)  { 
       if(type=="Fichier Excel") name<-sheet else name<-file
-      name <- dlgInput("Quel nom voulez-vous donner aux donnees ?", "data1")$res
+      name <- dlgInput("Quel nom voulez-vous donner aux donnees ?", name)$res
     if(length(name)==0) name <- "data1"
     name <- strsplit(name, ":")
     name <- tail(name[[1]],n=1)
