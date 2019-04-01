@@ -727,13 +727,9 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
                           }else{
       names(residus)<-"residu"
       }
-    print(data)
-    print(residus)
+
     data<-merge(x=data, y=residus, by="match")
-    print(names(data))
-    print(data)
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X="residu", Y=NULL)
-    print(Resultats)
     
     if(!is.null(cov) & !is.null(between)){
       options(contrasts = c("contr.helmert", "contr.poly"))
