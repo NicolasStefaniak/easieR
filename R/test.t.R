@@ -227,17 +227,11 @@ test.t <-
       }
     
     norme<-function(X, mu, data, param=c("param", "non param", "robustes"), group=NULL, alternative="two.sided", n.boot=NULL, rscale=0.707){
-      print(data)
       if(class(data)!="data.frame") {data<-data.frame(data)
                                      names(data)[1]<-X}
-      print(class(data))
-      print(X)
-      print(data)
       Resultats<-list()
       .e <- environment()
-      print(.stat.desc.out(X=X, groupes=NULL, data=data, tr=.1, type=3, plot=F))
       Resultats$"statistiques descriptives"<-.stat.desc.out(X=X, groupes=NULL, data=data, tr=.1, type=3, plot=F)
-print(Resultats)      
       cutoff <- data.frame(x = c(-Inf, Inf), y = mu, cutoff = factor(mu) )
       p2<- ggplot(data)
       p2<-p2+ eval(parse(text=paste0("aes(x=factor(0), y=", X,")"))) + geom_violin()
@@ -719,9 +713,6 @@ print(Resultats)
     n.boot<-test.t.options$options$n.boot
     sauvegarde<-test.t.options$options$sauvegarde
     outlier<-test.t.options$options$desires
-      print(class(data))
-      print(X)
-      print(data)
     
     for(i in 1 : length(X)) {
       
@@ -743,9 +734,12 @@ print(Resultats)
                "Deux echantillons apparies"=R1$"Donnees completes"<-apparies(X=X1, Y=Y, data=data1, param=param,alternative=alternative, n.boot=n.boot, rscale=rscale),
                "Deux echantillons independants"= R1$"Donnees completes"<-indpdts(X=X1, Y=Y, data=data1, param=param,alternative=alternative, n.boot=n.boot, rscale=rscale))
       }
-      
+      print(Resultats)
       if(any(outlier=="Identification des valeurs influentes")|any(outlier=="Donnees sans valeur influente")){
-        if(choix=="Comparaison a une norme") data1$residu<-data1[,X1] else data1$residu<-unlist(tapply(data1[,X1], data1[,Y], scale, center=T, scale=F))
+        if(choix=="Comparaison a une norme") {print(class(data1))
+          data1$residu<-data1[,X1]
+                                              print("ok")
+                                             }else data1$residu<-unlist(tapply(data1[,X1], data1[,Y], scale, center=T, scale=F))
         critere<-ifelse(is.null(z), "Grubbs", "z")
         valeurs.influentes(X="residu", critere=critere,z=z, data=data1)->influentes
       }
