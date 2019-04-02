@@ -714,11 +714,11 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     if(!is.null(cov)) factorize<-FALSE else factorize<-TRUE
     aov.out<-aov_4(as.formula(modele),data=data, es_aov=ES, type=SumS,factorize=factorize)
     residus<-data.frame(aov.out$lm$residuals)
-    residus[,"match"] <-aov.out$data$wide[,IDeasy]
+    residus[,"match"] <-aov.out$data$wide[,id]
     if(!is.null(within)){ residus<-melt(residus, id.vars="match") 
                          names(residus)[3]<-"residu"
                           residus$match<-paste0(residus[,1], residus[,2])
-                          data$match<-paste0(data[,IDeasy], data[,within[1]])
+                          data$match<-paste0(data[,id], data[,within[1]])
                           if(length(within)>1){
                              for(i in 2:length(within)){
                                  data$match<-paste0(data$match, "_", data[,within[i]])
@@ -726,7 +726,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
                                                }
                           }else{
       names(residus)<-c("residu", "match")
-      data$match<-data$IDeasy
+      data$match<-data[,id]
       }
 
     data<-merge(x=data, y=residus, by="match")
