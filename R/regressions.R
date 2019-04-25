@@ -160,7 +160,7 @@ regressions <-
         dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
         Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur p"=DWT.results[3]),4)->DWT.results
        
-        var.err<-ols_test_breusch_pagan(model, rhs=T)
+        var.err<-ols_test_breusch_pagan(lm.r1, rhs=T)
 
         Resultats$"Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$bp,
                                                                                                                  ddl=length(var.err$preds), valeur.p=var.err$p) 
