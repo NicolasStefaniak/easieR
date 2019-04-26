@@ -1131,10 +1131,10 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
       modeleR<-as.formula(paste0(DV, "~", within,"*", between))
       try(WRS2::tsplit( as.formula(modeleR), data[,id], data=data, tr = 0.2), silent=T)->tronquees
       if(class(tronquees)!="try-error"){
-        tronquees<-matrix(unlist(tronquees)[c(1:12)],ncol=4, byrow=T)
-        rownames(tronquees)<-c(within, between, paste0(within,":",between))
-        colnames(tronquees)<-c("F", "p", "df1", "df2")
-        Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees
+        tronquees2<-matrix(unlist(tronquees)[c(1:12)],ncol=4, byrow=T)
+        rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
+        colnames(tronquees2)<-c("F", "p", "df1", "df2")
+        Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees2
         WRS2::sppba(modeleR, data[,id], data=data, est = "mom", avg = TRUE, nboot = n.boot, MDIS = FALSE)->MoMa 
         WRS2::sppbb(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMb
         WRS2::sppbi(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMi 
