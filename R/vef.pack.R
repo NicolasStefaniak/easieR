@@ -68,7 +68,7 @@ function(){
                       'WRS',                   
                       'WRS2'
     )
-     if(Sys.info()[[1]]=="Windows"){pack.to.inst<-c(pack.to.inst,'RGtk2','RGtk2Extras')}
+
           list()->Resultats
     Resultats$"packages.installes.correctement"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
     Resultats$"Package.mal.installes"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
