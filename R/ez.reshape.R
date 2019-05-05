@@ -170,6 +170,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
         if(length(var.name)==0) { return(ez.reshape())}
         strsplit(var.name, ":")->var.name
         tail(var.name[[1]],n=1)->var.name
+        var.name<-gsub("[^[:alnum:]]", ".", var.name)
         v.names<-c(v.names, var.name)
       }
       varying[[n.var]]<-varying2
@@ -177,6 +178,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
       if(length(var.name)==0) { return(ez.reshape())}
       strsplit(var.name, ":")->var.name
       tail(var.name[[1]],n=1)->var.name
+      var.name<-gsub("[^[:alnum:]]", ".", var.name)
       v.names<-c(v.names, var.name)
       
     } else {
@@ -184,6 +186,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
       v.names <- dlgInput(paste(.ez.reshape.msg("title",3),1), "Variable")$res
       if(length(v.names)==0) { return(ez.reshape())}
       strsplit(v.names, ":")->v.names
+      v.names<-gsub("[^[:alnum:]]", ".", v.names)
       tail(v.names[[1]],n=1)->v.names
     }
     
@@ -239,7 +242,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
       if(length(IV.names [[1]])==0) return(ez.reshape(data=data, varying=varying))
       strsplit(IV.names [[1]], ":")->IV.names[[1]]
       tail(IV.names [[1]][[1]],n=1)->IV.names[[1]]
-      
+      IV.names[[1]]<-gsub("[^[:alnum:]]", ".", IV.names[[1]])
     } else {
       c()->N.modalites2 # nombre de modalités sur chaque facteur
       while(prod(N.modalites2)!=length(varying[[1]])){
@@ -252,6 +255,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
           if(length(IV.names[[i]])==0) return(ez.reshape(data=data, varying=varying))
           strsplit(IV.names[[i]], ":")->IV.names[[i]]
           tail(IV.names[[i]][[1]],n=1)->IV.names[[i]]
+           IV.names[[i]]<-gsub("[^[:alnum:]]", ".", IV.names[[i]])
           N.modalites <- dlgInput(paste(.ez.reshape.msg("title",6), IV.names[[i]]), 2)$res
           if(length(N.modalites)==0) return(ez.reshape(data=data, varying=varying))
           strsplit(N.modalites, ":")->N.modalites
