@@ -40,7 +40,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
 \item{rscaleRandom}{ rscale for the fixed effect in Bayes analyses. Default = 1. It is not possible to state it in dialog box}  
 
 }
-}
+
 \details{
 ez.anova relies on the packages 'afex', 'emmeans', 'WRS2', 'WRS', 'BayesFactor' and 'PMCMRplus' for performing parmatric 
   and non parametric analyses, as well as Bayes and robust analyses
