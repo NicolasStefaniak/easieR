@@ -77,6 +77,7 @@ ez.html <-
           
           if(any(class(Resultats[[i]])=="ggplot")) {
             essai<-Resultats[[i]]
+             if(Sys.info()[[1]]=="Windows"){
             dire<-dir(paste0(tempdir(), "\\easieR\\"))
             if(any(str_detect(dire, "ezplot"))) {
               ezplot<-str_detect(dire, "ezplot")
@@ -84,9 +85,20 @@ ez.html <-
               nom<-paste0(tempdir(), "\\easieR\\ezplot", n+1, ".png")
             }else{nom<-paste0(tempdir(), "\\easieR\\ezplot1.png")}
             ggsave(filename=nom, plot=essai)
-            
             essai<-paste0("<img src='", nom, "'alt='Drawing' style='width: 700px;'/>")
             output<-c(output, essai)
+             }else{
+            dire<-dir(paste0(tempdir(), "/easieR/"))
+            if(any(str_detect(dire, "ezplot"))) {
+              ezplot<-str_detect(dire, "ezplot")
+              n<-length(which(ezplot==TRUE))
+              nom<-paste0(tempdir(), "/easieR/ezplot", n+1, ".png")
+            }else{nom<-paste0(tempdir(), "/easieR/ezplot1.png")}
+            ggsave(filename=nom, plot=essai)
+            essai<-paste0("<img src='", nom, "'alt='Drawing' style='width: 700px;'/>")
+            output<-c(output, essai)
+               
+           
           }
           
           
