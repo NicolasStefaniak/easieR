@@ -97,7 +97,7 @@ ez.html <-
             ggsave(filename=nom, plot=essai)
             essai<-paste0("<img src='", nom, "'alt='Drawing' style='width: 700px;'/>")
             output<-c(output, essai)
-               
+               }
            
           }
           
