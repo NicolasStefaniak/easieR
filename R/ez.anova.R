@@ -1128,7 +1128,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     } 
     
     if(length(between)==1 & length(within)==1){
-      modeleR<-as.formula(paste0(DV, "~", within,"*", between))
+      modeleR<-as.formula(paste0(DV, "~", between,"*",  within))
       try(WRS2::tsplit( as.formula(modeleR), data[,id], data=data, tr = 0.2), silent=T)->tronquees
       if(class(tronquees)!="try-error"){
         tronquees2<-matrix(unlist(tronquees)[c(1:12)],ncol=4, byrow=T)
