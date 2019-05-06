@@ -88,6 +88,7 @@ ez.html <-
             essai<-paste0("<img src='", nom, "'alt='Drawing' style='width: 700px;'/>")
             output<-c(output, essai)
              }else{
+            dir.create(paste0(tempdir(), "/easieR/"))
             dire<-dir(paste0(tempdir(), "/easieR/"))
             if(any(str_detect(dire, "ezplot"))) {
               ezplot<-str_detect(dire, "ezplot")
