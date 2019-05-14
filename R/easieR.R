@@ -21,8 +21,8 @@ easieR <-
                       "Analyses - Hypothesis tests")) Resultats <-analyse()
       if(choix%in%c("Interface - objets en memoire, nettoyer la memoire, repertoire de travail",
                   "Interface - objects in memory, clean memory, wordking directory")) Resultats <- interfaceR()
-      if(choix%in% c("Pretraitements (tri, selection, operations mathematiques, valeurs manquantes",
-                     "Preprocess (sort, select, mathematical operations, valeurs manquantes)")) Resultats<-preprocess()
+      if(choix%in% c("Pretraitements (tri, selection, operations mathematiques, Traitement des valeurs manquantes)",
+                     "Preprocess (sort, select, mathematical operations, missing values)")) Resultats<-preprocess()
       if(choix%in% c("Materiel pedagogique","Teaching material")) return(teaching())
       if(choix%in%c("Graphiques","Graphics")) return(graphiques())
       return(Resultats)
@@ -34,7 +34,8 @@ easieR.msg<-function(msg="1"){
    if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
      msg<-switch(msg, 
                  "1"=c("Pour que easieR fonctionne correctement, il faut installer Pandoc disponible à l'url suivant : https://github.com/jgm/pandoc/releases") ,
-                 "2"=c("Donnees - (Importation, exportation, sauvegarde)", "Pretraitements (tri, selection, operations mathematiques, missing values", 
+                 "2"=c("Donnees - (Importation, exportation, sauvegarde)", 
+                       "Pretraitements (tri, selection, operations mathematiques, Traitement des valeurs manquantes)", 
                        "Analyses - Tests d'hypothese", "Graphiques",
                      "Interface - objets en memoire, nettoyer la memoire, repertoire de travail", 
                      "Materiel pedagogique"), 
@@ -43,7 +44,7 @@ easieR.msg<-function(msg="1"){
      }else {
        msg<-switch(msg, "1"="In order to ensure that easieR is properly installed, please install Pandoc at the following url :
       https://github.com/jgm/pandoc/releases",
-                   "2"=c("Data - (Import, export, save)", "Preprocess (sort, select, mathematical operations, valeurs manquantes", 
+                   "2"=c("Data - (Import, export, save)", "Preprocess (sort, select, mathematical operations, missing values)", 
                          "Analyses - Hypothesis tests", "Graphics",
                        "Interface - objects in memory, clean memory, working directory", 
                        "Teaching material"),
