@@ -765,7 +765,8 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     c(unlist(within), between)->withinbetween
     if(length(withinbetween)>1) {
       
-      graph.modele<-paste0(withinbetween[1],"~",withinbetween[2])
+      if(length(withinbetween)==1) graph.modele<-paste0("~",withinbetween[1]) else{
+      graph.modele<-paste0(withinbetween[1],"~",withinbetween[2])}
       if(length(withinbetween)>2){paste0(graph.modele, "|",withinbetween[3] )->graph.modele
         if(length(withinbetween)>3){ for(i in 4:length(withinbetween)){paste0(graph.modele, "*",withinbetween[i] )->graph.modele} 
           
