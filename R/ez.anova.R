@@ -763,7 +763,6 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
     }
     
     c(unlist(within), between)->withinbetween
-    if(length(withinbetween)>1) {
       
       if(length(withinbetween)==1) graph.modele<-paste0("~",withinbetween[1]) else{
       graph.modele<-paste0(withinbetween[1],"~",withinbetween[2])}
@@ -773,7 +772,7 @@ if(reshape.data) Resultats$call.reshape<-ez.history[[length(ez.history)]][[2]]
         }} 
       
       Resultats$Figure<-emmip(aov.out,as.formula(graph.modele),CIs=T)
-    }
+    
     
     
     aov.out2<-summary(aov.out)
