@@ -1,6 +1,6 @@
 chi <-
   function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, sauvegarde=F,choix=NULL, data=NULL, info=TRUE, n.boot=NULL, priorConcentration =1,  
-           SampleType=NULL,fixedMargin=NULL, choix2=c("test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens") ,rscale=2^0.5/2){
+           SampleType=NULL,fixedMargin=NULL, choix2=c("test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens") ,rscale=2^0.5/2, html=T){
     # X = character or vector.  First set of variables
     # Y = character or vector. Second set of variables
     # Effectifs = character. Name of weighting variable. Must be positive integer
@@ -361,6 +361,6 @@ chi <-
     
     ref1(packages)->Resultats$"References"
     ### Obtenir les Resultats
-    try(ez.html(Resultats))
+    if(html) try(ez.html(Resultats))
     return(Resultats) 
     }
