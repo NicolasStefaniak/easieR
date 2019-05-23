@@ -27,3 +27,4 @@
 25) suppression of outliers in ez.anova has been corrected (04/29/2019)
 26) the default for dataframe name when importing excel sheet is the name of the sheet(04/29/2019)
 27) ez.reshape has been corrected so that using space or other special character is not problematic anymore (05/05/2019)
+28) now p.values are in red in html output (only in French for the moment) (05/23/2019)
