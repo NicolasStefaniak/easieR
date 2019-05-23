@@ -39,7 +39,8 @@ ez.html <-
             listes[[length(listes)+1]]<-essai
             essai<-c("```{r, echo=F, results='asis'}", 
                      "i<-i+1", "tableau<-data.results[[i]]",
-                     "tableau<-data.frame(tableau)", "ft <- flextable(tableau)",
+                     "tableau<-data.frame(tableau)", "if(!is.null(rownames(tableau))) tableau<-add_rownames(tableau) "
+                     "ft <- flextable(tableau)",
                      "ft<-theme_booktabs(ft)", "ft<-fontsize(ft, size=14)",
                      "if(any(grepl('valeur.p', names(tableau)))) ft <- color( ft, i = which(any(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)), j = 1:ncol(tableau), color = 'red' )", 
                      "ft","```")
@@ -57,7 +58,8 @@ ez.html <-
             
             listes[[length(listes)+1]]<-essai
             essai<-c("```{r, echo=F, results='asis'}", "i<-i+1", "tableau<-data.results[[i]]",
-                     "tableau<-data.frame(tableau)", "ft <- flextable(tableau)",
+                     "tableau<-data.frame(tableau)", "if(!is.null(rownames(tableau))) tableau<-add_rownames(tableau) "
+                     "ft <- flextable(tableau)",
                      "ft<-theme_booktabs(ft)", "ft<-fontsize(ft, size=14)",
                      "if(any(grepl('valeur.p', names(tableau)))) ft <- color( ft, i = which(any(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)), j = 1:ncol(tableau), color = 'red' )", 
                      "ft","```")
@@ -123,7 +125,8 @@ ez.html <-
               listes[[length(listes)+1]]<-essai
               
               essai<-c("```{r, echo=F, results='asis'}", "i<-i+1", "tableau<-data.results[[i]]",
-                       "tableau<-data.frame(tableau)", "ft <- flextable(tableau)",
+                       "tableau<-data.frame(tableau)", "if(!is.null(rownames(tableau))) tableau<-add_rownames(tableau) "
+                       "ft <- flextable(tableau)",
                        "ft<-theme_booktabs(ft)", "ft<-fontsize(ft, size=14)",
                        "if(any(grepl('valeur.p', names(tableau)))) ft <- color( ft, i = which(any(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)), j = 1:ncol(tableau), color = 'red' )", 
                        "ft","```")
