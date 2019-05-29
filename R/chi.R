@@ -222,7 +222,7 @@ chi <-
               AY<-data.frame("chi.deux"=round(mon.chi$statistic,4),"ddl"=mon.chi$parameter,   Cramer(mon.chi),"Fisher.Exact.Test"="" )
               if(any(choix2=="Test non parametrique")) AY$valeur.p<-round(mon.chi$p.value,4)
               SY<-rbind(SY, AY)
-              dimnames(SY)[[1]][1]<-c("Sans correction de Yates", "Avec correction de Yates") 
+              dimnames(SY)[[1]]<-c("Sans correction de Yates", "Avec correction de Yates") 
             } else dimnames(SY)[[1]][1]<-c("Sans correction de Yates")
             if(!is.null(n.boot) && n.boot>1){
               SY$"Valeur p par simulation de Monte Carlo"<-chisq.test(tab, B=n.boot, simulate.p.value=T, correct=F)$p.value
