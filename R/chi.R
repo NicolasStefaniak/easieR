@@ -165,7 +165,6 @@ chi <-
       Resultats$Effectifs<-Effectifs
       Resultats$p<-p
       Resultats$choix<-Options$choix
-      Resultats$sauvegarde<-Options$sauvegarde
       Resultats$n.boot<-Options$n.boot
       Resultats$SampleType<-SampleType
       Resultats$fixedMargin<-FM
