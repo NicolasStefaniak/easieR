@@ -4,7 +4,6 @@ chi <-
     # X = character or vector.  First set of variables
     # Y = character or vector. Second set of variables
     # Effectifs = character. Name of weighting variable. Must be positive integer
-    # save = logical. Should the results be saved ?
     # p = vector of probabilities. Must be equal to 1. The lenght must be equel to number of levels of X
     # choix = character. One among "Ajustement", "Independance", or "Test de McNemar"
     # data = name of the dataframe 
