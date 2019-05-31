@@ -244,7 +244,7 @@ corr.complet <-
           dimnames(spear)<-list(c("Rho partiel de Spearman","Rho semi-partiel de Spearman"), c("rho", "valeur.p", "t", "r.carre"))
           Resultats$"Test non parametrique"$"Rho partiel/semi partiel de Spearman"<-spear
           tau<-round(tau,4)
-          dimnames(tau)<-list(c("Tau partiel de Kendall","Tau semi-partiel de Kendall"), c("tau", "z", "valeur.p"))
+          dimnames(tau)<-list(c("Tau partiel de Kendall","Tau semi-partiel de Kendall"), c("tau", "valeur.p", "z"))
           Resultats$"Test non parametrique"$"Tau partiel/semi-partiel de Kendall"<-tau
         } else { Spear<-cor.test(data[,X1], data[ ,Y1], method = "spearman", exact=T, continuity=T)
         cor.test(data[,X1], data[ ,Y1], method = "kendall")->Kendall 
