@@ -308,7 +308,7 @@ chi <-
     
     if(!is.null(data) & class(data)!="character") deparse(substitute(data))->data 
     
-    chi.in(X=X, Y=Y, Effectifs=Effectifs,p=p, choix=choix, data=data, info=info, n.boot=n.boot, SampleType=SampleType, FM=fixedMargin, choix2=choix2, sauvegarde=sauvegarde)->chi.options
+    chi.in(X=X, Y=Y, Effectifs=Effectifs,p=p, choix=choix, data=data, info=info, n.boot=n.boot, SampleType=SampleType, FM=fixedMargin, choix2=choix2)->chi.options
     if(is.null(chi.options)) return(analyse())
     if(chi.options!="Ajustement"){
       try( windows(record=T), silent=T)->win
