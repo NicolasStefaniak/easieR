@@ -496,7 +496,7 @@ VI.multiples<-function(data){ require("pych")
       round(data.frame(Shapiro_Wilk$statistic,Shapiro_Wilk$p.value, Lilliefors$statistic, Lilliefors$p.value),4)->normalite
       names(normalite)<-c("W de Shapiro-Wilk", "valeur.p SW", "D de Lilliefors", "valeur.p Llfrs")
       dimnames(normalite)[1]<-" "
-      format(normalite, width = max(sapply(names(normalite), nchar)), justify = "centre")->normalite
+#      format(normalite, width = max(sapply(names(normalite), nchar)), justify = "centre")->normalite
       n2$"Test de normalite"<-normalite}
     
     
