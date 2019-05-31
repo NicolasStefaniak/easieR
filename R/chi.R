@@ -12,7 +12,7 @@ chi <-
     # SampleType : the sampling plan (see details)
     # fixedMargin : for the independent multinomial sampling plan, which margin is fixed ("rows" or "cols")
     # rscale : prior scale. A number of preset values can be given as strings
-    chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL){
+    chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL){
       if(!is.null(choix)) dial<-F else dial<-T
       if(is.null(choix) || (choix %in%c("Ajustement", "Independance", "Test de McNemar")==FALSE)){
         if(info) writeLines("Veuillez preciser le type de chi carre que vous souhaitez realiser.")
@@ -28,7 +28,7 @@ chi <-
       if(choix=="Independance") multiple<-T else multiple<-F
       X<-.var.type(X=X, info=info, data=data, type="factor", check.prod=F, message=msg3,  multiple=multiple, title="Variable-s", out=NULL)
       if(is.null(X)) {
-        chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+        chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
         return(Resultats)}
       X$data->data
       X$X->X
@@ -37,14 +37,14 @@ chi <-
         msg4<-"Veuillez choisir le second set de facteur(s) categoriel(s)"
         Y<-.var.type(X=Y, info=info, data=data, type="factor", check.prod=F, message=msg4,  multiple=multiple, title="Variable-s", out=NULL)
         if(is.null(Y)) {
-          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
           return(Resultats)}
         Y$data->data
         Y$X->Y
         if(choix=="Test de McNemar" & any(sapply(data[,c(X,Y)],nlevels)!=2)) {
           msgBox("Le test de McNemar implique un tableau 2x2. Les dimensions de votre tableau sont differentes.")
           print(table(data[,X], data[,Y], dnn=c(X,Y)))
-          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
           return(Resultats)
         }
       }
@@ -53,7 +53,7 @@ chi <-
         if(info==T) writeLines("Faut-il ponderer l'analyse par une variable effectif ?")
         Effectifs<-dlgList(c("oui", "non"), multiple = F, preselect="non", title="Specifier effectifs ?")$res
         if(length(Effectifs)==0) {
-          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
           return(Resultats)}
         if(Effectifs=="non") Effectifs<-NULL}
       
@@ -61,7 +61,7 @@ chi <-
         msg5<-"Veuillez choisir la ou les variables definissant les effectifs"
         .var.type(X=Effectifs, info=T, data=data, type="integer", message=msg5,multiple=F, title="Specifier la vriable effectifs ?", out=c(X, Y))->Effectifs
         if(is.null(Effectifs)) {
-          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+          chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
           return(Resultats)}
         Effectifs$X->Effectifs
       }
@@ -96,7 +96,7 @@ chi <-
           if(sum(p)!=1 ||length(p)!=nlevels(data[,X]) | any(p)>1 | any(p)<0){
             if( dlgMessage("La somme des probabilites est differente de 1 ou le nombre de probabilites ne correspond pas au nombre de modalites de la variable.
                            Veuillez entrer un vecteur de probabilites valide","okcancel")$res=="cancel") {
-              chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+              chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
               return(Resultats)} else return(NULL)
         } 
         }
@@ -104,9 +104,8 @@ chi <-
       if(choix=="Test de McNemar") robust<-F else robust<-T
       if(choix=="Ajustement") Bayes<-F else Bayes<-T 
       msg.options<-"Dans ce cas, le test non parametrique est le test de chi carre classique"
-      .ez.options(options="choix", n.boot=n.boot,param=F, non.param=T, robust=robust, Bayes=Bayes, msg.options1=NULL, msg.options2=msg.options, info=T, dial=dial, choix=choix2,
-                  sauvegarde=sauvegarde)->Options
-      if(is.null(Options)){  chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+      .ez.options(options="choix", n.boot=n.boot,param=F, non.param=T, robust=robust, Bayes=Bayes, msg.options1=NULL, msg.options2=msg.options, info=T, dial=dial, choix=choix2)->Options
+      if(is.null(Options)){  chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
         return(Resultats)}
       if(dial==T || any(SampleType %in% c("poisson", "jointMulti","hypergeom", "indepMulti"))==F || SampleType=="indepMulti" & any(fixedMargin %in% c("rows","cols"))==F){
         
@@ -141,7 +140,7 @@ chi <-
                                                                                                                                      paste("indepMulti - Effectif fixe pour les colonnes - variable", comb[i,2]))
                                                                                                                       }
             SampleType1<-dlgList(possible, preselect="Effectif total non fixe", multiple = FALSE, title=paste("Pan experimental entre", comb[i,1], "et",comb[i,2], "?"))$res
-            if(length(SampleType1)==0) {chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL, sauvegarde=NULL)->Resultats
+            if(length(SampleType1)==0) {chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
               return(Resultats)}
             ifelse(SampleType1 == paste("indepMulti - Effectif total fixe pour les lignes - variable", comb[i,1]), fixedMargin<-"rows",
                    ifelse(SampleType1 == paste("indepMulti - Effectif fixe pour les colonnes - variable", comb[i,2]), fixedMargin<-"cols", fixedMargin<-0))
