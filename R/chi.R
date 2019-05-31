@@ -213,7 +213,7 @@ chi <-
                             "ddl"=mon.chi$parameter, Cramer(mon.chi))
             if(any(choix2=="Test non parametrique")) SY$valeur.p<-round(mon.chi$p.value,4) 
             try(fisher.test(tab),silent=T)->fisher
-            if(class(fisher)!="try-error") SY$"Fisher.Exact.Test"=round(fisher$p.value,4)
+            if(class(fisher)!="try-error") SY$"Valeur.p.Fisher.Exact.Test"=round(fisher$p.value,4)
             if(all(dim(tab)==2)){
               mon.chi<-chisq.test(tab, B=n.boot, correct=T)
               AY<-data.frame("chi.deux"=round(mon.chi$statistic,4),"ddl"=mon.chi$parameter,   Cramer(mon.chi),"Fisher.Exact.Test"="" )
@@ -222,7 +222,7 @@ chi <-
               dimnames(SY)[[1]]<-c("Sans correction de Yates", "Avec correction de Yates") 
             } else dimnames(SY)[[1]][1]<-c("Sans correction de Yates")
             if(!is.null(n.boot) && n.boot>1){
-              SY$"Valeur p par simulation de Monte Carlo"<-chisq.test(tab, B=n.boot, simulate.p.value=T, correct=F)$p.value
+              SY$"Valeur.p par simulation de Monte Carlo"<-chisq.test(tab, B=n.boot, simulate.p.value=T, correct=F)$p.value
             } 
             Resultats$"Analyse principale"<-SY
             # Rapport de vraisemblance 
