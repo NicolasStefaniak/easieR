@@ -1,5 +1,5 @@
 chi <-
-  function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, sauvegarde=F,choix=NULL, data=NULL, info=TRUE, n.boot=NULL, priorConcentration =1,  
+  function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=TRUE, n.boot=NULL, priorConcentration =1,  
            SampleType=NULL,fixedMargin=NULL, choix2=c("test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens") ,rscale=2^0.5/2, html=T){
     # X = character or vector.  First set of variables
     # Y = character or vector. Second set of variables
@@ -357,7 +357,6 @@ chi <-
     .add.history(data=chi.options$data, command=Resultats$Call, nom=chi.options$nom)
     .add.result(Resultats=Resultats, name =paste(chi.options$analyse, Sys.time() ))
     
-    if(chi.options$sauvegarde){save(Resultats=Resultats ,choix ="chi.deux", env=.e)}
     
     ref1(packages)->Resultats$"References"
     ### Obtenir les Resultats
