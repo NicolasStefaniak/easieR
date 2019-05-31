@@ -346,7 +346,7 @@ chi <-
     paste(chi.options$fixedMargin, collapse="','", sep="")->FM
     paste0("chi(X=c('", X,ifelse(!is.null(Y), paste0("'),Y=c('", Y, "')"), "'), Y=NULL"), 
            ifelse(is.null(chi.options$Effectifs),",Effectifs=NULL", paste0(",Effectifs='", chi.options$Effectifs, "'")),
-           ifelse(!is.null(Y), ", p=NULL", paste0(", p=c(", p,")")), ",sauvegarde=", chi.options$sauvegarde,
+           ifelse(!is.null(Y), ", p=NULL", paste0(", p=c(", p,")")), 
            ", choix='", chi.options$analyse, "',data=", chi.options$nom.data, ",info=", info, ",n.boot=", ifelse(is.null(chi.options$n.boot), "NULL",chi.options$n.boot) , 
            ",priorConcentration =" ,priorConcentration, ",SampleType=", ifelse(is.null(chi.options$SampleType), 'NULL', paste0("c('",SampleType,"')")), 
            ",fixedMargin=", ifelse(is.null(chi.options$fixedMargin), 'NULL', paste0("c('",FM,"')")), ",choix2=c('",choix2,
