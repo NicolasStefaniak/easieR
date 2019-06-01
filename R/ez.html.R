@@ -1,5 +1,5 @@
 ez.html <-
-    function(ez.results=NULL){
+  function(ez.results=NULL){
     
     packages<-c("rmarkdown", "knitr","ggplot2","stringr","reshape2") 
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
@@ -21,7 +21,12 @@ ez.html <-
     
     im<-c("```{r, echo=F}","options(digits = 4)", "library('pander')","library('knitr')",
           "library('bibtex')", "library('flextable')","library('tibble')", "data.results<-dget('ez.results.txt')", "i<-0","```")
-    outputb<-c(outputb,a, im)
+    round<-c("```{r, echo=F}",
+             "round.ps<-function (x) { substr(as.character(ifelse(x < 0.0001, ' <.0001', ifelse(round(x, 2) == 1, ' >.99', formatC(x, digits = 4, format = 'f')))), 2, 7)}",
+             "myf<-function(x){which(x<0.05)}"
+                  ,"```")
+
+    outputb<-c(outputb,a, im,round)
     
     to.html<-function(Resultats, X=1){
       listes<-list()
@@ -88,11 +93,21 @@ ez.html <-
                      "tableau<-table",
                      "tableau<-as.data.frame.matrix(tableau)",
                      "if(has_rownames(tableau) & rownames(tableau)!=' ') tableau<-rownames_to_column(tableau, var = ' ')", 
+                     "if(any(grepl('valeur.p', names(tableau)))) {", 
+                     "col<-which(grepl('valeur.p', names(tableau)))",
+                     "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))",
+                     "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
+                     "is<-which(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)",
+                     "tableau[, which(grepl('valeur.p', names(tableau)))]<-round.ps(tableau[, which(grepl('valeur.p', names(tableau)))])}}",
                      "ft<-flextable(tableau)", 
                      "if(!is.null(names(dimnames(table)))){ft<-add_header_row(ft, top=T, values=c(names(dimnames(table)), rep(' ',times= length(tableau)-2)))}",
                      "ft<-theme_booktabs(ft)",
                      "ft<-fontsize(ft, size=14, part='all')",
-                     "if(any(grepl('valeur.p', names(tableau)))) ft <- color( ft, i = which(any(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)), j = 1:ncol(tableau), color = 'red' )", 
+                     "if(any(grepl('valeur.p', names(tableau)))) {",
+                         "ft <- color( ft, i = is, j = 1:ncol(tableau), color = 'red' )",
+                         "}", 
+                     "if(any(class(table)=='valeur.p')){",
+                     "for(j in 1:ncol(tableau)){ft <- color(ft, i = which(tableau[,j]<0.05) , j = j, color='red')}}",
                      "ft","```")
             output<-c(output, essai)
           }
@@ -152,7 +167,7 @@ ez.html <-
       file.nameRmd<-paste0(tempdir(), "/easieR/Rapport.easieR.Rmd")
     }
     writeLines(output, file.nameRmd)
-    render(file.nameRmd)
+    render(file.nameRmd, quiet=T)
     if(Sys.info()[[1]]=="Windows"){
       browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
     } else {
