@@ -1131,9 +1131,10 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       modeleR<-as.formula(paste0(DV, "~", between,"*",  within))
       try(WRS2::tsplit( as.formula(modeleR), data[,id], data=data, tr = 0.2), silent=T)->tronquees
       if(class(tronquees)!="try-error"){
-        tronquees2<-matrix(unlist(tronquees)[c(1:12)],ncol=4, byrow=T)
+        tronquees2<-matrix(unlist(unlist(tronquees)[c(1:12)]),ncol=4, byrow=T)
+        tronquees2<-data.frame(tronquees2)
         rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
-        colnames(tronquees2)<-c("F", "valeur.p", "df1", "df2")
+        names(tronquees2)<-c("F", "valeur.p", "df1", "df2")
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees2
         WRS2::sppba(modeleR, data[,id], data=data, est = "mom", avg = TRUE, nboot = n.boot, MDIS = FALSE)->MoMa 
         WRS2::sppbb(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMb
