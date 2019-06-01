@@ -248,7 +248,7 @@ corr.matrice <-
       if(any(param=="H0")|any(param=="Tests de H0")) {paste("la correction appliquee est la correction de",p.adjust)->Resultats$Correction[1]
         if(is.null(Y)) Resultats$Correction[2]<-"Seules les valeurs au-dessus de la diagonales sont ajustees pour comparaisons multiples"
         round(matrice$p,3)->r2
-        class(r2)<-"matrix"
+        class(r2)<-c("matrix", "p.value")
         Resultats$"matrice des probabilites"<-r2
         dimnames(r2)[[1]]<-paste0(dimnames(r2)[[1]], ".p")
         if(is.null(Y)) r2[which(lower.tri(r2, diag = T))]<-NA
@@ -282,17 +282,10 @@ corr.matrice <-
       nice.mat<-list()
       nice.mat$"Matrice de correlations"<-(r1)
       if(html) try(ez.html(nice.mat), silent =T)
-      if(sauvegarde) {
-        tps<-as.character(Sys.time())
-        tps<-gsub(":",".",tps)
-        nom<-paste0("corr.mat.",tps, ".doc")
-        rtf<-RTF(nom,width=8.5,height=11,font.size=10,omi=c(1,1,1,1))
-        addTable(rtf,r1,font.size=12,row.names=TRUE,NA.string="-" )
-        done(rtf)
-      }
+
       
       if(is.null(Y) & is.null(Z) & n.boot>100) round(cor.ci(data[,X], n.iter=n.boot, plot=FALSE)$ci,4)->Resultats$"Intervalle de confiance estime par bootstrap" else  round(matrice$ci,4)->Resultats$"Intervalle de confiance" 
-      
+      names(Resultats[[length(Resultats)]])<-c("lim.inf","r","lim.sup","valeur.p")
       
       return(Resultats)  
       
