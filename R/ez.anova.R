@@ -779,7 +779,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       aov.out2b<-round(aov.out2$sphericity.test,5)
       aov.out2b<-matrix(aov.out2b, ncol=2)
-      dimnames(aov.out2b)<-dimnames(aov.out2$sphericity.test)
+      dimnames(aov.out2b)<-list(dimnames(aov.out2$sphericity.test)[[1]], c("Stat", "valeur.p"))
       Resultats[[.ez.anova.msg("title",36)]]<-aov.out2b
     }
 
@@ -1133,7 +1133,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       if(class(tronquees)!="try-error"){
         tronquees2<-matrix(unlist(tronquees)[c(1:12)],ncol=4, byrow=T)
         rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
-        colnames(tronquees2)<-c("F", "p", "df1", "df2")
+        colnames(tronquees2)<-c("F", "valeur.p", "df1", "df2")
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees2
         WRS2::sppba(modeleR, data[,id], data=data, est = "mom", avg = TRUE, nboot = n.boot, MDIS = FALSE)->MoMa 
         WRS2::sppbb(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMb
