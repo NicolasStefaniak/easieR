@@ -106,7 +106,7 @@ ez.html <-
                      "if(any(grepl('valeur.p', names(tableau)))) {",
                          "ft <- color( ft, i = is, j = 1:ncol(tableau), color = 'red' )",
                          "}", 
-                     "if(any(class(table)=='valeur.p')){",
+                     "if(any(class(table)=='p.value')){",
                      "for(j in 1:ncol(tableau)){ft <- color(ft, i = which(tableau[,j]<0.05) , j = j, color='red')}}",
                      "ft","```")
             output<-c(output, essai)
