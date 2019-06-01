@@ -785,7 +785,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 
     aov.out3<-aov.out[[1]]
     aov.out3<-data.frame(aov.out3)
-    aov.out3[,6]<-round.ps(aov.out3[,6])
+#    aov.out3[,6]<-round.ps(aov.out3[,6])
     if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
       names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
