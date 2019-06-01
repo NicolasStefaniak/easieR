@@ -865,7 +865,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       table.cont<-summary(emmean.out)
       Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",41)]]<-contrasts
       if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-        names(table.cont)<-c("contraste","estimateur", "erreur.st", "ddl","t", "p")}
+        names(table.cont)<-c("contraste","estimateur", "erreur.st", "ddl","t", "valeur.p")}
       table.cont$R.2<-round(table.cont$t^2/(table.cont$t^2+table.cont$ddl),4)
       if(!is.null(between)) {
         grepl(paste(between,collapse = "|"),  table.cont[,1])->table.cont$D.Cohen
