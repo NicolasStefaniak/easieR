@@ -994,7 +994,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       ans<-frdAllPairsExactTest(y=data[,DV],groups=data[,within], blocks=data[,id], p.adjust = p.adjust)
       comp<-expand.grid(dimnames(ans$p.value))
       comp<- paste0(comp[,1],"-", comp[,2])
-      F.MC<-data.frame(D.exact.test=c(ans$statistic), p=c(ans$p.value))
+      F.MC<-data.frame(D.exact.test=c(ans$statistic), valeur.p=c(ans$p.value))
        dimnames(F.MC)[[1]]<-comp
        F.MC<-F.MC[complete.cases(F.MC),]
       F.MC$p<-round.ps(F.MC$p)
