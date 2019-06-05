@@ -812,13 +812,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     
     if(!is.list(contrasts) && contrasts %in% c("pairwise",  "Comparaison 2 a 2" )){
       pair<-pairs(em.out, adjust=p.adjust)
-      assign("pair", pair,envir = .GlobalEnv)
-      print(pair)
       pair<-summary(pair)
-      str(pair)
-       names(pair)[which(names(pair)=="p.value")]
       names(pair)[which(names(pair)=="p.value")]<-"valeur.p"
-      print(pair)
       Resultats[[.ez.anova.msg("title",39)]]<-pair
     }
     
