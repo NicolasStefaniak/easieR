@@ -141,6 +141,7 @@ fiabilite <-
       
       if(choix=="Correlation intra-classe"| choix=="ICC"){psych::ICC(data[,X], missing=FALSE)->ICC.out
         ICC.out[[1]]->Resultats$"correlation intra-classe"
+        names(Resultats$"correlation intra-classe")<-c("type", "ICC", "F", "ddl1", "ddl2", "valeur.p", "lim.inf","lim.sup")
         Resultats$"informations"<-paste("le nombre de juge =", length(X), "et le nombre d'observations =", ICC.out$n.obs) } 
     }
     
