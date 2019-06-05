@@ -1083,9 +1083,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       mom<-try(
         WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "mom", nboot = n.boot),silent=T)
       if(class(mom)!="try-error")  {
-        mom<-cbind(c(between, paste0(between[1], between[2])), mom<-mom[c(2,4,6)])
-        mom<-data.frame(mom)
-        names(mom)<-c(" ", "valeur.p")
+        mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
+        dimnames(mom)[[1]]<-list(c(between, paste0(between[1], ":",between[2]),c("valeur.p"))
          Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
       }
      
