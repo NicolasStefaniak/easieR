@@ -923,7 +923,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         round(Table.contrasts,4)->Table.contrasts
         data.frame(Table.contrasts)->Table.contrasts  
         if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          names(Table.contrasts)<-c("estimateur", "ddl","t", "p")}else names(Table.contrasts)<-c("estimate", "df","t", "p.value")
+          names(Table.contrasts)<-c("estimateur", "ddl","t", "valeur.p")}else names(Table.contrasts)<-c("estimate", "df","t", "p.value")
         
         
         dimnames(Table.contrasts)[[1]]<-table.cont[,1]
