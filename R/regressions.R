@@ -159,7 +159,8 @@ regressions <-
         Resultats$"Graphique testant la linearite entre les predicteurs et la variable dependante"<-ols_plot_comp_plus_resid(lm.r1)
         Resultats$"Indice des valeurs propres"<-FIV$`Indice des valeurs propres`
         dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
-        Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[1],"statistique de D-W"=DWT.results[2],"valeur.p"=DWT.results[3]),4)
+        Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[[1]],
+                                                                               "statistique de D-W"=DWT.results[[2]],"valeur.p"=DWT.results[[3]]),4)
        
         var.err<-ols_test_breusch_pagan(lm.r1, rhs=T)
 
