@@ -1080,9 +1080,15 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         c(names(data[,between]), paste(names(data[,between])[1],":",names(data[,between])[2]))->dimnames(T2)[[1]]
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-T2
       }
-      try(
-        Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),
-                                                                                            data=data, est = "mom", nboot = n.boot),silent=T)
+      mom<-try(
+        WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "mom", nboot = n.boot),silent=T)
+      if(class(mom)!="try-error")  {
+        mom<-cbind(c(between, paste0(between[1], between[2])), mom<-mom[c(2,4,6)])
+        mom<-data.frame(mom)
+        names(mom)<-c(" ", "valeur.p")
+         Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
+      }
+     
       try( Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])), 
                                                                                                data=data, est = "median", nboot = n.boot),silent=T)
       
