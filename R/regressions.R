@@ -147,6 +147,7 @@ regressions <-
         Resultats$"Normalite multivariee"<-.normalite(data=dtrgeasieR, X=cont, Y=NULL)
         ols_plot_resid_fit(lm.r1)
         FIV<-ols_coll_diag(lm.r1) # calcul du facteur d inflation de la variance 
+        FIV[[1]]<-data.frame(FIV[[1]])
         names(FIV)<-c("Test de multicolinearite", "Indice des valeurs propres")
         names(FIV$`Test de multicolinearite`)<-c("variables", "Tolerance", "FIV")
         Resultats$"Tests de multicolinearite"<-FIV$`Test de multicolinearite`
