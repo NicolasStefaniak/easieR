@@ -999,7 +999,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       F.MC<-data.frame(D.exact.test=c(ans$statistic), valeur.p=c(ans$p.value))
        dimnames(F.MC)[[1]]<-comp
        F.MC<-F.MC[complete.cases(F.MC),]
-      F.MC$p<-round.ps(F.MC$p)
+#      F.MC$p<-round.ps(F.MC$p)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",48)]]<-F.MC
       
       
