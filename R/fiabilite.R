@@ -130,7 +130,7 @@ fiabilite <-
             psych::alpha(Matrice, keys=keys,n.obs=length(data[,1]))->cron
           }
           
-          round(cron$total,3)->Resultats$"Alpha de Cronbach sur la totalite de l'ehelle"
+          round(cron$total,3)->Resultats$"Alpha de Cronbach sur la totalite de l'echelle"
           if(n.boot>1) cron$boot.ci->Resultats$"Intervalle de confiance base sur le bootstrap"
           cron$total[,1]->a1
           cron$total[,6]->ase
