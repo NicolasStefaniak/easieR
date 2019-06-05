@@ -1101,7 +1101,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         mediane<-cbind(comp, matrix(c(test[[1]][[1]][[2]], test[[1]][[2]][[2]] , test[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(mediane)<-c("psihat", "valeur.p", "lim.inf"."lim.sup")
+        names(mediane)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
         Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",42)]]<-mediane
       }
       
@@ -1110,7 +1110,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         mediane<-cbind(comp, matrix(c(test[[1]][[1]][[2]], test[[1]][[2]][[2]] , test[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(mediane)<-c("psihat", "valeur.p", "lim.inf"."lim.sup")
+        names(mediane)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
         Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-mediane
       }
     }
