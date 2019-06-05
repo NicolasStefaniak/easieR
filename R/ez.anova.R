@@ -1093,7 +1093,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   if(class(mom)!="try-error")  {
     mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
     dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c("valeur.p"))
-    Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
+    Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-mom
   }
       
       try(WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "mom", nboot = n.boot), silent=T)->mediane
