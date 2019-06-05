@@ -1088,18 +1088,29 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
          Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
       }
      
-      try( Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])), 
-                                                                                               data=data, est = "median", nboot = n.boot),silent=T)
+       mom<-try(
+     WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "median", nboot = n.boot),silent=T)
+  if(class(mom)!="try-error")  {
+    mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
+    dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c("valeur.p"))
+    Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
+  }
       
       try(WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "mom", nboot = n.boot), silent=T)->mediane
       if(class(mediane)!="try-error") {
-        mediane$call<-NULL
+        comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
+                 valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
+        mediane<-cbind(comp, matrix(c(test[[1]][[1]][[2]], test[[1]][[2]][[2]] , test[[1]][[3]][[2]]), ncol=2, byrow=T))
+        names(mediane)<-c("psihat", "valeur.p", "lim.inf"."lim.sup")
         Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",42)]]<-mediane
       }
       
       try(mediane<-WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "median", nboot = n.boot), silent=T)
       if(class(mediane)!="try-error") {
-        mediane$call<-NULL
+        comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
+                 valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
+        mediane<-cbind(comp, matrix(c(test[[1]][[1]][[2]], test[[1]][[2]][[2]] , test[[1]][[3]][[2]]), ncol=2, byrow=T))
+        names(mediane)<-c("psihat", "valeur.p", "lim.inf"."lim.sup")
         Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-mediane
       }
     }
