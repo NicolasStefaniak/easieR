@@ -1100,20 +1100,20 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       if(class(mediane)!="try-error") {
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
-        mediane<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(mediane)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
-        dimnames(mediane)[[1]]<-names(mediane[[2]])
-        Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",42)]]<-mediane
+        med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
+        names(med)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
+        dimnames(med)[[1]]<-names(mediane[[2]])
+        Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",42)]]<-med
       }
       
       try(mediane<-WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "median", nboot = n.boot), silent=T)
       if(class(mediane)!="try-error") {
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
-        mediane<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(mediane)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
-        dimnames(mediane)[[1]]<-names(mediane[[2]])
-        Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-mediane
+        med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
+        names(med)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
+        dimnames(med)[[1]]<-names(mediane[[2]])
+        Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-med
       }
     }
     
