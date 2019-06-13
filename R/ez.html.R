@@ -81,7 +81,7 @@ ez.html <-
           if(any(class(Resultats[[i]])=="matrix") | any(class(Resultats[[i]])=="table") |  any(class(Resultats[[i]])=="data.frame")|  any(class(Resultats[[i]])=="ftable")) {
             
             essai<-Resultats[[i]]
-            if(class(essai)=="ftable") {
+            if(any(class(essai)=="ftable")) {
               essai<-dcast(as.data.frame(essai), as.formula(paste(paste(names(attr(essai, 'row.vars')), collapse='+'), '~', paste(names(attr(essai, 'col.vars'))))))
             }
             
@@ -92,7 +92,7 @@ ez.html <-
                      "table<-data.results[[i]]",
                      "tableau<-table",
                      "tableau<-as.data.frame.matrix(tableau)",
-                     "if(has_rownames(tableau) & rownames(tableau)!=' ') tableau<-rownames_to_column(tableau, var = ' ')", 
+                     "if(has_rownames(tableau) & any(rownames(tableau)!=' ')) tableau<-rownames_to_column(tableau, var = ' ')", 
                      "if(any(grepl('valeur.p', names(tableau)))) {", 
                      "col<-which(grepl('valeur.p', names(tableau)))",
                      "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))",
