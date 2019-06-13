@@ -33,6 +33,7 @@ import <-
     file <- try(file.choose(), silent=TRUE)
     if(class(file)=="try-error") return(import())
     setwd(dirname(file))
+    basename(file)->file
     }
     
     
@@ -65,7 +66,8 @@ import <-
         }
       }
     }
-    if(type=="fichier SPSS") {basename(file)->file
+    if(type=="fichier SPSS") {
+      #basename(file)->file
       data1<-read.spss(file, to.data.frame=TRUE)
       col.char <-sapply(data1, is.factor)
       if(any(col.char)) data1[col.char] <- lapply(data1[which(col.char)], factor)
