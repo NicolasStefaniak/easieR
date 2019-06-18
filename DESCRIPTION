@@ -82,6 +82,7 @@ Imports: afex,
          stringr, 
          svDialogs, 
          TeachingDemos,
+         tibble,
          trimcluster, 
          WRS2
 License: GPL-2
