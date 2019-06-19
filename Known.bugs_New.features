@@ -30,3 +30,4 @@
 28) now p.values are in red in html output (only in French for the moment) (05/23/2019)
 29) ez.html has been updated, corrected and debugged (06/01/2019) (update 06/05/2019)
 30) logistic regressions returns error
+31) the option "by group" on correlation matrix returns error
