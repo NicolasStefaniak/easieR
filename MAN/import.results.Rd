@@ -5,7 +5,7 @@
 Import results that has been saved by easieR.GUI
 }
 \description{
-Wrapper function for dget. It is a GUI for restoring results that have been saved by easieR.GUI
+Wrapper function for openFileInOS. It is a GUI for restoring results that have been saved by easieR.GUI
 }
 \usage{
 import.results()
@@ -40,7 +40,8 @@ Nicolas Stefaniak
 
 import.results()
 # is the same as 
-dget(file.choose())
+require(pander)
+openFileInOS(file.choose())
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
