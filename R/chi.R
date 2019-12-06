@@ -213,10 +213,10 @@ chi <-
                             "ddl"=mon.chi$parameter, Cramer(mon.chi))
             if(any(choix2=="Test non parametrique")) SY$valeur.p<-round(mon.chi$p.value,4) 
             try(fisher.test(tab),silent=T)->fisher
-            if(class(fisher)!="try-error") SY$"Valeur.p.Fisher.Exact.Test"=round(fisher$p.value,4)
+            if(class(fisher)!="try-error") SY$Fisher.Exact.Test=round(fisher$p.value,4)
             if(all(dim(tab)==2)){
               mon.chi<-chisq.test(tab, B=n.boot, correct=T)
-              AY<-data.frame("chi.deux"=round(mon.chi$statistic,4),"ddl"=mon.chi$parameter,   Cramer(mon.chi),"Fisher.Exact.Test"="" )
+              AY<-data.frame("chi.deux"=round(mon.chi$statistic,4),"ddl"=mon.chi$parameter,   Cramer(mon.chi),valeur.p=round(mon.chi$p.value,4) ,Fisher.Exact.Test="" )
               if(any(choix2=="Test non parametrique")) AY$valeur.p<-round(mon.chi$p.value,4)
               SY<-rbind(SY, AY)
               dimnames(SY)[[1]]<-c("Sans correction de Yates", "Avec correction de Yates") 
