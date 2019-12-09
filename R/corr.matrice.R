@@ -281,7 +281,7 @@ corr.matrice <-
 	    r1$tri<-1:length(dimnames(r1)[[2]])
       r1<-r1[order(r1$tri), ]
 	    r1<-r1[,-length(r1)]
-      r1[which(is.na(r1))]<-"-" 
+      r1[is.na(r1)]<-"-" 
       nice.mat<-list()
       nice.mat$"Matrice de correlations"<-(r1)
       if(html) try(ez.html(nice.mat), silent =T)
