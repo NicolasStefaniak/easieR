@@ -124,7 +124,7 @@ regressions <-
       
       if(scale==T || scale=="Centre") {Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
       
-      which(sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)!="factor")->centre
+      which(!sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)%in%c("factor", "character"))->centre
       if(length(centre)==1) dtrgeasieR[,names(centre)]-mean(dtrgeasieR[,names(centre)],na.rm=T)->dtrgeasieR[,names(centre)] else{
         sapply(X=dtrgeasieR[,names(centre)], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,names(centre)]
       }
@@ -143,7 +143,7 @@ regressions <-
       resid(lm.r1)->dtrgeasieR$residu
       Resultats$"Tests de normalite"<-.normalite(data=dtrgeasieR, X="residu", Y=NULL)
       if(length(variables)>1)  {
-        cont<-variables[which(sapply(dtrgeasieR[,variables],class)!="factor")]
+        cont<-variables[which(!sapply(dtrgeasieR[,variables],class)%in%c("factor","character"))]
         Resultats$"Normalite multivariee"<-.normalite(data=dtrgeasieR, X=cont, Y=NULL)
         ols_plot_resid_fit(lm.r1)
         FIV<-ols_coll_diag(lm.r1) # calcul du facteur d inflation de la variance 
@@ -152,18 +152,18 @@ regressions <-
         names(FIV$`Test de multicolinearite`)<-c("variables", "Tolerance", "FIV")
         Resultats$"Tests de multicolinearite"<-FIV$`Test de multicolinearite`
         if(FIV$`Test de multicolinearite`$Tolerance==0) {
-            msgBox("La multicolinearite est trop importante. Le modele est instable")
-            return(Resultats)
-            }
-
+          msgBox("La multicolinearite est trop importante. Le modele est instable")
+          return(Resultats)
+        }
+        
         Resultats$"Graphique testant la linearite entre les predicteurs et la variable dependante"<-ols_plot_comp_plus_resid(lm.r1)
         Resultats$"Indice des valeurs propres"<-FIV$`Indice des valeurs propres`
         dwt(lm.r1, simulate=TRUE, method= "normal", reps=500)->DWT.results
         Resultats$"Test de Durbin-Watson - autocorrelations"<-round(data.frame("Autocorrelation"=DWT.results[[1]],
                                                                                "statistique de D-W"=DWT.results[[2]],"valeur.p"=DWT.results[[3]]),4)
-       
+        
         var.err<-ols_test_breusch_pagan(lm.r1, rhs=T)
-
+        
         Resultats$"Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"<-data.frame(chi=var.err$bp,
                                                                                                                  ddl=length(var.err$preds), valeur.p=var.err$p) 
         
@@ -283,7 +283,7 @@ regressions <-
             denomBF<-lmBF(formula= as.formula(formule.H1[[i-1]]), data=dtrgeasieR, rscaleFixed=rscale)
             OddBF<-numBF/denomBF
             BF.hier<-c(BF.hier, extractBF(OddBF, onlybf=T))}
-
+          
           BF.hier<-data.frame("Rapport des FB entre les modeles"=BF.hier, "FB du modele"= BF.modele)
           dimnames(BF.hier)[[1]]<- unlist(as.character(formule.H1))
           Resultats$"Approche bayesienne des modeles hierarchique"<-BF.hier
@@ -303,7 +303,7 @@ regressions <-
         data.frame(summary(lm.r1)$coefficients)->table # fournit le b, le t et la valeur de la probabilite. On le stocke dans table
         round(table[,1:4],3)->table # on arrondit les valeurs a 3 decimales 
         
-        beta<-coef(lm.r1)*sapply(data.frame(model.matrix(lm.r1)),sd) /sd(data[,variables[1]])
+        beta<-coef(lm.r1)*sapply(data.frame(model.matrix(lm.r1)),sd) /sd(dtrgeasieR[,variables[1]])
         c("",round(beta[-1],5))->table$beta # fournit les betas qu on inclut a la table 
         names(table)<-c("b","erreur.standard","t","valeur.p","beta")
         
@@ -324,10 +324,10 @@ regressions <-
         table[is.na(table)]<-""
         table->Resultats$"table des betas"
         if(length(pred)>1){
-        ols.corr<-ols_correlations(lm.r1)
-        Resultats$"Contribution des variables au modele"<-ols.corr
-        Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)
-          }
+          ols.corr<-ols_correlations(lm.r1)
+          Resultats$"Contribution des variables au modele"<-ols.corr
+          Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)
+        }
       }
       
       if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
