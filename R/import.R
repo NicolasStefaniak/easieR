@@ -98,7 +98,9 @@ import <-
       writeLines("Des caracteres non autorises ont ete utilises pour le nom. Ces caracteres ont ete remplaces par des points")
       gsub("[^[:alnum:]]", ".", name)->name
     }
-    data1<-data.frame(data1)
+     name<-replace_non_ascii(names(data1))
+     names(data1)<-name
+     data1<-data.frame(data1)
     
     if(any(nchar(names(data1))>30)) {
       dlgMessage("Certaines variables ont des noms particulierement longs pouvant gener la lecture. Voulez-vous les raccourcir?", "yesno")$res->rn
