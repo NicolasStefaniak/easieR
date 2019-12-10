@@ -13,7 +13,7 @@ import <-
     
     
     options (warn=-1)
-    c("svDialogs",  "readxl","foreign")->packages
+    c("svDialogs",  "readxl","foreign", "textclean")->packages
     lapply(packages, require,character.only=T)
     Resultats <- list()
     if(info==TRUE) print("Dans quel format est enregistre votre fichier ?")
