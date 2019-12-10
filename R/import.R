@@ -98,8 +98,8 @@ import <-
       writeLines("Des caracteres non autorises ont ete utilises pour le nom. Ces caracteres ont ete remplaces par des points")
       gsub("[^[:alnum:]]", ".", name)->name
     }
-     name<-replace_non_ascii(names(data1))
-     names(data1)<-name
+     nameV<-replace_non_ascii(names(data1))
+     names(data1)<-nameV
      data1<-data.frame(data1)
     
     if(any(nchar(names(data1))>30)) {
