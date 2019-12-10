@@ -82,6 +82,7 @@ Imports: afex,
          stringr, 
          svDialogs, 
          TeachingDemos,
+         textclean,
          tibble,
          trimcluster, 
          WRS2
