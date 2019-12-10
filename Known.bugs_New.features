@@ -8,7 +8,7 @@
 7) several minor corrections on ez.anova (09/25/2018)
 8) automatic attribution of row.names in ez.reshape has been fixed (09/26/2018)
 9) reversed items are not reversed in alpha (fixed 09/28/2018)
-10) aov.plus() is not working at the moment
+10) aov.plus() is not working at the moment (fixed 12/10/2019)
 11) confirmatory factor analysis failed on mac OS (fixed)
 12) paired comparison for non parametric test in anova returns an error (fixed 10/07/2018)
 13) omega squared must be added in ez.anova (added 10/07/2018)
@@ -19,7 +19,7 @@
 17) the function anova does not allow to choose the number of iterations for Bayes Factors
 18) the interaction failed in logistic regression
 19) missing values could return an error in anova (fixed 12/21/2018) 
-20) Descriptive statistics for factor variable have been corrected so that it appears in the html output
+20) Descriptive statistics for factor variable have been corrected so that it appears in the html output (fixed)
 21) Rgtk2 is not anymore considered as a missing package on mac OS (06/02/2019)
 22) ez.anova does not require anymore that WRS is installed (06/02/2019)
 23) the ICC functions is explictly associated to the 'psych' package in order to avoir error message due to other packages (03/19/2019)
@@ -30,4 +30,4 @@
 28) now p.values are in red in html output (only in French for the moment) (05/23/2019)
 29) ez.html has been updated, corrected and debugged (06/01/2019) (update 06/05/2019)
 30) logistic regressions returns error
-31) the option "by group" on correlation matrix returns error
+31) the option "by group" on correlation matrix returns error (fixed 12/10/2019)
