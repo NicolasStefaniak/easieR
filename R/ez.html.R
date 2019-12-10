@@ -51,7 +51,7 @@ ez.html <-
             
             output<-c(output, essai)
           }        
-          if(any(class(Resultats[[i]])=="ggplot")) {
+          if(any(class(Resultats[[i]])%in%c("ggplot","arrangelist"))) {
             essai<-Resultats[[i]]
             if(Sys.info()[[1]]=="Windows"){
               dire<-dir(paste0(tempdir(), "\\easieR\\"))
