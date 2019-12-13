@@ -1,7 +1,7 @@
 ez.html <-
   function(ez.results=NULL){
     
-    packages<-c("rmarkdown", "knitr","ggplot2","stringr","reshape2") 
+    packages<-c("rmarkdown", "knitr","ggplot2","stringr","reshape2", "readr","stringi") 
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
       require(packages)}
     dir.create(path= paste0(tempdir(),"\\easieR") , showWarnings = FALSE)
@@ -167,7 +167,10 @@ ez.html <-
       file.nameRmd<-paste0(tempdir(), "/easieR/Rapport.easieR.Rmd")
     }
     writeLines(output, file.nameRmd)
-    render(file.nameRmd, quiet=T)
+    lines <- unlist(read_lines_raw(file.nameRmd, n_max = 10000))
+    guess <- stringi::stri_enc_detect(lines)
+    encoding<-guess[[1]]$Encoding[which.max(guess[[1]]$Confidence)]
+    render(file.nameRmd, quiet=T, encoding=encoding)
     if(Sys.info()[[1]]=="Windows"){
       browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
     } else {
