@@ -166,8 +166,8 @@ ez.html <-
     } else {
       file.nameRmd<-paste0(tempdir(), "/easieR/Rapport.easieR.Rmd")
     }
-    output<-iconv(output, to="UTF-8")
-    writeLines(output, file.nameRmd)
+
+    writeLines(enc2utf8(output), file.nameRmd, useBytes = TRUE)
     render(file.nameRmd, quiet=T, encoding="UTF-8")
     if(Sys.info()[[1]]=="Windows"){
       browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
