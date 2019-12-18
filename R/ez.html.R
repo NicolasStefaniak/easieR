@@ -6,14 +6,15 @@ ez.html <-
       require(packages)}
     dir.create(path= paste0(tempdir(),"\\easieR") , showWarnings = FALSE)
     
-    outputb<-c("---","title: 'Resultats de vos analyses'",
+outputb<-c("---","title: 'Resultats de vos analyses'",
                "author: 'Genere automatiquement par easieR'",
                paste("date:","'", date(),"'"),
-               "output:",
+               if(html) {c("output:",
                "  html_document:",
                "    toc: true",
                "    toc_float: true",
-               "    toc_depth: 5",
+               "    toc_depth: 5")}else{
+			         "output: word_document"},
                "---")
     a<-c("```{r global options, include = FALSE}",
          "knitr::opts_chunk$set(echo=FALSE, include=TRUE, warning=FALSE, message=FALSE)",
