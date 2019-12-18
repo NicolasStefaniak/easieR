@@ -19,7 +19,8 @@ donnees <-
     if(choix %in% c("importer des resultats", "import results")) import.results()->Resultats
     if(choix %in% c("importer des donnees","import data") ) import()->Resultats
     if(choix %in% c("exporter des donnees", "export data")) exporterD()->Resultats
-    if(choix %in% c("generer un rapport", "Compile the report of the session")) ez.report()
+    if(choix %in% c("generer un rapport", "Compile the report of the session")) {ez.report()
+                                                                                 Resultats<-NULL}
     return(Resultats)
   }
 
