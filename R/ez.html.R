@@ -170,10 +170,18 @@ outputb<-c("---","title: 'Resultats de vos analyses'",
 
     writeLines(enc2utf8(output), file.nameRmd, useBytes = TRUE)
     render(file.nameRmd, quiet=T, encoding="UTF-8")
+    if(html){	  
     if(Sys.info()[[1]]=="Windows"){
       browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
     } else {
       browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.html"))
+    }
+    }else { 
+    if(Sys.info()[[1]]=="Windows"){
+      browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.docx"))
+    } else {
+      browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.docx"))
+    }
     }
     
     
