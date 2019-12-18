@@ -1,5 +1,5 @@
 ez.html <-
-  function(ez.results=NULL){
+  function(ez.results=NULL, html=T){
     
     packages<-c("rmarkdown", "knitr","ggplot2","stringr","reshape2", "readr","stringi") 
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
