@@ -1,6 +1,6 @@
 regressions.log <-
   function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=NULL, inf=T, select.m="none", step=NULL, group=NULL, scale=T, dial=T, info=T,
-           sauvegarde=F,proba=F){
+           sauvegarde=F,proba=F, html=T){
     
     logisticPseudoR2s <- function(LogModel) {
       dev <- LogModel$deviance
