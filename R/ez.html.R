@@ -85,7 +85,7 @@ outputb<-c("---","title: 'Resultats de vos analyses'",
             if(any(class(essai)=="ftable")) {
 		    if(length(attributes(essai[[1]])$row.vars)!=0 & length(attributes(essai[[1]])$col.vars)!=0) {
               essai<-dcast(as.data.frame(essai), as.formula(paste(paste(names(attr(essai, 'row.vars')), collapse='+'), '~', paste(names(attr(essai, 'col.vars'))))))
-			    }else{essai<-as.data.frame(essai)
+			    }else{ if() essai<-as.data.frame(essai)
       }
             }
             
@@ -95,7 +95,7 @@ outputb<-c("---","title: 'Resultats de vos analyses'",
                      "i<-i+1",
                      "table<-data.results[[i]]",
                      "tableau<-table",
-                     "tableau<-as.data.frame.matrix(tableau)",
+                    # "tableau<-as.data.frame.matrix(tableau)",
                      "if(has_rownames(tableau) & any(rownames(tableau)!=' ')) tableau<-rownames_to_column(tableau, var = ' ')", 
                      "if(any(grepl('valeur.p', names(tableau)))) {", 
                      "col<-which(grepl('valeur.p', names(tableau)))",
