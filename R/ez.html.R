@@ -85,7 +85,7 @@ outputb<-c("---","title: 'Resultats de vos analyses'",
             if(any(class(essai)=="ftable")) {
 		    if(length(attributes(essai[[1]])$row.vars)!=0 & length(attributes(essai[[1]])$col.vars)!=0) {
               essai<-dcast(as.data.frame(essai), as.formula(paste(paste(names(attr(essai, 'row.vars')), collapse='+'), '~', paste(names(attr(essai, 'col.vars'))))))
-			    }else{essai<-data.frame(essai[[1]])
+			    }else{essai<-as.table(essai)
       }
             }
             
