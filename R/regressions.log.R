@@ -449,7 +449,7 @@ regressions.log <-
     .add.result(Resultats=Resultats, name =paste("Regressions.logistique", Sys.time() ))  
     if(sauvegarde)   if(sauvegarde) save(Resultats=Resultats, choix="Regressions.logistique", env=.e)
     Resultats$"References"<-ref1(packages)
-    ez.html(Resultats)
+    if(html) try(ez.html(Resultats), silent=T)
     return(Resultats)
     
   }
