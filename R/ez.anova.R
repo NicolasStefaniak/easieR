@@ -771,7 +771,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
           
         }} 
       
-      Resultats$Figure<-emmip(aov.out,as.formula(graph.modele),CIs=T)
+     try( Resultats$Figure<-emmip(aov.out,as.formula(graph.modele),CIs=T), silent=T)
     
     
     
