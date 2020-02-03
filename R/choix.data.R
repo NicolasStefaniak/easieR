@@ -3,6 +3,7 @@ choix.data <-
     # data : character corresponding to the object name representing data. 
     # info : donne une explication sur les arguments
     # nom : logique. Specifie si le nom de la base de donnees doit etre importe en meme temps. Dans ce cas, l'objet renvoye est une liste
+    library("svDialogs")
     list()->Resultats
     Filter( function(x) 'data.frame' %in% class( get(x) ), ls(envir=.GlobalEnv))->nom1
     if(length(nom1)==0) {
