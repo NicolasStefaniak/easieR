@@ -14,7 +14,7 @@ choix.corr <-
               "Autres correlations"), preselect=NULL, multiple = FALSE, title="Quelle analyse voulez-vous?")$res->choix
     if(length(choix)==0) return(analyse())
     switch(choix,
-           "Analyse detaillee (Bravais Pearson/Spearman/tau) pour une ou peu de correlations"=corr.complet()->Resultats,
+           "Analyse detaillee (Bravais Pearson/Spearman/tau) pour une ou peu de correlations"=corr.complet(html=html)->Resultats,
            "Matrice de correlations"= corr.matrice(html=html)->Resultats,
            "Comparaison de deux correlations"= comp.corr(html=html)->Resultats,
            "Autres correlations"= tetrapoly(html=html)->Resultats
