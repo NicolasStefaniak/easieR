@@ -1,5 +1,5 @@
 choix.corr <-
-  function(){options (warn=-1) 
+  function(html=T){options (warn=-1) 
     c( "svDialogs")->packages
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
       require(packages)} 
@@ -15,9 +15,9 @@ choix.corr <-
     if(length(choix)==0) return(analyse())
     switch(choix,
            "Analyse detaillee (Bravais Pearson/Spearman/tau) pour une ou peu de correlations"=corr.complet()->Resultats,
-           "Matrice de correlations"= corr.matrice()->Resultats,
-           "Comparaison de deux correlations"= comp.corr()->Resultats,
-           "Autres correlations"= tetrapoly()->Resultats
+           "Matrice de correlations"= corr.matrice(html=html)->Resultats,
+           "Comparaison de deux correlations"= comp.corr(html=html)->Resultats,
+           "Autres correlations"= tetrapoly(html=html)->Resultats
     )
     return(Resultats)
   }
