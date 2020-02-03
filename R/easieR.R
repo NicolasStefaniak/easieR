@@ -1,6 +1,6 @@
 
 easieR <-
-  function(info=TRUE){
+  function(info=TRUE, html=T){
     # 1. l'argument info permettra a terme de choisir les informations qui s'affichent dans la console ou non 
     options (warn=1)
     options(scipen=999)
@@ -18,7 +18,7 @@ easieR <-
       if(choix %in%c("Donnees - (Importation, exportation, sauvegarde)",
                      "Data - (Import, export, save")) Resultats <- donnees()
       if(choix %in% c("Analyses - Tests d'hypothese", 
-                      "Analyses - Hypothesis tests")) Resultats <-analyse()
+                      "Analyses - Hypothesis tests")) Resultats <-analyse(html=html)
       if(choix%in%c("Interface - objets en memoire, nettoyer la memoire, repertoire de travail",
                   "Interface - objects in memory, clean memory, wordking directory")) Resultats <- interfaceR()
       if(choix%in% c("Pretraitements (tri, selection, operations mathematiques, Traitement des valeurs manquantes)",
