@@ -2,7 +2,8 @@
 
 
 fiabilite <-
-  function(X=NULL,Y=NULL, data=NULL, choix=NULL, ord=NULL,outlier="Donnees completes", keys=NULL, n.boot=NULL, sauvegarde=F, imp=NULL){
+  function(X=NULL,Y=NULL, data=NULL, choix=NULL, ord=NULL,outlier="Donnees completes", keys=NULL, n.boot=NULL, sauvegarde=F, 
+           imp=NULL, html=TRUE){
     # choix
     
     options (warn=-1)
@@ -181,6 +182,6 @@ fiabilite <-
     
     if(sauvegarde)save(Resultats=Resultats, choix=choix, env=.e)
     ref1(packages)->Resultats$"References"
-   try(ez.html(Resultats), silent=T)
+   if(html) try(ez.html(Resultats), silent=T)
     return(Resultats)
   }
