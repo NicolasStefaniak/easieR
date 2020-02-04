@@ -83,7 +83,6 @@ Imports: afex,
          TeachingDemos,
          textclean,
          tibble,
-         trimcluster, 
          WRS2
 License: GPL-2
 RoxygenNote: 6.0.1
