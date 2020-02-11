@@ -2,7 +2,8 @@ test.t <-
   function(X=NULL, Y=NULL, group=NULL, choix=NULL,
            sauvegarde=F, outlier=c("Donnees completes",  "Identification des valeurs influentes","Donnees sans valeur influente"),  z=NULL, data=NULL,
            alternative="two.sided", mu=NULL, formula=NULL, n.boot=NULL, 
-           param=c("test parametrique", "test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens"), info=TRUE, rscale=0.707){
+           param=c("test parametrique", "test non parametrique","Test robustes - impliquant des bootstraps", 
+                   "Facteurs bayesiens"), info=TRUE, rscale=0.707, html=T){
     # X : Character specifying the dependant variable in dataframe. 
     # Y : character specifying either a two levels factor in dataframe or a numeric variable if paired is TRUE
     # group : Factor vector allowing to decompose analysis by group in one sample t test
@@ -779,7 +780,7 @@ test.t <-
     if(sauvegarde){save(Resultats=Resultats ,choix =choix, env=.e)}
     
     ref1(packages)->Resultats$"References"
-    ez.html(Resultats)
+    if(html) ez.html(Resultats)
     ### Obtenir les Resultats
     return(Resultats) 
     
