@@ -1,32 +1,32 @@
 ez.html <-
-  function(ez.results=NULL, html=T){
+ function(ez.results=NULL, html=T){
     
     packages<-c("rmarkdown", "knitr","ggplot2","stringr","reshape2", "readr","stringi") 
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
       require(packages)}
     dir.create(path= paste0(tempdir(),"\\easieR") , showWarnings = FALSE)
     
-outputb<-c("---","title: 'Resultats de vos analyses'",
+    outputb<-c("---","title: 'Resultats de vos analyses'",
                "author: 'Genere automatiquement par easieR'",
                paste("date:","'", date(),"'"),
                if(html) {c("output:",
-               "  html_document:",
-               "    toc: true",
-               "    toc_float: true",
-               "    toc_depth: 5")}else{
-			         "output: word_document"},
+                           "  html_document:",
+                           "    toc: true",
+                           "    toc_float: true",
+                           "    toc_depth: 5")}else{
+                             "output: word_document"},
                "---")
     a<-c("```{r global options, include = FALSE}",
          "knitr::opts_chunk$set(echo=FALSE, include=TRUE, warning=FALSE, message=FALSE)",
          "```")
     
     im<-c("```{r, echo=F}","options(digits = 4)", "library('pander')","library('knitr')",
-          "library('bibtex')", "library('flextable')","library('tibble')", "data.results<-dget('ez.results.txt')", "i<-0","```")
+          "library('bibtex')", "library('huxtable')","library('tibble')", "data.results<-dget('ez.results.txt')", "i<-0","```")
     round<-c("```{r, echo=F}",
              "round.ps<-function (x) { substr(as.character(ifelse(x < 0.0001, ' <.0001', ifelse(round(x, 2) == 1, ' >.99', formatC(x, digits = 4, format = 'f')))), 2, 7)}",
              "myf<-function(x){which(x<0.05)}"
-                  ,"```")
-
+             ,"```")
+    
     outputb<-c(outputb,a, im,round)
     
     to.html<-function(Resultats, X=1){
@@ -78,44 +78,6 @@ outputb<-c("---","title: 'Resultats de vos analyses'",
             }
             
           }
-          
-          if(any(class(Resultats[[i]])=="matrix") | any(class(Resultats[[i]])=="table") |  any(class(Resultats[[i]])=="data.frame")|  any(class(Resultats[[i]])=="ftable")) {
-            
-            essai<-Resultats[[i]]
-            if(any(class(essai)=="ftable")) {
-		    if(length(attributes(essai[[1]])$row.vars)!=0 & length(attributes(essai[[1]])$col.vars)!=0) {
-              essai<-dcast(as.data.frame(essai), as.formula(paste(paste(names(attr(essai, 'row.vars')), collapse='+'), '~', paste(names(attr(essai, 'col.vars'))))))
-			    }else{  essai<-as.data.frame(essai)
-      }
-            }
-            
-            listes[[length(listes)+1]]<-essai
-            
-            essai<-c("```{r, echo=F, results='asis'}", 
-                     "i<-i+1",
-                     "table<-data.results[[i]]",
-                     "tableau<-table",
-                     "tableau<-as.data.frame(tableau)",
-                     "if(has_rownames(tableau) & any(rownames(tableau)!=' ')) tableau<-rownames_to_column(tableau, var = ' ')", 
-                     "if(any(grepl('valeur.p', names(tableau)))) {", 
-                     "col<-which(grepl('valeur.p', names(tableau)))",
-                     "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))",
-                     "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
-                     "is<-which(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)",
-                     "tableau[, which(grepl('valeur.p', names(tableau)))]<-round.ps(tableau[, which(grepl('valeur.p', names(tableau)))])}}",
-                     "ft<-flextable(tableau)", 
-                     "if(!is.null(names(dimnames(table)))){ft<-add_header_row(ft, top=T, values=c(names(dimnames(table)), rep(' ',times= length(tableau)-2)))}",
-                     "ft<-theme_booktabs(ft)",
-                     "ft<-fontsize(ft, size=14, part='all')",
-                     "if(any(grepl('valeur.p', names(tableau)))) {",
-                         "ft <- color( ft, i = is, j = 1:ncol(tableau), color = 'red' )",
-                         "}", 
-                     "if(any(class(table)=='p.value')){",
-                     "for(j in 1:ncol(tableau)){ft <- color(ft, i = which(tableau[,j]<0.05) , j = j, color='red')}}",
-                     "ft","```")
-            output<-c(output, essai)
-          }
-          
           if(any(class(Resultats[[i]])=="numeric") ) {
             if(length(Resultats[[i]])==1) {
               output<-c(output, Resultats[[i]])
@@ -123,19 +85,77 @@ outputb<-c("---","title: 'Resultats de vos analyses'",
               
               round(matrix(Resultats[[i]],nrow=1),4)->essai
               essai<-data.frame(essai)
+
               names(essai)<-names(Resultats[[i]])
               listes[[length(listes)+1]]<-essai
               
-              essai<-c("```{r, echo=F, results='asis'}", "i<-i+1", "tableau<-data.results[[i]]",
-                       "tableau<-data.frame(tableau)", 
-                       "if(has_rownames(tableau) & rownames(tableau)!=' ') tableau<-rownames_to_column(tableau,  var = ' ')",
-                       "ft <- flextable(tableau)",
-                       "ft<-theme_booktabs(ft)", "ft<-fontsize(ft, size=14, part='all')",
-                       "if(any(grepl('valeur.p', names(tableau)))) ft <- color( ft, i = which(any(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)), j = 1:ncol(tableau), color = 'red' )", 
-                       "ft","```")
+              essai<-c("```{r, echo=F, results='asis'}", 
+                       "i<-i+1",
+                       "tableau<-data.results[[i]]",
+                       "tableau<-as.data.frame(tableau)",
+                       "if(!is.null(dimnames(tableau)[[1]])) tableau<-data.frame(' '=dimnames(tableau)[[1]], tableau, check.names=F)", 
+                       "if(any(grepl('valeur.p', names(tableau)))| any(grepl('p.value', names(tableau)))) {", 
+                       "col<-which(grepl('valeur.p', names(tableau))|grepl('p.value', names(tableau)))",
+                       "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))+1",
+                       "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
+                       "is<-which(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)", "is<-is+1",
+                       "tableau[, which(grepl('valeur.p', names(tableau))|grepl('p.value', names(tableau)))]<-round.ps(tableau[,  which(grepl('valeur.p', names(tableau))|grepl('p.value', names(tableau)))])}}",
+                       " ht <- as_hux(tableau,  add_colnames = TRUE)",
+                       "bottom_border(ht)[1,]<-1",
+                       "top_border(ht)[1,]<-1",
+                       " bottom_border(ht)[dim(ht)[1],]<-1",
+                       "if(any(grepl('valeur.p', names(tableau)))|any(grepl('p.value', names(tableau)))) {",
+                       "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red', byrow = T)",
+                       "}", 
+                       "if(any(class(table)=='p.value')){",
+                       "for(j in 1:ncol(tableau)){",
+                       "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red', byrow = T)}}",
+                       "ht",
+                       "```")
+
               output<-c(output, essai)
             }
           }
+          
+          if(any(class(Resultats[[i]])=="matrix") | any(class(Resultats[[i]])=="table") |  any(class(Resultats[[i]])=="data.frame")|  any(class(Resultats[[i]])=="ftable")) {
+            
+            essai<-Resultats[[i]]
+            if(any(class(essai)=="ftable")) {
+              if(length(attributes(essai[[1]])$row.vars)!=0 & length(attributes(essai[[1]])$col.vars)!=0) {
+                essai<-dcast(as.data.frame(essai), as.formula(paste(paste(names(attr(essai, 'row.vars')), collapse='+'), '~', paste(names(attr(essai, 'col.vars'))))))
+              }else{  essai<-as.data.frame(essai)
+              }
+            }
+            essai<-data.frame(essai)
+            listes[[length(listes)+1]]<-essai
+            
+            essai<-c("```{r, echo=F, results='asis'}", 
+                     "i<-i+1",
+                     "tableau<-data.results[[i]]",
+                     "tableau<-as.data.frame(tableau)",
+                     "if(!is.null(dimnames(tableau)[[1]])) tableau<-data.frame(' '=dimnames(tableau)[[1]], tableau, check.names=F)", 
+                     "if(any(grepl('valeur.p', names(tableau)))| any(grepl('p.value', names(tableau)))) {", 
+                     "col<-which(grepl('valeur.p', names(tableau))|grepl('p.value', names(tableau)))",
+                     "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))+1",
+                     "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
+                     "is<-which(tableau[, which(grepl('valeur.p', names(tableau)))]<0.05)", "is<-is+1",
+                     "tableau[, which(grepl('valeur.p', names(tableau))|grepl('p.value', names(tableau)))]<-round.ps(tableau[,  which(grepl('valeur.p', names(tableau))|grepl('p.value', names(tableau)))])}}",
+                     " ht <- as_hux(tableau,  add_colnames = TRUE)",
+                     "bottom_border(ht)[1,]<-1",
+                     "top_border(ht)[1,]<-1",
+                     " bottom_border(ht)[dim(ht)[1],]<-1",
+                     "if(any(grepl('valeur.p', names(tableau)))|any(grepl('p.value', names(tableau)))) {",
+                     "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red', byrow = T)",
+                     "}", 
+                     "if(any(class(table)=='p.value')){",
+                     "for(j in 1:ncol(tableau)){",
+                     "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red', byrow = T)}}",
+                     "ht",
+                     "```")
+            output<-c(output, essai)
+          }
+          
+         
           
           if(any(class(Resultats[[i]])=="list") ){
             Resultats[[i]]->Y
@@ -170,21 +190,21 @@ outputb<-c("---","title: 'Resultats de vos analyses'",
     } else {
       file.nameRmd<-paste0(tempdir(), "/easieR/Rapport.easieR.Rmd")
     }
-
+    
     writeLines(enc2utf8(output), file.nameRmd, useBytes = TRUE)
     render(file.nameRmd, quiet=T, encoding="UTF-8")
     if(html){	  
-    if(Sys.info()[[1]]=="Windows"){
-      browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
-    } else {
-      browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.html"))
-    }
+      if(Sys.info()[[1]]=="Windows"){
+        browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
+      } else {
+        browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.html"))
+      }
     }else { 
-    if(Sys.info()[[1]]=="Windows"){
-      browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.docx"))
-    } else {
-      browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.docx"))
-    }
+      if(Sys.info()[[1]]=="Windows"){
+        browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.docx"))
+      } else {
+        browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.docx"))
+      }
     }
     
     
