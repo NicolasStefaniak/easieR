@@ -287,7 +287,7 @@ corr.matrice <-
       if(html) try(ez.html(nice.mat), silent =T)
 
       
-      if(is.null(Y) & is.null(Z) & n.boot>100) round(cor.ci(data[,X], n.iter=n.boot, plot=FALSE)$ci,4)->Resultats$"Intervalle de confiance estime par bootstrap" else  round(matrice$ci,4)->Resultats$"Intervalle de confiance" 
+      if(is.null(Y) & is.null(Z) & (!is.null(n.boot) && n.boot > 100)) round(cor.ci(data[,X], n.iter=n.boot, plot=FALSE)$ci,4)->Resultats$"Intervalle de confiance estime par bootstrap" else  round(matrice$ci,4)->Resultats$"Intervalle de confiance" 
       names(Resultats[[length(Resultats)]])<-c("lim.inf","r","lim.sup","valeur.p")
       
       return(Resultats)  
