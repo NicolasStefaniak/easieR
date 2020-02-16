@@ -83,7 +83,7 @@ regressions.log <-
         }
         
         
-        if(any(link=="Effets additifs") || !null(X_a)| any(X_a %in% names(data)==F)) {
+        if(any(link=="Effets additifs") || !is.null(X_a)| any(X_a %in% names(data)==F)) {
           msg3<-"Veuillez choisir la variable dependante."
           X_a<-.var.type(X=Y, info=info, data=data, type=NULL, check.prod=F, message=msg3,  multiple=TRUE, title="Variables modele additif", out=Y)
           if(is.null(X_a)) {
