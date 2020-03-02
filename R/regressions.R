@@ -1,6 +1,6 @@
 regressions <-
   function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=NULL, inf=T, CV=F, select.m="none", method="p", step=NULL, group=NULL, criteria=0.15 , scale=T, dial=T, info=T,
-           sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353){
+           sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353, html=TRUE){
     
     
     
@@ -545,7 +545,7 @@ regressions <-
     .add.result(Resultats=Resultats, name =paste("regressions.multiples", Sys.time() ))  
     if(sauvegarde)   if(sauvegarde) save(Resultats=Resultats, choix="Regressions.multiples", env=.e)
     Resultats$"References"<-ref1(packages)
-    ez.html(Resultats)
+    if(html) ez.html(Resultats)
     return(Resultats)
   }
 
