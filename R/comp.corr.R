@@ -1,5 +1,5 @@
 comp.corr <-
-  function(xy=NULL, xz=NULL, yz=NULL, n=NULL, n2=NULL,twotailed=TRUE){options (warn=-1) 
+  function(xy=NULL, xz=NULL, yz=NULL, n=NULL, n2=NULL,twotailed=TRUE, html=FALSE){options (warn=-1) 
     #xy : value of the correlation between x and y
     #xz : value of the correlation between x and z
     #yz : value of the correlation between y and z. Should be null for independant comparisons et having a value for paired.
@@ -60,6 +60,7 @@ comp.corr <-
         n2<-value$"N de la correlation XZ"
       }
       comp.corr(xy=xy, xz=xz, yz=yz, n=n, n2=n2,twotailed=twotailed)->Resultats
+      if(html) html<-FALSE
       return(Resultats)
     }
     }
