@@ -1,5 +1,5 @@
 ez.mediation <-
-  function(info=T){
+  function(info=T, html=T){
     options (warn=-1) 
     mediation.effect.bar.plot2 <-function (x, mediator, dv, main = "Mediation Effect Bar Plot", 
                                            width = 1, left.text.adj = 0, right.text.adj = 0, rounding = 3, 
@@ -191,7 +191,7 @@ ez.mediation <-
     if(length(sauvegarde)==0) sauvegarde<-FALSE  
     if(sauvegarde) save(Resultats=Resultats, choix=choix, env=.e)
     ref1(packages)->Resultats$"References" 
-    ez.html(Resultats)
+    if(html) ez.html(Resultats)
     return(Resultats)  
     
   }
