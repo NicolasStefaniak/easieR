@@ -160,7 +160,7 @@ ez.mediation <-
     if(!is.na(n.boot) && any(n.boot>50)) bootstrap<-TRUE else bootstrap<-FALSE
     
     if(choix=="Effets de mediation simple"){
-      mediation(data[,X], data[,Mediator], data[,VD], conf.level = 0.95, bootstrap = bootstrap, B = n.boot, which.boot="both", save.bs.replicates=TRUE, complete.set=TRUE)->mediation.out
+      MBESS::mediation(data[,X], data[,Mediator], data[,VD], conf.level = 0.95, bootstrap = bootstrap, B = n.boot, which.boot="both", save.bs.replicates=TRUE, complete.set=TRUE)->mediation.out
       for(i in 1:length(mediation.out)){
         if(class(mediation.out[[i]])== "list") for(j in 1 : length(mediation.out[[i]])){
           round(mediation.out[[i]][[j]], 4)->mediation.out[[i]][[j]]} else {
