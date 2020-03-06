@@ -36,7 +36,6 @@ function(){
                       'pander',
                       "PMCMRplus",
                       'pgirmess',
-                      'phia',
                       'pkgmaker',
                       'plyr',
                       'ppcor',
@@ -50,7 +49,6 @@ function(){
                       'Rfit',
                       'rmarkdown',
                       'rms',
-                      'robust',
                       'robustbase',
                       'rpivotTable',
                       'rrcov',
@@ -64,7 +62,7 @@ function(){
                       'stringr',
                       'svDialogs',
                       'TeachingDemos',
-                      'trimcluster',
+                      'textclean',
                       'WRS',                   
                       'WRS2'
     )
