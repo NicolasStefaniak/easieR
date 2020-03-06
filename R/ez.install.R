@@ -40,7 +40,6 @@ ez.install <-
                       'pander',
                       "PMCMRplus",
                       'pgirmess',
-                      'phia',
                       'pkgmaker',
                       'plyr',
                       'ppcor',
@@ -54,7 +53,6 @@ ez.install <-
                       'Rfit',
                       'rmarkdown',
                       'rms',
-                      'robust',
                       'robustbase',
                       'rpivotTable',
                       'rrcov',
@@ -68,7 +66,6 @@ ez.install <-
                       'stringr',
                       'svDialogs',
                       'TeachingDemos',
-                      'trimcluster',
                       'WRS',                   
                       'WRS2'
     )
