@@ -29,9 +29,13 @@
 27) ez.reshape has been corrected so that using space or other special character is not problematic anymore (05/05/2019)
 28) now p.values are in red in html output (only in French for the moment) (05/23/2019)
 29) ez.html has been updated, corrected and debugged (06/01/2019) (update 06/05/2019)
-30) logistic regressions returns error
+30) logistic regressions returns error (fixed) 
 31) the option "by group" on correlation matrix returns error (fixed 12/10/2019)
 32) ez.html force encoding in UTF-8 which prevents problem for non-ASCII characters (fixed 12/17/2019)
 33) it is now possible to export results in MS word document thanks to the ez.html function, with argument, html=F (12/18/2019)
 34) ez.html has been updated (01/20/2020)
-35) for some mac users, gdtools makes R crash. The cause of this issue has not beeen found yet. (fxed 02/16/2020, the dependencies to flextable have been changed for huxtable)  
+35) for some mac users, gdtools makes R crash. The cause of this issue has not beeen found yet. (fixed 02/16/2020, the dependencies to flextable have been changed for huxtable)  
+36) mediation analyses have been corrected (03/08/2020)
+37) correlation matrix by group with missing value has been corrected (03/08/2020) 
+
+
