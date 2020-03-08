@@ -191,7 +191,8 @@ corr.matrice <-
           return(Resultats)
         }
         data1<-ez.imp(data[, c(X1,Y,Z)], imp=imp)
-        data<-data.frame(data1, data[which(dimnames(data)[[1]] %in% dimnames(data1)[[1]]),group])
+        data<-data.frame(data1, data[,group])
+	naes(data)<-c(names(data1), group)      
       }
       
       Resultats$nom<- nom
