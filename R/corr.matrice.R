@@ -192,7 +192,7 @@ corr.matrice <-
         }
         data1<-ez.imp(data[, c(X1,Y,Z)], imp=imp)
         data<-data.frame(data1, data[,group])
-	naes(data)<-c(names(data1), group)      
+	names(data)<-c(names(data1), group)      
       }
       
       Resultats$nom<- nom
