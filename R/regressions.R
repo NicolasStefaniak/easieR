@@ -323,9 +323,10 @@ regressions <-
         table[is.na(table)]<-""
         table->Resultats$"table des betas"
         if(length(pred)>1){
-          ols.corr<-ols_correlations(lm.r1)
+          try(ols.corr<-ols_correlations(lm.r1), silent=T)
+          if(class(ols.corr)!="try-error"){
           Resultats$"Contribution des variables au modele"<-ols.corr
-          Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)
+          Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)}
         }
       }
       
