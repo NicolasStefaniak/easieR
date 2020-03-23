@@ -52,7 +52,6 @@ function(){
                       'robustbase',
                       'rpivotTable',
                       'rrcov',
-                      'rtf',
                       'scatterplot3d',
                       'semPlot',
                       "sjstats",
