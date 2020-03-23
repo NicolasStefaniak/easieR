@@ -504,7 +504,7 @@ corr.complet <-
     .add.history(data=data, command=Resultats$Call, nom=corr.options$nom)
     .add.result(Resultats=Resultats, name =paste(choix, Sys.time() ))
     
-    if(sauvegarde){save(Resultats=Resultats ,choix =choix, env=.e)}
+    if(sauvegarde){ try(ez.html(Resultats, html=F), silent=T) }
     
     ref1(packages)->Resultats$"References"
     if(html) try(ez.html(Resultats), silent=T)
