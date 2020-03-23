@@ -56,7 +56,6 @@ ez.install <-
                       'robustbase',
                       'rpivotTable',
                       'rrcov',
-                      'rtf',
                       'scatterplot3d',
                       'semPlot',
                       "sjstats",
