@@ -62,7 +62,7 @@ ez.html <-
                 nom<-paste0(tempdir(), "\\easieR\\ezplot", n+1, ".png")
               }else{nom<-paste0(tempdir(), "\\easieR\\ezplot1.png")}
               ggsave(filename=nom, plot=essai)
-              essai<-paste0("<img src='", nom, "'alt='Drawing' style='width: 700px;'/>")
+              essai<-paste0("![](" ,basename(nom),")")
               output<-c(output, essai)
             }else{
               dir.create(paste0(tempdir(), "/easieR/"))
@@ -73,7 +73,7 @@ ez.html <-
                 nom<-paste0(tempdir(), "/easieR/ezplot", n+1, ".png")
               }else{nom<-paste0(tempdir(), "/easieR/ezplot1.png")}
               ggsave(filename=nom, plot=essai)
-              essai<-paste0("<img src='", nom, "'alt='Drawing' style='width: 700px;'/>")
+             essai<-paste0("![](", basename(nom),")")
               output<-c(output, essai)
             }
             
