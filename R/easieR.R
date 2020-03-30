@@ -483,6 +483,7 @@ VI.multiples<-function(data){ require("pych")
   # X : character. Name or list of the variables for the numerical values.Multinormality is prefered if X>1
   # Y : character. Name or list of the variabes which are used as groups. 
   packages<-c("outliers", "nortest","psych","ggplot2")
+  try(lapply(packages, library, character.only=T), silent=T)->test2
   if(length(X)==1){
     if(is.null(Y)){
       scale(data[,X], center=T, scale=F)->res
