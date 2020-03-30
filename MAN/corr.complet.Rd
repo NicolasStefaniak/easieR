@@ -47,10 +47,8 @@ corr.complet relies on the packages 'psych', 'BayesFactor' and 'ppcor' for perfo
 \item{Kendal tau}{Kendall's tau}
 \item{Bayes factor}{Bayes factor for the analysis}
 \item{Grubbs test}{Grubbs' test allowing to determine whether there are outlier in the analysis}  
-  %% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
 Canty, A, & Ripley, B. (2019). boot: Bootstrap R (S-Plus) Functions. R package version 1.3-23.
           
 Efron, B., & Gong, G. (1983). A Leisurely Look at the Bootstrap, the Jackknife, and Cross-Validation. *The American Statistician, 371*, 36-48.
@@ -63,13 +61,6 @@ Richard D. Morey and Jeffrey N. Rouder (2018). BayesFactor: Computation of Bayes
 \author{
 Nicolas Stefaniak
 }
-\note{
-%%  ~~further notes~~
-}\section{Details }{....} 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 data(iris)          
 corr.complet() # open GUI
@@ -80,7 +71,3 @@ corr.complet(X=c('Sepal.Length','Sepal.Width'), Y=c('Petal.Length','Petal.Width'
 
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
