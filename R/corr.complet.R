@@ -433,7 +433,7 @@ corr.complet <-
     
     
     # package supprime "plyr",
-    packages<-c("BayesFactor", "boot", "ggplot2","nortest", "ppcor","outliers","psych",  "svDialogs")
+    packages<-c("BayesFactor", "boot", "ggplot2", "ppcor","outliers","psych",  "svDialogs")
     
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== "try-error") return(ez.install())
