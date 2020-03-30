@@ -1,6 +1,6 @@
 corr.complet <-
   function(X=NULL, Y=NULL, Z=NULL,data=NULL,  group=NULL, param=c("test parametrique", "test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens"), 
-           sauvegarde=F, outlier=c("Donnees completes", "Identification des outliers","Analyse sans les valeurs influentes"),  z=NULL, info=T, n.boot=NULL, rscale=0.353, html=T){options (warn=-1) 
+           save=F, outlier=c("Donnees completes", "Identification des outliers","Analyse sans les valeurs influentes"),  z=NULL, info=T, n.boot=NULL, rscale=0.353, html=T){options (warn=-1) 
     
     
     corr.complet.in<-function(X=NULL, Y=NULL,Z=NULL, data=NULL, group=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T,n.boot=NULL, rscale=0.707){
