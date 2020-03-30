@@ -281,7 +281,7 @@ corr.complet <-
         }
       }
       
-      if(any(param=="robustes"| any(param=="Test robustes - impliquant des bootstraps"))){
+      if(any(param=="robust"| any(param=="Test robustes - impliquant des bootstraps"))){
         boot_BP_results<-boot(data, boot_BP, n.boot)
         if(!is.null(Resultats$"Test parametrique"$"Correlation de Bravais Pearson")) {
           try(Resultats$"Test parametrique"$"Correlation de Bravais Pearson"$"Bca lim inf"<-round( boot.ci(boot_BP_results)$bca[,4],4), silent=T)
