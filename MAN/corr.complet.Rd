@@ -51,11 +51,14 @@ corr.complet relies on the packages 'psych', 'BayesFactor' and 'ppcor' for perfo
 }
 \references{
 %% ~put references to the literature/web site here ~
-\item{Canty, A, & Ripley, B. (2019). boot: Bootstrap R (S-Plus) Functions. R package version 1.3-23.}          
-\item{Efron, B., & Gong, G. (1983). A Leisurely Look at the Bootstrap, the Jackknife, and Cross-Validation. *The American Statistician, 371*, 36-48.}
-\item{Jeffreys, H. (1961). Theory of probability, 3rd edn. Oxford, UK: Oxford University Press.}
-\item{Richard D. Morey and Jeffrey N. Rouder (2018). BayesFactor: Computation of Bayes Factors for Common Designs. R package version 0.9.12-4.2.
-  https://CRAN.R-project.org/package=BayesFactor}
+Canty, A, & Ripley, B. (2019). boot: Bootstrap R (S-Plus) Functions. R package version 1.3-23.
+          
+Efron, B., & Gong, G. (1983). A Leisurely Look at the Bootstrap, the Jackknife, and Cross-Validation. *The American Statistician, 371*, 36-48.
+
+Jeffreys, H. (1961). Theory of probability, 3rd edn. Oxford, UK: Oxford University Press.
+
+Richard D. Morey and Jeffrey N. Rouder (2018). BayesFactor: Computation of Bayes Factors for Common Designs. R package version 0.9.12-4.2.
+  https://CRAN.R-project.org/package=BayesFactor
 }
 \author{
 Nicolas Stefaniak
