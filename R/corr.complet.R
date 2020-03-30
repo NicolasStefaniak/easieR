@@ -1,6 +1,6 @@
 corr.complet <-
   function(X=NULL, Y=NULL, Z=NULL,data=NULL,  group=NULL, param=c("test parametrique", "test non parametrique","Test robustes - impliquant des bootstraps", "Facteurs bayesiens"), 
-           save=F, outlier=c("Donnees completes", "Identification des outliers","Analyse sans les valeurs influentes"),  z=NULL, info=T, n.boot=NULL, rscale=0.353, html=T){options (warn=-1) 
+           save=F, outlier=c("complete", "id", "removed"),  z=NULL, info=T, n.boot=NULL, rscale=0.353, html=T){options (warn=-1) 
     
     
     corr.complet.in<-function(X=NULL, Y=NULL,Z=NULL, data=NULL, group=NULL, param=NULL, outlier=NULL, save=NULL, info=T,n.boot=NULL, rscale=0.707){
@@ -464,19 +464,22 @@ corr.complet <-
       Y1<-as.character(XY[i,2])
       data1<-data[complete.cases(data[,c(Y1,X1,Z)]),]
       R1<-list()
-      if(any(outlier==  "Donnees completes")){
+      if(any(outlier%in%  c("Donnees completes", "complete")){
         R1$"Donnees completes"<-corr.complet.out(X=X1, Y=Y1,Z=Z, data=data1, choix=choix, group=group, param=param, n.boot=n.boot, rscale=rscale)
       } 
-      if(any(outlier=="Identification des valeurs influentes")|any(outlier=="Donnees sans valeur influente")){
+      if(any(outlier%in%c("Identification des valeurs influentes","id"))|
+         any(outlier%in%c("Donnees sans valeur influente", "removed"))){
         modele<-as.formula(paste0(X1,"~",Y1))
         if(!is.null(Z)){for(i in 1:length(Z))      modele<-update(modele, as.formula(paste0(".~.+",Z[i])))}
         data1$residu<-resid(lm(modele, data=data1))
         critere<-ifelse(is.null(z), "Grubbs", "z")
         valeurs.influentes(X="residu", critere=critere,z=z, data=data1)->influentes
       }
-      if(any(outlier== "Identification des valeurs influentes")){influentes->R1$"Valeurs influentes"}
-      if(any(outlier== "Donnees sans valeur influente")) {
-        if(length(influentes$"observations influentes")!=0 | all(outlier!="Donnees completes")){
+      if(any(outlier%in% c("id","Identification des valeurs influentes"))){influentes->R1$"Valeurs influentes"}
+      if(any(outlier%in%c("removed", "Donnees sans valeur influente"))) {
+        if(length(influentes$"observations influentes")!=0 | 
+           all(outlier!="Donnees completes")|
+          all(outlier!="complete")){
           get("nettoyees", envir=.GlobalEnv)->nettoyees
           R1$"Donnees sans valeur influente"<-corr.complet.out(X=X1, Y=Y1,Z=Z, data=nettoyees, choix=choix, group=group, param=param, n.boot=n.boot, rscale=rscale)
         }
