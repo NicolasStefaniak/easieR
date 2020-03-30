@@ -654,7 +654,7 @@ ref1 <-
   packageStartupMessage(" If you are using easieR for the first time, please use the function ez.install in order to ensure that easieR will work properly.\n Si vous utilisez easieR pour la 1e fois, veuillez utiliser la fonction ez.install pour vous assurer de bon fonctionnement de easieR.")
   packageStartupMessage("Les accents / caracteres speciaux ont volontairement ete supprimes pour assurer la portabilite de easieR sur tous les ordinateurs.")
   packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 03/21/2020")
+  packageStartupMessage("Last update 03/30/2020")
   packageStartupMessage("##############")
 
 }
