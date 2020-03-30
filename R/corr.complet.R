@@ -464,7 +464,7 @@ corr.complet <-
       Y1<-as.character(XY[i,2])
       data1<-data[complete.cases(data[,c(Y1,X1,Z)]),]
       R1<-list()
-      if(any(outlier%in%  c("Donnees completes", "complete")){
+      if(any(outlier%in%  c("Donnees completes", "complete"))){
         R1$"Donnees completes"<-corr.complet.out(X=X1, Y=Y1,Z=Z, data=data1, choix=choix, group=group, param=param, n.boot=n.boot, rscale=rscale)
       } 
       if(any(outlier%in%c("Identification des valeurs influentes","id"))|
