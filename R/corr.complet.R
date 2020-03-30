@@ -27,7 +27,7 @@ corr.complet <-
       
       X<-.var.type(X=X, info=info, data=data, type="numeric", check.prod=F, message=msg3,  multiple=T, title="Variable-s en abcisse", out=NULL)
       if(is.null(X)) {
-        corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                         n.boot=NULL, rscale=0.707)->Resultats
         return(Resultats)}
       data<-X$data
@@ -35,7 +35,7 @@ corr.complet <-
       
       Y<-.var.type(X=Y, info=info, data=data, type="numeric", check.prod=F, message=msg4,  multiple=T, title="Variable-s en ordonnee", out=X1)
       if(is.null(Y)) {
-        corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                         n.boot=NULL, rscale=0.707)->Resultats
         return(Resultats)}
       data<-Y$data
@@ -44,7 +44,7 @@ corr.complet <-
         msg6<-"Veuillez preciser la ou les variables a controler" 
         Z<-.var.type(X=Y, info=info, data=data, type="numeric", check.prod=F, message=msg6,  multiple=T, title="Variable-s a controler", out=c(X1,Y))
         if(is.null(Z)) {
-          corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                           n.boot=NULL, rscale=0.707)->Resultats
           return(Resultats)}
         data<-Z$data
@@ -60,20 +60,20 @@ corr.complet <-
                                   \n l'analyse par groupe ne s'appliquent pas aux statistiques robustes.")
         dlgList(c("oui", "non"), preselect="non", multiple = FALSE, title="Analyse par groupe?")$res->par.groupe
         if(length(par.groupe)==0) {
-          corr.complet.in(X=NULL, Y=NULL, data=NULL,param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          corr.complet.in(X=NULL, Y=NULL, data=NULL,param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                           n.boot=NULL, rscale=0.707)->Resultats
           return(Resultats)
         } 
         msg5<-"Veuillez choisir le facteur de classement categoriel."
         if(par.groupe=="oui"){group<-.var.type(X=group, info=info, data=data, type="factor", check.prod=F, message=msg5,  multiple=TRUE, title="Variable-s", out=c(X1,Y,Z)) 
-        if(length(group)==0) {  corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        if(length(group)==0) {  corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                 n.boot=NULL, rscale=0.707)->Resultats
           return(Resultats)}
         data<-group$data
         group<-group$X 
         if(any(ftable(data[,group])<3)){
           msgBox("Certaines combinaisons des modalites ont moins de 3 observations. Vous devez avoir au moins 3 observations pour chaque combinaison")
-          corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                           n.boot=NULL, rscale=0.707)->Resultats
           return(Resultats)
         }
@@ -84,9 +84,9 @@ corr.complet <-
       msg.options2<- "Le test non parametrique correspond au rho de Spearman et au tau de Kendall"
       
       options<-.ez.options(options=c("choix","outlier"), n.boot=n.boot,param=T, non.param=T, robust=T, Bayes=T, msg.options1=msg.options1, msg.options2=msg.options2, info=info, dial=dial, 
-                           choix=param,sauvegarde=sauvegarde, outlier=outlier, rscale=rscale)
+                           choix=param,sauvegarde=save, outlier=outlier, rscale=rscale)
       if(is.null(options)){
-        corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        corr.complet.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                         n.boot=NULL, rscale=0.707)->Resultats
         return(Resultats)
       }
@@ -443,7 +443,7 @@ corr.complet <-
     if(class(win)=="try-error") quartz()
     if(!is.null(data) & class(data)!="character") deparse(substitute(data))->data  
     
-    corr.options<-corr.complet.in(X=X, Y=Y,Z=Z, data=data, group=group, param=param, outlier=outlier, sauvegarde=sauvegarde, info=T, n.boot=n.boot, rscale=rscale)
+    corr.options<-corr.complet.in(X=X, Y=Y,Z=Z, data=data, group=group, param=param, outlier=outlier, save=save, info=T, n.boot=n.boot, rscale=rscale)
     if(is.null(corr.options)) return(analyse())
     choix<-corr.options$choix
     X<-corr.options$X
@@ -454,7 +454,7 @@ corr.complet <-
     param<-corr.options$options$choix
     if(corr.options$options$rscalei==T) rscale<-corr.options$options$rscale/2 else rscale<-corr.options$options$rscale
     n.boot<-corr.options$options$n.boot
-    sauvegarde<-corr.options$options$sauvegarde
+    save<-corr.options$options$save
     outlier<-corr.options$options$desires
     
     expand.grid(X,Y)->XY
@@ -497,17 +497,17 @@ corr.complet <-
                            "'), Y=c('", Y, 
                            "'), Z =", ifelse(!is.null(Z),paste0("c('",Z,"')"), "NULL"), ",data=",  corr.options$nom, 
                            ", group=", ifelse(!is.null(group),paste0("c('",group,"')"), "NULL"), 
-                           ", param=c('", param, "'), sauvegarde=", sauvegarde, ",outlier=c('", outlier, "'),z=", ifelse(!is.null(z),z, "NULL"),
+                           ", param=c('", param, "'), save=", save, ",outlier=c('", outlier, "'),z=", ifelse(!is.null(z),z, "NULL"),
                            ", info=T, rscale=", rscale, 
                            ", n.boot=", ifelse(is.null(n.boot), "NULL",n.boot),", html=", html, ")")
     
     .add.history(data=data, command=Resultats$Call, nom=corr.options$nom)
     .add.result(Resultats=Resultats, name =paste(choix, Sys.time() ))
     
-    if(sauvegarde){ try(ez.html(Resultats, html=F), silent=T) }
+    if(save){ try(ez.html(Resultats, html=F), silent=T) }
     
     ref1(packages)->Resultats$"References"
     if(html) try(ez.html(Resultats), silent=T)
     ### Obtenir les Resultats
     return(Resultats) 
-    }
+  }
