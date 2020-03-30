@@ -454,7 +454,7 @@ corr.complet <-
     param<-corr.options$options$choix
     if(corr.options$options$rscalei==T) rscale<-corr.options$options$rscale/2 else rscale<-corr.options$options$rscale
     n.boot<-corr.options$options$n.boot
-    save<-corr.options$options$save
+    save<-corr.options$options$sauvegarde
     outlier<-corr.options$options$desires
     
     expand.grid(X,Y)->XY
