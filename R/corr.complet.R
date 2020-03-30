@@ -478,8 +478,7 @@ corr.complet <-
       if(any(outlier%in% c("id","Identification des valeurs influentes"))){influentes->R1$"Valeurs influentes"}
       if(any(outlier%in%c("removed", "Donnees sans valeur influente"))) {
         if(length(influentes$"observations influentes")!=0 | 
-           all(outlier!="Donnees completes")|
-          all(outlier!="complete")){
+           ! any(outlier %in% c("Donnees completes","complete"))){
           get("nettoyees", envir=.GlobalEnv)->nettoyees
           R1$"Donnees sans valeur influente"<-corr.complet.out(X=X1, Y=Y1,Z=Z, data=nettoyees, choix=choix, group=group, param=param, n.boot=n.boot, rscale=rscale)
         }
