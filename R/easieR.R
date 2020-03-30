@@ -407,7 +407,9 @@ VI.multiples<-function(data){ require("pych")
   
   
   if(any(options=="outlier")){
-    if(dial || is.null(outlier)|| (dial==F & any(outlier %in%c("Donnees completes", "Identification des valeurs influentes","Donnees sans valeur influente"))==F)) {
+    if(dial || is.null(outlier)|| 
+       (dial==F & any(outlier %in%c("Donnees completes", "Identification des valeurs influentes","Donnees sans valeur influente",
+                                   "complete", "id", "removed"))==F)) {
       if(info==TRUE) writeLines("les donnees completes representent l'analyse classique sur toutes les donnees utilisables, l'identification des valeurs influentes
                                 permet d'identifier les observations qui sont considerees statistiquement comme influencant les resultats.
                                 les analyses sur les donnees sans les valeurs influentes realise l'analyse apres suppression des valeurs influentes. 
