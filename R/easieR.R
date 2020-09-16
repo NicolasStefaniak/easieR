@@ -349,7 +349,7 @@ VI.multiples<-function(data){ require("pych")
       choix<-c(choix, "Test non parametrique")
     }
     if(robust==T) {
-      if(info) writeLines("Les statistiques robustes sont des analyses alternatives à l'analyse principale, impliquant le plus souvent des bootstraps. Ces analyses sont souvent plus lentes")
+      if(info) writeLines("Les statistiques robustes sont des analyses alternatives a l'analyse principale, impliquant le plus souvent des bootstraps. Ces analyses sont souvent plus lentes")
       choix<-c(choix, "Test robustes - impliquant des bootstraps")
     }
     if(Bayes==T) {
