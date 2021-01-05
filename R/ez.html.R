@@ -147,11 +147,11 @@ ez.html <-
                      "top_border(ht)[1,]<-1",
                      " bottom_border(ht)[dim(ht)[1],]<-1",
                      "if(any(grepl('valeur.p', names(tableau)))|any(grepl('p.value', names(tableau)))) {",
-                     "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red', byrow = T)",
+                     "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')",
                      "}", 
                      "if(any(class(table)=='p.value')){",
                      "for(j in 1:ncol(tableau)){",
-                     "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red', byrow = T)}}",
+                     "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')}}",
                      "ht",
                      "```")
             output<-c(output, essai)
