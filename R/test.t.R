@@ -305,7 +305,7 @@ test.t <-
         }
         
         SBF<-data.frame("n"=rep(5:length(data[,X]), each=3 ),"BF"= bfs, 
-                        "rscale"=rep(c("moyen", "large", "ultra large"), length.out= 3*(length(data[,X])-4) ))
+                        "rscale"=factor(rep(c("moyen", "large", "ultra large"), length.out= 3*(length(data[,X])-4) )))
         names(SBF)<-c("n", "BF", "rscale")
         reorder( c("moyen", "large", "ultra large"),levels(SBF$rscale))->levels(SBF$rscale)
         Resultats$"Facteurs bayesiens sequentiels"<-.plotSBF(SBF)
