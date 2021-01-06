@@ -77,29 +77,35 @@ easieR.msg<-function(msg="1"){
 
 
 
-VI.multiples<-function(data){ require("pych") 
+VI.multiples<-function(data, X){ 
+  # data =data.frame
+  # X = variable names to include in the analysis
+  require("pych") 
   Resultats<-list()
-  nvar<-length(data)
-  try(psych::outlier(data, bad=T, na.rm=T,plot=T),silent=T)->essai
+  data$ideasy<- 1:NROW(data)
+  nvar<-length(X)
+  try(psych::outlier(data[,X], bad=T, na.rm=T,plot=T),silent=T)->essai
   if(class(essai)=="try-error"){
-    msgBox("Votre matrice est singuliere, ce qui pose souci. Nous tentons de  de resoudre le souci. Si possible, la distance de Mahalanobis sera alors calculee sur le maximum d'information tout en evitant la singularite.")
-    data->data2
+    msgBox("Votre matrice est singuliere, ce qui pose souci. Nous tentons de  de resoudre le souci. 
+           Si possible, la distance de Mahalanobis sera alors calculee sur le maximum d information 
+           tout en evitant la singularite.")
+    data2<-data
     rankifremoved <- sapply(1:ncol(data2), function (x) qr(data2[,-x])$rank)
     which(rankifremoved == max(rankifremoved))->rangs
     if(length(rangs)==length(data2)){ 
       sample(rangs,1)->rang2
       data2[,-rang2]->data2
     } else {
-      while(length(rangs)!=length(data2)){
+      while(length(rangs)!=length(X)){
         sample(rangs,1)->rang2
         data2[,-rang2]->data2
         rankifremoved <- sapply(1:ncol(data2), function (x) qr(data2[,-x])$rank)
         which(rankifremoved == max(rankifremoved))->rangs
       }
     }
-    try(psych::outlier(data2), silent=T)->essai
+    try(psych::outlier(data2[,X]), silent=T)->essai
     if(class(essai)=="try-error") {
-      corr.test(data2)$r->matrice
+      corr.test(data2[,X])$r->matrice
       if(any(abs(matrice)==1)) {
         msgBox("vous tenter de faire une matrice de correlations avec des variables parfaitement correlees. Cela pose souci pour le calcul de la distance de Mahalanobis. Nous tentons de resoudre le souci")
         which(abs(matrice)==1, arr.ind=TRUE)->un
@@ -152,7 +158,6 @@ VI.multiples<-function(data){ require("pych")
   Resultats$data<-data
   return(Resultats)
 }
-
 
 
 
