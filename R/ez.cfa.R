@@ -333,7 +333,7 @@ ez.cfa <-
         }
         
         if(outlier=="Donnees sans valeur influente"){
-          inf<-VI.multiples(data[,X])
+          inf<-VI.multiples(data,X)
           Resultats$"Valeurs considerees comme influentes"<-inf$"Valeurs considerees comme influentes"
           data<-inf$data
         }
