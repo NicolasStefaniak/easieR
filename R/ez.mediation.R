@@ -4,7 +4,7 @@ ez.mediation <-
     mediation.effect.bar.plot2 <-function (x, mediator, dv, main = "Mediation Effect Bar Plot", 
                                            width = 1, left.text.adj = 0, right.text.adj = 0, rounding = 3, 
                                            file = "", save.pdf = FALSE, save.eps = FALSE, save.jpg = FALSE){
-      Mediation.Results <- mediation(x = x, mediator = mediator, 
+      Mediation.Results <- MBESS::mediation(x = x, mediator = mediator, 
                                      dv = dv, conf.level = 0.95,complete.set=TRUE)
       observed.c <- Mediation.Results$Y.on.X$Regression.Table[2, 
                                                               1]
