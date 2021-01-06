@@ -326,7 +326,7 @@ corr.matrice <-
     n.boot<-corr.options$n.boot
     
     if(outlier=="Donnees sans valeur influente"){
-      inf<-VI.multiples(data[,c(X,Y,Z)])
+      inf<-VI.multiples(data, X=c(X,Y,Z))
       Resultats$"Valeurs considerees comme influentes"<-inf$"Valeurs considerees comme influentes"
       data<-inf$data
     }
