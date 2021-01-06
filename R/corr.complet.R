@@ -377,9 +377,8 @@ corr.complet <-
         }
         
         SBF<-data.frame("n"=rep(5:length(data[,X]), each=3 ),"BF"= bfs, 
-                        "rscale"=rep(c("moyen - 0.353", "large - 0.5", "ultra large - 0.707"), length.out= 3*(length(data[,X])-4) ))
-        names(SBF)<-c("n", "BF", "rscale")
-        reorder( c("moyen", "large", "ultra large"),levels(SBF$rscale))->levels(SBF$rscale)
+                        "rscale"=as.factor(rep(c("moyen - 0.353", "large - 0.5", "ultra large - 0.707"), length.out= 3*(length(data[,X])-4) )))
+        SBF$rscale<-relevel(SBF$rscale, ref=2)
         Resultats$"Facteurs bayesiens sequentiels"<-.plotSBF(SBF)
         
         ##### Debut du graphique  Bayes Factor Robustness Check     
