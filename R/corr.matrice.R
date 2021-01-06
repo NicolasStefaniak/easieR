@@ -279,10 +279,12 @@ corr.matrice <-
       dimnames(r2)[[1]]<-paste(dimnames(r2)[[1]], "r^2")
       r1<-rbind(r1, r2)
       r1<-data.frame(r1)
-	    r1$tri<-1:length(dimnames(r1)[[2]])
+	    if(is.null(Y)){
+      r1$tri<-1:length(dimnames(r1)[[2]])
       r1<-r1[order(r1$tri), ]
 	    r1<-r1[,-length(r1)]
       r1[is.na(r1)]<-"-" 
+		    }
       nice.mat<-list()
       nice.mat$"Matrice de correlations"<-(r1)
       if(html) try(ez.html(nice.mat), silent =T)
