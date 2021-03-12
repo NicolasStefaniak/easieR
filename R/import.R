@@ -137,7 +137,7 @@ import <-
     
     
     assign(x=name, value=data1, envir=.GlobalEnv)
-    View(data1, "Vos donnees")
+    try(View(data1, "Vos donnees"), silent=T)
     str(data1)
     Resultats <- "les donnees ont ete importees correctement"
     call.txt<-paste0("import(file='", file, "',dir='",getwd(),"',type='",type,"',dec='",dec, 
