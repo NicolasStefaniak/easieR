@@ -1,5 +1,5 @@
 aov.plus <-
-  function(aov.plus.list=NULL, info=T){
+  function(aov.plus.list=NULL, info=T, html=T){
     options (warn=-1)
     packages<-c("svDialogs","emmeans")
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages) 
@@ -80,7 +80,7 @@ aov.plus <-
         ref1(packages)->Resultats$"References des packages utilises pour cette analyse"
         .add.result(Resultats=Resultats, name =paste("Anova plus", Sys.time() ))
 #    if(sauvegarde==T) save(Resultats=Resultats ,choix ="Resultats.aov.plus", env=.e)
-      ez.html(Resultats)
+     if(html) ez.html(Resultats)
       return(Resultats)
     
   }
