@@ -121,13 +121,15 @@ regressions <-
       pred<-attributes(terms(as.formula(modele)))$term.labels
       Resultats$"Statistiques descriptives"<-.stat.desc.out(X=variables, groupes=NULL, data=dtrgeasieR, tr=.1, type=3, plot=T)
       
-      if(scale==T || scale=="Centre") {Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
+       if(scale==T || scale=="Centre") {
+         Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
+        which(!sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)%in%c("factor", "character"))->centre
+        centre<-pred[centre]
+      if(length(centre)==1) dtrgeasieR[,centre]-mean(dtrgeasieR[,centre],na.rm=T)->dtrgeasieR[,centre] else{
+        sapply(X=dtrgeasieR[,centre], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,centre]
+      }
+      }
       
-      which(!sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)%in%c("factor", "character"))->centre
-      if(length(centre)==1) dtrgeasieR[,names(centre)]-mean(dtrgeasieR[,names(centre)],na.rm=T)->dtrgeasieR[,names(centre)] else{
-        sapply(X=dtrgeasieR[,names(centre)], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,names(centre)]
-      }
-      }
       
       
       mod<-list()
