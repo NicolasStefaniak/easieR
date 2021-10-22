@@ -167,7 +167,7 @@ corr.matrice <-
         if(dial | length(p.adjust)!=1 || p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none")==FALSE){
           writeLines("Veuillez preciser le type de correction de la probabilite que vous desirez realiser")
           dlgList(c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none"), preselect=NULL, multiple = FALSE, title="Type de correction ?")$res->p.adjust
-          if(length(p.adjust)==0) {Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          if(length(p.adjust)==0) {Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                               n.boot=NULL, rscale=0.353)->Resultats
           return(Resultats)}
         } 
@@ -175,7 +175,7 @@ corr.matrice <-
       if(dial | length(sauvegarde)!=1 || !is.logical(sauvegarde )){
         writeLines("voulez-vous sauvegarder les resultats")
         sauvegarde<- dlgList(c(TRUE, FALSE), preselect=FALSE, multiple = TRUE, title="Enregistrer les resultats ?")$res
-        if(length(sauvegarde)==0) {Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        if(length(sauvegarde)==0) {Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                               n.boot=NULL, rscale=0.353)->Resultats
         return(Resultats)}
         
@@ -186,7 +186,7 @@ corr.matrice <-
         imp<- dlgList(c("Ne rien faire - Garder l'ensemble des observations", "Suppression des observations avec valeurs manquantes", "Remplacer par la moyenne",
                         "Remplacer par la mediane","Multiple imputation - Amelia"), preselect=FALSE, multiple = TRUE, title="Traitement des valeurs manquantes")$res
         if(length(imp)==0){
-          Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                      n.boot=NULL, rscale=0.353)
           return(Resultats)
         }
