@@ -8,7 +8,7 @@ corr.matrice <-
     # group : character or vector. Names of the classifying variables 
     # method : one among c("pearson", "spearman", "kendall") 
     # param :  one or both among "H0" (null hypoethesis testing) et "FB"(bayesian factors)
-    # sauvegarde : logical. Must the analyses be saved ? 
+    # save : logical. Must the analyses be saved ? 
     # outlier : One among   c("Donnees completes", "Donnees sans valeur influente")
     # rscale : numeric. If not null, bayesian factors are computed. Can also be "moyen", "large", "ultralarge"
     # info : logical. Must information be displayed in dialog box interface. 
