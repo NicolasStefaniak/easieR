@@ -213,7 +213,7 @@ corr.matrice <-
     
     
     
-    corr.matrice.out<-function(data, X, Y, Z, p.adjust, method,sauvegarde, rscale, n.boot, param){
+    corr.matrice.out<-function(data, X, Y, Z, p.adjust, method,save, rscale, n.boot, param){
       Resultats<-list()
       Resultats$"Statistiques descriptives"<-.stat.desc.out(X=c(X,Y,Z), groupes=NULL, data=data, tr=.1, type=3, plot=F)
       Resultats$"Normalite multivariee"<-.normalite(data, c(X,Y,Z)) 
