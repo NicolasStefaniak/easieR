@@ -172,7 +172,7 @@ corr.matrice <-
           return(Resultats)}
         } 
       } else p.adjust<-"none"
-      if(dial | length(sauvegarde)!=1 || !is.logical(sauvegarde )){
+      if(dial | length(save)!=1 || !is.logical(save)){
         writeLines("voulez-vous sauvegarder les resultats")
         sauvegarde<- dlgList(c(TRUE, FALSE), preselect=FALSE, multiple = TRUE, title="Enregistrer les resultats ?")$res
         if(length(sauvegarde)==0) {Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
