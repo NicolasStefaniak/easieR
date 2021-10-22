@@ -319,7 +319,7 @@ corr.matrice <-
     data<-corr.options$data
     param<-corr.options$param
     rscale<-corr.options$rscale
-    sauvegarde<-corr.options$sauvegarde
+    save<-corr.options$save
     outlier<-corr.options$outlier
     method<-corr.options$method
     p.adjust<-corr.options$p.adjust
