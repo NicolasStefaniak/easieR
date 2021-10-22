@@ -360,14 +360,14 @@ corr.matrice <-
                            "'), Y=", ifelse(!is.null(Y),paste0("c('",Y,"')"), "NULL"), 
                            ", Z =", ifelse(!is.null(Z),paste0("c('",Z,"')"), "NULL"), ",data=",  corr.options$nom, ", p.adjust='", p.adjust,
                            "', group=", ifelse(!is.null(group),paste0("c('",group,"')"), "NULL"), 
-                           ", param=c('", param, "'), sauvegarde=", sauvegarde, ",outlier=c('", outlier, "'), info=T, rscale=", ifelse(!is.null(rscale),rscale, "NULL"), ", n.boot=", n.boot, ")")
+                           ", param=c('", param, "'), save=", save, ",outlier=c('", outlier, "'), info=T, rscale=", ifelse(!is.null(rscale),rscale, "NULL"), ", n.boot=", n.boot, ")")
     
     .add.history(data=data, command=Resultats$Call, nom=corr.options$nom)
     .add.result(Resultats=Resultats, name =paste(choix, Sys.time() ))
     
     
     
-    if(sauvegarde) save(Resultats=Resultats, choix=paste("correlation de", method), env=.e)
+    if(save) save(Resultats=Resultats, choix=paste("correlation de", method), env=.e)
     ref1(packages)->Resultats$"References"
     if(html) try(ez.html(Resultats), silent=T)
     return(Resultats)
