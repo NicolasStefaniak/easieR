@@ -206,7 +206,7 @@ corr.matrice <-
       Resultats$param<-param
       Resultats$rscale<-rscale
       Resultats$n.boot<-n.boot
-      Resultats$sauvegarde<-sauvegarde
+      Resultats$save<-save
       Resultats$p.adjust<-p.adjust
       return(Resultats)
     }
