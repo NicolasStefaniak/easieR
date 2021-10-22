@@ -17,7 +17,7 @@ corr.matrice <-
     # na.rm : character. How to deal with missing values ? 
     # html : Logical. Should output be a HTML page ? 
     
-    corr.matrice.in<-function(X=NULL, Y=NULL, Z=NULL, group=NULL, data=NULL, p.adjust="holm", rscale=0.354,sauvegarde=F,outlier="Donnees completes", info=T, method="pearson", param=c("H0","FB"), n.boot=NULL){
+    corr.matrice.in<-function(X=NULL, Y=NULL, Z=NULL, group=NULL, data=NULL, p.adjust="holm", rscale=0.354,save=F,outlier="Donnees completes", info=T, method="pearson", param=c("H0","FB"), n.boot=NULL){
       Resultats<-list()
       if(!is.null(X) & !is.null(data) & (is.null(Y) | is.null(Z))) {dial<-F 
       if(is.null(Z)) choix<-"Correlations" else choix<-"Correlations partielle et semi partielle"
