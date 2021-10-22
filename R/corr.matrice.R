@@ -1,5 +1,5 @@
 corr.matrice <-
-  function(X=NULL, Y=NULL, Z=NULL,data=NULL, group=NULL,method="pearson",param=c("H0","FB"), sauvegarde=F, outlier=c("Donnees completes"),n.boot=1,  rscale=0.354, info=T,
+  function(X=NULL, Y=NULL, Z=NULL,data=NULL, group=NULL,method="pearson",param=c("H0","FB"), save=F, outlier=c("Donnees completes"),n.boot=1,  rscale=0.354, info=T,
            p.adjust="holm",out.m=2, na.rm=NULL, html=T) { 
     # X : character or vector. First set of variables
     # Y : character or vector. Second set of variables Must be NULL if Z is not
