@@ -147,7 +147,7 @@ corr.matrice <-
       if((dial)|| !is.null(rscale) & ((is.numeric(rscale) & (rscale<0.1 | rscale>2)) || (!is.numeric(rscale) & rscale%in% c("moyen", "large", "ultralarge")==F))) {
         if(info) writeLines("Voulez-vous les tests d'hypothees nuls ou/et les facteurs bayesiens ?")   
         param<-dlgList(c("Facteurs bayesiens","Tests de H0"), preselect=c("Facteurs bayesiens","Tests de H0"), multiple = T, title="Approche statistique ?")$res
-        if(length(param)==0) { Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        if(length(param)==0) { Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                           n.boot=NULL, rscale=0.353)
         return(Resultats)}
         
@@ -156,7 +156,7 @@ corr.matrice <-
           
           rscale<-dlgList(c("moyen", "large", "ultralarge"), preselect="moyen", multiple = F, title="Quelle distribution voulez-vous  ?")$res 
           if(length(rscale)==0) {
-            Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+            Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                        n.boot=NULL, rscale=0.353)
             return(Resultats)
           }
