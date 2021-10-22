@@ -49,7 +49,7 @@ corr.matrice <-
       
       X<-.var.type(X=X, info=info, data=data, type="numeric", check.prod=F, message=msg3,  multiple=T, title="Variables", out=NULL)
       if(is.null(X)) {
-        corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                         n.boot=NULL, rscale=0.353)->Resultats
         return(Resultats)}
       data<-X$data
@@ -58,7 +58,7 @@ corr.matrice <-
         msg4<-"Veuillez choisir le second jeu de variables"
         Y<-.var.type(X=Y, info=info, data=data, type="numeric", check.prod=F, message=msg4,  multiple=T, title="Second jeu de variables", out=X1)
         if(is.null(Y)) {
-          corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                           n.boot=NULL, rscale=0.353)->Resultats
           return(Resultats)}
         data<-Y$data
@@ -69,7 +69,7 @@ corr.matrice <-
         msg6<-"Veuillez preciser la ou les variables a controler" 
         Z<-.var.type(X=Y, info=info, data=data, type="numeric", check.prod=F, message=msg6,  multiple=T, title="Variable-s a controler", out=c(X1,Y))
         if(is.null(Z)) {
-          corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                           n.boot=NULL, rscale=0.353)->Resultats
           return(Resultats)}
         data<-Z$data
@@ -84,20 +84,20 @@ corr.matrice <-
                                   \n Si vous desirez l'analyse pour l'echantillon complet uniquement, chosissez non.")
         dlgList(c("oui", "non"), preselect="non", multiple = FALSE, title="Analyse par groupe?")$res->par.groupe
         if(length(par.groupe)==0) {
-          corr.matrice.in(X=NULL, Y=NULL, data=NULL,method=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          corr.matrice.in(X=NULL, Y=NULL, data=NULL,method=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                           n.boot=NULL, rscale=0.353)->Resultats
           return(Resultats)
         } } else par.groupe<-"non"
       msg5<-"Veuillez choisir le facteur de classement categoriel."
       if(par.groupe=="oui" || !is.null(group)){group<-.var.type(X=group, info=info, data=data, type="factor", check.prod=F, message=msg5,  multiple=TRUE, title="Variable-s", out=c(X1,Y,Z)) 
-      if(length(group)==0) {   corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+      if(length(group)==0) {   corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                n.boot=NULL, rscale=0.353)->Resultats
         return(Resultats)}
       data<-group$data
       group<-group$X 
       if(any(ftable(data[,group])<3)){
         msgBox("Certaines combinaisons des modalites ont moins de 3 observations. Vous devez avoir au moins 3 observations pour chaque combinaison")
-        corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                         n.boot=NULL, rscale=0.353)->Resultats
         return(Resultats)
       }
@@ -107,14 +107,14 @@ corr.matrice <-
         if(info) writeLines("Desirez-vous l'analyse sur les donnees completes ou sur les donnees pour lesquelles les valeurs influentes ont ete enlevees ?")
         outlier<- dlgList(c("Donnees completes", "Donnees sans valeur influente"), preselect=c("Donnees completes"),
                           multiple = FALSE, title="Quels resultats voulez-vous obtenir ?")$res
-        if(length(outlier)==0) { Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        if(length(outlier)==0) { Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, param=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                             n.boot=NULL, rscale=0.353)
         return(Resultats)}
       }
       if(dial || length(method)>1 || method %in% c("pearson", "spearman","kendall") ==FALSE){
         if(info) writeLines("Veuillez choisir le type de correlations que vous desirez realiser")
         method<-dlgList(c("pearson", "spearman","kendall"), preselect="pearson", multiple = FALSE, title="Type de correlations ?")$res
-        if(length(method)==0) { Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+        if(length(method)==0) { Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                            n.boot=NULL, rscale=0.353)
         return(Resultats)}
       }
@@ -130,7 +130,7 @@ corr.matrice <-
           writeLines("Veuillez preciser le nombre de bootstrap. Pour ne pas avoir de bootstrap, choisir 1")
           
           n.boot<-dlgInput("Nombre de bootstrap ?", 1)$res
-          if(length(n.boot)==0) {Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,
+          if(length(n.boot)==0) {Resultats<-corr.matrice.in(X=NULL, Y=NULL, data=NULL, method=NULL, outlier=NULL, save=NULL, info=T, group=NULL,
                                                             n.boot=NULL, rscale=0.353)
           return(Resultats)}
           strsplit(n.boot, ":")->n.boot
