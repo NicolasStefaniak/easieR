@@ -331,7 +331,8 @@ corr.matrice <-
       data<-inf$data
     }
     
-    Resultats$"Matrice des correlations"<-corr.matrice.out(data=data, X=X, Y=Y, Z=Z, p.adjust=p.adjust, method=method,sauvegarde=sauvegarde, rscale=rscale, n.boot=n.boot, param=param)
+    Resultats$"Matrice des correlations"<-corr.matrice.out(data=data, X=X, Y=Y, Z=Z, p.adjust=p.adjust, method=method,save=save, 
+							   rscale=rscale, n.boot=n.boot, param=param)
     
     
     
