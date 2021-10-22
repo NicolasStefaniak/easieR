@@ -341,7 +341,7 @@ corr.matrice <-
       if(length(group)>1) G<-as.list(G)
       G<-split(data[,c(X,Y,Z)], G)
       for(i in 1:length(G)){
-        resg<-corr.matrice.out(data=G[[i]], X=X, Y=Y, Z=Z, p.adjust=p.adjust, method=method,sauvegarde=sauvegarde, rscale=rscale, n.boot=n.boot, param=param)  
+        resg<-corr.matrice.out(data=G[[i]], X=X, Y=Y, Z=Z, p.adjust=p.adjust, method=method,save=save, rscale=rscale, n.boot=n.boot, param=param)  
         Resultats[[length(Resultats)+1]]<-resg
         names(Resultats)[length(Resultats)]<-names(G)[i]
       }
