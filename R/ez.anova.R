@@ -368,6 +368,10 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     }
   }else{
     contrastes<-list()
+    if(contrasts %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun")) {
+      Resultats$contrastes<-contrasts
+      contrastes<-contrasts
+      }else{
     for(i in 1:length(contrasts)){
       cont2<-contrasts[[i]]
       cont2<-as.matrix(cont2)
@@ -380,7 +384,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     }
     names(contrastes)<-names(contrasts)
     Resultats$contrastes<-contrastes
-    
+    }
   }
   if((dial & contrastes %in% c("Comparaison 2 a 2","Pairwise", "pairwise")) || 
      (!p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
