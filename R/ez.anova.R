@@ -790,7 +790,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
     #omega.out<-omega_sq(aov.out$aov)
-    effectsize::omega_sqared(aov.out$aov)
+   omega.out<- effectsize::effectsize(aov.out$aov, type = "omega")
     aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$omegasq),3])
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
