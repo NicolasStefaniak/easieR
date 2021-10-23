@@ -101,7 +101,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   if(!is.null(cov)) cov<-paste(unique(cov), collapse="','", sep="") 
   param<-paste(unique(param), collapse="','", sep="") 
   outlier<-paste(unique(outlier), collapse="','", sep="")
-  if(!contrasts%o%c("none", "aucun", "pairwise", "Comparaison 2 a 2")){
+  if(!contrasts%in%c("none", "aucun", "pairwise", "Comparaison 2 a 2")){
     cont.call<-"list("
     for(i in 1:length(contrasts)){
       if(i>1) cont.call<-paste0(cont.call, ",")
