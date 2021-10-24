@@ -9,6 +9,7 @@ fiabilite <-
     options (warn=-1)
     packages<-c("svDialogs", "psych", "lavaan")
     try(lapply(packages, library, character.only=T), silent=T)->test2
+    rev<-FALSE
     if(class(test2)== "try-error") return(ez.install())
     
     .e<- environment()
