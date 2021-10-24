@@ -1,6 +1,6 @@
 regressions <-
-  function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=NULL, inf=F, CV=F, select.m="none", method="p", step=NULL, group=NULL, criteria=0.15 , scale=T, dial=T, info=T,
-           sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353, html=TRUE){
+  function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier='Donnees completes', inf=F, CV=F, select.m="none", method="p", step=NULL, group=NULL, criteria=0.15 , scale=T, dial=T, info=T,
+           sauvegarde=F, n.boot=NULL, param="param", rscale=0.353, html=TRUE){
     
     
     
