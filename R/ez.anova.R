@@ -271,7 +271,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     for(i in 1:length(betweenwithin)){
       
       j<-which(betweenwithin[[i]]==names(contrasts))
-      if(!all(class(contrasts[[j]]) %in% c("matrix", "data.frame")) || !is.numeric(as.matrix(contrasts[[j]]))){
+      if(!class(contrasts[[j]]) %in% c("matrix", "data.frame") || !is.numeric(as.matrix(contrasts[[j]]))){
         okCancelBox( .ez.anova.msg("msg", 24))
         return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T)) 
       }
