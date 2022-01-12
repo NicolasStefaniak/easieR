@@ -794,7 +794,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
     #omega.out<-omega_sq(aov.out$aov)
-   try(omega.out<- effectsize::effectsize(aov.out$aov, type = "omega"))
+   omega.out<-try(effectsize::effectsize(aov.out$aov, type = "omega"))
      if(class(omega.out)== "try-error") omega.out<-NULL
     aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$omegasq),3])
     
