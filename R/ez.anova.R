@@ -795,7 +795,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     }
     #omega.out<-omega_sq(aov.out$aov)
    omega.out<-try(effectsize::effectsize(aov.out$aov, type = "omega"))
-     if(class(omega.out)== "try-error") omega.out<-NULL
+     if(class(omega.out)== "try-error", silent=T) omega.out$omegasq<-"na"
     aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$omegasq),3])
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
