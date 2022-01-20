@@ -19,7 +19,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   # contrast = list. The names in the list corresponds to the names of the factors and the values is a matrix of coefficients for the contrasts. "pairs" or "none" are also possible
   # p.adjust = adjust p values for multiples comparisons. see <code>p.adjust</code>
   packages<-c("BayesFactor", "car","afex", "DescTools","emmeans","ggplot2","nortest", "outliers", "PMCMRplus",
-              "pgirmess",  "psych", "reshape2", "sjstats", "svDialogs", "WRS2" )
+              "psych", "reshape2", "sjstats", "svDialogs", "WRS2" )
   test2<-try(lapply(packages, library, character.only=T), silent=T)
   if(class(test2)== "try-error") return(ez.install())
   try(require(WRS), silent=T)
