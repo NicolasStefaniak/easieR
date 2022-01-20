@@ -39,7 +39,6 @@ ez.install <-
                       'outliers',
                       'pander',
                       "PMCMRplus",
-                      'pgirmess',
                       'pkgmaker',
                       'plyr',
                       'ppcor',
