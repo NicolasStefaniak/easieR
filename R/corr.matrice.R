@@ -311,7 +311,7 @@ corr.matrice <-
     if(class(win)=="try-error") quartz()
     if(!is.null(data) & class(data)!="character") deparse(substitute(data))->data  
     
-    corr.options<-corr.matrice.in(X=X, Y=Y, Z=Z, data=data, group=group, param=param, outlier=outlier, save=save, info=T,  rscale=rscale, n.boot=n.boot)
+    corr.options<-corr.matrice.in(X=X, Y=Y, Z=Z, data=data, group=group,p.adjust=p.adjust, param=param, outlier=outlier, save=save, info=T,  rscale=rscale, n.boot=n.boot)
     if(is.null(corr.options)) return(analyse())
     
     choix<-corr.options$choix
