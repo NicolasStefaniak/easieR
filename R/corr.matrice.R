@@ -246,9 +246,12 @@ corr.matrice <-
       dimnames(r1)[[1]]<-paste(dimnames(r1)[[1]], "r")
       matrice$n->Resultats$"taille de l'echantillon"
       
-      if(any(param=="H0")|any(param=="Tests de H0")) {paste("la correction appliquee est la correction de",p.adjust)->Resultats$Correction[1]
-        if(is.null(Y)) Resultats$Correction[2]<-"Seules les valeurs au-dessus de la diagonales sont ajustees pour comparaisons multiples"
-        round(matrice$p,3)->r2
+      if(any(param=="H0")|any(param=="Tests de H0")) {
+	      paste("la correction appliquee est la correction de",p.adjust)->Resultats$Correction[1]
+        if(is.null(Y)) {Resultats$Correction[2]<-"Seules les valeurs au-dessus de la diagonales sont ajustees pour comparaisons multiples"
+        		round(matrice$p,3)->r2}else{
+		r2<-round(matrice$p.adj,3)
+	}
         class(r2)<-c("matrix", "p.value")
         Resultats$"matrice des probabilites"<-r2
         dimnames(r2)[[1]]<-paste0(dimnames(r2)[[1]], ".p")
