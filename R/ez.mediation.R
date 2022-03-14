@@ -114,7 +114,7 @@ ez.mediation <-
     
     
     .e <- environment()
-    c("boot", "MBESS","QuantPsyc", "svDialogs")->packages
+    c("boot", "MBESS", "svDialogs")->packages
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== "try-error") return(ez.install())
     Resultats<-list()
@@ -169,23 +169,25 @@ ez.mediation <-
       Resultats$Analyse.mediation<-mediation.out
       Resultats$Information<-"Pour une description detaillee des resultats, ?mediation"
       mediation.effect.bar.plot2(data[,X], data[,Mediator], data[,VD],main = "Mediation Effect Bar Plot", width = 1, left.text.adj = 0,right.text.adj = 0, rounding = 3, file = "", save.pdf = FALSE,save.eps = FALSE, save.jpg = FALSE)
-    }else { data2<-data[,c(X, Mediator, Mediator2, VD)]
-    names(data2)<-c("x", "m1","m2","y")
-    distal.med(data2)->results
-    data.frame(results)->results
-    round(as.numeric(as.character(results$Effect)),4)->results$Effect
-    round(as.numeric(as.character(results$SE)),4)->results$SE
-    round(as.numeric(as.character(results[,3])),3)->results$t.ratio
-    round(as.numeric(as.character(results$Med.Ratio)),4)->results$Med.Ratio 
-    names(results)<-c("Effet", "Erreur.st","test.t", "Ratio.med")
-    results->Resultats$"Mediation a distance"
-    Resultats$Information<-"Pour une description detaillee des resultats, ?distal.med"
-    distmed.boot <- boot(data2, distInd.ef, R=n.boot)
-    boot.ci(distmed.boot, conf=.95, type=c("basic","perc", "norm"))->IC.boot
-    round(matrix(c(IC.boot$normal[,2:3],IC.boot$basic[,4:5],IC.boot$percent[,4:5]), ncol=2 ),4)->IC.boot
-    dimnames(IC.boot)[[1]]<-c("normal","basic","percentile")
-    dimnames(IC.boot)[[2]]<-c("limite.inf","limite.sup")
-    IC.boot->Resultats$"Intervalle de confiance estime par bootstrap"}
+    }else { print("Les mediations distales ne sont pas disponibles pour le moment / Distal mediations are not available for now")
+    #data2<-data[,c(X, Mediator, Mediator2, VD)]
+    #names(data2)<-c("x", "m1","m2","y")
+    #distal.med(data2)->results
+    #data.frame(results)->results
+    #round(as.numeric(as.character(results$Effect)),4)->results$Effect
+    #round(as.numeric(as.character(results$SE)),4)->results$SE
+    #round(as.numeric(as.character(results[,3])),3)->results$t.ratio
+    #round(as.numeric(as.character(results$Med.Ratio)),4)->results$Med.Ratio 
+    #names(results)<-c("Effet", "Erreur.st","test.t", "Ratio.med")
+    #results->Resultats$"Mediation a distance"
+    #Resultats$Information<-"Pour une description detaillee des resultats, ?distal.med"
+    #distmed.boot <- boot(data2, distInd.ef, R=n.boot)
+    #boot.ci(distmed.boot, conf=.95, type=c("basic","perc", "norm"))->IC.boot
+    #round(matrix(c(IC.boot$normal[,2:3],IC.boot$basic[,4:5],IC.boot$percent[,4:5]), ncol=2 ),4)->IC.boot
+    #dimnames(IC.boot)[[1]]<-c("normal","basic","percentile")
+    #dimnames(IC.boot)[[2]]<-c("limite.inf","limite.sup")
+    #IC.boot->Resultats$"Intervalle de confiance estime par bootstrap"
+          }
     
     dlgList(c("TRUE","FALSE"), preselect="FALSE", multiple = FALSE, title="voulez-vous sauvegarder?")$res->sauvegarde
     if(length(sauvegarde)==0) sauvegarde<-FALSE  
