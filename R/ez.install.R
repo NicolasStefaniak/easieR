@@ -44,7 +44,6 @@ ez.install <-
                       'ppcor',
                       'psych',
                       'pwr',
-                      'QuantPsyc',
                       'quantreg',
                       'Rcpp',
                       'readxl',
