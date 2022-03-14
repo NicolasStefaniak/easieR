@@ -40,7 +40,6 @@ function(){
                       'ppcor',
                       'psych',
                       'pwr',
-                      'QuantPsyc',
                       'quantreg',
                       'Rcpp',
                       'readxl',
