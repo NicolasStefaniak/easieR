@@ -123,7 +123,7 @@ regressions <-
       
        if(scale==T || scale=="Centre") {
          Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
-        which(!sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)%in%c("factor", "character"))->centre
+      if(length(pred)>1)  which(!sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)%in%c("factor", "character"))->centre
         centre<-pred[centre]
       if(length(centre)==1) dtrgeasieR[,centre]-mean(dtrgeasieR[,centre],na.rm=T)->dtrgeasieR[,centre] else{
         sapply(X=dtrgeasieR[,centre], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,centre]
