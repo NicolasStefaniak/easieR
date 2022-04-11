@@ -145,7 +145,7 @@ regressions <-
       assign("lm.r1",lm.r1, env= .GlobalEnv)
       resid(lm.r1)->dtrgeasieR$residu
       Resultats$"Tests de normalite"<-.normalite(data=dtrgeasieR, X="residu", Y=NULL)
-      if(length(variables)>1)  {
+      if(length(pred)>1)  {
         cont<-variables[which(!sapply(dtrgeasieR[,variables],class)%in%c("factor","character"))]
         Resultats$"Normalite multivariee"<-.normalite(data=dtrgeasieR, X=cont, Y=NULL)
         ols_plot_resid_fit(lm.r1)
