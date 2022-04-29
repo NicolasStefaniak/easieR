@@ -310,7 +310,7 @@ chi <-
     
     chi.in(X=X, Y=Y, Effectifs=Effectifs,p=p, choix=choix, data=data, info=info, n.boot=n.boot, SampleType=SampleType, FM=fixedMargin, choix2=choix2)->chi.options
     if(is.null(chi.options)) return(analyse())
-    if(chi.options!="Ajustement"){
+    if(chi.options$analyse!="Ajustement"){
       try( windows(record=T), silent=T)->win
       if(class(win)=="try-error") quartz()
     }
