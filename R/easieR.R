@@ -562,7 +562,7 @@ VI.multiples<-function(data, X){
     if(is.null(groupes)) NULL->groupes2 else data.frame(data[,groupes])->groupes2
     try(  psych::describeBy(data[,X], group=groupes2,mat=(!is.null(groupes)),type=type,digits=4, check=FALSE,skew = TRUE, 
                             ranges = TRUE,trim=tr, fast=FALSE), silent=T)->psych.desc
-    if(class(psych.desc)=="try-error") {
+    if(any(class(psych.desc)=="try-error")) {
       psych::describeBy(data[,X], group=groupes2,mat=F,type=type,digits=15, check=FALSE,skew = TRUE, 
                         ranges = TRUE,trim=tr)->psych.desc
       expand.grid(sapply(groupes2, levels))->modalites
