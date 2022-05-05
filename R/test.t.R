@@ -372,7 +372,7 @@ test.t <-
       
       if(any(param=="robustes"| any(param=="Test robustes - impliquant des bootstraps"))){
         try( round(unlist(WRS::trimci(data[,X],tr=.2,alpha=.05, null.value=mu)),4), silent=T)->m.tr
-        if(m.tr!="try-error"){
+        if(any(m.tr!="try-error")){
           names(m.tr)<-c("lim.inf.IC","lim.sup.IC", "M.tronquee","test.t", "se","valeur.p","n")
           m.tr->Resultats$'Test sur la moyenne tronquee a 0.2' 
           data[,X]->x
