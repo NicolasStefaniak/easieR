@@ -393,7 +393,7 @@ regressions <-
     if(class(test2)== "try-error") return(ez.install())
     Resultats<-list() 
     try( windows(record=T), silent=T)->win
-    if(class(win)=="try-error") quartz()
+    if(any(class(win)=="try-error")) quartz()
     if(class(data)=="data.frame") deparse(substitute(data))->data 
     reg.in.output<-regressions.in(data=data, modele=modele, Y=Y, X_a=X_a, X_i=X_i, outlier=outlier, inf=inf, 
                                   CV=CV, select.m=select.m, method=method, step=step, group=group, criteria=criteria , scale=scale, info=info,
