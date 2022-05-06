@@ -154,7 +154,7 @@ regressions <-
         names(FIV)<-c("Test de multicolinearite", "Indice des valeurs propres")
         names(FIV$`Test de multicolinearite`)<-c("variables", "Tolerance", "FIV")
         Resultats$"Tests de multicolinearite"<-FIV$`Test de multicolinearite`
-        if(FIV$`Test de multicolinearite`$Tolerance==0) {
+        if(any(FIV$`Test de multicolinearite`$Tolerance==0)) {
           msgBox("La multicolinearite est trop importante. Le modele est instable")
           return(Resultats)
         }
