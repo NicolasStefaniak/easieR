@@ -152,7 +152,7 @@ regressions.log <-
         modele<-as.formula(modele)}
       
       model.test<-try(model.matrix(modele, data), silent=T)
-      if(class(model.test)=="try-error") {
+      if(any(class(model.test)=="try-error")) {
         msgBox("Le modele specifie est incorrect. Verifiez vos variables et votre modele")
         return(reg.log.in())
       }
