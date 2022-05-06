@@ -118,10 +118,10 @@ factor.an <-
       ### doit etre significatif (attention depend de la taille de l echantillon)
       bartlett->Resultats$"Mesure d'adequation de la matrice"$"Test de Barlett"
       KMO1<-KMO(Matrice)
-      if(is.na(KMO1)) {msgBox("Le KMO sur la matrice n'a pu etre obtenu. Nous tentons de realiser un lissage de la matrice de correlation")
+      if(any(is.na(KMO1))) {msgBox("Le KMO sur la matrice n'a pu etre obtenu. Nous tentons de realiser un lissage de la matrice de correlation")
         Matrice<-cor.smooth(Matrice)
         KMO1<-KMO(Matrice)}
-      if(is.na(KMO1)) {
+      if(any(is.na(KMO1))) {
         msgBox("Le KMO sur la matrice n'a pu etre obtenu.")
         Resultats$"Mesure d'adequation de la matrice"$"Indice de Kaiser-Meyer-Olkin global"<-"Le KMO n'a pas pu etre calcule. Verifiez votre matrice de correlation."
       } else {
