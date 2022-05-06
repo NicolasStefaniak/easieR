@@ -328,7 +328,7 @@ regressions <-
         table->Resultats$"table des betas"
         if(length(pred)>1){
           ols.corr<-try(ols_correlations(lm.r1), silent=T)
-          if(class(ols.corr)!="try-error"){
+          if(any(class(ols.corr)!="try-error")){
           Resultats$"Contribution des variables au modele"<-ols.corr
           Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)}
         }
