@@ -11,7 +11,7 @@ choix.data <-
       import()
       choix.data(data=NULL,info=T, nom=nom)->Resultats
       return(Resultats)}
-    if(!is.null(data) && data%in% nom1) data->nom1
+    if(any(!is.null(data)) && data%in% nom1) data->nom1
     if(length(nom1)==1)  data<-get(nom1) else{
       if(info=="TRUE") writeLines("Veuillez choisir la base de donnees")
       nom1 <- dlgList(nom1, multiple = FALSE, title="Donnees ?")$res
