@@ -815,7 +815,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     aov.plus.in$em.out<-em.out
     
     
-    if(!is.list(contrasts) && contrasts %in% c("pairwise",  "Comparaison 2 a 2" )){
+    if(!is.list(contrasts) && any(contrasts %in% c("pairwise",  "Comparaison 2 a 2" ))){
       pair<-pairs(em.out, adjust=p.adjust)
       pair<-summary(pair)
       names(pair)[which(names(pair)=="p.value")]<-"valeur.p"
