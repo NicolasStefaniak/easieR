@@ -258,7 +258,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 .contrastes.ez<-function(data, between=NULL, within=NULL, contrasts="none", p.adjust="none", dial=T){
   options (warn=1)
   c(between, unlist(within))->betweenwithin
-  if(!contrasts%in%c("none","pairwise","aucun","comparaison 2 a 2") & class(contrasts)!="list") {
+  if(any(!contrasts%in%c("none","pairwise","aucun","comparaison 2 a 2")) & class(contrasts)!="list") {
     okCancelBox( .ez.anova.msg("msg", 27))
     return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T))
   }
