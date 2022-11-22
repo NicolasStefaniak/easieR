@@ -368,7 +368,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     }
   }else{
     contrastes<-list()
-    if(contrasts %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun")) {
+    if(any(contrasts %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun"))) {
       Resultats$contrastes<-contrasts
       contrastes<-contrasts
       }else{
