@@ -35,7 +35,6 @@ function(){
                       'outliers',
                       'pander',
                       "PMCMRplus",
-                      'pkgmaker',
                       'plyr',
                       'ppcor',
                       'psych',
