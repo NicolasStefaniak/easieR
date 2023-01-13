@@ -255,7 +255,7 @@ chi <-
           }
           if(any(choix2 %in% c("Test non parametrique","Test robustes - impliquant des bootstraps")))      {
             if(is.null(SY$"Valeur p par simulation de Monte Carlo")) p<-SY$valeur.p else p<-SY$"Valeur p par simulation de Monte Carlo"
-            if(p<0.05)  {
+            if(any(p<0.05))  {
               round(mon.chi$residuals,3)->Resultats$"Residus"
               round((mon.chi$observed-mon.chi$expected)/(mon.chi$expected^0.5),3)->Resultats$"Residus standardises"
               round(mon.chi$stdres,3)->Resultats$"Residus standardises ajustes"
