@@ -16,8 +16,88 @@ It is possible to split analyses by group (regressions, correlations) for some a
 The English version is under development. 
 
 # The most important
-Most functions works quite well, and many new functions will be developed soon but if there bugs, just let me know by posting in the issues part of this github repository.
+Most functions works quite well, and many new functions will be developed soon but if there are bugs, just let me know by posting in the issues part of this github repository.
 
+
+easieR est un package qui peut être utilisé en boîte de dialogue (GUI) ou en ligne de commande. Ce document expliquera comment l'utiliser d'une manière ou d'une autre. Cependant, pour le moment, easieR n'est pas un package disponible sur le CRAN. Il est donc nécessaire de passer par quelques étapes intermédiaires. Pour s'assurer d'une installation correcte de easieR, il faut suivre **les étapes suivantes**.  
+
+**Etape 1** : tout d'abord, il faut  ouvrir R et installer le package *devtools* de la manière suivante. 
+
+```{r eval=FALSE}
+install.packages("devtools",dependencies = TRUE, repos = "https://mirror.ibcp.fr/pub/CRAN")
+```
+
+
+Normalement, le package « devtools » est à présent installé. Il faut le charger. Pour charger un package, on utilise la fonction <code>library</code>. Une fois que le package est chargé, vous pouvez l’utiliser pendant toute la durée de la session sans devoir le charger à nouveau. Donc, pour charger le package *devtools*, il faut taper :
+
+```{r}
+library(devtools)
+```
+
+
+Si un message d’erreur survient ici (« erreur » apparaît dans la console), c’est que vous n’avez pas réalisé correctement les opérations qui précèdent. Si le package est installé correctement, R va indiquer :
+
+```{r echo=F}
+print("##Le chargement a nécessité le package : devtools")
+```
+
+Il se peut aussi que rien ne soit affiché. Ce n’est pas grave.
+
+**Etape 2**: l'installation de easieR 
+
+Vous pouvez installer easieR à présent grâce à la ligne de commande :
+
+```{r ,eval=FALSE}
+install_github("NicolasStefaniak/easieR", type="binary")
+```
+
+Vous savez que easieR est installé en chargeant le package à l'aide de la ligne de commande suivante :
+
+```{r eval=FALSE}
+library(easieR)
+```
+
+
+
+La date de la dernière mise à jour est également indiquée (Last update). Il est bon de vérifier sur github dans l'onglet "nouvelles fonctionnalités et bugs" si des versions plus récentes sont proposées. 
+
+**Etape 3**: Vérifier l'installation des packages
+
+Pour pouvoir profiter de l’ensemble des fonctionnalités de easieR, il est nécessaire de vérifier que tous les packages soient bien installés. Cela peut être réalisé grâce à la fonction :
+
+```{r eval=FALSE }
+ez.install()
+```
+
+A cette étape, vous saurez que tous les packages sont correctement installés si dans la sortie de résultats, vous avez "packages.mal.installes : character(0)". 
+
+
+
+**Etape 4**: l'installation de Pandoc
+
+La dernière étape consiste à installer pandoc. Ce logiciel complémentaire vous permet d'obtenir les sorties html pour les résultats. 
+
+Pour pandoc, il faut se rendre sur le site de pandoc (https://github.com/jgm/pandoc/releases/)  et de l’installer manuellement. Vous devez d'abord avoir fermé R avant de l'installer. Vous choisissez la version qui correspond à votre ordinateur (le fichier pkg pour les utilisateurs **mac** et le fichier msi pour les utilisateurs **windows**). Après l'avoir téléchargé, vous double-cliquez et vous suivez les consignes d’installation.
+
+
+Chaque fois que vous fermez R, les packages sont déchargés. Pour pouvoir utiliser easieR, il faudra donc utiliser la fonction <code>library</code> et ensuite, vous pourrez utiliser la fonction easieR :
+
+```{r eval=FALSE }
+library(easieR)
+```
+
+## 2.3. Mise à jour de easieR 
+
+Dès qu’un bug est identifié, des corrections du package sont réalisées. Par ailleurs, de nouvelles fonctionnalités sont régulièrement ajoutées à easieR. Dès lors, pour pouvoir en profiter, il est utile de pouvoir faire une mise à jour. En d’autres termes, la procédure décrite ci-dessous est utile pour les personnes qui ont déjà installé easieR et qui veulent le mettre à jour. La procédure la plus sûre pour atteindre cet objectif est :
+
+1) d’ouvrir R (si R est déjà ouvert, fermez R au préalable pour vous assurer que des packages ne sont pas chargés)
+
+2) copier coller les lignes de commandes ci-dessous : 
+
+
+```{r eval=FALSE}
+devtools::install_github("nicolasstefaniak/easier", type="binary", dependencies=F)
+```
 
 # Présentation générale d'easieR
 
