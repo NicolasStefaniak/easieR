@@ -4,7 +4,7 @@ easieR is R metapckage. The aim is to provide a GUI able to perform classical st
 
 Concerning the presentation, easieR systematically prints : descriptive statistics, assumptions, the main analysis, and effect sizes. For each analysis, it is possible to obtain less common analyses (e.g., Wilcox test instead of t test) and identify and remove these outliers automatically. This approach aims to increase robustness of analyses and improve replication of results.
 
-# Functions already present in easieR
+## Functions already present in easieR
 
 easieR has many capabilities for the moment : import/export data, sort, select, scale, ranking, multiple imputation for missing data, mathematical operations, descriptive statistics, t test, correlations, anova, regressions, logistic regressions, exploratory factor analyses, confirmatory factor analyses, principal component analyses, reliability analyses.
 
@@ -12,11 +12,88 @@ It is possible to split analyses by group (regressions, correlations) for some a
 
 
 
-# Evolutions and correction
+## Evolutions and correction
 The English version is under development. 
 
-# The most important
+## The most important
 Most functions works quite well, and many new functions will be developed soon but if there are bugs, just let me know by posting in the issues part of this github repository.
+
+easieR can be used either by the GUI and in command lines. For now, easieR is not a package available on CRAN. Thus, it requires  to follow several steps for the installation. 
+
+
+**Step 1** : open R and install *devtools* d. 
+
+```{r eval=FALSE}
+install.packages("devtools",dependencies = TRUE, repos = "https://mirror.ibcp.fr/pub/CRAN")
+```
+
+
+Now, the package « devtools » is installad. You must load it with the function  <code>library</code>. Once the package loaded, you can use it during all the session without have to load it anew. To load "devtools", you must use the command:
+
+```{r}
+library(devtools)
+```
+
+If an error message occurs in the console, the package is not correctly installed. Try to close R, open R, and the following command line:
+install.packages("devtools",dependencies = TRUE, type="binary", repos = "https://mirror.ibcp.fr/pub/CRAN")
+
+If the package is correctly installed, a message should be printed in the console:
+
+```{r echo=F}
+print("##Le chargement a nécessité le package : devtools")
+```
+
+It is also possible that nothing is printed. Do not worry.
+
+**Step 2**: the installation of easieR
+
+You can install easieR with the following command line:
+
+```{r ,eval=FALSE}
+install_github("NicolasStefaniak/easieR", type="binary")
+```
+
+You know that easieR is correctly installed by loading the package with the following command line:
+
+```{r eval=FALSE}
+library(easieR)
+```
+
+The last update is printed. Check that it is the last time that I have update easieR on github. 
+
+
+**Step 3**: Check that all the packages have been correctly installed 
+
+In order to ensure that all the functions works, it is required to check that all the packages are correctly installed. This check is made with the following command line:
+
+```{r eval=FALSE }
+ez.install()
+```
+
+If for "package.mal.installes", the result is character(0), everything has been correctly done.
+
+
+
+**Step 4**: Install Pandoc
+
+The last step requires to install pandoc. This supplementary package allows to get html ouput.
+All the instructions for pandoc is available here: https://github.com/jgm/pandoc/releases/
+
+Once R is closed, the packages are unloaed. Each time you open R, if you want to use 'easieR', you need to use the following command line before you can use it:
+
+```{r eval=FALSE }
+library(easieR)
+```
+
+## Update of easieR 
+
+I try to correct bug as quickly as possible. Moreover, I wan to add some new functions in the future. If you want to update easieR, you can use the following command line:
+
+```{r eval=FALSE}
+devtools::install_github("nicolasstefaniak/easier", type="binary", dependencies=F)
+```
+
+# Version français 
 
 
 easieR est un package qui peut être utilisé en boîte de dialogue (GUI) ou en ligne de commande. Ce document expliquera comment l'utiliser d'une manière ou d'une autre. Cependant, pour le moment, easieR n'est pas un package disponible sur le CRAN. Il est donc nécessaire de passer par quelques étapes intermédiaires. Pour s'assurer d'une installation correcte de easieR, il faut suivre **les étapes suivantes**.  
