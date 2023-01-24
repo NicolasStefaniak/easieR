@@ -61,8 +61,7 @@ ez.install <-
                       'stringi',
                       'stringr',
                       'svDialogs',
-                      'TeachingDemos',
-                      'WRS',                   
+                      'TeachingDemos',                  
                       'WRS2'
     )
    
