@@ -16,7 +16,7 @@ easieR <-
     choix <- dlgList(easieR.msg("2"), preselect=NULL, multiple = FALSE, title=easieR.msg("3"))$res
     if(length(choix)==0) return(writeLines(easieR.msg("4"))) else {
       if(choix %in%c("Donnees - (Importation, exportation, sauvegarde)",
-                     "Data - (Import, export, save")) Resultats <- donnees()
+                     "Data - (Import, export, save)")) Resultats <- donnees()
       if(choix %in% c("Analyses - Tests d'hypothese", 
                       "Analyses - Hypothesis tests")) Resultats <-analyse(html=html)
       if(choix%in%c("Interface - objets en memoire, nettoyer la memoire, repertoire de travail",
