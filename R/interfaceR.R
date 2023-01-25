@@ -4,7 +4,7 @@ interfaceR <-
     packages <- c("svDialogs","pkgmaker")
     lapply(packages, require,character.only=T)
     Resultats <- list()
-    write.pkgbib(packages, file='references')
+    ref1(packages)
     
     
     choix <- dlgList(c("obtenir le repertoire de travail","specifier le repertoire de travail", "Suppression d objet en memoire", 
