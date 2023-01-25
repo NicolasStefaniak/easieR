@@ -1,7 +1,7 @@
 interfaceR <-
   function(){
     options (warn=-1) 
-    packages <- c("svDialogs","pkgmaker")
+    packages <- c("svDialogs")
     lapply(packages, require,character.only=T)
     Resultats <- list()
     ref1(packages)
