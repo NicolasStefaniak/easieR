@@ -4,7 +4,7 @@ interfaceR <-
     packages <- c("svDialogs")
     lapply(packages, require,character.only=T)
     Resultats <- list()
-    ref1(packages)
+
     
     
     choix <- dlgList(c("obtenir le repertoire de travail","specifier le repertoire de travail", "Suppression d objet en memoire", 
@@ -43,8 +43,7 @@ Une page html reprenant l'ensemble des packages faisant reference a l'analyse re
            },
            "mise a jour des packages"= {update.packages(ask=FALSE)},
            "Verifier l installation des packages"=vef.pack()->Resultats$"Verification des packages")
-    bibtex::read.bib('references.bib')->Resultats$"References des packages utilises"
-    file.remove('references.bib')
-    
+             if(choix =="rechercher une nouvelle fonction") packages<-c(packages, "sos")
+    Resultats$ref<- ref1(packages)
     return(Resultats)
   }
