@@ -20,7 +20,7 @@ easieR <-
       if(choix %in% c("Analyses - Tests d'hypothese", 
                       "Analyses - Hypothesis tests")) Resultats <-analyse(html=html)
       if(choix%in%c("Interface - objets en memoire, nettoyer la memoire, repertoire de travail",
-                  "Interface - objects in memory, clean memory, wordking directory")) Resultats <- interfaceR()
+                  "Interface - objects in memory, clean memory, working directory")) Resultats <- interfaceR()
       if(choix%in% c("Pretraitements (tri, selection, operations mathematiques, Traitement des valeurs manquantes)",
                      "Preprocess (sort, select, mathematical operations, missing values)")) Resultats<-preprocess()
       if(choix%in% c("Materiel pedagogique","Teaching material")) return(teaching())
