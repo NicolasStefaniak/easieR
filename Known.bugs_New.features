@@ -37,5 +37,5 @@
 35) for some mac users, gdtools makes R crash. The cause of this issue has not beeen found yet. (fixed 02/16/2020, the dependencies to flextable have been changed for huxtable)  
 36) mediation analyses have been corrected (03/08/2020)
 37) correlation matrix by group with missing value has been corrected (03/08/2020) 
-
+38) English version has been corrected (01/30/2023)
 
