@@ -654,7 +654,7 @@ test.t <-
                                 "Difference","Err-type","Stat", "Seuil", "ddl","valeur.p")
           yuen.modele->Resultats$Robustes$"Analyse sur les moyennes tronquees"
           if(n.boot>99){
-            WRS::yuenbt(g1[,X],g2[,X], nboot=n.boot, side=T)->yuen.bt.modele ### fournit la probabilite associee a des moyennes tronquees apres un bootstrap.
+            WRS2::yuenbt(modele, data= data, nboot=n.boot, side=T)->yuen.bt.modele ### fournit la probabilite associee a des moyennes tronquees apres un bootstrap.
             round(unlist(yuen.bt.modele)[1:4],4)->yuen.bt.modele
             names(yuen.bt.modele)<-c("lim.inf.IC", "lim.sup.IC", "Stat", "valeur.p")
             yuen.bt.modele->Resultats$Robustes$"Bootstrap utilisant la methode t sur les moyennes tronquees"
