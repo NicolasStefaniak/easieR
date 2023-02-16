@@ -655,8 +655,11 @@ test.t <-
           yuen.modele->Resultats$Robustes$"Analyse sur les moyennes tronquees"
           if(n.boot>99){
             WRS2::yuenbt(modele, data= data, nboot=n.boot, side=T)->yuen.bt.modele ### fournit la probabilite associee a des moyennes tronquees apres un bootstrap.
-            round(unlist(yuen.bt.modele)[1:4],4)->yuen.bt.modele
-            names(yuen.bt.modele)<-c("lim.inf.IC", "lim.sup.IC", "Stat", "valeur.p")
+            yuen.bt.modele<-round(data.frame(test = yuen.bt.modele$test, 
+                                             ddl = yuen.bt.modele$df,
+                                             valeur.p = yuen.bt.modele$p.value, 
+                                             lim.inf.IC = yuen.bt.modele$conf.int[1], 
+                                             lim.sup.IC = yuen.bt.modele$conf.int[2]),3)
             yuen.bt.modele->Resultats$Robustes$"Bootstrap utilisant la methode t sur les moyennes tronquees"
             WRS::pb2gen(g1[,X],g2[,X], nboot=n.boot)->pb2gen.modele### calcule le bootstrap sur le M-estimateur et fournit l intervalle de confiance. 
             round(unlist(pb2gen.modele)[1:6],4)->pb2gen.modele
