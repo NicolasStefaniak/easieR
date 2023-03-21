@@ -132,10 +132,7 @@ regressions.log <-
       variables<-terms(as.formula(modele))
       variables<-as.character( attributes(variables)$variables)[-1]
       pred<-attributes(terms(as.formula(modele)))$term.labels
-      if(any(ftable(data[,which(lapply(sapply(data,unique),length)<5)])<3)) {
-        msgBox("Les observations sont en nombre insuffisant (<3) pour certaines combinaisons de niveaux des variables du modele")
-        return(ftable(data[,which(lapply(sapply(data,unique),length)<5)]))
-      }
+
       if(dial){
         if(length(pred>1)){
           pred.ord<-c()
