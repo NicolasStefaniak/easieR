@@ -285,7 +285,7 @@ regressions.log <-
       if(select.m!="none"){
         select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="forward", "Backward- pas-a-pas descendant"="backward", "Bidirectionnel"="both",
                          "forward"="forward", "bidirectional"="both","backward"="backward" )
-        if(  select.m=="forward") { mod0<-as.formula(paste0(as.character(modele[2], "~1")
+        if(  select.m=="forward") { mod0<-as.formula(paste0(as.character(modele)[2], "~1"))
           glm.0<-glm(mod0, data=data, family="binomial")
         }
         glm(modele, data=data, family="binomial")->glm.r1
