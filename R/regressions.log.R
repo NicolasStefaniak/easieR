@@ -290,7 +290,7 @@ regressions.log <-
         }
         glm(modele, data=data, family="binomial")->glm.r1
         
-        if(  select.m=="forward") { steps<-stepAIC(glm.0, direction=select.m, scope =list(upper=glm.r1
+        if(  select.m=="forward") { steps<-stepAIC(glm.0, direction=select.m, scope =list(upper=glm.r1,
     lower = glm.0)) }else{
         steps<-stepAIC(glm.r1, direction=select.m)
         }
