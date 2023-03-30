@@ -791,7 +791,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     aov.out3<-data.frame(aov.out3)
 #    aov.out3[,6]<-round.ps(aov.out3[,6])
     if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-      names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p", "omega2" )
+      names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
     omega.out<-effectsize::omega_squared(aov.out$Anova)
     aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$Parameter),"Omega2_partial"])
