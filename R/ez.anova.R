@@ -793,9 +793,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
       names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
-    #omega.out<-omega_sq(aov.out$aov)
-   omega.out<-try(effectsize::effectsize(aov.out$aov, type = "omega"), silent=T)
-     if(class(omega.out)!= "try-error") aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$omegasq),3])
+
+  #  out<-effectsize::omega_squared(aov.out$Anova)
+   #  if(class(omega.out)!= "try-error") aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$omegasq),3])
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
