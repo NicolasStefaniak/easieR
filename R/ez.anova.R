@@ -931,12 +931,15 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         round(Table.contrasts,4)->Table.contrasts
         data.frame(Table.contrasts)->Table.contrasts  
         if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          names(Table.contrasts)<-c("estimateur", "ddl","t", "valeur.p")}else names(Table.contrasts)<-c("estimate", "df","t", "p.value")
-        
-        
+          names(Table.contrasts)<-c("estimateur", "ddl","t", "valeur.p")
+         Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$ddl)->Table.contrasts$R.2
+          round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen 
+        }else {
+          names(Table.contrasts)<-c("estimate", "df","t", "p.value")
+         Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$df)->Table.contrasts$R.2
+          round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen 
+        }
         dimnames(Table.contrasts)[[1]]<-table.cont[,1]
-        Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$ddl)->Table.contrasts$R.2
-        round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen
         Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",43)]]<-Table.contrasts
         
         
