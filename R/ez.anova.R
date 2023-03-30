@@ -872,7 +872,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",41)]]<-contrasts
       table.cont$R.2<-round(table.cont$t.ratio^2/(table.cont$t.ratio^2+table.cont$df),4)
         if(!is.null(between)) {
-        grepl(paste(between,collapse = "|"),  table.cont[,1])->table.cont$D.Cohen
+        grepl(paste(between,collapse = "|"),  table.cont[,1])->table.cont$d.Cohen
        round( ifelse(table.cont$d.Cohen==T, (2*table.cont$t.ratio)/(nlevels(data[,id])^0.5), table.cont$t.ratio/(nlevels(data[,id])^0.5)),4)->table.cont$d.Cohen}else{
           round(table.cont$t.ratio/((nlevels(data[,id]))^0.5),4)->table.cont$d.Cohen}
       
