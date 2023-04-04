@@ -295,7 +295,7 @@ regressions.log <-
         steps<-stepAIC(glm.r1, direction=select.m)
         }
         Resultats$"Methode de selection - criteres d'information d'Akaike"<-steps$anova
-        modele<-as.formula(attributes(steps$anova)$heading[5])
+       # modele<-as.formula(attributes(steps$anova)$heading[5])
       }
       
       return(Resultats)
