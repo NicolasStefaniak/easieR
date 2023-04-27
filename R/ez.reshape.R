@@ -140,7 +140,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   data<-data[[2]]
   
   
-  if(is.null(varying) || !unlist(varying) %in%names(data) ){
+  if(is.null(varying) || any(!unlist(varying) %in%names(data)) ){
     varying<-list()
     n.var<-NA
     dostop<-T
