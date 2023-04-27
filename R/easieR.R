@@ -292,7 +292,7 @@ VI.multiples<-function(data, X){
       return(Resultats)
     }
     if(check.prod){
-      if(length(X)>1 && sapply(data[,X],nlevels)>length(data[,1])) {
+      if(length(X)>1 && prod(sapply(data[,X],nlevels))>length(data[,1])) {
         msgBox("Le produit des modalites des variables definissant les groupes est superieur au nombre de vos observations. Il faut au moins une observation par combinaison de modalites de vos variables. Veuillez redefinir votre analyse") 
         .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title,out=out)->Resultats
         return(Resultats)
