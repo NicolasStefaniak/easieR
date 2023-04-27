@@ -386,7 +386,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     Resultats$contrastes<-contrastes
     }
   }
-  if((dial & contrastes %in% c("Comparaison 2 a 2","Pairwise", "pairwise")) || 
+  if((dial & all(contrastes %in% c("Comparaison 2 a 2","Pairwise", "pairwise"))) || 
      (!p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
                        "sidak","dunnettx","mvt" ,"none" ))){
     list()->p.adjust
