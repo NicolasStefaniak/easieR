@@ -794,7 +794,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
     }
     omega.out<-effectsize::omega_squared(aov.out$Anova)
-    aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$Parameter),"Omega2_partial"])
+    aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$Parameter),2])
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
