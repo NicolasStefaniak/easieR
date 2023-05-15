@@ -312,7 +312,7 @@ VI.multiples<-function(data, X){
   }
   if(!is.null(type) && type=="numeric"){
     if(length(X)==1) moy<-is.na(mean(data[,X],na.rm=T)) else moy<-any(is.na(sapply(data[,X], mean, na.rm=T)))
-    if(any(moy==0) || var(data[,X],na.rm=T)==0)){
+    if(any(moy==0) || any(var(data[,X],na.rm=T)==0)){
       okCancelBox("la variable doit etre numerique et avoir une variance non nulle.")
       X<-NULL
       .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title, out=out)->Resultats
