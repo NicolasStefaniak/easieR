@@ -432,7 +432,7 @@ regressions <-
         if(length(group)>1) G<-as.list(G)
         G<-split(data, G)
         for(i in 1:length(G)){
-          resg<-regressions.out(data=G[[i]], modele=modele,  VC=VC, select.m=select.m, method=method, step=step, group=group, criteria=criteria , scale=scale,
+          resg<-regressions.out(dtrgeasieR=G[[i]], modele=modele,  VC=VC, select.m=select.m, method=method, step=step, group=group, criteria=criteria , scale=scale,
                                 sauvegarde=sauvegarde, n.boot=n.boot, param=param, rscale=rscale)
           
           R1[[length(R1)+1]]<-resg
