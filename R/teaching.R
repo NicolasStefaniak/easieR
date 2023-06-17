@@ -9,7 +9,7 @@ teaching <-
       }
     }
     
-    c("psych", "svDialogs", "TeachingDemos")->packages
+    c("psych", "svDialogs", "TeachingDemos", "tkrplot")->packages
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== "try-error") return(ez.install())
     
