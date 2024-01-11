@@ -70,10 +70,6 @@ ez.install <-
     
     # 2c. installer packages manquants si necessaires et si utilisateur le souhaite
     if(length(pack.uninst)>0){
-      inst <- menu(choices=c("oui","non"), graphics=TRUE, title="Voulez-vous installer les packages manquants ?")
-      if(length(inst)==0 || inst==2){
-        tk_messageBox(type="ok", caption="Attention", message="Vous avez choisi de ne pas installer les packages manquants, cela peut gener l'execution de certaines fonctions. Relancez easieR() si vous souhaitez installer les packages.")
-      } else {
         writeLines("Installation des packages")
         print(pack.uninst)
         flush.console()
@@ -81,8 +77,7 @@ ez.install <-
         #WRS is a special case because it is not on CRAN
         if (!("WRS" %in% rownames(installed.packages()))) {
           # third: install an additional package which provides some C functions
-          library("devtools")
-          install_github("nicebread/WRS", subdir="pkg")
+          devtools::install_github("nicebread/WRS", subdir="pkg")
         }
       }
     } 
@@ -105,3 +100,76 @@ ez.install <-
     return(Resultats)
     
   }
+
+
+
+vef.pack <-
+function(){
+      pack.to.inst <- c('afex',
+                      'akima',
+                      'Amelia',
+                      'asbio',
+                      'BayesFactor',
+                      'bibtex',
+                      'car',
+                      'cobs',
+                      'corpcor',
+                      'deldir',
+                      'DescTools',
+                      'doBy',
+                      'dplyr',
+                      'emmeans',
+                      'epitools',
+                      'foreign',
+                      'ggplot2',
+                      "ggplotgui",
+                      'gmodels',
+                      'GPArotation',
+                      'gsl',
+                      'huxtable', 
+                      'knitr',
+                      'lars',
+                      'lsr',
+                      'MBESS',
+                      'mc2d',
+                      'mgcv',
+                      'mlogit',
+                      'nFactors',
+                      'nortest',
+                      'olsrr',
+                      'outliers',
+                      'pander',
+                      "PMCMRplus",
+                      'plyr',
+                      'ppcor',
+                      'psych',
+                      'pwr',
+                      'quantreg',
+                      'Rcpp',
+                      'readxl',
+                      'reshape2',
+                      'Rfit',
+                      'rmarkdown',
+                      'rms',
+                      'robustbase',
+                      'rpivotTable',
+                      'rrcov',
+                      'scatterplot3d',
+                      'semPlot',
+                      "sjstats",
+                      'sos',
+                      'sp',
+                      'stringi',
+                      'stringr',
+                      'svDialogs',
+                      'TeachingDemos',
+                      'textclean',
+                      'WRS',                   
+                      'WRS2'
+    )
+
+          list()->Resultats
+    Resultats$"packages.installes.correctement"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
+    Resultats$"Package.mal.installes"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
+    return(Resultats)
+}
