@@ -80,7 +80,7 @@ ez.install <-
           devtools::install_github("nicebread/WRS", subdir="pkg")
         }
       }
-    } 
+     
     
     library(rmarkdown)
     if(is.null(pandoc_version())){
@@ -97,9 +97,9 @@ ez.install <-
     
     flush.console()
     vef.pack()->Resultats
-    return(Resultats)
+   # return(Resultats)
     
-  }
+  
 
 
 
