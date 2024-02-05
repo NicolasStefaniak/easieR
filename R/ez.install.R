@@ -1,7 +1,7 @@
 ez.install <-
   function(){
     require(tcltk)
-    
+
     # # 2. installer les packages necessaires et MAJ des packages installes
     # # 2a. packages a installer, par ordre alphabetique
     pack.to.inst <- c('afex',
@@ -61,16 +61,16 @@ ez.install <-
                       'stringi',
                       'stringr',
                       'svDialogs',
-                      'TeachingDemos',                  
+                      'TeachingDemos',
                       'WRS2'
     )
-   
+
     # 2b. packages manquants
     pack.uninst <- pack.to.inst[!(pack.to.inst %in% rownames(installed.packages()))]
-    
+
     # 2c. installer packages manquants si necessaires et si utilisateur le souhaite
     if(length(pack.uninst)>0){
-        writeLines("Installation des packages")
+        writeLines(txt_packages_install)
         print(pack.uninst)
         flush.console()
         install.packages(pack.uninst, quiet=TRUE)
@@ -80,26 +80,26 @@ ez.install <-
           devtools::install_github("nicebread/WRS", subdir="pkg")
         }
       }
-     
-    
+
+
     library(rmarkdown)
     if(is.null(pandoc_version())){
       if(grepl("mac",  .Platform$pkgType)){
         return(easieR.msg(msg=1))
       }else{
-        
+
         install.packages("installr")
         library(installr)
         install.pandoc()
       }
     }
-    
-    
+
+
     flush.console()
     vef.pack()->Resultats
    return(Resultats)
-  }  
-  
+  }
+
 
 
 
@@ -126,7 +126,7 @@ function(){
                       'gmodels',
                       'GPArotation',
                       'gsl',
-                      'huxtable', 
+                      'huxtable',
                       'knitr',
                       'lars',
                       'lsr',
@@ -164,12 +164,12 @@ function(){
                       'svDialogs',
                       'TeachingDemos',
                       'textclean',
-                      'WRS',                   
+                      'WRS',
                       'WRS2'
     )
 
           list()->Resultats
-    Resultats$"packages.installes.correctement"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
-    Resultats$"Package.mal.installes"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
+    Resultats[[desc_install_correct_packages]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
+    Resultats[[desc_install_bad_packages]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
     return(Resultats)
 }
