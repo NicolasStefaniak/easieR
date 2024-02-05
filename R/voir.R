@@ -1,6 +1,6 @@
 voir <-
 function(){
-  require("svDialogs")
+  require('svDialogs')
   data <- Filter( function(x) 'data.frame' %in% class( get(x) ), ls(envir=.GlobalEnv) )
   data<-dlgList(data, multiple = TRUE, title=voir.msg())$res
   if(length(data)==0) return(donnees())
@@ -12,6 +12,6 @@ function(){
 }
 
 voir.msg<-function(){
-if(grepl("French",Sys.setlocale())) msg<-"Choix du dataframe" else msg<-"Choose dataframe"
+msg<-txt_dataframe_choice
 
 return(msg)}

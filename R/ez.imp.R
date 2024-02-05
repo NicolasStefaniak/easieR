@@ -1,14 +1,14 @@
 ez.imp <-
   function(data=NULL, imp="median", ord=NULL, id=NULL, noms=NULL, info=T){
-    # data : data.frame 
+    # data : data.frame
     # imp : one among "rm", "mean", "median", "amelia"
     # ord : if imp is amelia, names of ordinal variables
     # id : if imp is amelia, names of id variables
     # noms : if imp is amelia, names of nominal variables
-    
-    packages<-c("Amelia",  "svDialogs")
+
+    packages<-c('Amelia',  'svDialogs')
     try(lapply(packages, library, character.only=T), silent=T)->test2
-    if(class(test2)== "try-error") return(ez.install())
+    if(class(test2)== 'try-error') return(ez.install())
     .e <- environment()
     if(is.null(data)) { dial<-T
     data<-choix.data(data=data, info=info, nom=T)
@@ -18,33 +18,33 @@ ez.imp <-
     } else {dial<-F
     deparse(substitute(data))->nom  }
     nom<-paste0(nom,".complet")
-    
-    if(dial || imp%in% c("Ne rien faire - Garder l'ensemble des observations", "Suppression des observations avec valeurs manquantes", "Remplacer par la moyenne",
-                         "Remplacer par la mediane","Multiple imputation - Amelia","rien","rm", "mean","median", "amelia") == FALSE){
-      writeLines("Nombre de valeurs manquantes par variable. Comment voulez-vous les traiter ?")
+
+    if(dial || imp%in% c(txt_do_nothing_keep_all_obs, txt_delete_observations_with_missing_values, txt_replace_by_mean,
+                         txt_replace_by_median,txt_multiple_imputation_amelia,"rien","rm", "mean","median", "amelia") == FALSE){
+      writeLines(ask_missing_value_treatment)
       print(sapply(data, function(x) sum(length(which(is.na(x))))) )
-      
-      imp<- dlgList(c("Ne rien faire - Garder l'ensemble des observations", "Suppression des observations avec valeurs manquantes", "Remplacer par la moyenne",
-                      "Remplacer par la mediane","Multiple imputation - Amelia"), preselect=FALSE, multiple = TRUE, title="Traitement des valeurs manquantes")$res
+
+      imp<- dlgList(c(txt_do_nothing_keep_all_obs, txt_delete_observations_with_missing_values, txt_replace_by_mean,
+                      txt_replace_by_median,txt_multiple_imputation_amelia), preselect=FALSE, multiple = FALSE, title=txt_missing_values_treatment)$res
       if(length(imp)==0){
         return(NULL)
       }
     }
     if(length(imp)==0) return(NULL)
-    if(imp == "Ne rien faire - Garder l'ensemble des observations" || imp=="rien") return(data)
-    if(imp== "Suppression des observations avec valeurs manquantes"|| imp=="rm"){
+    if(imp == txt_do_nothing_keep_all_obs || imp=="rien") return(data)
+    if(imp== txt_delete_observations_with_missing_values|| imp=="rm"){
       data<-data[complete.cases(data),]
       if(dial)  assign(nom, data, envir=.GlobalEnv)
     }
-    if(imp=="Remplacer par la moyenne"|| imp=="mean"){
+    if(imp==txt_replace_by_mean|| imp=="mean"){
       for(i in 1 : length(data)) {data[which(is.na(data[,i])),i]<-mean(data[,i], na.rm=T)}
       if(dial)  assign(nom, data, envir=.GlobalEnv)
     }
-    if(imp== "Remplacer par la mediane"|| imp=="median"){
+    if(imp== txt_replace_by_median|| imp=="median"){
       for(i in 1 : length(data)) {data[which(is.na(data[,i])),i]<-median(data[,i], na.rm=T)}
       if(dial)  assign(nom, data, envir=.GlobalEnv)
     }
-    if(imp== "Multiple imputation - Amelia"|| imp=="amelia"){
+    if(imp== txt_multiple_imputation_amelia|| imp=="amelia"){
       amelia(x=data, m = 1, p2s = 0,frontend = FALSE, idvars = id,
              ts = NULL, cs = NULL, polytime = NULL, splinetime = NULL, intercs = FALSE,
              lags = NULL, leads = NULL, startvals = 0, tolerance = 0.0001,
@@ -55,7 +55,7 @@ ez.imp <-
              parallel = c("no", "multicore", "snow"),
              ncpus = getOption("amelia.ncpus", 1L), cl = NULL)->data.am
       data.am$imputations$imp1->data
-      
+
       if(dial)  assign(nom, data, envir=.GlobalEnv)
     }
     return(data)
