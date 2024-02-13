@@ -446,11 +446,12 @@ VI.multiples<-function(data, X){
   try(get("ez.history", envir=.GlobalEnv),silent=T)->ez.history
   if(class(ez.history)=="try-error") {ez.history<-list()
   ez.history$Analyse[[1]]<-data
-  names(ez.history)[length(ez.history)]<-paste("analyse sur",nom)
+  names(ez.history)[length(ez.history)]<-paste("analyse :",nom)
   names(ez.history[[length(ez.history)]])[1]<-nom  
   ez.history[[length(ez.history)]]$historique<-command 
   }else{
-    if(nom==names(ez.history[[length(ez.history)]])[1] && all.equal(target=ez.history[[length(ez.history)]][[1]], current=data, ignore_col_order=T, ignore_row_order=T )!=TRUE){
+    if(nom==names(ez.history[[length(ez.history)]])[1] && any(all.equal(target=ez.history[[length(ez.history)]][[1]], current=data, 
+                                                                        ignore_col_order=T, ignore_row_order=T )!=TRUE)){
       ez.history[[length(ez.history)]]$historique<-rbind(ez.history[[length(ez.history)]]$historique,command)
     }else {
       ez.history$Analyse[[1]]<-data
