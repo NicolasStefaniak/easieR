@@ -965,6 +965,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       kruskal.test(as.formula( paste0(DV, "~",between[1])), data = data)->KW
       round(data.frame(KW$statistic,KW$parameter,KW$p.value),4)->KW
       names(KW)<-c("H",txt_df,txt_p_dot_val)
+
       round((KW$H-nlevels(data[,between])+1)/(length(data[,1])-nlevels(data[,between])),4)->eta
       if(eta<0.0001) "<0.001"->KW$eta.2.H else KW$eta.2.H
       KW$espilon.2<-round(KW$H/((length(data[,1])^2-1)/(length(data[,1])+1)),4)
