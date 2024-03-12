@@ -439,7 +439,6 @@ VI.multiples<-function(data, X){
   try(get("ez.history", envir=.GlobalEnv),silent=T)->ez.history
   if(class(ez.history)=='try-error') {ez.history<-list()
   ez.history$Analyse[[1]]<-data
-
   names(ez.history)[length(ez.history)]<-paste(txt_analysis_on,nom)
   names(ez.history[[length(ez.history)]])[1]<-nom
   ez.history[[length(ez.history)]]$historique<-command
@@ -658,7 +657,7 @@ ref1 <-
   packageStartupMessage(desc_first_time_easier)
   packageStartupMessage(desc_special_characters_have_been_removed)
   packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 03/12/2024") # TODO translation?
+  packageStartupMessage("Last update 03/12/2024")
   packageStartupMessage("##############")
 
 }
