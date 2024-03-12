@@ -444,7 +444,7 @@ VI.multiples<-function(data, X){
   names(ez.history[[length(ez.history)]])[1]<-nom
   ez.history[[length(ez.history)]]$historique<-command
   }else{
-    if(nom==names(ez.history[[length(ez.history)]])[1] && any(all.equal(target=ez.history[[length(ez.history)]][[1]], current=data, 
+    if(nom==names(ez.history[[length(ez.history)]])[1] && any(all.equal(target=ez.history[[length(ez.history)]][[1]], current=data,
                                                                         ignore_col_order=T, ignore_row_order=T )!=TRUE)){
       ez.history[[length(ez.history)]]$historique<-rbind(ez.history[[length(ez.history)]]$historique,command)
     }else {
@@ -658,7 +658,7 @@ ref1 <-
   packageStartupMessage(desc_first_time_easier)
   packageStartupMessage(desc_special_characters_have_been_removed)
   packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 06/05/2023") # TODO translation
+  packageStartupMessage("Last update 03/12/2024") # TODO translation?
   packageStartupMessage("##############")
 
 }
