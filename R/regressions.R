@@ -208,11 +208,9 @@ regressions <-
           methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[4]]) )
           ols.frame<-data.frame(etape=1:ols.out$steps,
                                 predicteurs=ifelse(predname,ols.out$predictors, c("Modele complet", ols.out$predictor)) ,
-                                Somme.Carre=ols.out$rss,
                                 AIC=ols.out$aic,
-                                SC.res=ols.out$ess,
-                                r.carre=ols.out$rsq,
-                                r.carre.adj=ols.out$arsq,
+                                r.carre=ols.out$rsquare,
+                                r.carre.adj=ols.out$adjr,
                                 Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", c(" ","variable supprimee")))
           )
           
