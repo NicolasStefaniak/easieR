@@ -1,3 +1,4 @@
+
 regressions <-
   function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier='Donnees completes', inf=F, CV=F, select.m="none", method="p", step=NULL, group=NULL, criteria=0.15 , scale=T, dial=T, info=T,
            sauvegarde=F, n.boot=NULL, param="param", rscale=0.353, html=TRUE){
@@ -121,15 +122,15 @@ regressions <-
       pred<-attributes(terms(as.formula(modele)))$term.labels
       Resultats$"Statistiques descriptives"<-.stat.desc.out(X=variables, groupes=NULL, data=dtrgeasieR, tr=.1, type=3, plot=T)
       
-       if(scale==T || scale=="Centre") {
-         Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
-      if(length(pred)>1) { which(!sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)%in%c("factor", "character"))->centre
-        centre<-pred[centre]}else{centre<-NULL}
-      if(!is.null(centre)){
-         if(length(centre)==1) dtrgeasieR[,centre]-mean(dtrgeasieR[,centre],na.rm=T)->dtrgeasieR[,centre] else{
-        sapply(X=dtrgeasieR[,centre], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,centre]
-           }
-      }
+      if(scale==T || scale=="Centre") {
+        Resultats$info<-"En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
+        if(length(pred)>1) { which(!sapply(dtrgeasieR[,pred[which(pred %in% variables)]],class)%in%c("factor", "character"))->centre
+          centre<-pred[centre]}else{centre<-NULL}
+        if(!is.null(centre)){
+          if(length(centre)==1) dtrgeasieR[,centre]-mean(dtrgeasieR[,centre],na.rm=T)->dtrgeasieR[,centre] else{
+            sapply(X=dtrgeasieR[,centre], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,centre]
+          }
+        }
       }
       
       
@@ -178,45 +179,40 @@ regressions <-
           select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
                            "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
           
-          if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = criteria, details=F)})
-          if(select.m=="Backward") t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=criteria, details=F)})
-          if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=criteria, details=F)})
-          predname<-if(!is.null(ols.out$predictors)) rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]]) )
-          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[1]]) )
-          ols.frame<-data.frame(etape=1:ols.out$steps,
-                                predicteurs=ifelse(predname,ols.out$predictors,ols.out$removed) ,
-                                mallows_cp=ols.out$ mallows_cp,
-                                AIC=ols.out$aic,
-                                BIC=ols.out$sbc,
-                                RMSE=ols.out$rmse,
-                                r.carre=ols.out$rsquare,
-                                r.carre.adj=ols.out$adjr,
-                                Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", "variable supprimee"))
-          )
-          Resultats$"Methode de selection"<-ols.frame 
-        }
-        
+          if(select.m=="Forward")  ols.out <- ols_step_forward_p(lm.r1,penter = criteria, details=F)
+          if(select.m=="Backward") ols.out <- ols_step_backward_p(lm.r1, prem=criteria, details=F)
+          if(select.m=="Both") ols.out <- ols_step_both_p(lm.r1,pent=criteria, details=F)}
+
         if(method %in% c("AIC - Akaike Information criterion","AIC")){ 
           select.m<-switch(select.m,"Forward - pas-a-pas ascendant"="Forward", "Backward- pas-a-pas descendant"="Backward", "Bidirectionnel"="Both",
                            "forward"="Forward", "bidirectional"="Both","backward"="Backward" )
           lm.r1<-lm(modele, data=dtrgeasieR)
-          if(select.m=="Forward") t0<-capture.output({  ols.out <- ols_step_forward_aic(lm.r1, details=T)}) 
-          if(select.m=="Backward") t0<-capture.output({  ols.out <- ols_step_backward_aic(lm.r1, details=T)})
-          if(select.m=="Both")     t0<-capture.output({  ols.out <- ols_step_both_aic(lm.r1, details=T)})
+          if(select.m=="Forward")  ols.out <- ols_step_forward_aic(lm.r1, details=F)
+          if(select.m=="Backward")  ols.out <- ols_step_backward_aic(lm.r1, details=F)
+          if(select.m=="Both")     ols.out <- ols_step_both_aic(lm.r1, details=F) }         
           
-          predname<-if(select.m!="Backward") rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]])+1 )
-          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[4]]) )
-          ols.frame<-data.frame(etape=1:ols.out$steps,
-                                predicteurs=ifelse(predname,ols.out$predictors, c("Modele complet", ols.out$predictor)) ,
-                                AIC=ols.out$aic,
-                                r.carre=ols.out$rsquare,
-                                r.carre.adj=ols.out$adjr,
-                                Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , "Variable ajoutee", c(" ","variable supprimee")))
-          )
+      
+          ols.frame<-data.frame(ols.out$metrics)
+          reg.out<-ols_regress(ols.out$model)
+          c(summary(ols.out$model)$sigma, summary(ols.out$model)$r.squared, summary(ols.out$model)$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
+          pf(summary(ols.out$model)$fstatistic[1], summary(ols.out$model)$fstatistic[2],summary(ols.out$model)$fstatistic[3], lower.tail=F)->p.value #permet de savoir si le F est significatif
+          c(significativite_modele , p.value)->modele.F # on combine les precedents 
+          round(modele.F,3)->modele.F # on arrondit les nombres a la 3e decimale
+          c("Erreur residuelle", "R.deux", "F", "Ddl (num)", "Ddl (dnom)","valeur.p")->names(modele.F)# attribue le nom aux colonnes
           
-          Resultats$"Methode de selection - criteres d'information d'Akaike"<-ols.frame
-          
-        }
+          coef.table<-data.frame(B = round(reg.out$betas, 3),
+                                 "Erreur Std."= format(round(reg.out$std_errors, 3)), 
+                                  "Beta" = c(" ", round(reg.out$sbetas, 3)),
+                                 t=round(reg.out$tvalues, 3),
+                                 valeur.p =round(reg.out$pvalues, 3),
+                                 lower=round(reg.out$conf_lm[, 1], 3),
+                                   upper =round(reg.out$conf_lm[, 2], 3))
+          select.name<-paste0("Methode de selection","-", method)                                 
+          Resultats$selection$"Variables retenues"<-ols.frame 
+          Resultats$selection$"Anova du modèle retenu"<-modele.F
+          Resultats$selection$"Table des coefficients"<-coef.table
+          names(Resultats)[length(Resultats)]<-select.name
+        
         
         if(any(param=="Bayes")|any(param=="Facteurs bayesiens")){
           BF.out<-try(regressionBF(modele, data=dtrgeasieR,progress=F, rscaleCont=rscale), silent=T)
@@ -327,8 +323,8 @@ regressions <-
         if(length(pred)>1){
           ols.corr<-try(ols_correlations(lm.r1), silent=T)
           if(any(class(ols.corr)!="try-error")){
-          Resultats$"Contribution des variables au modele"<-ols.corr
-          Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)}
+            Resultats$"Contribution des variables au modele"<-ols.corr
+            Resultats$"Graphe des variables ajoutees" <-ols_plot_added_variable(lm.r1)}
         }
       }
       
@@ -402,7 +398,7 @@ regressions <-
     modele<-reg.in.output$modele
     param<-reg.in.output$options$choix
     n.boot<-reg.in.output$options$n.boot
-    if(reg.in.output$options$rscalei) rscale<-reg.in.output$options$rscale/2 else rscale<-reg.in.output$options$rscale
+    if(reg.in.output$options$rscale) rscale<-reg.in.output$options$rscale/2 else rscale<-reg.in.output$options$rscale
     outlier<-reg.in.output$options$desires
     sauvegarde<-reg.in.output$options$sauvegarde
     scale<-reg.in.output$reg.options$scale
@@ -548,7 +544,7 @@ regressions <-
     .add.result(Resultats=Resultats, name =paste("regressions.multiples", Sys.time() ))  
     if(sauvegarde)   if(sauvegarde) save(Resultats=Resultats, choix="Regressions.multiples", env=.e)
     Resultats$"References"<-ref1(packages)
-    if(html) ez.html(Resultats)
+    if(html) try(ez.html(Resultats), silent=T)
     return(Resultats)
   }
 
