@@ -1,23 +1,23 @@
 save <-
   function(Resultats=NULL, choix, env=.GlobalEnv){options (warn=-1)
     # Resultats = object that must be saved
-    # choix = name of the file 
+    # choix = name of the file
     # env = environment in which to find the object
-    packages<-c("svDialogs", "htmltools" )
+    packages<-c('svDialogs', 'htmltools' )
     test2<-try(lapply(packages, library, character.only=T), silent=T)
-    if(class(test2)== "try-error") return(ez.install())
+    if(class(test2)== 'try-error') return(ez.install())
     Resultats <- list()
-                                                  
-    if(is.null(Resultats) & exists("ez.results")) Resultats<-ez.results else return("aucun resultat n'a ete sauvegarde")
+
+    if(is.null(Resultats) & exists("ez.results")) Resultats<-ez.results else return(desc_no_result_saved)
     ez.html <-function(ez.results=Resultats)
-      
-    fileHTML<-file.path("file:/", tempdir(), "easieR/Rapport.easieR.html")
-    fileNAME<-dlgInput("Quel nom voulez-vous attribuer au fichier")$res 
+
+    fileHTML<-file.path("file:/", tempdir(), "easieR/Rapport.easieR.html") # TODO not working on Windows I guess?
+    fileNAME<-dlgInput(ask_filename)$res
     fileNAME<-strsplit(fileNAME, ":")
-    fileNAME<-tail(fileNAME[[1]],n=1)                                         
+    fileNAME<-tail(fileNAME[[1]],n=1)
     save_html(html=fileHTML, file=fileNAME, background = "white")
-    
+
     Resultats<-NULL
-    Resultats$SAUVEGARDE<-paste("les donnees sont sauvegardees dans", getwd())
-    
+    Resultats$SAUVEGARDE<-paste(desc_data_saved_in, getwd())
+
   }

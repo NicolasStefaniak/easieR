@@ -17,11 +17,11 @@ function(){
                       'epitools',
                       'foreign',
                       'ggplot2',
-                      "ggplotgui",
+                      'ggplotgui',
                       'gmodels',
                       'GPArotation',
                       'gsl',
-                      'huxtable', 
+                      'huxtable',
                       'knitr',
                       'lars',
                       'lsr',
@@ -34,7 +34,7 @@ function(){
                       'olsrr',
                       'outliers',
                       'pander',
-                      "PMCMRplus",
+                      'PMCMRplus',
                       'plyr',
                       'ppcor',
                       'psych',
@@ -51,7 +51,7 @@ function(){
                       'rrcov',
                       'scatterplot3d',
                       'semPlot',
-                      "sjstats",
+                      'sjstats',
                       'sos',
                       'sp',
                       'stringi',
@@ -59,12 +59,12 @@ function(){
                       'svDialogs',
                       'TeachingDemos',
                       'textclean',
-                      'WRS',                   
+                      'WRS',
                       'WRS2'
     )
 
           list()->Resultats
-    Resultats$"packages.installes.correctement"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
-    Resultats$"Package.mal.installes"<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
+    Resultats[[desc_install_correct_packages]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
+    Resultats[[desc_install_bad_packages]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
     return(Resultats)
 }

@@ -18,16 +18,16 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   # html = logical. Do you want easieR to output the results in nice html document ? 
   # contrast = list. The names in the list corresponds to the names of the factors and the values is a matrix of coefficients for the contrasts. "pairs" or "none" are also possible
   # p.adjust = adjust p values for multiples comparisons. see <code>p.adjust</code>
-  packages<-c("BayesFactor", "car","afex", "DescTools","emmeans","ggplot2","nortest", "outliers", "PMCMRplus",
-              "psych", "reshape2", "sjstats", "svDialogs", "WRS2" )
+  packages<-c('BayesFactor', 'car','afex', 'DescTools','emmeans','ggplot2','nortest', 'outliers', 'PMCMRplus',
+              'psych', 'reshape2', 'sjstats', 'svDialogs', 'WRS2' )
   test2<-try(lapply(packages, library, character.only=T), silent=T)
-  if(class(test2)== "try-error") return(ez.install())
+  if(class(test2)== 'try-error') return(ez.install())
   try(require(WRS), silent=T)
   .e <- environment()
   Resultats<-list()
   if(!is.null(data) & class(data)!="character") data<-deparse(substitute(data))
    try( windows(record=T), silent=T)->win
-   if(class(win)=="try-error") quartz()
+   if(class(win)=='try-error') quartz()
   ez.aov.out<-.ez.anova.in(data=data, DV=DV, between=between, within=within,id=id, cov=cov, RML=RML, 
                            RML.factor= RML.factor, param=param,outlier=outlier, 
                            ES=ES, SumS=SumS, save=save, contrasts=contrasts,p.adjust=p.adjust)
@@ -57,22 +57,25 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   complet[["aov.plus.in"]]<-NULL
   
   
-  if(any(outlier %in% c("complete", "Donnees completes","Complete dataset"))){
+  if(any(outlier %in% c("complete", txt_complete_dataset,txt_complete_dataset))){
     Resultats[[.ez.anova.msg("title", 12)]]<-complet
-    aov.plus.in->aov.plus.list$"Donnees completes"}
+    aov.plus.in->aov.plus.list[[txt_complete_dataset]]}
   
-  if(any(outlier %in% c("id", "removed" , "Identification of outliers", "Dataset with outliers removed",
-                        "Identification des valeurs influentes", "Donnees sans valeur influente"))) { 
-    if(is.null(data$residu)) {
+  if(any(outlier %in% c("id", "removed" , txt_identifying_outliers, txt_without_outliers,
+                        txt_identifying_outliers, txt_without_outliers))) { 
+    if(is.null(data$'residu')) {
       Resultats[[.ez.anova.msg("title", 55)]]<-.ez.anova.msg("msg", 34)
       return(Resultats)}
-    valeurs.influentes(X="residu", critere="Grubbs",z=3.26, data=data)->influentes
+    valeurs.influentes(X='residu', critere="Grubbs",z=3.26, data=data)->influentes
     
-    if(any(outlier %in% c("Identification des valeurs influentes","id","Identification of outliers" ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
-    if(any(outlier %in% c( "Donnees sans valeur influente",  "Dataset with outliers removed","removed" ))){
+    if(any(outlier %in% c(txt_identifying_outliers,"id",txt_identifying_outliers ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
+    if(any(outlier %in% c( txt_without_outliers,  txt_without_outliers,"removed" ))){
       
-      if(!is.null(influentes$"observations influentes"[,id])){
-        setdiff(data[,as.character(id)],influentes$"observations influentes"[,as.character(id)])->diffs
+      #if(!is.null(influentes[[txt_outliers]][,id])){
+      #  setdiff(data[,as.character(id)],influentes[[txt_outliers]][,as.character(id)])->diffs
+      #if(influentes[[txt_outliers_synthesis]]$Synthese[1]!=0){
+      if(influentes[[txt_outliers_synthesis]][[txt_synthesis]][1]!=0){
+        setdiff(data[,as.character(id)],influentes[[txt_outliers]][,as.character(id)])->diffs
         data[which(data[,id] %in% diffs), ]->nettoyees
         factor(nettoyees[,id])->nettoyees[,id]
         nett<-.ez.anova.out(data=nettoyees, DV=DV, between=between, within=within,id=id, cov=cov,  
@@ -81,10 +84,10 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         nett[["data"]]<-NULL
         nett[["aov.plus.in"]]<-NULL
         Resultats[[.ez.anova.msg("title", 14)]]<-nett
-        aov.plus.in->aov.plus.list$"Donnees sans valeur influente"
+        aov.plus.in->aov.plus.list[[txt_without_outliers]]
       }
-      print(!all(outlier %in% c("complete", "Donnees completes","Complete dataset")))
-    if(!any(outlier %in% c("complete", "Donnees completes","Complete dataset")))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
+      print(!all(outlier %in% c("complete", txt_complete_dataset,txt_complete_dataset)))
+    if(!any(outlier %in% c("complete", txt_complete_dataset,txt_complete_dataset)))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
       
     }
     
@@ -101,7 +104,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   if(!is.null(cov)) cov<-paste(unique(cov), collapse="','", sep="") 
   param<-paste(unique(param), collapse="','", sep="") 
   outlier<-paste(unique(outlier), collapse="','", sep="")
-  if(!any(contrasts%in%c("none", "aucun", "pairwise", "Comparaison 2 a 2"))){
+  if(!any(contrasts%in%c("none", txt_none, txt_pairwise, txt_comparison_two_by_two))){
     cont.call<-"list("
     for(i in 1:length(contrasts)){
       if(i>1) cont.call<-paste0(cont.call, ",")
@@ -118,9 +121,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                ", p.adjust = '", p.adjust, "', n.boot = ", n.boot, ",rscaleFixed = ", rscaleFixed, ", rscaleRandom = ", rscaleRandom, ")")
   Resultats$call<-call
   
-  .add.history(data=data, command=Resultats$Call, nom="Anova")
-  .add.result(Resultats=Resultats, name =paste("Anova", Sys.time() ))
-  if(save==T) save(Resultats=Resultats ,choix =paste("anova sur", nom), env=.e)
+  .add.history(data=data, command=Resultats$Call, nom=txt_anova)
+  .add.result(Resultats=Resultats, name =paste(txt_anova, Sys.time() ))
+  if(save==T) save(Resultats=Resultats ,choix =paste(txt_anova_on, nom), env=.e)
   ref1(packages)->Resultats[[.ez.anova.msg("title", 56)]]
   if(html) try(ez.html(Resultats), silent=T) 
   return(Resultats)
@@ -134,122 +137,120 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 .ez.anova.msg<-function(type, number){
   # type : either "msg" or "title"
   # number : number of message 
-  if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
-    msg<-c("Veuillez preciser le(s) type(s) de variable(s) que vous souhaitez inclure dans l'analyse.\nVous pouvez en choisir plusieurs (e.g., pour anova mixte ou des ancova",
-           "Il est indispensable d'avoir au minimum des variables a groupes independants ou en mesures repetees",
-           "Veuillez selectionner les variables OU les modalites de la (des) variables a mesure(s) repetee(s).",
-           "Quelle est la variable identifiant les participants ?",
-           "Chaque participant doit apparaître une et une seule fois pour chaque combinaison des modalites",
-           "Pour un facteur en mesures repetees en format large, il faut au moins deux colonnes",
-           "Si vos donnees sont en format large, les mesures doivent toutes etre numeriques ou des entiers (integer)",
-           "Veuillez choisir les variable-s a groupes independants",
-           "Vous n avez pas choisi de variable. Voulez-vous continuer  (ok) ou abandonner (annuler) cette analyse ?",
-           "Veuillez choisir la variable dependante.", 
-           "Certains participants ont des valeurs manquantes sur les facteurs en mesures repetees. Ils vont etre supprimes des analyses",
-           "Veuillez choisir la ou les covariables",
-           "Il n'y a pas assez d'observations pour realiser l'analyse. Veuillez verifier vos donnees \net vous assurer qu'il y a au moins trois observations par modalite de chaque facteur",
-           "le modele parametrique renvoie l'anova classique,le non parametrique calcule le test de Kruskal Wallis \nsi c'est un modele a groupes independants, ou une anova de Friedman pour un modele en Mesures repetees.\nLe modele bayesien est l'equivalent du modele teste dans l'anova en adoptant une approche bayesienne,\nles statistiques robustes sont des anovas sur des medianes ou les moyennes tronquees avec ou sans bootstrap.",
-           "Les donnees completes representent l'analyse realisee sur l'ensemble des observations. L'analyse sans les valeurs influentes
-           est une analyse pour laquelle les valeurs influentes ont ete supprimees.\nL'identification des valeurs influentes est realisee sur la base du test de Grubbs",
-           "Vous ne pouvez pas avoir a la fois des arguments dans within et RML",
-           "la taille d'effet la plus frequente est le eta carre partiel - pes.\nLa taille d'effet la plus precise est le eta carre generalise - ges",
-           "Il existe plusieurs maniere de calculer la somme des carres. Le choix par defaut des logiciels commerciaux est une somme des carres\nde type 3, mettant la priorite sur les interactions plutot que sur les effets principaux.",
-           "Voulez-vous sauvegarder les resultats de l'analyse ?",
-           "La variable dependante a moins de trois valeurs differentes. Verifiez vos donnees ou l'analyse que vous tentez de realiser n'est pas pertinente.",
-           "Les contrastes a priori correspondent aux contrastes qui permettent de tester des hypotheses a priori.\nLes contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction a la probabilite",
-           "Vous pouvez choisir les contrastes predefinis ou les specifier manuellement. Dans ce dernier cas, veuillez choisir specifier les contrastes",
-           "Les contrastes doivent respecter l orthogonalite. Voulez-vous continuer ?",
-           "Les contrates doivent etre des matrices de coefficients placees dans une list dont le nom de chaque niveau correspond a un facteur",
-           "Si vous entrez des contrastes manuellement, toutes les variables de l'analyse doivent avoir leur matrice de coefficients",
-           "Quelle correction de la probabilite voulez-vous appliquer ? Pour ne pas appliquer de correction, choisir +none+",
-           "Les valeurs autorisees pour les contrastes sont +none+ pour aucun contraste, +pairwise+ pour les comparaisons 2 a 2 ou une liste de coefficients de contrastes",
-           "Au moins une de vos matrices de contrastes n'est pas correcte.",
-           "il y a moins de 3 observations pour un des groupes ou \nla variance d'au moins un groupe vaut 0. Les resultats risquent d'etre considerablement biaises" ,
-           "Les facteurs bayesiens n'ont pas pu etre calcules.",
-           "Desole, nous n'avons pas pu calcule l'anova sur les medianes, possiblement en raison d'un nombre important d'ex aequo.",
-           "Les probabilites et les IC sont estimes sur la base d'un bootsrap. L'IC est corrige pour comparaison multiple, contrairement a la probabilite reportee.",
-           "Desole, nous n'avons pas pu calcule l'anova robuste.", "L'analyse n'a pas pu aboutir"
+    msg<-c(ask_variables_type_for_anova,
+           desc_at_least_independant_variables_or_repeated_measures,
+           ask_select_variables_or_modalities_of_repeated_measure_variable,
+           ask_which_variable_identifies_participants,
+           desc_each_participant_must_appear_only_once_,
+           desc_two_cols_are_needed,
+           desc_large_format_must_be_numeric_or_integer,
+           ask_chose_independant_group_variables,
+	   ask_you_did_not_chose_a_variable_continue_or_abort,
+           ask_chose_dependant_variable, 
+           desc_some_participants_have_missing_values_on_repeated_measures,
+           ask_chose_covariables,
+	   ask_not_enough_obs_verify_dataset,
+	   desc_all_tests_description,
+	   desc_complete_dataset_vs_identification_outliers_vs_without_outliers,
+           desc_cannot_have_both_within_RML_arguments,
+	   desc_most_common_effect_size,
+	   desc_multiple_ways_to_compute_squares_sum,
+           ask_save_results,
+           ask_dependant_variable_with_less_than_three_val_verify_dataset,
+	   desc_all_contrasts_description,
+           desc_you_can_chose_predefined_or_manual_contrasts,
+           ask_contrast_must_respect_ortho,
+           desc_contrasts_must_be_coeff_matrices_in_list,
+           desc_manual_contrast_need_coeff_matrice,
+           ask_which_correction,
+           desc_authorized_values_for_contrasts,
+           desc_at_least_on_contrast_matrix_incorrect,
+	   desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance,
+           desc_bayesian_factors_could_not_be_computed,
+           desc_we_could_not_compute_anova_on_medians,
+           desc_proba_and_IC_estimated_on_bootstrap,
+           desc_we_could_not_compute_robust_anova, desc_analysis_aborted
     )
     
     
-    title<-c("Quel-s type-s de variables ?", "Mesures repetees","Identifiant participant","Variables a groupes independants",
-             "Variable dependante", "Covariable-s ?",
-             "Modele parametrique", "Modele non parametrique","Facteurs bayesiens", "Statistiques robustes - peut prendre du temps",
-             "Quelle(s) analyses voulez-vous  ?","Donnees completes","Identification des valeurs influentes", "Donnees sans valeur influente",
-             "Quels resultats voulez-vous obtenir ?", "Quelle taille d effet voulez-vous  ?","Quelle somme des carres voulez-vous utiliser ?",
-             "Voulez-vous sauvegarder ?", "a priori",  "Comparaison 2 a 2", "aucun","Quel types de contraste voulez-vous ?",
-             "Contrastes pour", "specifier vos contrastes","Quelle est la ligne de base ?", "Statistiques descriptives","Modele teste",
-             "Statistiques descriptives de la variable","Statistiques descriptives de l'interaction entre","Avertissement",
-             "Tests de normalite","Conditions d'application de l'ancova","Test de l'absence de difference entre les groupes sur ",
-             "Test de l'homogeneite des pentes entre les groupes sur la variable dependante",
-             "Test de Levene verifiant l'homogeneite des variances","Test de Mauchly testant la sphericite de la matrice de covariance",
-             "Analyse principale","Anova avec correction de Welch pour variances heterogenes", "Comparaisons 2 a 2","contrastes",
-             "Matrice de coefficients variables","Table des contrastes","Table des contrastes imitant les logiciels commerciaux","Facteurs bayesiens",
-             "Analyse non parametrique","Test de Kruskal-Wallis","Anova de Friedman","Comparaison 2 a 2 pour ANOVA de Friedman",
-             "Test de Kruskal-Wallis - Comparaison deux a deux"  ,"Anova sur les medianes","Analyse principale","Anova basee sur les moyennes tronquees",
-             "ANOVA sur M estimator", "Anova sur l'estimateur modifie de localisation de Huber","Arret premature de l'analyse",
-             "References des packages utilises pour cette analyse"
+    title<-c(ask_variables_type, txt_repeated_measures,txt_participants_id,txt_independant_group_variables,
+             txt_dependant_variable, ask_covariables,
+             txt_param_model, txt_non_param_model,txt_bayesian_factors, txt_robust_statistics,
+             ask_which_analysis,txt_complete_dataset,txt_identifying_outliers, txt_without_outliers,
+             ask_results_desired, ask_which_size_effect,ask_which_squared_sum,
+             ask_save, txt_apriori,  txt_comparison_two_by_two, txt_none,ask_which_contrasts,
+             txt_contrasts_for, txt_specify_contrasts,ask_which_baseline, txt_descriptive_statistics,txt_test_model,
+             txt_variable_descriptive_statistics,txt_descriptive_statistics_of_interaction_between_x,txt_warning,
+             txt_normality_tests,txt_ancova_application_conditions,txt_absence_of_difference_between_groups_test_on,
+             txt_slopes_homogeneity_between_groups_on_dependant_variable,
+             txt_levene_test_verifying_homogeneity_variances,txt_mauchly_test_sphericity_covariance_matrix,
+             txt_principal_analysis,txt_anova_with_welch_correction, txt_pairwise_comparisons,txt_contrasts,
+             txt_variables_coeff_matrix,txt_contrasts_table,txt_contrasts_table_imitating_commercial_softwares,txt_bayesian_factors,
+             txt_non_param_analysis,txt_kruskal_wallis_test,txt_friedman_anova,txt_friedman_anova_pairwise_comparison,
+             txt_kruskal_wallis_pairwise  ,txt_anova_on_medians,txt_principal_analysis,txt_anova_on_truncated_means,
+             txt_anova_on_m_estimator, txt_anova_on_modified_huber_estimator,txt_analysis_premature_abortion,
+             desc_references
              
     )
     
-  } else {
-    msg<-c("Which kind of variable do you want to include in the analysis ?\nYou are allowed to choose several (e.g., for mixed anova or for ancova).",
-           "It is required that at least one variable is either an independant group variable or a repeated measure variable",
-           "Please select the repeated measures variable-s or the levels of the repeated measures variables",
-           "Which variable identify individual ?",
-           "Each participant must occur once and only once for each combinations of levels",
-           "If your data have a wide format, you must select at least 2 columns for repeated measure factors",
-           "If your data a wide format, the format in each column must be either numeric or integer",
-           "Please choose between participant variables.",
-           "You have not chosen any variable. Do you want to continue (ok) or to leave (cancel) this analysis ?",
-           "Please choose the dependant variable",
-           "Some participants have missing data on repeated measure factors. They are removed from the analyses.",
-           "Please choose the covariables",
-           "The number of observations is not enough given the number of levels for each variable. \nPlease ensure that there are at least 3 observations for each combination of levels",
-           "The parametruc model is the usual anova presented in statistical packages. The non parametric test is \nthe Kruskal Wallis test for one way anova and Friedman test for repeated measure anova.\n
-           The bayesian approach assesses the same model as the classical anova by computing the Bayes Factor.\nRobust statistics are anovas on trimmed means or median with or without bootstrap",
-           "Complete data are the analyses performed on the entire dataset. The analysis without outliers means that outliers have\nbeen removed before performing the analysis. The criteria for detecting outliers is the Grubbs test.",
-           "If within is not null, RML must be null and conversely",
-           "The most often used effect size is the partial eta squarred (pes). The most accurate is the generalized eta squared (ges)",
-           "There are several ways to estimate the Sum of Squares. Default value for comercial softwares is Type 3,\nwhich prioritizes interaction instead of main effects",
-           "Do you want to save the results of the analysis?",
-           "The dependant variable has less than 3 unique different values. Check your data or the analysis that you try to make is not relevant.",
-           "A priori contrast allow to make comparisons for a priori hypotheses. Pairwise contrasts make all possible pairwise comparisons, with or without p. adjust.",
-           "You may use one of predefined contrast matrix or state the contrast by yourself. In the latter case, you must choose state the contrasts.",
-           "The contrasts must be orthogonal. Do you want to continue ?",
-           "Les contrates must be matrix of coefficients stored in list for which the name of each levels is the name of one variable.",
-           "If you choose the coefficients yourself, all the variables in the analysis must have their coefficient matrix",
-           "Which p adjustment do you want ? If you do not want any p adjust, choose +none+",
-           "Allowed values for contrasts are +none+, +pairwise+ or a list with the coefficients of contrasts.",
-           "At least one of your contrast matrix is not correct.",
-           "There are less than 3 observations for at least one group or the variance for one groupe is 0. Results are probably biased",
-           "Bayes Factors estimation failed",
-           "We are sorry but it was not possible to perform the ANOVA on the medians, probably du to ex aequo.",
-           "Probability and CI are estimated by bootstrap. CI is corrected for multiple comparisons, contrary to reported p values",
-           "We are sorry but robust ANOVA failed", "The analysis has failed"
-           
-    )
-    
-    
-    
-    title<-c("Which kind of variable ?", "Repeated measure", "Id of individuals", "Between participant variables",
-             "Dependant variable","Covariable-s ?",
-             "Parametric", "Non parametric","Bayes Factors", "Robust statistics - might take some time",
-             "Which analysis do you want ?", "Complete dataset", "Identification of outliers", "Dataset with outliers removed",
-             "Which results do you want ?", "Which effect size do you want?", "Which sum of squares do you want ?","Do you want to save?",
-             "a priori", "Pairwise", "none", "Please choose the type of contrast", "Contrasts for", "Choose your own contrasts",
-             "Which level is the baseline?","Descriptive statistics", "Model", "Descriptive for",
-             "Descriptive statistics for the interaction between","Warning","Normal distribution test",
-             "Assumptions of ancova","Test of absence of difference between groups on ",
-             "Homogeneity of slopes between groups on the dependant variable",
-             "Levene's test testing homogeneity of variances","Mauchly's sphericity test","Main analysis",
-             "Welch's ANOVA for heterogeneous variances","Pairwise comparisons","contrasts","Matrix of coefficients",
-             "Table of contrasts","Contrasts that mimics commercial software","Bayes factors", "Non parametrique test", "Kruskal-Wallis test", "Friedman Anova",
-             "Friedman pairwise comparison","Kruskal-Wallis test- pairwise comparisons", "Anova on medians","Main analysis",
-             "Anova on trimmed mean", "M estimator ANOVA","Anova on modified Huber estimator", "A problem occurred. The analysis has stopped",
-             "References of packages used for this analysis")
-    
-  }
+  #} else {
+  #  msg<-c("Which kind of variable do you want to include in the analysis ?\nYou are allowed to choose several (e.g., for mixed anova or for ancova).",
+  #         "It is required that at least one variable is either an independant group variable or a repeated measure variable",
+  #         "Please select the repeated measures variable-s or the levels of the repeated measures variables",
+  #         "Which variable identify individual ?",
+  #         "Each participant must occur once and only once for each combinations of levels",
+  #         "If your data have a wide format, you must select at least 2 columns for repeated measure factors",
+  #         "If your data a wide format, the format in each column must be either numeric or integer",
+  #         "Please choose between participant variables.",
+  #         "You have not chosen any variable. Do you want to continue (ok) or to leave (cancel) this analysis ?",
+  #         "Please choose the dependant variable",
+  #         desc_some_participants_have_missing_values_on_repeated_measures,
+  #         "Please choose the covariables",
+  #         "The number of observations is not enough given the number of levels for each variable. \nPlease ensure that there are at least 3 observations for each combination of levels",
+  #         "The parametruc model is the usual anova presented in statistical packages. The non parametric test is \nthe Kruskal Wallis test for one way anova and Friedman test for repeated measure anova.\n
+  #         The bayesian approach assesses the same model as the classical anova by computing the Bayes Factor.\nRobust statistics are anovas on trimmed means or median with or without bootstrap",
+  #         "Complete data are the analyses performed on the entire dataset. The analysis without outliers means that outliers have\nbeen removed before performing the analysis. The criteria for detecting outliers is the Grubbs test.",
+  #         "If within is not null, RML must be null and conversely",
+  #         "The most often used effect size is the partial eta squarred (pes). The most accurate is the generalized eta squared (ges)",
+  #         "There are several ways to estimate the Sum of Squares. Default value for comercial softwares is Type 3,\nwhich prioritizes interaction instead of main effects",
+  #         "Do you want to save the results of the analysis?",
+  #         "The dependant variable has less than 3 unique different values. Check your data or the analysis that you try to make is not relevant.",
+  #         desc_all_contrasts_description,
+  #         "You may use one of predefined contrast matrix or state the contrast by yourself. In the latter case, you must choose state the contrasts.",
+  #         ask_contrasts_must_be_ortho,
+  #         desc_contrasts_must_be_coeff_matrices_in_list,
+  #         "If you choose the coefficients yourself, all the variables in the analysis must have their coefficient matrix",
+  #         ask_probability_correction,
+  #         "Allowed values for contrasts are +none+, +pairwise+ or a list with the coefficients of contrasts.",
+  #         "At least one of your contrast matrix is not correct.",
+  #         "There are less than 3 observations for at least one group or the variance for one groupe is 0. Results are probably biased",
+  #         "Bayes Factors estimation failed",
+  #         "We are sorry but it was not possible to perform the ANOVA on the medians, probably du to ex aequo.",
+  #         "Probability and CI are estimated by bootstrap. CI is corrected for multiple comparisons, contrary to reported p values",
+  #         "We are sorry but robust ANOVA failed", "The analysis has failed"
+  #         
+  #  )
+  #  
+  #  
+  #  
+  #  title<-c("Which kind of variable ?", txt_repeated_measures, "Id of individuals", "Between participant variables",
+  #           "Dependant variable",ask_covariables,
+  #           "Parametric", "Non parametric",txt_bayesian_factors, "Robust statistics - might take some time",
+  #           "Which analysis do you want ?", "Complete dataset", "Identification of outliers", "Dataset with outliers removed",
+  #           "Which results do you want ?", "Which effect size do you want?", "Which sum of squares do you want ?","Do you want to save?",
+  #           txt_apriori, txt_pairwise, "none", "Please choose the type of contrast", "Contrasts for", "Choose your own contrasts",
+  #           "Which level is the baseline?","Descriptive statistics", txt_test_model, "Descriptive for",
+  #           txt_descriptive_statistics_of_interaction_between_x,"Warning","Normal distribution test",
+  #           "Assumptions of ancova",txt_absence_of_difference_between_groups_test_on,
+  #           "Homogeneity of slopes between groups on the dependant variable",
+  #           "Levene's test testing homogeneity of variances",txt_mauchly_test_sphericity_covariance_matrix,"Main analysis",
+  #           "Welch's ANOVA for heterogeneous variances",txt_pairwise_comparisons,"contrasts","Matrix of coefficients",
+  #           "Table of contrasts","Contrasts that mimics commercial software",txt_bayesian_factors, txt_non_param_analysis, txt_kruskal_wallis_test, txt_friedman_anova,
+  #           "Friedman pairwise comparison",txt_kruskal_wallis_pairwise, txt_anova_on_medians,"Main analysis",
+  #           "Anova on trimmed mean", txt_anova_on_m_estimator,"Anova on modified Huber estimator", "A problem occurred. The analysis has stopped",
+  #           "References of packages used for this analysis")
+  #  
+  #}
   
   ifelse(type=="msg", r<-msg, r<-title)
   r<-r[number]   
@@ -258,7 +259,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 .contrastes.ez<-function(data, between=NULL, within=NULL, contrasts="none", p.adjust="none", dial=T){
   options (warn=1)
   c(between, unlist(within))->betweenwithin
-  if(any(!contrasts%in%c("none","pairwise","aucun","comparaison 2 a 2")) & class(contrasts)!="list") {
+  if(any(!contrasts%in%c("none",txt_pairwise,txt_none,txt_pairwise_comparison)) & class(contrasts)!="list") {
     okCancelBox( .ez.anova.msg("msg", 27))
     return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T))
   }
@@ -296,7 +297,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(length(type.cont)==0) return(NULL)
     Resultats$type.cont<-type.cont
     
-    if(type.cont=="a priori") {
+    if(type.cont==txt_apriori) {
       
       writeLines(.ez.anova.msg("msg", 21))
       cont.exemple<-list()
@@ -316,27 +317,28 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                              preselect=c("Helmert"), multiple = FALSE, title=paste(.ez.anova.msg("title", 23), betweenwithin[i],"?"))$res
         
         if(length(type.cont2)==0) return(contrastes.ez())
-        contrastes[[i]]<-switch(EXPR =type.cont2,
-                                "Helmert"= contr.helmert(nlevels(data[,betweenwithin[i]])), 
-                                "Helmert reversed"= apply(contr.helmert(nlevels(data[,betweenwithin[i]])), 2, rev), 
-                                "poly"= emmeans:::poly.emmc(1:nlevels(data[,betweenwithin[i]])),
-                                "Trait.vs.contr"= {
-                                  base<- dlgList(levels(data[, betweenwithin[i]]), preselect=levels(data[,betweenwithin[i]])[1],
-                                                 multiple = FALSE, title=.ez.anova.msg("title", 25))$res
-                                  which(levels(data[, betweenwithin[i]])==base)->base
-                                  emmeans:::trt.vs.ctrl1.emmc(1:nlevels(data[,betweenwithin[i]]), ref=base)
-                                }, 
-                                "Eff"=emmeans:::del.eff.emmc(1:nlevels(data[,betweenwithin[i]])), 
-                                "consec"= emmeans:::consec.emmc(1:nlevels(data[,betweenwithin[i]])), 
-                                "mean.change"= emmeans:::mean_chg.emmc(1:nlevels(data[,betweenwithin[i]]))) 
+	## With translation, switch case can cause trouble when using variables instead of literal strings.
+	## That's why I've been converting it here too.
+	if (type.cont2=="Helmert") { contr.helmert(nlevels(data[,betweenwithin[i]])) -> contrastes[[i]] }
+        if (type.cont2=="Helmert reversed") { apply(contr.helmert(nlevels(data[,betweenwithin[i]])), 2, rev)  -> contrastes[[i]]}
+        if (type.cont2=="poly") { emmeans:::poly.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
+        if (type.cont2=="Trait.vs.contr") {
+		{ base<- dlgList(levels(data[, betweenwithin[i]]), preselect=levels(data[,betweenwithin[i]])[1],
+                        multiple = FALSE, title=.ez.anova.msg("title", 25))$res
+                        which(levels(data[, betweenwithin[i]])==base)->base
+                        emmeans:::trt.vs.ctrl1.emmc(1:nlevels(data[,betweenwithin[i]]), ref=base)
+                      } -> contrastes[[i]]  }
+        if (type.cont2=="Eff") { emmeans:::del.eff.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
+        if (type.cont2=="consec") { emmeans:::consec.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
+        if (type.cont2=="mean.change") { emmeans:::mean_chg.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
         
-        if(type.cont2 %in% c("specifier vos contrastes", "Choose your own contrasts")){
+        if(type.cont2 %in% c(txt_specify_contrasts, txt_specify_contrasts)){
           ortho<-FALSE
           while(ortho!=TRUE){
             own.cont<-matrix(rep(0,times=(nlevels(data[,betweenwithin[i]])*(nlevels(data[,betweenwithin[i]])-1))), 
                              nrow=nlevels(data[,betweenwithin[i]]))
             dimnames( own.cont)[[1]]<-levels(data[,betweenwithin[i]])
-            dimnames( own.cont)[[2]]<-paste("contraste", 1:(nlevels(data[,betweenwithin[i]])-1), sep=".")
+            dimnames( own.cont)[[2]]<-paste(txt_contrast, 1:(nlevels(data[,betweenwithin[i]])-1), sep=".")
             own.cont<-fix( own.cont)
             if(any(colSums( own.cont)!=0)|(nlevels(data[,betweenwithin[i]])>2 & 
                                            max(rle(c( own.cont))$lengths)>2*(nlevels(data[,betweenwithin[i]])-2))) ortho<-FALSE else {
@@ -355,20 +357,20 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
           
         }
         
-        dimnames(contrastes[[i]])[[2]]<-paste("contraste", 1:(ncol(contrastes[[i]])), sep=".")
+        dimnames(contrastes[[i]])[[2]]<-paste(txt_contrast, 1:(ncol(contrastes[[i]])), sep=".")
         dimnames(contrastes[[i]])[[1]]<-levels(data[,betweenwithin[i]])
       }
       names(contrastes)<-betweenwithin
       Resultats$contrastes<-contrastes     
       
     }else{
-      if(type.cont %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun"))  { Resultats$contrastes<-type.cont
+      if(type.cont %in% c(txt_comparison_two_by_two,txt_pairwise, txt_pairwise, "none", txt_none))  { Resultats$contrastes<-type.cont
       contrastes<-type.cont}
       
     }
   }else{
     contrastes<-list()
-    if(any(contrasts %in% c("Comparaison 2 a 2","Pairwise", "pairwise", "none", "aucun"))) {
+    if(any(contrasts %in% c(txt_comparison_two_by_two,txt_pairwise, txt_pairwise, "none", txt_none))) {
       Resultats$contrastes<-contrasts
       contrastes<-contrasts
       }else{
@@ -378,7 +380,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       j<-which(names(data)==names(contrasts)[[i]])
       noms<-list()
       noms[[1]]<-levels(data[,j])
-      noms[[2]]<-paste("contraste", 1:(ncol(cont2)), sep=".")
+      noms[[2]]<-paste(txt_contrast, 1:(ncol(cont2)), sep=".")
       dimnames(cont2)<-noms
       contrastes[[i]]<-cont2 
     }
@@ -386,13 +388,13 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     Resultats$contrastes<-contrastes
     }
   }
-  if((dial & all(contrastes %in% c("Comparaison 2 a 2","Pairwise", "pairwise"))) || 
+  if((dial & all(contrastes %in% c(txt_comparison_two_by_two,txt_pairwise, txt_pairwise))) || 
      (!p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
                        "sidak","dunnettx","mvt" ,"none" ))){
     list()->p.adjust
     writeLines(.ez.anova.msg("msg", 26) )
     dlgList(c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
-              "sidak","dunnettx","mvt" ,"none"), preselect="holm", multiple = FALSE, title="Correction ?")$res->p.adjust
+              "sidak","dunnettx","mvt" ,"none"), preselect="holm", multiple = FALSE, title=ask_correction_anova_contrasts)$res->p.adjust
     
     if(length(p.adjust)==0) return(contrastes.ez())
     
@@ -407,8 +409,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   list()->Resultats
   
   if(dial || !any(param %in% c("param", "non param", "bayes", "robust",
-                               "Modele parametrique", "Modele non parametrique","Facteurs bayesiens", "Statistiques robustes - peut prendre du temps",
-                               "Parametric", "Non parametric","Bayes Factors", "Robust statistics - might take some time"))){
+                               txt_param_model, txt_non_param_model,txt_bayesian_factors, txt_robust_statistics,
+                               txt_param_model, txt_non_param_model,txt_bayesian_factors, txt_robust_statistics))){
+                               #"Parametric", "Non parametric",txt_bayesian_factors, "Robust statistics - might take some time"))){
     writeLines(.ez.anova.msg("msg",14))
     msg<-c(.ez.anova.msg("title",7),.ez.anova.msg("title",9))
     if(is.null(cov)) {    
@@ -423,15 +426,15 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   
   
-  if(dial | !any(outlier%in% c("complete","id", "removed","Complete dataset", "Identification of outliers", "Dataset with outliers removed",
-                               "Donnees completes","Identification des valeurs influentes", "Donnees sans valeur influente")) ){
+  if(dial | !any(outlier%in% c("complete","id", "removed",txt_complete_dataset,txt_identifying_outliers, txt_without_outliers,
+                               txt_complete_dataset,txt_identifying_outliers, txt_without_outliers)) ){
     outlier<-c(.ez.anova.msg("title",12),.ez.anova.msg("title",13),.ez.anova.msg("title",14))
     outlier<- dlgList(outlier, preselect=outlier,multiple = TRUE, title=.ez.anova.msg("title",15))$res
     if(length(outlier)==0) return(.options.aov(between=between, within=within, cov=cov))
   }
   
   
-  if(any(param %in% c("Modele parametrique", "Parametric", "param"))){
+  if(any(param %in% c(txt_param_model, "Parametric", "param"))){
     if(!ES %in% c("ges", "pes") | dial){
     writeLines(.ez.anova.msg("msg",17))
     ES<- dlgList(c("ges", "pes"), preselect=c("ges"),multiple = FALSE, title=.ez.anova.msg("title",16))$res
@@ -476,20 +479,20 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     return(.ez.anova.in())}
   
   if(is.null(c(between,within, RML))) {
-    if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) index<-1 else index<-2
-    type.v<-matrix(c("Groupes independants", "Mesures repetees", "Covariables",
-                     "Independant groups", "Repeated measures", "Covariables"), ncol=2) 
+    index<-1 # From when language was hard coded in easieR. TODO 
+    type.v<-matrix(c(txt_independant_groups, txt_repeated_measures, txt_covariables,
+	             txt_independant_groups, txt_repeated_measures, txt_covariables), ncol=2)
     writeLines(.ez.anova.msg("msg", 1))
     type.v2<-dlgList(type.v[,index], multiple = TRUE, title=.ez.anova.msg("title", 1))$res
     if(length(type.v2)==0) return(.ez.anova.in())
     type.v<-type.v[which(type.v[, index]%in%type.v2),1]
-    if(!any(type.v %in% c("Groupes independants", "Mesures repetees"))) {
+    if(!any(type.v %in% c(txt_independant_groups, txt_repeated_measures))) {
       writeLines(.ez.anova.msg("msg",2))
       return(.ez.anova.in())
     }
   } 
   
-  if(any(type.v=="Mesures repetees") | !is.null(within) | !is.null(RML)) {
+  if(any(type.v==txt_repeated_measures) | !is.null(within) | !is.null(RML)) {
     if(!is.null(RML)) within<-RML
     within<-.var.type(X=within, info=T, data=data, type=NULL, check.prod=F, message=.ez.anova.msg("msg",3),  multiple=TRUE, 
                       title=.ez.anova.msg("title",2), out=NULL)
@@ -538,8 +541,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                      IV.names=IV.names, IV.levels=RML.factor) 
     nom<-paste0(nom, ".long")
     reshape.data<-TRUE
-    DV<-"value"
-    within<-setdiff(names(data), c(idvar, "value","IDeasy"))
+    DV<-txt_value
+    within<-setdiff(names(data), c(idvar, txt_value,"IDeasy"))
     if(length(within)>1) {
       data[,within]<-lapply(data[, within], factor)
       within<-within[-which(within=="time")]
@@ -562,7 +565,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     data$IDeasy<-factor( data$IDeasy)
     id<-"IDeasy"
   }     
-  if(any(type.v=="Groupes independants") | !is.null(between)){
+  if(any(type.v==txt_independant_groups) | !is.null(between)){
     between<-.var.type(X=between, info=T, data=data, type="factor", check.prod=F, message=.ez.anova.msg("msg",8),  multiple=TRUE, 
                        title=.ez.anova.msg("title",4), out=diffs)
     if(is.null(between)) {
@@ -596,7 +599,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   
   
-  if(any(type.v=="Covariables")) {
+  if(any(type.v==txt_covariables)) {
     
     cov<-.var.type(X=cov, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",12),  multiple=TRUE, 
                    title=.ez.anova.msg("title",6), out=diffs)
@@ -632,8 +635,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     msgBox(.ez.anova.msg("msg",13))
     return(NULL)
   }
-#if(any(param %in% c("Modele parametrique", "Parametric", "param")))  
-  if(any(options.out$param %in% c("param", "Modele parametrique", "Parametric", "param"))){
+#if(any(param %in% c(txt_param_model, "Parametric", "param")))  
+  if(any(options.out$param %in% c("param", txt_param_model, "Parametric", "param"))){
     contrasts<-.contrastes.ez(data=data, between=between, within=within, contrasts=contrasts, dial=dial, p.adjust=p.adjust)
     if(is.null(contrasts)) return(.ez.anova.in()) 
   } else contrasts<-NULL
@@ -712,7 +715,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     return(Resultats)
   }  
   
-  if(any(param %in% c("Modele parametrique","param", "Parametric"))){
+  if(any(param %in% c(txt_param_model,"param", "Parametric"))){
     if(any(Resultats[[2]][[1]]$sd==0)) Resultats[[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",29)
     options(contrasts=c("contr.sum","contr.poly"))
     if(!is.null(cov)) factorize<-FALSE else factorize<-TRUE
@@ -720,7 +723,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     residus<-data.frame(aov.out$lm$residuals)
     residus[,"match"] <-aov.out$data$wide[,id]
     if(!is.null(within)){ residus<-melt(residus, id.vars="match") 
-                         names(residus)[3]<-"residu"
+                         names(residus)[3]<-'residu'
                           residus$match<-paste0(residus[,1], residus[,2])
                           data$match<-paste0(data[,id], data[,within[1]])
                           if(length(within)>1){
@@ -729,30 +732,26 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                                                         }
                                                }
                           }else{
-      names(residus)<-c("residu", "match")
+      names(residus)<-c('residu', "match")
       data$match<-data[,id]
       }
 
     data<-merge(x=data, y=residus, by="match")
-    Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X="residu", Y=NULL)
+    Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X='residu', Y=NULL)
     
     if(!is.null(cov) & !is.null(between)){
       options(contrasts = c("contr.helmert", "contr.poly"))
       for(i in 1:length(cov)){
         aov(as.formula(paste0(cov[i], "~",pred.ind)), data=data)->aov.cov
         Anova(aov.cov, type="III")->aov.cov
-        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          names(aov.cov)<-c("SC", "ddl", "F", "valeur.p") 
-        }
+        names(aov.cov)<-c("SC", txt_df, "F", txt_p_dot_val) 
         
         Resultats[[.ez.anova.msg("title",32)]][[paste0(.ez.anova.msg("title",33), cov[i])]]<-aov.cov
         if(i==1) {paste(cov[1],"*")->cov2} else {paste0(cov2, cov[i],"*")->cov2}
       }
       aov(as.formula(paste0(DV, "~", cov2,pred.ind)), data=data)->aov.cov
       Anova(aov.cov, type="III")->aov.cov
-      if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-        names(aov.cov)<-c("SC", "ddl", "F", "valeur.p") 
-      }
+      names(aov.cov)<-c("SC", txt_df, "F", txt_p_dot_val)
       Resultats[[.ez.anova.msg("title",32)]][[.ez.anova.msg("title",34)]]<-aov.cov
       
     }
@@ -761,8 +760,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       paste0(DV, "~",pred.ind)->modele2
       Levene<-leveneTest(as.formula(modele2),data=data) # test de Levene pour homogeneite des variances
       Levene<-round(unlist(Levene)[c(1,2,3,5)],3)
-      if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-        names(Levene)<-c("ddl1","ddl2","F","valeur.p")}
+      names(Levene)<-c(txt_df1,txt_df2,"F",txt_p_dot_val)
       Resultats[[.ez.anova.msg("title",35)]]<- Levene
     }
     
@@ -783,26 +781,21 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       aov.out2b<-round(aov.out2$sphericity.test,5)
       aov.out2b<-matrix(aov.out2b, ncol=2)
-      dimnames(aov.out2b)<-list(dimnames(aov.out2$sphericity.test)[[1]], c("Stat", "valeur.p"))
+      dimnames(aov.out2b)<-list(dimnames(aov.out2$sphericity.test)[[1]], c("Stat", txt_p_dot_val))
       Resultats[[.ez.anova.msg("title",36)]]<-aov.out2b
     }
 
     aov.out3<-aov.out[[1]]
     aov.out3<-data.frame(aov.out3)
-#    aov.out3[,6]<-round.ps(aov.out3[,6])
-    if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-      names(aov.out3)<-c("ddl.num", "ddl.denom", "CME", "F", ES, "valeur.p" )
-    }
+    names(aov.out3)<-c(txt_df_num, txt_df_denom, "CME", "F", ES, txt_p_dot_val )
     omega.out<-effectsize::omega_squared(aov.out$Anova)
     aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$Parameter),2])
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       GG.HF<-data.frame(round(aov.out2$pval.adjustments,5))
-      if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-        names(GG.HF)<-c("GG.eps", "GG.valeur.p","HF.eps", "HF.valeur.p")
-      }
-      Resultats$"Correction : Greenhouse-Geisser &  Hyunh-Feldt"<-GG.HF}
+      names(GG.HF)<-c("GG.eps", txt_gg_p_value,"HF.eps", txt_hf_p_value)
+      Resultats[[txt_greenhouse_geisser_huynn_feldt_correction]]<-GG.HF}
     if(length(between)==1 & is.null(within) & is.null(cov)) {
       Welch<-oneway.test(as.formula(paste(DV,"~", between)),data=data)
       Welch<-round(data.frame("F"=Welch$statistic,"num"=Welch$parameter[1],"denom"=Welch$parameter[2],"p"=Welch$p.value),4)
@@ -814,10 +807,10 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     aov.plus.in$em.out<-em.out
     
     
-    if(!is.list(contrasts) && any(contrasts %in% c("pairwise",  "Comparaison 2 a 2" ))){
+    if(!is.list(contrasts) && any(contrasts %in% c(txt_pairwise,  txt_comparison_two_by_two ))){
       pair<-pairs(em.out, adjust=p.adjust)
       pair<-summary(pair)
-      names(pair)[which(names(pair)=="p.value")]<-"valeur.p"
+      names(pair)[which(names(pair)=="p.value")]<-txt_p_dot_val
       Resultats[[.ez.anova.msg("title",39)]]<-pair
     }
     
@@ -876,9 +869,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
        round( ifelse(table.cont$d.Cohen==T, (2*table.cont$t.ratio)/(nlevels(data[,id])^0.5), table.cont$t.ratio/(nlevels(data[,id])^0.5)),4)->table.cont$d.Cohen}else{
           round(table.cont$t.ratio/((nlevels(data[,id]))^0.5),4)->table.cont$d.Cohen}
       
-      if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-        names(table.cont)<-c("contraste","estimation", "erreur.st", "ddl","t", "valeur.p", "R carre", "d Cohen")
-        }
+        names(table.cont)<-c(txt_contrast,txt_estimation, txt_error_dot_standard_short, txt_df,"t", txt_p_dot_val, txt_r_square, "d Cohen")
 
     
       
@@ -930,25 +921,17 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         
         round(Table.contrasts,4)->Table.contrasts
         data.frame(Table.contrasts)->Table.contrasts  
-        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          names(Table.contrasts)<-c("estimateur", "ddl","t", "valeur.p")
-         Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$ddl)->Table.contrasts$R.2
-          round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen 
-        }else {
-          names(Table.contrasts)<-c("estimate", "df","t", "p.value")
-         Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$df)->Table.contrasts$R.2
-          round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen 
-        }
+        names(Table.contrasts)<-c(txt_estimator, txt_df,"t", txt_p_dot_val)
+        Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$ddl)->Table.contrasts$R.2
+        round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen 
         dimnames(Table.contrasts)[[1]]<-table.cont[,1]
         Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",43)]]<-Table.contrasts
-        
-        
       } 
-      
     }
   }
+
   ##### Bayes 
-  if(any(param %in% c("bayes","Facteurs bayesiens", "Bayes Factors")) )  {
+  if(any(param %in% c("bayes",txt_bayesian_factors, txt_bayesian_factors)) )  {
     modeleBF<-paste0(DV,"~")
     if(!is.null(cov)){
       for(i in 1 : length(cov)){
@@ -965,7 +948,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                               rscaleRandom= rscaleRandom, iterations=1000), silent=T)
     
     
-    if(class(BF.out)=="try-error") Resultats[[.ez.anova.msg("title",43)]]<-.ez.anova.msg("msg",30) else{
+    if(class(BF.out)=='try-error') Resultats[[.ez.anova.msg("title",43)]]<-.ez.anova.msg("msg",30) else{
       BF.out<-extractBF(BF.out)
       BF.out<-BF.out[,1:2]
       BF.out<-BF.out[which(grepl(id, dimnames(BF.out)[[1]])==F),]
@@ -977,12 +960,12 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   
   
-  if(any(param %in% c( "non param", "Modele non parametrique", "Non parametric"))){
+  if(any(param %in% c( "non param", txt_non_param_model, "Non parametric"))){
     if(!is.null(between)){
       kruskal.test(as.formula( paste0(DV, "~",between[1])), data = data)->KW
       round(data.frame(KW$statistic,KW$parameter,KW$p.value),4)->KW
      
-        names(KW)<-c("H","ddl","valeur.p")
+        names(KW)<-c("H",txt_df,txt_p_dot_val)
       
       round((KW$H-nlevels(data[,between])+1)/(length(data[,1])-nlevels(data[,between])),4)->eta
       if(eta<0.0001) "<0.001"->KW$eta.2.H else KW$eta.2.H
@@ -1000,9 +983,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       friedman<-friedman.test(as.formula(paste0(DV,"~", within[[1]], "|", id )),data=data)
       friedman<-round(data.frame(friedman$statistic,friedman$parameter,friedman$p.value),4)
       friedman$W.de.Kendall<-round(friedman[,1]/(nrow(data)*(nlevels(data[,unlist(within)])-1)),4)
-      if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-        names(friedman)<-c("chi.2","ddl","valeur.p", "W.de.Kendall")
-      }else { names(friedman)<-c("chi.2","df","p.value","Kendall's W") }
+      names(friedman)<-c(txt_chi_dot_squared,txt_df,txt_p_dot_val, txt_kendall_w)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",47)]]<-friedman
       ans<-frdAllPairsExactTest(y=data[,DV],groups=data[,within], blocks=data[,id], p.adjust = p.adjust)
       comp<-expand.grid(dimnames(ans$p.value))
@@ -1012,29 +993,23 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
        F.MC<-F.MC[complete.cases(F.MC),]
 #      F.MC$p<-round.ps(F.MC$p)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",48)]]<-F.MC
-      
-      
     }
   }
   
   
-  if(any(param %in% c("Statistiques robustes - peut prendre du temps", "robust", "Robust statistics - might take some time"))){
+  if(any(param %in% c(txt_robust_statistics, "robust", "Robust statistics - might take some time"))){
     if(length(between)==1 & is.null(within)){
       split(data[,DV], data[,between])->robuste
       try(unlist(WRS::med1way(robuste,iter = n.boot)), silent=T)->mediane
-      if(class(mediane)!="try-error"){
-        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          names(mediane)<-c("Test", "Valeur.critique","valeur.p")
-        }
+      if(class(mediane)!='try-error'){
+        names(mediane)<-c("Test", txt_critical_dot_val,txt_p_dot_val)
         Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-round(mediane,4)
         # revoir
         if(is.list(contrasts)){
           contrasts<-contrasts[[1]]
           cont<-WRS::medpb(robuste,alpha=.05,nboot=n.boot,con=contrasts,bhop=FALSE)
-          if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-            dimnames(cont$output)[[2]]<-c("Numero.contraste","Valeur.contraste",
-                                          "valeur.p","p.critique.corrigee","lim.inf.IC","lim.sup.IC")
-          }
+          dimnames(cont$output)[[2]]<-c("Numero.contraste",txt_contrast_dot_val,
+                                          txt_p_dot_val,txt_critical_p_corrected,txt_ci_inferior_limit_dot,txt_ci_superior_limit_dot)
           
           Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-cont$output
         }
@@ -1047,15 +1022,11 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       
       
       try( WRS2::t1way(as.formula(paste0(DV, "~",between)), tr=.2,data=data),silent=T)->AR1
-      if(class(AR1)!="try-error"){
+      if(class(AR1)!='try-error'){
         WRS2::t1way(as.formula(paste0(DV, "~",between)), tr=.2,data=data)->AR1
         WRS2::t1waybt(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot,data=data)->AR2
         data.frame(AR1[[2]],AR1[[3]],AR1[[1]],AR2[[2]],AR2[[3]],AR2[[4]], AR2[[5]])->AR1
-        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          names(AR1)<-c("ddl.num","ddl.denom","Stat","valeur.p","Var.expliquee","Taille.effet","Nombre.bootstrap" )
-        }else {
-          names(AR1)<-c("df.num","df.denom","Stat","p.value","Var.explained","effect size","N.bootstrap" )
-        }
+        names(AR1)<-c(txt_df_num,txt_df_denom,"Stat",txt_p_dot_val,txt_var_explained_dot,txt_effect_size_dot,txt_bootstrap_dot_number )
         
         
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-AR1
@@ -1063,13 +1034,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         
         try(WRS::lincon(robuste, tr=.2, con=contrasts),silent=T)->cont
         try(WRS::mcppb20(robuste, tr=.2, nboot=n.boot, con=contrasts),silent=T)->cont2
-        if(class(cont)!= "try-error") {
+        if(class(cont)!= 'try-error') {
           cont<-data.frame(cont$psihat[,2],cont$test[,4],cont$test[,5],cont$test[,2],cont$test[,3],cont2$psihat[,4],cont2$psihat[,5],cont2$psihat[,6])
-          if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-            names(cont)<-c("Valeur.contraste","erreur.standard","ddl","test","seuil.critique","lim.inf.IC","lim.sup.IC","valeur.p")
-          }else {
-            names(cont)<-c("estimate","se","df","test","critic","lower.lim.CI","upper.lim.CI","p.value")
-          }
+          names(cont)<-c(txt_contrast_dot_val,txt_error_dot_standard,txt_df,"test",txt_critical_dot_threshold,txt_ci_inferior_limit_dot,txt_ci_superior_limit_dot,txt_p_dot_val)
           Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",42)]] <-cont
         }
         
@@ -1083,46 +1050,44 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(length(between)==2 & is.null(within)) { 
       
       try( WRS2::t2way(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, tr = 0.2), silent=T)->T2
-      if(class(T2)!="try-error"){
+      if(class(T2)!='try-error'){
         T2<-matrix(unlist(T2[c(1:6)]), ncol=2, byrow=T)
-        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          dimnames(T2)[[2]]<-c("valeur", "valeur.p")
-        }
+        dimnames(T2)[[2]]<-c(txt_value, txt_p_dot_val)
         c(names(data[,between]), paste(names(data[,between])[1],":",names(data[,between])[2]))->dimnames(T2)[[1]]
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-T2
       }
       mom<-try(
         WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "mom", nboot = n.boot),silent=T)
-      if(class(mom)!="try-error")  {
+      if(class(mom)!='try-error')  {
         mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
-        dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c("valeur.p"))
+        dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(txt_p_dot_val))
          Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
       }
      
        mom<-try(
      WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "median", nboot = n.boot),silent=T)
-  if(class(mom)!="try-error")  {
+  if(class(mom)!='try-error')  {
     mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
-    dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c("valeur.p"))
+    dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(txt_p_dot_val))
     Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-mom
   }
       
       try(WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "mom", nboot = n.boot), silent=T)->mediane
-      if(class(mediane)!="try-error") {
+      if(class(mediane)!='try-error') {
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(med)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
+        names(med)<-c("psihat", txt_p_dot_val, txt_inferior_limit,txt_ci_superior_limit)
         dimnames(med)[[1]]<-names(mediane[[2]])
         Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",42)]]<-med
       }
       
       try(mediane<-WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "median", nboot = n.boot), silent=T)
-      if(class(mediane)!="try-error") {
+      if(class(mediane)!='try-error') {
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(med)<-c("psihat", "valeur.p", "lim.inf","lim.sup")
+        names(med)<-c("psihat", txt_p_dot_val, txt_inferior_limit,txt_ci_superior_limit)
         dimnames(med)[[1]]<-names(mediane[[2]])
         Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-med
       }
@@ -1130,7 +1095,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     
     if(length(between)==3 & is.null(within)){
       tronquees<-try( WRS2::t3way(as.formula(paste0(DV, "~",between[1],"*",between[2],"*",between[3])), data=data, tr = 0.2), silent=T)
-      if(class(tronquees)!="try-error") {
+      if(class(tronquees)!='try-error') {
         tronquees<-round(matrix(unlist(tronquees[c(1:14)]), ncol=2, byrow=T), 4)
         colnames(tronquees)<-c("F", "p")
         rownames(tronquees)<- nice(aov.out)$Effect
@@ -1139,14 +1104,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     }
     if(length(within)==1 & is.null(between)){
       ANOVA.tr<-try( WRS2::rmanova(data$value,data[,within[[1]]] ,data[,id]), silent=T)
-      if(class(ANOVA.tr)!="try-error"){
+      if(class(ANOVA.tr)!='try-error'){
         
-        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          ANOVA.tr<-round(data.frame("Valeur.test"= ANOVA.tr$test,"ddl1"=ANOVA.tr$df1, "ddl2"=ANOVA.tr$df2,"valeur.p"=ANOVA.tr$p.value),4)
-          
-        }else {
-          ANOVA.tr<-round(data.frame("Test"= ANOVA.tr$test,"df1"=ANOVA.tr$df1, "df2"=ANOVA.tr$df2,"p.value"=ANOVA.tr$p.value),4)
-        }
+        ANOVA.tr<-round(data.frame(txt_test_dot_val= ANOVA.tr$test,txt_df1=ANOVA.tr$df1, txt_df2=ANOVA.tr$df2,txt_p_dot_val=ANOVA.tr$p.value),4)
         
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-ANOVA.tr
         if((nlevels(data[,within[[1]]]))>2) {
@@ -1161,27 +1121,20 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(length(between)==1 & length(within)==1){
       modeleR<-as.formula(paste0(DV, "~", between,"*",  within))
       try(WRS2::tsplit( as.formula(modeleR), data[,id], data=data, tr = 0.2), silent=T)->tronquees
-      if(class(tronquees)!="try-error"){
+      if(class(tronquees)!='try-error'){
         tronquees2<-matrix(unlist(unlist(tronquees)[c(1:12)]),ncol=4, byrow=T)
         tronquees2<-data.frame(tronquees2)
         rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
-        names(tronquees2)<-c("F", "valeur.p", "df1", "df2")
+        names(tronquees2)<-c("F", txt_p_dot_val, txt_df1, txt_df2)
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees2
         WRS2::sppba(modeleR, data[,id], data=data, est = "mom", avg = TRUE, nboot = n.boot, MDIS = FALSE)->MoMa 
         WRS2::sppbb(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMb
         WRS2::sppbi(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMi 
-        if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())){
-          MoM<-data.frame("effet"= c(between,within[[1]],"interaction"), "valeur.p"=c(MoMa$p.value,MoMb$p.value, MoMi$p.value) )
-          
-        }else {
-          MoM<-data.frame("effect"= c(between,within[[1]],"interaction"), "p.value"=c(MoMa$p.value,MoMb$p.value, MoMi$p.value) )
-        }
-        
+        MoM<-data.frame("effet"= c(between,within[[1]],"interaction"), txt_p_dot_val=c(MoMa$p.value,MoMb$p.value, MoMi$p.value) )
+	names(MoM) <- c(txt_effect,txt_p_dot_val)
         Resultats[[.ez.anova.msg("title",54)]][[.ez.anova.msg("title",51)]]  <-MoM
       }else Resultats[[.ez.anova.msg("title",10)]]<-.ez.anova.msg("msg",33)
-      
     }
-    
   }
   Resultats[["data"]]<-data
   Resultats[["aov.plus.in"]]<-aov.plus.in
