@@ -216,7 +216,6 @@ regressions <-
           Resultats$selection[[txt_coeff_table]]<-coef.table
           names(Resultats)[length(Resultats)]<-select.name 
     
-        }
 
    
 
