@@ -176,10 +176,10 @@ regressions <-
       }
       if(select.m!="none"){
         dtrgeasieR<<-dtrgeasieR
-
-        select.m<-switch(select.m,txt_forward_step_ascending="Forward", txt_backward_step_descending=txt_backward, txt_bidirectionnal="Both",
-                           "forward"="Forward", "bidirectional"="Both","backward"=txt_backward )
-        
+        if(select.m == txt_forward_step_ascending | select.m =="forward") select.m<-"Forward"
+        if(select.m == txt_backward_step_descending | select.m =="backward") select.m<-txt_backward
+        if(select.m == txt_bidirectionnal | select.m ==  "bidirectional") select.m<-"Both"
+       
         if(method %in% c("F", txt_f_value, "p", txt_probability_value)){
            if(select.m=="Forward")  ols.out <- ols_step_forward_p(lm.r1,penter = criteria, details=F)
           if(select.m=="Backward") ols.out <- ols_step_backward_p(lm.r1, prem=criteria, details=F)
@@ -198,7 +198,8 @@ regressions <-
           pf(summary(ols.out$model)$fstatistic[1], summary(ols.out$model)$fstatistic[2],summary(ols.out$model)$fstatistic[3], lower.tail=F)->p.value #permet de savoir si le F est significatif
           c(significativite_modele , p.value)->modele.F # on combine les precedents 
           modele.F<-round(modele.F,3) # on arrondit les nombres a la 3e decimale
-         names(modele.F)<-c(txt_residual_error, txt_r_dot_two, "F", txt_df_parenthesis_num, txt_df_parenthesis_denom,txt_p_dot_val)-># attribue le nom aux colonne
+         names(modele.F)<-c(txt_residual_error, txt_r_dot_two, "F", 
+                            txt_df_parenthesis_num, txt_df_parenthesis_denom,txt_p_dot_val)# attribue le nom aux colonne
                    
           coef.table<-data.frame(b = round(reg.out$betas, 3),
                                  "Erreur Std."= format(round(reg.out$std_errors, 3)), 
