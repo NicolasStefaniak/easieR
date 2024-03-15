@@ -1,3 +1,4 @@
+
 regressions <-
   function(data=NULL, modele=NULL, Y=NULL, X_a=NULL, X_i=NULL, outlier=txt_complete_dataset, inf=F, CV=F, select.m="none", method="p", step=NULL, group=NULL, criteria=0.15 , scale=T, dial=T, info=T,
            sauvegarde=F, n.boot=NULL, param="param", rscale=0.353, html=TRUE){
@@ -118,6 +119,7 @@ regressions <-
       variables<-terms(as.formula(modele))
       variables<-as.character( attributes(variables)$variables)[-1]
       pred<-attributes(terms(as.formula(modele)))$term.labels
+
       Resultats[[txt_descriptive_statistics]]<-.stat.desc.out(X=variables, groupes=NULL, data=dtrgeasieR, tr=.1, type=3, plot=T)
 
        if(scale==T || scale==txt_center) {
@@ -129,6 +131,7 @@ regressions <-
         sapply(X=dtrgeasieR[,centre], fun<-function(X){X-mean(X, na.rm=T)})->dtrgeasieR[,centre]
            }
       }
+
       }
 
 
@@ -173,67 +176,52 @@ regressions <-
       }
       if(select.m!="none"){
         dtrgeasieR<<-dtrgeasieR
+
+        select.m<-switch(select.m,txt_forward_step_ascending="Forward", txt_backward_step_descending=txt_backward, txt_bidirectionnal="Both",
+                           "forward"="Forward", "bidirectional"="Both","backward"=txt_backward )
+        
         if(method %in% c("F", txt_f_value, "p", txt_probability_value)){
-          #select.m<-switch(select.m,txt_forward_step_ascending="Forward", txt_backward_step_descending=txt_backward, txt_bidirectionnal="Both",
-          #                 "forward"="Forward", "bidirectional"="Stepwise","backward"="Both" )
+           if(select.m=="Forward")  ols.out <- ols_step_forward_p(lm.r1,penter = criteria, details=F)
+          if(select.m=="Backward") ols.out <- ols_step_backward_p(lm.r1, prem=criteria, details=F)
+          if(select.m=="Both") ols.out <- ols_step_both_p(lm.r1,pent=criteria, details=F)
+          }
+       
+         if(method %in% c(txt_aic_criterion,"AIC")){
+          if(select.m=="Forward")  ols.out <- ols_step_forward_aic(lm.r1, details=F)
+          if(select.m=="Backward")  ols.out <- ols_step_backward_aic(lm.r1, details=F)
+          if(select.m=="Both")     ols.out <- ols_step_both_aic(lm.r1, details=F) 
+           }     
 
-	  if (select.m==txt_forward_step_ascending) "Forward"
-	  if (select.m==txt_backward_step_descending) txt_backward
-	  if (select.m==txt_bidirectionnal) "Both"
-	  if (select.m=="forward") "Forward"
-	  if (select.m=="bidirectional") "Stepwise"
-	  if (select.m=="backward") "Both"
+          ols.frame<-data.frame(ols.out$metrics)
+          reg.out<-ols_regress(ols.out$model)
+          c(summary(ols.out$model)$sigma, summary(ols.out$model)$r.squared, summary(ols.out$model)$fstatistic)->significativite_modele # fournit les residus, le R.deux et le F
+          pf(summary(ols.out$model)$fstatistic[1], summary(ols.out$model)$fstatistic[2],summary(ols.out$model)$fstatistic[3], lower.tail=F)->p.value #permet de savoir si le F est significatif
+          c(significativite_modele , p.value)->modele.F # on combine les precedents 
+          modele.F<-round(modele.F,3) # on arrondit les nombres a la 3e decimale
+         names(modele.F)<-c(txt_residual_error, txt_r_dot_two, "F", txt_df_parenthesis_num, txt_df_parenthesis_denom,txt_p_dot_val)-># attribue le nom aux colonne
+                   
+          coef.table<-data.frame(b = round(reg.out$betas, 3),
+                                 "Erreur Std."= format(round(reg.out$std_errors, 3)), 
+                                  "Beta" = c(" ", round(reg.out$sbetas, 3)),
+                                 t=round(reg.out$tvalues, 3),
+                                 valeur.p =round(reg.out$pvalues, 3),
+                                 lower=round(reg.out$conf_lm[, 1], 3),
+                                   upper =round(reg.out$conf_lm[, 2], 3))
+         names(coef.table)<-c("b",txt_error_dot_standard,"beta","t",
+                              txt_p_dot_val,txt_confidence_interval_inferior_limit, txt_confidence_interval_superior_limit)
 
-          if(select.m=="Forward") t<-capture.output({  ols.out <- ols_step_forward_p(lm.r1,penter = criteria, details=F)})
-          if(select.m==txt_backward) t<-capture.output({  ols.out <- ols_step_backward_p(lm.r1, prem=criteria, details=F)})
-          if(select.m=="Both") t<-capture.output({  ols.out <- ols_step_both_p(lm.r1,pent=criteria, details=F)})
-          predname<-if(!is.null(ols.out$predictors)) rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]]) )
-          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[1]]) )
-          ols.frame<-data.frame(etape=1:ols.out$steps,
-                                predicteurs=ifelse(predname,ols.out$predictors,ols.out$removed) ,
-                                mallows_cp=ols.out$ mallows_cp,
-                                AIC=ols.out$aic,
-                                BIC=ols.out$sbc,
-                                RMSE=ols.out$rmse,
-                                r.carre=ols.out$rsquare,
-                                r.carre.adj=ols.out$adjr,
-                                Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , desc_variable_added, desc_removed_variable))
-          )
-          Resultats[[txt_selection_method]]<-ols.frame
+          select.name<-paste0(txt_selection_method,"-", method)                                 
+          Resultats$selection$Selection<-ols.frame 
+          Resultats$selection$ANOVA<-modele.F
+          Resultats$selection[[txt_coeff_table]]<-coef.table
+          names(Resultats)[length(Resultats)]<-select.name 
+    
         }
 
-        if(method %in% c(txt_aic_criterion,"AIC")){
-          #select.m<-switch(select.m,txt_forward_step_ascending="Forward", txt_backward_step_descending=txt_backward, txt_bidirectionnal="Both",
-          #                 "forward"="Forward", "bidirectional"="Both","backward"=txt_backward )
-          if (select.m==txt_forward_step_ascending) "Forward"
-	  if (select.m==txt_backward_step_descending) txt_backward
-	  if (select.m==txt_bidirectionnal) "Both"
-          if (select.m=="forward") "Forward"
-	  if (select.m=="bidirectional") "Both"
-	  if (select.m=="backward") txt_backward
-
-          lm.r1<-lm(modele, data=dtrgeasieR)
-          if(select.m=="Forward") t0<-capture.output({  ols.out <- ols_step_forward_aic(lm.r1, details=T)})
-          if(select.m==txt_backward) t0<-capture.output({  ols.out <- ols_step_backward_aic(lm.r1, details=T)})
-          if(select.m=="Both")     t0<-capture.output({  ols.out <- ols_step_both_aic(lm.r1, details=T)})
-
-          predname<-if(select.m!=txt_backward) rep(TRUE, length(ols.out$predictors)) else rep(FALSE,length(ols.out[[1]])+1 )
-          methodname<-if(!is.null(ols.out$method)) rep(TRUE, length(ols.out$method)) else rep(select.m,length(ols.out[[4]]) )
-          ols.frame<-data.frame(etape=1:ols.out$steps,
-                                predicteurs=ifelse(predname,ols.out$predictors, c(txt_complete_model, ols.out$predictor)) ,
-                                Somme.Carre=ols.out$rss,
-                                AIC=ols.out$aic,
-                                SC.res=ols.out$ess,
-                                r.carre=ols.out$rsq,
-                                r.carre.adj=ols.out$arsq,
-                                Method=ifelse(methodname==T, ols.out$method, ifelse(methodname=="Forward" , desc_variable_added, c(" ",desc_removed_variable)))
-          )
-
-          Resultats[[txt_selection_method_akaike]]<-ols.frame
-
-        }
+   
 
         if(any(param=="Bayes")|any(param==txt_bayesian_factors)){
+
           BF.out<-try(regressionBF(modele, data=dtrgeasieR,progress=F, rscaleCont=rscale), silent=T)
           if(class(BF.out)!='try-error') {
             try(plot(BF.out) , silent=T)
@@ -344,6 +332,7 @@ regressions <-
           if(any(class(ols.corr)!='try-error')){
           Resultats[[txt_variables_contribution_to_model]]<-ols.corr
           Resultats[[txt_added_variables_graph]] <-ols_plot_added_variable(lm.r1)}
+
         }
       }
 
@@ -417,7 +406,7 @@ regressions <-
     modele<-reg.in.output$modele
     param<-reg.in.output$options$choix
     n.boot<-reg.in.output$options$n.boot
-    if(reg.in.output$options$rscalei) rscale<-reg.in.output$options$rscale/2 else rscale<-reg.in.output$options$rscale
+    if(reg.in.output$options$rscale) rscale<-reg.in.output$options$rscale/2 else rscale<-reg.in.output$options$rscale
     outlier<-reg.in.output$options$desires
     sauvegarde<-reg.in.output$options$sauvegarde
     scale<-reg.in.output$reg.options$scale
@@ -564,6 +553,7 @@ regressions <-
     if(sauvegarde)   if(sauvegarde) save(Resultats=Resultats, choix=txt_multiple_regressions_dot, env=.e)
     Resultats[[txt_references]]<-ref1(packages)
     if(html) ez.html(Resultats)
+
     return(Resultats)
   }
 
