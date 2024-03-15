@@ -518,6 +518,8 @@ load_en_EN <- function() {
   txt_confidance_threshold <<- "Confidence threshold (1- alpha)"
   txt_confidence_interval_estimated_by_bootstrap <<- "Interval of trust estimates by bootstrap"
   txt_confidence_interval <<- "Confidential Interval"
+  txt_confidence_interval_superior_limit<<- "Upper bound CI"
+  txt_confidence_interval_inferior_limit  <<- "Lower bound CI"
   txt_confidence_interval_of_saturations_on_bootstrap <<- "Interval of confidence of saturations on the basis of bootstrap - may be biased in presence of Heyhood case"
   txt_confidence_interval_on_bootstrap <<- "Trust interval based on bootstrap"
   txt_confidence_interval_on_standard_error <<- "Confidence interval based on standard alpha error"
