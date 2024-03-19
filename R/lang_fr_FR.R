@@ -892,6 +892,7 @@ load_fr_FR <- function() {
   txt_variables_from_step <<- "Variable(s) de cette etape"
   txt_verify_packages_install <<- "Verifier l installation des packages"
   txt_view_data <<- "voir des donnees"
+  txt_VIF<<-"FIV"
   txt_warning <<- "Avertissement"
   txt_wilcoxon_by_group <<- "Wilcoxon par groupe"
   txt_without_outliers <<- "Donnees sans valeur influente"
