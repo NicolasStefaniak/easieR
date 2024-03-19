@@ -974,6 +974,7 @@ load_en_EN <- function() {
   txt_test_model <<- "Test model"
   txt_variables <<- "variables"
   txt_variable <<- "variable"
+  txt_VIF<<-"VIF"
   desc_corr_group_analysis_spec <<- "If you want to perform the analysis for different subsamples based on a categorical criterion (i.e.; perform a group analysis) \n choose yes. In this case, the analysis is done on the complete sample and on the subsamples. \n If you want the analysis for the complete sample only, choose no. The group analysis does not apply to robust statistics."
   desc_outliers_removal_implications <<- "Delete all outliers removes all values beyond p(chi.two)< 0.001. Delete one observation at a time makes it possible to make a detailed analysis of each observation considered to be influential from the most extreme value. The procedure stops when no more observations are considered influential"
   txt_bilateral <<- "Bilateral"
