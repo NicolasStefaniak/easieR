@@ -540,6 +540,8 @@ VI.multiples<-function(data, X){
 
 # cree la liste avec tous les resultats
 .stat.desc.out<-function(X=NULL, groupes=NULL, data=NULL, tr=.1, type=3, plot=T){
+	  packages<-c('psych', 'ggplot2')
+	 test2<-try(lapply(packages, library, character.only=T), silent=T)
   data_summary <- function(x) {
     m <- mean(x)
     ymin <- m-sd(x)
