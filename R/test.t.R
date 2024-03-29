@@ -685,10 +685,10 @@ test.t <-
                                                desc_for_bigger_samples_bootstrap_t_prefered)
           }
 
-          WRS::ks(g1[,X],g2[,X],w=F,sig=T)->KS
-          round(unlist(KS),4)->KS
-          names(KS)<-c("KS", txt_critical_dot_threshold,txt_p_dot_val)
-          KS->Resultats[[txt_robusts_statistics]][[txt_kolmogorov_smirnov_comparing_two_distrib]]
+         # WRS::ks(g1[,X],g2[,X],w=F,sig=T)->KS
+         # round(unlist(KS),4)->KS
+         # names(KS)<-c("KS", txt_critical_dot_threshold,txt_p_dot_val)
+         # KS->Resultats[[txt_robusts_statistics]][[txt_kolmogorov_smirnov_comparing_two_distrib]]
         }else Resultats[[txt_robusts_statistics]]<-desc_robusts_statistics_could_not_be_computed_verify_WRS
 
 
