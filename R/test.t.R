@@ -685,7 +685,7 @@ test.t <-
                                                desc_for_bigger_samples_bootstrap_t_prefered)
           }
 
-          WRS::ks(g1[,X],g2[,X],w=F,sig=T)->KS
+          easieR::ks(g1[,X],g2[,X],w=F,sig=T)->KS
           round(unlist(KS),4)->KS
           names(KS)<-c("KS", txt_critical_dot_threshold,txt_p_dot_val)
           KS->Resultats[[txt_robusts_statistics]][[txt_kolmogorov_smirnov_comparing_two_distrib]]
@@ -829,4 +829,197 @@ ksties.crit<-function(x,y,alpha=.05){
   START=sqrt(0-log(alpha/2)*(n1+n2)/(2*n1*n2))
   crit=optim(START,ksties.sub,x=x,y=y,alpha=alpha,lower=.001,upper=.86,method='Brent')$par
   crit
+}
+
+
+
+			       
+ks<-function(x,y,w=FALSE,sig=TRUE,alpha=.05){
+  #  Compute the Kolmogorov-Smirnov test statistic
+  #
+  #  w=T computes the weighted version instead.
+  #
+  #  sig=T indicates that the exact  level is to be computed.
+  #  If there are ties, the reported Type I  error probability is exact when
+  #  using the unweighted test, but for the weighted test the reported
+  #  level is too high.
+  #
+  #  This function uses the functions ecdf, kstiesig, kssig and kswsig
+  #
+  #  This function returns the value of the test statistic, the approximate .05
+  #  critical value, and the exact level if sig=T.
+  #
+  #  Missing values are automatically removed
+  #
+  x<-x[!is.na(x)]
+  y<-y[!is.na(y)]
+  n1 <- length(x)
+  n2 <- length(y)
+  w<-as.logical(w)
+  sig<-as.logical(sig)
+  tie<-logical(1)
+  siglevel<-NA
+  z<-sort(c(x,y))  # Pool and sort the observations
+  tie=FALSE
+  chk=sum(duplicated(x,y))
+  if(chk>0)tie=TRUE
+  v<-1   # Initializes v
+  for (i in 1:length(z))v[i]<-abs(ecdf(x,z[i])-ecdf(y,z[i]))
+  ks<-max(v)
+  if(!tie)crit=ks.crit(n1=n1,n2=n2,alpha=alpha)
+  else crit=ksties.crit(x,y,alpha=alpha)
+  if(!w && sig && !tie)siglevel<-kssig(length(x),length(y),ks)
+  if(!w && sig && tie)siglevel<-kstiesig(x,y,ks)
+  if(w){
+    crit=ksw.crit(length(x),length(y),alpha=alpha)
+    for (i in 1:length(z)){
+      temp<-(length(x)*ecdf(x,z[i])+length(y)*ecdf(y,z[i]))/length(z)
+      temp<-temp*(1.-temp)
+      v[i]<-v[i]/sqrt(temp)
+    }
+    v<-v[!is.na(v)]
+    ks<-max(v)*sqrt(length(x)*length(y)/length(z))
+    if(sig)siglevel<-kswsig(length(x),length(y),ks)
+    if(tie && sig)
+      warning(paste("Ties were detected. The reported significance level of the
+weighted Kolmogorov-Smirnov test statistic is not exact."))
+  }
+  list(test=ks,critval=crit,p.value=siglevel)
+}
+
+ks.crit<-function(n1,n2,alpha=.05){
+  #
+  # Compute a critical value so that probability coverage is approximately
+  # 1-alpha 
+  #
+  START=sqrt(0-log(alpha/2)*(n1+n2)/(2*n1*n2))
+  crit=optim(START,ks.sub,n1=n1,n2=n2,alpha=alpha,lower=.001,upper=.86,method='Brent')$par
+  crit
+}
+
+ks.sub<-function(crit,n1,n2,alpha){
+  v=kssig(n1,n2,crit)
+  dif=abs(alpha-v)
+  dif
+}
+
+
+ksw.crit<-function(n1,n2,alpha=.05){
+  #
+  # Compute a critical value so that probability coverage is 
+  # >= 1-alpha while being close as possible to 1-alpha
+  #
+  if(alpha>.1)stop('The function assumes alpha is at least .1')
+  crit=2.4
+  del=.05
+  pc=.12
+  while(pc>alpha){
+    crit=crit+.05
+    pc=kswsig(n1,n2,crit)
+  }
+  crit
+}
+
+ecdf<-function(x,val){
+#  compute empirical cdf for data in x evaluated at val
+#  That is, estimate P(X <= val)
+#
+ecdf<-length(x[x<=val])/length(x)
+ecdf
+}
+
+kswsig<-function(m,n,val){
+#
+#    Compute significance level of the weighted
+#    Kolmogorov-Smirnov test statistic
+#
+#    m=sample size of first group
+#    n=sample size of second group
+#    val=observed value of test statistic
+#
+mpn<-m+n
+cmat<-matrix(0,m+1,n+1)
+umat<-matrix(0,m+1,n+1)
+for (i in 1:m-1){
+for (j in 1:n-1)cmat[i+1,j+1]<-abs(i/m-j/n)*sqrt(m*n/((i+j)*(1-(i+j)/mpn)))
+}
+cmat<-ifelse(cmat<=val,1,0)
+for (i in 0:m){
+for (j in 0:n)if(i*j==0)umat[i+1,j+1]<-cmat[i+1,j+1]
+else umat[i+1,j+1]<-cmat[i+1,j+1]*(umat[i+1,j]+umat[i,j+1])
+}
+term<-lgamma(m+n+1)-lgamma(m+1)-lgamma(n+1)
+kswsig<-1.-umat[m+1,n+1]/exp(term)
+kswsig
+}
+
+kstiesig<-function(x,y,val){
+  #
+  #    Compute significance level of the  Kolmogorov-Smirnov test statistic
+  #    for the data in x and y.
+  #    This function allows ties among the  values.
+  #    val=observed value of test statistic
+  #
+  m<-length(x)
+  n<-length(y)
+  z<-c(x,y)
+  z<-sort(z)
+  cmat<-matrix(0,m+1,n+1)
+  umat<-matrix(0,m+1,n+1)
+  for (i in 0:m){
+    for (j in 0:n){
+      if(abs(i/m-j/n)<=val)cmat[i+1,j+1]<-1e0
+      k<-i+j
+      if(k > 0 && k<length(z) && z[k]==z[k+1])cmat[i+1,j+1]<-1
+    }
+  }
+  for (i in 0:m){
+    for (j in 0:n)if(i*j==0)umat[i+1,j+1]<-cmat[i+1,j+1]
+    else umat[i+1,j+1]<-cmat[i+1,j+1]*(umat[i+1,j]+umat[i,j+1])
+  }
+  term<-lgamma(m+n+1)-lgamma(m+1)-lgamma(n+1)
+  kstiesig<-1.-umat[m+1,n+1]/exp(term)
+  kstiesig
+}
+
+
+kssig<-function(m,n,val){
+  #
+  #    Compute significance level of the  Kolmogorov-Smirnov test statistic
+  #    m=sample size of first group
+  #    n=sample size of second group
+  #    val=observed value of test statistic
+  #
+  cmat<-matrix(0,m+1,n+1)
+  umat<-matrix(0,m+1,n+1)
+  for (i in 0:m){
+    for (j in 0:n)cmat[i+1,j+1]<-abs(i/m-j/n)
+  }
+  cmat<-ifelse(cmat<=val,1e0,0e0)
+  for (i in 0:m){
+    for (j in 0:n)if(i*j==0)umat[i+1,j+1]<-cmat[i+1,j+1]
+    else umat[i+1,j+1]<-cmat[i+1,j+1]*(umat[i+1,j]+umat[i,j+1])
+  }
+  term<-lgamma(m+n+1)-lgamma(m+1)-lgamma(n+1)
+  kssig<-1.-umat[m+1,n+1]/exp(term)
+  kssig=max(0,kssig)
+  kssig
+}
+
+ksties.crit<-function(x,y,alpha=.05){
+  #
+  # Compute a critical value so that probability coverage is approximately
+  # 1-alpha 
+  #
+  n1<-length(x)
+  n2<-length(y)
+  START=sqrt(0-log(alpha/2)*(n1+n2)/(2*n1*n2))
+  crit=optim(START,ksties.sub,x=x,y=y,alpha=alpha,lower=.001,upper=.86,method='Brent')$par
+  crit
+}
+
+ksties.sub<-function(crit,x,y,alpha){
+  v=kstiesig(x,y,crit)
+  dif=abs(alpha-v)
+  dif
 }
