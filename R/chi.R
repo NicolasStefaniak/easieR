@@ -235,8 +235,8 @@ chi <-
             p<-mon.chi$observed/sum(mon.chi$observed)
             q<-mon.chi$expected/sum(mon.chi$expected)
             RVES<-(-1/(log(min(q[which(p!=0)]), base=exp(1)))) *sum(p *log(p[which(p!=0)]/q[which(p!=0)], base=exp(1))) # ES from JOHNSTON et al. 2006
-            RV<-data.frame(txt_chi_dot_squared=RV, txt_df=mon.chi$parameter, txt_p_dot_val=round(PRV,4), txt_effect_size=round(RVES,4))
-            names(RV)<-c(txt_chi_dot_squared, txt_df, txt_p_dot_val, txt_effect_size)
+            RV<-data.frame(txt_chi_dot_squared=RV, txt_df=mon.chi$parameter, txt_p_dot_val=round(PRV,4), txt_effect_size_dot=round(RVES,4))
+            names(RV)<-c(txt_chi_dot_squared, txt_df, txt_p_dot_val, txt_effect_size_dot)
             Resultats[[txt_likelihood_ratio_g_test]]<-RV
           }
           # facteur bayesien
