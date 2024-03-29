@@ -685,10 +685,10 @@ test.t <-
                                                desc_for_bigger_samples_bootstrap_t_prefered)
           }
 
-         # WRS::ks(g1[,X],g2[,X],w=F,sig=T)->KS
-         # round(unlist(KS),4)->KS
-         # names(KS)<-c("KS", txt_critical_dot_threshold,txt_p_dot_val)
-         # KS->Resultats[[txt_robusts_statistics]][[txt_kolmogorov_smirnov_comparing_two_distrib]]
+          WRS::ks(g1[,X],g2[,X],w=F,sig=T)->KS
+          round(unlist(KS),4)->KS
+          names(KS)<-c("KS", txt_critical_dot_threshold,txt_p_dot_val)
+          KS->Resultats[[txt_robusts_statistics]][[txt_kolmogorov_smirnov_comparing_two_distrib]]
         }else Resultats[[txt_robusts_statistics]]<-desc_robusts_statistics_could_not_be_computed_verify_WRS
 
 
@@ -819,3 +819,14 @@ test.t <-
     return(Resultats)
 
     }
+ksties.crit<-function(x,y,alpha=.05){
+  #
+  # Compute a critical value so that probability coverage is approximately
+  # 1-alpha 
+  #
+  n1<-length(x)
+  n2<-length(y)
+  START=sqrt(0-log(alpha/2)*(n1+n2)/(2*n1*n2))
+  crit=optim(START,ksties.sub,x=x,y=y,alpha=alpha,lower=.001,upper=.86,method='Brent')$par
+  crit
+}
