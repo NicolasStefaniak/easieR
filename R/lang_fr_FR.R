@@ -1,6 +1,6 @@
 load_fr_FR <- function() {
   require(rlang)
-  env_bind(easieR, ask_2x2_table ="tableau 2x2 ?")
+  env_bind(namespace:easieR, ask_2x2_table ="tableau 2x2 ?")
   ask_2x2_table <<- "tableau 2x2 ?"
   ask_2x2_table_value <<- "Veuillez preciser la valeur pour les tableaux 2x2"
   ask_add_a_value_to_empty_cells <<- "Faut-il ajouter une valeur aux cellules vides pour les correlations polychorique ? Pour specifier les valeurs,choisissez TRUE, sinon choisissez [default]"
