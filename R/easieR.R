@@ -1,11 +1,13 @@
 easieR <-
-  function(info=TRUE, html=T){
+  function(info=TRUE, html=T, lang='auto'){
+	  
     # 1. l'argument info permettra a terme de choisir les informations qui s'affichent dans la console ou non
     options (warn=1)
     options(scipen=999)
     test<-try(library(svDialogs), silent=T)
     if(class(test)== 'try-error') return(ez.install())
-
+    # 2. choisir la langue
+	  load_language(lang=lang)
 
     library(rmarkdown)
     if(is.null(pandoc_version())){
