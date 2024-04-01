@@ -22,6 +22,7 @@ load_language <- function(lang='auto') {
 }
 
 select_language <- function() {
+	require(svDialogs)
     lang <- dlgList(c('English',
 		      'Français'
 		     ), preselect=NULL, multiple = FALSE, title=ask_what_is_your_choice)$res
