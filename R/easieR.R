@@ -7,7 +7,7 @@ easieR <-
     test<-try(library(svDialogs), silent=T)
     if(class(test)== 'try-error') return(ez.install())
     # 2. choisir la langue
-	if(!is.null(lang)  load_language(lang=lang)
+	if(!is.null(lang) ) load_language(lang=lang)
 
     library(rmarkdown)
     if(is.null(pandoc_version())){
