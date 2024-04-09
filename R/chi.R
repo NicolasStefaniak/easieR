@@ -212,7 +212,7 @@ chi <-
           if(any(choix2 %in% c(txt_non_parametric_test,txt_robusts_tests_with_bootstraps)))    {
             SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
                             txt_df=mon.chi$parameter, Cramer(mon.chi))
-            names(SY)<-c(txt_chi_dot_squared, txt_df, "Cramer")
+            names(SY)<-c(txt_chi_dot_squared, txt_df, "V.Cramer",  V.sq)
             if(any(choix2==txt_non_parametric_test)) SY[[txt_p_dot_val]]<-round(mon.chi$p.value,4)
             try(fisher.test(tab),silent=T)->fisher
             if(class(fisher)!='try-error') SY$Fisher.Exact.Test=round(fisher$p.value,4)
