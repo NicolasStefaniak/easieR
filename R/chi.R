@@ -219,7 +219,7 @@ chi <-
             if(all(dim(tab)==2)){
               mon.chi<-chisq.test(tab, B=n.boot, correct=T)
               AY<-data.frame(txt_chi_dot_squared=round(mon.chi$statistic,4),txt_df=mon.chi$parameter,   Cramer(mon.chi),valeur.p=round(mon.chi$p.value,4) ,Fisher.Exact.Test="" )
-              names(AY)<-c(txt_chi_dot_squared,txt_df,"Cramer",txt_p_dot_val,"Fisher.Exact.Test")
+              names(AY)<-c(txt_chi_dot_squared,txt_df,"V.Cramer",  V.sq, txt_p_dot_val,"Fisher.Exact.Test")
               if(any(choix2==txt_non_parametric_test)) AY[[txt_p_dot_val]]<-round(mon.chi$p.value,4)
               SY<-rbind(SY, AY)
               dimnames(SY)[[1]]<-c(txt_without_yates_correction, txt_with_yates_correction)
