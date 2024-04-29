@@ -236,7 +236,7 @@ regressions <-
             Resultats[[txt_selection_method_bayesian_factor]]<-BF.out
           } else Resultats[[txt_selection_method_bayesian_factor]]<-desc_selection_for_bayesian_factor_does_not_apply_to_complex_models
         }
-        rm( "dtrgeasieR", envir = .GlobalEnv)
+       # rm( "dtrgeasieR", envir = .GlobalEnv)
       }
       
       if(!is.null(step)){
