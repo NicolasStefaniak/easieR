@@ -701,5 +701,6 @@ regressions <-
   Resultats$method<-method
   Resultats$criteria<-criteria
   Resultats$group<-group
+   rm( "dtrgeasieR", envir = .GlobalEnv)  
   return(Resultats)
 }
