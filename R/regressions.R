@@ -116,6 +116,7 @@ regressions <-
                               sauvegarde=F, n.boot=NULL, param=NULL, rscale=0.353){
       
       Resultats<-list()
+      dtrgeasieR<<-dtrgeasieR
       variables<-terms(as.formula(modele))
       variables<-as.character( attributes(variables)$variables)[-1]
       pred<-attributes(terms(as.formula(modele)))$term.labels
@@ -179,7 +180,7 @@ regressions <-
         try(ceresPlots(lm.r1, main=txt_ceres_graph_linearity), silent=T)
       }
       if(select.m!="none"){
-        dtrgeasieR<<-dtrgeasieR
+      
         if(select.m == txt_forward_step_ascending | select.m =="forward") select.m<-"Forward"
         if(select.m == txt_backward_step_descending | select.m =="backward") select.m<-txt_backward
         if(select.m == txt_bidirectionnal | select.m ==  "bidirectional") select.m<-"Both"
