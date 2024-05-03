@@ -332,8 +332,9 @@ regressions <-
           ols.corr<-try(ols_correlations(lm.r1), silent=T)
           if(any(class(ols.corr)!='try-error')){
             Resultats[[txt_variables_contribution_to_model]]<-ols.corr
-            Resultats[[txt_added_variables_graph]] <-ols_plot_added_variable(lm.r1)}
+            Resultats[[txt_added_variables_graph]] <-ols_plot_added_variable(lm.r1)
           coef.table[[txt_delta_r_squared]]<-c(" ", round((ols.corr$Part)^2,3))
+            }
           
         }
         Resultats[[txt_beta_table]]<-coef.table
