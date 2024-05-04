@@ -436,6 +436,7 @@ load_en_EN <- function() {
   txt_adjusted_means <<- "Adjusted Averages"
   txt_adjustement_measure <<- "Adjustment measures"
   txt_agreement <<- "Agreement"
+  txt_adjusted_p_dot_value <<- "Adjusted p value"
   txt_aic_criterion <<- "AIC - Akaike Information criteria"
   txt_alpha_warning <<- "Alpha warning"
   txt_alternative <<- "alternative"
