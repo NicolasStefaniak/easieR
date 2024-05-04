@@ -1008,8 +1008,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         if(is.list(contrasts)){
           contrasts<-contrasts[[1]]
           cont<-WRS::medpb(robuste,alpha=.05,nboot=n.boot,con=contrasts,bhop=FALSE)
-          dimnames(cont$output)[[2]]<-c("Numero.contraste",txt_contrast_dot_val,
-                                          txt_p_dot_val,txt_critical_p_corrected,txt_ci_inferior_limit_dot,txt_ci_superior_limit_dot)
+          dimnames(cont$output)[[2]]<-c("Num.cont",txt_contrast_dot_val,
+                                          txt_p_dot_val,txt_critical_p_corrected,txt_ci_inferior_limit_dot,txt_ci_superior_limit_dot,
+				       txt_adjusted_p_dot_value)
           
           Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-cont$output
         }
