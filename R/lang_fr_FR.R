@@ -437,6 +437,7 @@ load_fr_FR <- function() {
   txt_adjusted_means_graph <<- "Moyennes ajustee-Graphique"
   txt_adjusted_means <<- "Moyennes ajustee"
   txt_adjustement_measure <<- "Mesure d'ajustement"
+  txt_adjusted_p_dot_value <<- "Valeur P corrigée"
   txt_agreement <<- "Accord"
   txt_aic_criterion <<- "AIC - Akaike Information criterion"
   txt_alpha_warning <<- "Avertissement alpha"
