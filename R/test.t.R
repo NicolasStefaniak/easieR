@@ -382,7 +382,7 @@ test.t <-
 
       if(any(param==txt_robusts| any(param==txt_robusts_tests_with_bootstraps))){
         try( round(unlist(WRS::trimci(data[,X],tr=.2,alpha=.05, null.value=mu)),4), silent=T)->m.tr
-        if(any(m.tr!='try-error')){
+        if(class(m.tr)!='try-error'){
           names(m.tr)<-c(txt_ci_inferior_limit_dot,txt_ci_superior_limit_dot, txt_truncated_m,"test.t", "se",txt_p_dot_val,"n")
           #m.tr->Resultats$'Test sur la moyenne tronquee a 0.2'
           m.tr->Resultats[[txt_truncated_mean_0_2]]
