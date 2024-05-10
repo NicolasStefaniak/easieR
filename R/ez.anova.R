@@ -568,7 +568,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
  }
 
     	  
-  }     
+      
   if(any(type.v==txt_independant_groups) | !is.null(between)){
     between<-.var.type(X=between, info=T, data=data, type="factor", check.prod=F, message=.ez.anova.msg("msg",8),  multiple=TRUE, 
                        title=.ez.anova.msg("title",4), out=diffs)
