@@ -603,7 +603,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                 ID.NA<-names(id.nrep.differ)
 	        data<-data[which(!data[,id]%in% ID.NA),]
 	} 
-   
+   data[,id]<-factor(data[,id])
     }       
   }
   
