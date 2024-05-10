@@ -564,10 +564,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     data$IDeasy<-paste0("p", 1:(nrow(data)/prod(N.modalites2)))
     data$IDeasy<-factor( data$IDeasy)
     id<-"IDeasy"
-    if(any(is.na(data[, DV]))){
-        NA.value<-which(is.na(data[,DV]))
-        ID.NA<- data$IDeasy[NA.value]
-        data<-data[which(!data$IDeasy %in% ID.NA),]
+
  }
 
     	  
@@ -595,12 +592,18 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   
   if(!is.null(within)) {
-    if( min(table(data[,id]))!=  max(table(data[,id])))  msgBox(.ez.anova.msg("msg",11))
-    
-    while(min(table(data[,id]))!=  max(table(data[,id]))){
-      mid<-names(table(data[,id]))[which.min(table(data[,id]))]
-      data<-data[-which(data[,id]==mid) , ]
-      data[,id]<-factor(data[,id])
+    if( min(table(data[,id]))!=  max(table(data[,id])) | any(is.na(data[, DV]))) {
+        msgBox(.ez.anova.msg("msg",11))
+        NA.value<-which(is.na(data[,DV]))
+        ID.NA<- data[NA.value, id]
+        data<-data[which(!data[,id]%in% ID.NA),]
+	if(min(table(data[,id]))!=  max(table(data[,id])))   {
+		n.rep<-max(table((data[,id])))
+		id.nrep.differ<-which(table(data[,id]) !=n.rep)
+                ID.NA<-names(id.nrep.differ)
+	        data<-data[which(!data[,id]%in% ID.NA),]
+	} 
+   
     }       
   }
   
