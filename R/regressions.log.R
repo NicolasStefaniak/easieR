@@ -24,16 +24,16 @@ regressions.log <-
 
 
       if(dial && is.null(modele)){
-        if(info) writeLines(ask_chose_relation_between_vars_regressions_log)
-        dlgList(c(txt_additive_effects, txt_interaction_effects, txt_specify_model), preselect=txt_regressions, multiple = TRUE, title=ask_which_regression_type)$res->link
+        if(info) writeLines(.dico[["ask_chose_relation_between_vars_regressions_log"]])
+        dlgList(c(.dico[["txt_additive_effects"]], .dico[["txt_interaction_effects"]], .dico[["txt_specify_model"]]), preselect=.dico[["txt_regressions"]], multiple = TRUE, title=.dico[["ask_which_regression_type"]])$res->link
         if(length(link)==0) return(NULL)} else link<-"none"
 
       if(length(Y)>1){
-        msgBox(desc_only_one_dependant_variable_alllowed)
+        msgBox(.dico[["desc_only_one_dependant_variable_alllowed"]])
         Y<-NULL }
-      if(any(link %in% c(txt_additive_effects, txt_interaction_effects))){
-        msg3<-ask_chose_dependant_variable
-        Y<-.var.type(X=Y, info=info, data=data, type=NULL, check.prod=F, message=msg3,  multiple=FALSE, title=txt_dependant_variable, out=NULL)
+      if(any(link %in% c(.dico[["txt_additive_effects"]], .dico[["txt_interaction_effects"]]))){
+        msg3<-.dico[["ask_chose_dependant_variable"]]
+        Y<-.var.type(X=Y, info=info, data=data, type=NULL, check.prod=F, message=msg3,  multiple=FALSE, title=.dico[["txt_dependant_variable"]], out=NULL)
         if(is.null(Y)) {
           reg.log.in()->Resultats
           return(Resultats)}
@@ -41,27 +41,27 @@ regressions.log <-
         Y<-Y$X
 
         if(length(unique(data[,Y]))!=2) {
-          msg1<-paste(desc_your_dependant_variable_has, length(unique(data[,Y])), desc_must_be_dichotomic )
+          msg1<-paste(.dico[["desc_your_dependant_variable_has"]], length(unique(data[,Y])), .dico[["desc_must_be_dichotomic"]] )
           msgBox(msg1)
           if(class(data[,Y]) %in%c("numeric","integer")){
-            dlgMessage(ask_convert_dependant_variable_to_dichotomic,"yesno")$res->conv
+            dlgMessage(.dico[["ask_convert_dependant_variable_to_dichotomic"]],"yesno")$res->conv
 
             if(conv=="no") return(reg.log.in())  else{
-              if(info) writeLines(ask_criterion_for_dichotomy)
-              dlgList(c(txt_median, txt_threshold), preselect=txt_median, multiple = FALSE, title=ask_coding_criterion)$res->codage
+              if(info) writeLines(.dico[["ask_criterion_for_dichotomy"]])
+              dlgList(c(.dico[["txt_median"]], .dico[["txt_threshold"]]), preselect=.dico[["txt_median"]], multiple = FALSE, title=.dico[["ask_coding_criterion"]])$res->codage
               if(length(codage)==0) return(reg.log.in())
-              if(codage==txt_median) data[,Y]<-ifelse(data[,Y]>median(data[,Y]),1, 0)
+              if(codage==.dico[["txt_median"]]) data[,Y]<-ifelse(data[,Y]>median(data[,Y]),1, 0)
               View(data)
               readline()
-              if(codage==txt_threshold) {
+              if(codage==.dico[["txt_threshold"]]) {
                 seuil<-NA
                 while(is.na(seuil)){
-                  seuil<-dlgInput(ask_separation_value, median(data[,Y]))$res
+                  seuil<-dlgInput(.dico[["ask_separation_value"]], median(data[,Y]))$res
                   if(length(seuil)==0) return(reg.log.in())
                   strsplit(seuil, ":")->seuil
                   tail(seuil[[1]],n=1)->seuil
                   as.numeric(seuil)->seuil
-                  if(is.na(seuil) || seuil>max(data[,Y]) || seuil<min(data[,Y])) {msgBox(desc_value_must_be_numeric)
+                  if(is.na(seuil) || seuil>max(data[,Y]) || seuil<min(data[,Y])) {msgBox(.dico[["desc_value_must_be_numeric"]])
                     Y<-NA}
                 }
                 data[,Y]<-ifelse(data[,Y]>seuil,1, 0)
@@ -70,10 +70,10 @@ regressions.log <-
             }
           }
           if(class(data[,Y]) %in%c("factor","character")){
-            dlgMessage(ask_regroup_modalities,"yesno")$res->reg
+            dlgMessage(.dico[["ask_regroup_modalities"]],"yesno")$res->reg
             if(reg=="no") return(reg.log.in()) else {
-              if(info) writeLines(ask_linebase_modalities)
-              reg<- dlgList(levels(data[,Y]), preselect=NULL, multiple = TRUE, title=txt_modalities_to_regroup)$res
+              if(info) writeLines(.dico[["ask_linebase_modalities"]])
+              reg<- dlgList(levels(data[,Y]), preselect=NULL, multiple = TRUE, title=.dico[["txt_modalities_to_regroup"]])$res
               setdiff(levels(data[,Y]),reg)->reste
               data[,Y]<-ifelse(data[,Y]%in%reg, 0,1)
               data[,Y]<-factor(data[,Y])
@@ -82,9 +82,9 @@ regressions.log <-
         }
 
 
-        if(any(link==txt_additive_effects) || !is.null(X_a)| any(X_a %in% names(data)==F)) {
-          msg3<-ask_chose_dependant_variable
-          X_a<-.var.type(X=Y, info=info, data=data, type=NULL, check.prod=F, message=msg3,  multiple=TRUE, title=txt_additive_model_variables, out=Y)
+        if(any(link==.dico[["txt_additive_effects"]]) || !is.null(X_a)| any(X_a %in% names(data)==F)) {
+          msg3<-.dico[["ask_chose_dependant_variable"]]
+          X_a<-.var.type(X=Y, info=info, data=data, type=NULL, check.prod=F, message=msg3,  multiple=TRUE, title=.dico[["txt_additive_model_variables"]], out=Y)
           if(is.null(X_a)) {
             reg.log.in()->Resultats
             return(Resultats)}
@@ -93,11 +93,11 @@ regressions.log <-
 
         }else X_a<-NULL
 
-        if(any(link==txt_interaction_effects) || !is.null(X_i) & (length(X_i)<2 | any(X_i %in% names(data)==F))) {
-          msg3<-ask_chose_interaction_model_predictors
+        if(any(link==.dico[["txt_interaction_effects"]]) || !is.null(X_i) & (length(X_i)<2 | any(X_i %in% names(data)==F))) {
+          msg3<-.dico[["ask_chose_interaction_model_predictors"]]
           X_i<-c()
           while(length(X_i)<2){
-            X_i<-.var.type(X=Y, info=info, data=data, type=NULL, check.prod=F, message=msg3,  multiple=TRUE, title=txt_interactive_model_variables, out=c(X_a,Y))
+            X_i<-.var.type(X=Y, info=info, data=data, type=NULL, check.prod=F, message=msg3,  multiple=TRUE, title=.dico[["txt_interactive_model_variables"]], out=c(X_a,Y))
             if(is.null(X_i)) {
               reg.log.in()->Resultats
               return(Resultats)}
@@ -127,7 +127,7 @@ regressions.log <-
 
 
 
-      if(any(link==txt_specify_model)) modele<-fix(modele)
+      if(any(link==.dico[["txt_specify_model"]])) modele<-fix(modele)
       variables<-terms(as.formula(modele))
       variables<-as.character( attributes(variables)$variables)[-1]
       pred<-attributes(terms(as.formula(modele)))$term.labels
@@ -136,8 +136,8 @@ regressions.log <-
         if(length(pred>1)){
           pred.ord<-c()
           while(length(pred)!=0){
-            if(info)  writeLines(ask_variables_order_for_max_likelihood)
-            V1<-dlgList(pred, multiple = FALSE,title=ask_variable_at_this_point)$res
+            if(info)  writeLines(.dico[["ask_variables_order_for_max_likelihood"]])
+            V1<-dlgList(pred, multiple = FALSE,title=.dico[["ask_variable_at_this_point"]])$res
             c(pred.ord,V1)->pred.ord
             setdiff(pred,V1)->pred}
         }else pred.ord<-pred
@@ -148,7 +148,7 @@ regressions.log <-
 
       model.test<-try(model.matrix(modele, data), silent=T)
       if(any(class(model.test)=='try-error')) {
-        msgBox(desc_incorrect_model)
+        msgBox(.dico[["desc_incorrect_model"]])
         return(reg.log.in())
       }
 
@@ -162,8 +162,8 @@ regressions.log <-
       if(is.null(reg.options)) return(reg.log.in())
 
       if(dial){
-        if(info) writeLines(ask_integrate_probabilities_to_dataset)
-        dlgList(c(TRUE, FALSE), preselect=FALSE, multiple = FALSE, title=ask_probabilities)$res->proba
+        if(info) writeLines(.dico[["ask_integrate_probabilities_to_dataset"]])
+        dlgList(c(TRUE, FALSE), preselect=FALSE, multiple = FALSE, title=.dico[["ask_probabilities"]])$res->proba
 
       }
 
@@ -183,9 +183,9 @@ regressions.log <-
       variables<-terms(as.formula(modele))
       variables<-as.character( attributes(variables)$variables)[-1]
       pred<-attributes(terms(as.formula(modele)))$term.labels
-      Resultats[[txt_descriptive_statistics]]<-.stat.desc.out(X=variables, groupes=NULL, data=data, tr=.1, type=3, plot=T)
+      Resultats[[.dico[["txt_descriptive_statistics"]]]]<-.stat.desc.out(X=variables, groupes=NULL, data=data, tr=.1, type=3, plot=T)
 
-      if(scale==T || scale==txt_center) {Resultats$info<-desc_centered_data_schielzeth_recommandations
+      if(scale==T || scale==.dico[["txt_center"]]) {Resultats$info<-.dico[["desc_centered_data_schielzeth_recommandations"]]
       fun<-function(X){X-mean(X)}
       variables[-1]->pred2
       sapply(X=data[, names(which(sapply(data[,pred2],class)!="factor"))], fun)->data[,names(which(sapply(data[,pred2],class)!="factor"))]
@@ -213,10 +213,10 @@ regressions.log <-
         hier<-paste0(hier,")")
         hier<-eval(parse(text=hier))
 
-        attributes(hier)$heading[1]<-txt_hierarchical_models_deviance_table
+        attributes(hier)$heading[1]<-.dico[["txt_hierarchical_models_deviance_table"]]
         round(1-pchisq(hier$Deviance,hier$Df,lower.tail=F),4)->hier$valeur.p
-        names(hier)<-c(txt_df_residual, "Deviance.resid",txt_df_effect, txt_deviation, txt_p_dot_val)
-        Resultats[[txt_hierarchical_model_analysis]]<-hier
+        names(hier)<-c(.dico[["txt_df_residual"]], "Deviance.resid",.dico[["txt_df_effect"]], .dico[["txt_deviation"]], .dico[["txt_p_dot_val"]])
+        Resultats[[.dico[["txt_hierarchical_model_analysis"]]]]<-hier
       }
 
 
@@ -237,45 +237,45 @@ regressions.log <-
 
       summary(mod[[length(mod)]])->resultats
       as(resultats$call,"character")->texte
-      paste(desc_tested_model_is , texte[2])->Resultats[[txt_test_model]]
+      paste(.dico[["desc_tested_model_is"]] , texte[2])->Resultats[[.dico[["txt_test_model"]]]]
 
       cbind(rms::vif(mod[[length(mod)]]), 1/rms::vif(mod[[length(mod)]]))->MC
-      dimnames(MC)[[2]]<-c(txt_inflation_variance_factor, txt_tolerance)
-      round(MC,4)->Resultats[[txt_multicolinearity_test]]
+      dimnames(MC)[[2]]<-c(.dico[["txt_inflation_variance_factor"]], .dico[["txt_tolerance"]])
+      round(MC,4)->Resultats[[.dico[["txt_multicolinearity_test"]]]]
 
       sum(Amelioration_du_MV$Df[2:length(Amelioration_du_MV$Df)])->ddl
       Amelioration_du_MV$`Resid. Dev`[1]-Amelioration_du_MV$`Resid. Dev`[length(Amelioration_du_MV$`Resid. Dev`)]->chi.carre.modele
       round(1-pchisq(chi.carre.modele,ddl),4)->valeur.p
       logisticPseudoR2s(mod[[length(mod)]])->Pseudo.R.carre
       data.frame(chi.carre.modele, ddl, valeur.p,Pseudo.R.carre[1],Pseudo.R.carre[2],Pseudo.R.carre[3])->mod.glob
-      names(mod.glob)<-c(txt_chi_dot_squared_model, txt_df, txt_p_dot_val,txt_hosmer_lemeshow_r_2,txt_cox_snell_r_2,"Nagelkerke R^2")
-      mod.glob->Resultats[[txt_model_significance]]
+      names(mod.glob)<-c(.dico[["txt_chi_dot_squared_model"]], .dico[["txt_df"]], .dico[["txt_p_dot_val"]],.dico[["txt_hosmer_lemeshow_r_2"]],.dico[["txt_cox_snell_r_2"]],"Nagelkerke R^2")
+      mod.glob->Resultats[[.dico[["txt_model_significance"]]]]
 
 
       Amelioration_du_MV$chi.deux.prob<-1-pchisq(Amelioration_du_MV$Deviance, Amelioration_du_MV$Df)
       round(Amelioration_du_MV,4)->Amelioration_du_MV
-      names(Amelioration_du_MV)<-c(txt_df_predictor, "MV",txt_df_residuals,"MV residuel",txt_p_dot_val)
-      Resultats[[desc_improve_likelihood_for_each_variable]]<-data.frame(Amelioration_du_MV)
+      names(Amelioration_du_MV)<-c(.dico[["txt_df_predictor"]], "MV",.dico[["txt_df_residuals"]],"MV residuel",.dico[["txt_p_dot_val"]])
+      Resultats[[.dico[["desc_improve_likelihood_for_each_variable"]]]]<-data.frame(Amelioration_du_MV)
 
       data.frame(resultats$coefficients)->table
       (table$z.value)^2->table$Wald.statistic
       exp(table$Estimate)->table$Odd.Ratio
       round(table,4)->table
-      names(table)<-c("b",txt_error_dot_standard,txt_z_dot_val,"p.Wald", "Wald",txt_odd_ratio_dot)
+      names(table)<-c("b",.dico[["txt_error_dot_standard"]],.dico[["txt_z_dot_val"]],"p.Wald", "Wald",.dico[["txt_odd_ratio_dot"]])
       cbind(table, round(exp(confint(mod[[length(mod)]])),4))->table
-      table$interpretation<-ifelse(table$Odd.ratio>=1,paste(table$Odd.ratio, desc_times_more), paste(round(1/table$Odd.ratio,4), desc_times_less))
-      table->Resultats[[txt_coeff_table]]
+      table$interpretation<-ifelse(table$Odd.ratio>=1,paste(table$Odd.ratio, .dico[["desc_times_more"]]), paste(round(1/table$Odd.ratio,4), .dico[["desc_times_less"]]))
+      table->Resultats[[.dico[["txt_coeff_table"]]]]
 
       R_sq<-NULL
       for(i in 1:length(mod)){logisticPseudoR2s(mod[[i]])->R_squared
         rbind(R_sq, R_squared)->R_sq}
       diff(R_sq,lag=1)->R_sq[2.]
       dimnames(R_sq)[[1]]<-pred
-      dimnames(R_sq)[[2]]<-c(txt_hosmer_lemeshow_r_2,txt_cox_snell_r_2,"Nagelkerke R^2")
-      R_sq->Resultats[[txt_pseudo_r_square_delta]]
+      dimnames(R_sq)[[2]]<-c(.dico[["txt_hosmer_lemeshow_r_2"]],.dico[["txt_cox_snell_r_2"]],"Nagelkerke R^2")
+      R_sq->Resultats[[.dico[["txt_pseudo_r_square_delta"]]]]
 
       if(proba=="TRUE")	{
-        round(fitted(mod[[length(mod)]]),4)->data[[txt_predicted_probabilities]]
+        round(fitted(mod[[length(mod)]]),4)->data[[.dico[["txt_predicted_probabilities"]]]]
         head(data)
         print(nom)
         assign(x=nom, value=data, envir=.GlobalEnv)}
@@ -283,9 +283,9 @@ regressions.log <-
       if(select.m!="none"){
         #select.m<-switch(select.m,txt_forward_step_ascending="forward", txt_backward_step_descending="backward", txt_bidirectionnal="both",
         #                 "forward"="forward", "bidirectional"="both","backward"="backward" )
-        if (select.m==txt_forward_step_ascending) "forward" -> select.m
-        else if (select.m==txt_backward_step_descending) "backward" -> select.m
-	else if (select.m==txt_bidirectionnal) "both" -> select.m
+        if (select.m==.dico[["txt_forward_step_ascending"]]) "forward" -> select.m
+        else if (select.m==.dico[["txt_backward_step_descending"]]) "backward" -> select.m
+	else if (select.m==.dico[["txt_bidirectionnal"]]) "both" -> select.m
         else if (select.m=="forward") "forward" -> select.m
 	else if (select.m=="bidirectional") "both" -> select.m
 	else if (select.m=="backward") "backward" -> select.m
@@ -299,7 +299,7 @@ regressions.log <-
     lower = glm.0)) }else{
         steps<-stepAIC(glm.r1, direction=select.m)
         }
-        Resultats[[txt_selection_method_akaike]]<-steps$anova
+        Resultats[[.dico[["txt_selection_method_akaike"]]]]<-steps$anova
        # modele<-as.formula(attributes(steps$anova)$heading[5])
       }
 
@@ -332,10 +332,10 @@ regressions.log <-
     group<-reg.in.output$reg.options$group
     proba<-reg.in.output$proba
 
-    if(!is.null(reg.in.output$reg.options$CV) && reg.in.output$reg.options$CV==TRUE) print(desc_cross_validation_is_not_yet_supported)
+    if(!is.null(reg.in.output$reg.options$CV) && reg.in.output$reg.options$CV==TRUE) print(.dico[["desc_cross_validation_is_not_yet_supported"]])
 
-    if(any(outlier==  txt_complete_dataset)){
-      Resultats[[txt_complete_dataset]]<-  reg.log.out(data=data, modele=modele,  select.m=select.m, step=step, scale=scale, proba=proba, nom=nom)
+    if(any(outlier==  .dico[["txt_complete_dataset"]])){
+      Resultats[[.dico[["txt_complete_dataset"]]]]<-  reg.log.out(data=data, modele=modele,  select.m=select.m, step=step, scale=scale, proba=proba, nom=nom)
       if(!is.null(group))   {
         R1<-list()
         G<-data[,group]
@@ -343,14 +343,14 @@ regressions.log <-
         G<-split(data, G)
         for(i in 1:length(G)){
           resg<-  try(reg.log.out(data=G[[i]], modele=modele,  select.m=select.m, step=step, scale=scale,proba=proba), silent=T)
-          if(class(resg)=='try-error')   R1[[length(R1)+1]]<-desc_insufficient_obs else R1[[length(R1)+1]]<-resg
+          if(class(resg)=='try-error')   R1[[length(R1)+1]]<-.dico[["desc_insufficient_obs"]] else R1[[length(R1)+1]]<-resg
           names(R1)[length(R1)]<-names(G)[i]
         }
-        Resultats[[txt_complete_dataset]][[txt_group_analysis]]<-R1
+        Resultats[[.dico[["txt_complete_dataset"]]]][[.dico[["txt_group_analysis"]]]]<-R1
       }
 
     }
-    if(any(outlier==txt_identifying_outliers)|any(outlier==txt_without_outliers)|inf==T){
+    if(any(outlier==.dico[["txt_identifying_outliers"]])|any(outlier==.dico[["txt_without_outliers"]])|inf==T){
 
       lm.r1<-glm(modele, data, na.action=na.exclude ,family="binomial")
       as.character(attributes(terms(modele))$variables)->variables
@@ -367,23 +367,23 @@ regressions.log <-
         data[which(apply(mesure_influence$is.inf, 1, any)),"est.inf"]<-"*"
 
         data[order(data$res.student.p.Bonf), ]->data
-        writeLines(desc_obs_with_asterisk_are_outliers)
+        writeLines(.dico[["desc_obs_with_asterisk_are_outliers"]])
         View(data)
         suppression<-"yes"
         outliers<-data.frame()
         nettoyees<-data
         while(suppression=="yes"){
 
-          cat (ask_press_enter_to_continue)
+          cat (.dico[["ask_press_enter_to_continue"]])
           line <- readline()
           sup<-NA
           while(is.na(sup)){
-            sup <- dlgInput(ask_obs_to_remove, 0)$res
+            sup <- dlgInput(.dico[["ask_obs_to_remove"]], 0)$res
             if(length(sup)==0) return(regressions())
             strsplit(sup, ":")->sup
             tail(sup[[1]],n=1)->sup
             as.numeric(sup)->sup
-            if(is.na(sup)) msgBox(desc_you_must_give_obs_number)
+            if(is.na(sup)) msgBox(.dico[["desc_you_must_give_obs_number"]])
           }
           if(sup==0) suppression<-"no" else {
             rbind(outliers, nettoyees[sup,])->outliers
@@ -399,22 +399,22 @@ regressions.log <-
         data[which(data$cook.d<= seuil_cook), ]->nettoyees
         data[which(data$cook.d>= seuil_cook), ]->outliers
         cbind(outliers[,variables],outliers$cook.d)->outliers
-        Resultats$"information"[[desc_outliers_identified_on_4_div_n]]
+        Resultats$"information"[[.dico[["desc_outliers_identified_on_4_div_n"]]]]
       }
       nettoyees->>nettoyees
 
-      if(any(outlier== txt_identifying_outliers)){
+      if(any(outlier== .dico[["txt_identifying_outliers"]])){
         length(data[,1])-length(nettoyees[,1])->N_retire # identifier le nombre d observations retirees sur la base de la distance de cook
         paste(N_retire/length(data[,1])*100,"%")->Pourcentage_retire # fournit le pourcentage retire
-        data.frame("N.retirees"=N_retire, txt_percentage_removed_obs=Pourcentage_retire)->Resultats[[txt_identified_outliers_synthesis]]
-        if(length(outliers)!=0) Resultats[[txt_identifying_outliers]][[desc_identified_outliers]]<-outliers
+        data.frame("N.retirees"=N_retire, txt_percentage_removed_obs=Pourcentage_retire)->Resultats[[.dico[["txt_identified_outliers_synthesis"]]]]
+        if(length(outliers)!=0) Resultats[[.dico[["txt_identifying_outliers"]]]][[.dico[["desc_identified_outliers"]]]]<-outliers
 
       }
-      if(any(outlier== txt_without_outliers)) {
-        if(N_retire!=0 | all(outlier!=txt_complete_dataset)){
-          so<- try(reg.log.out(data=nettoyees,modele=modele,  select.m=select.m, step=step, scale=scale,proba=proba, nom=paste0(nom,txt_dot_cleaned)),silent=T)
-          if(class(so)=='try-error') Resultats[[txt_without_outliers]]<-desc_removing_outliers_weakens_sample_size else{
-            Resultats[[txt_without_outliers]]<-so
+      if(any(outlier== .dico[["txt_without_outliers"]])) {
+        if(N_retire!=0 | all(outlier!=.dico[["txt_complete_dataset"]])){
+          so<- try(reg.log.out(data=nettoyees,modele=modele,  select.m=select.m, step=step, scale=scale,proba=proba, nom=paste0(nom,.dico[["txt_dot_cleaned"]])),silent=T)
+          if(class(so)=='try-error') Resultats[[.dico[["txt_without_outliers"]]]]<-.dico[["desc_removing_outliers_weakens_sample_size"]] else{
+            Resultats[[.dico[["txt_without_outliers"]]]]<-so
 
             if(!is.null(group))   {
               R1<-list()
@@ -424,10 +424,10 @@ regressions.log <-
               for(i in 1:length(G)){
                 resg<- try( reg.log.out(data=G[[i]], modele=modele,  VC=VC, select.m=select.m, method=method, step=step, group=group,  scale=scale,proba=proba), silent=T)
 
-                if(class(resg)=='try-error')   R1[[length(R1)+1]]<-desc_insufficient_obs else R1[[length(R1)+1]]<-resg
+                if(class(resg)=='try-error')   R1[[length(R1)+1]]<-.dico[["desc_insufficient_obs"]] else R1[[length(R1)+1]]<-resg
                 names(R1)[length(R1)]<-names(G)[i]
               }
-              Resultats[[txt_without_outliers]][[txt_group_analysis]]<-R1
+              Resultats[[.dico[["txt_without_outliers"]]]][[.dico[["txt_group_analysis"]]]]<-R1
             }
           }
 
@@ -454,9 +454,9 @@ regressions.log <-
 
 
     .add.history(data=data, command=Resultats$Call, nom=nom)
-    .add.result(Resultats=Resultats, name =paste(txt_log_regression_dot, Sys.time() ))
-    if(sauvegarde)   if(sauvegarde) save(Resultats=Resultats, choix=txt_log_regression_dot, env=.e)
-    Resultats[[txt_references]]<-ref1(packages)
+    .add.result(Resultats=Resultats, name =paste(.dico[["txt_log_regression_dot"]], Sys.time() ))
+    if(sauvegarde)   if(sauvegarde) save(Resultats=Resultats, choix=.dico[["txt_log_regression_dot"]], env=.e)
+    Resultats[[.dico[["txt_references"]]]]<-ref1(packages)
     if(html) try(ez.html(Resultats), silent=T)
     return(Resultats)
 

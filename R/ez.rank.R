@@ -17,14 +17,14 @@ ez.rank <-
       data[[1]]->nom1
       data[[2]]->data}
     if(!is.null(X)) dial<-FALSE else dial<-TRUE
-    msg.pre1<-ask_specify_variables_for_ranks
-    .var.type(X=X, info=T, data=data, type="numeric", message=msg.pre1,multiple=T, title=txt_variables)->X1
+    msg.pre1<-.dico[["ask_specify_variables_for_ranks"]]
+    .var.type(X=X, info=T, data=data, type="numeric", message=msg.pre1,multiple=T, title=.dico[["txt_variables"]])->X1
     if(is.null(X1)) return(preprocess())
     if(!is.null(X) && X1$X!=X) dial<-TRUE
     X1$X->X
     if(dial){
-      if(info) writeLines(ask_how_to_treat_exaequo_rank)
-      ties.method<-dlgList(c("average", "first", "last", "random", "max", "min"), multiple = F, preselect="average", title=ask_specify_sample)$res
+      if(info) writeLines(.dico[["ask_how_to_treat_exaequo_rank"]])
+      ties.method<-dlgList(c("average", "first", "last", "random", "max", "min"), multiple = F, preselect="average", title=.dico[["ask_specify_sample"]])$res
     }
     if(length(X)==1) rangs<-rank(data[,X],ties.method=ties.method, na.last="keep" ) else sapply(data[,X], rank, ties.method=ties.method, na.last="keep")->rangs
     if(length(X)==1) data.frame(rangs)->rangs

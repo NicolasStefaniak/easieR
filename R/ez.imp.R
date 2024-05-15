@@ -19,32 +19,32 @@ ez.imp <-
     deparse(substitute(data))->nom  }
     nom<-paste0(nom,".complet")
 
-    if(dial || imp%in% c(txt_do_nothing_keep_all_obs, txt_delete_observations_with_missing_values, txt_replace_by_mean,
-                         txt_replace_by_median,txt_multiple_imputation_amelia,"rien","rm", "mean","median", "amelia") == FALSE){
-      writeLines(ask_missing_value_treatment)
+    if(dial || imp%in% c(.dico[["txt_do_nothing_keep_all_obs"]], .dico[["txt_delete_observations_with_missing_values"]], .dico[["txt_replace_by_mean"]],
+                         .dico[["txt_replace_by_median"]],.dico[["txt_multiple_imputation_amelia"]],"rien","rm", "mean","median", "amelia") == FALSE){
+      writeLines(.dico[["ask_missing_value_treatment"]])
       print(sapply(data, function(x) sum(length(which(is.na(x))))) )
 
-      imp<- dlgList(c(txt_do_nothing_keep_all_obs, txt_delete_observations_with_missing_values, txt_replace_by_mean,
-                      txt_replace_by_median,txt_multiple_imputation_amelia), preselect=FALSE, multiple = FALSE, title=txt_missing_values_treatment)$res
+      imp<- dlgList(c(.dico[["txt_do_nothing_keep_all_obs"]], .dico[["txt_delete_observations_with_missing_values"]], .dico[["txt_replace_by_mean"]],
+                      .dico[["txt_replace_by_median"]],.dico[["txt_multiple_imputation_amelia"]]), preselect=FALSE, multiple = FALSE, title=.dico[["txt_missing_values_treatment"]])$res
       if(length(imp)==0){
         return(NULL)
       }
     }
     if(length(imp)==0) return(NULL)
-    if(imp == txt_do_nothing_keep_all_obs || imp=="rien") return(data)
-    if(imp== txt_delete_observations_with_missing_values|| imp=="rm"){
+    if(imp == .dico[["txt_do_nothing_keep_all_obs"]] || imp=="rien") return(data)
+    if(imp== .dico[["txt_delete_observations_with_missing_values"]]|| imp=="rm"){
       data<-data[complete.cases(data),]
       if(dial)  assign(nom, data, envir=.GlobalEnv)
     }
-    if(imp==txt_replace_by_mean|| imp=="mean"){
+    if(imp==.dico[["txt_replace_by_mean"]]|| imp=="mean"){
       for(i in 1 : length(data)) {data[which(is.na(data[,i])),i]<-mean(data[,i], na.rm=T)}
       if(dial)  assign(nom, data, envir=.GlobalEnv)
     }
-    if(imp== txt_replace_by_median|| imp=="median"){
+    if(imp== .dico[["txt_replace_by_median"]]|| imp=="median"){
       for(i in 1 : length(data)) {data[which(is.na(data[,i])),i]<-median(data[,i], na.rm=T)}
       if(dial)  assign(nom, data, envir=.GlobalEnv)
     }
-    if(imp== txt_multiple_imputation_amelia|| imp=="amelia"){
+    if(imp== .dico[["txt_multiple_imputation_amelia"]]|| imp=="amelia"){
       amelia(x=data, m = 1, p2s = 0,frontend = FALSE, idvars = id,
              ts = NULL, cs = NULL, polytime = NULL, splinetime = NULL, intercs = FALSE,
              lags = NULL, leads = NULL, startvals = 0, tolerance = 0.0001,

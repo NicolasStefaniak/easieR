@@ -1,1134 +1,1132 @@
 load_fr_FR <- function() {
-  require(rlang)
-  env_bind(current_env(), ask_2x2_table ="tableau 2x2 ?")
-  ask_2x2_table <<- "tableau 2x2 ?"
-  ask_2x2_table_value <<- "Veuillez preciser la valeur pour les tableaux 2x2"
-  ask_add_a_value_to_empty_cells <<- "Faut-il ajouter une valeur aux cellules vides pour les correlations polychorique ? Pour specifier les valeurs,choisissez TRUE, sinon choisissez [default]"
-  ask_add_value_to_total <<- "voulez-vous encore ajouter une valeur au total ?"
-  ask_analysis_by_group <<- "Analyse par groupe?"
-  ask_analysis_on_complete_data_or_remove_outliers <<- "Desirez-vous l'analyse sur les donnees completes ou sur les donnees pour lesquelles les valeurs influentes ont ete enlevees ?"
-  ask_analysis_type <<- "Quelle analyse voulez-vous realiser?"
-  ask_are_frequences_free_parameters <<- "est-ce que les frequences des differents group est un parametre libre ? "
-  ask_are_there_inversed_items <<- "Y a-t-il des items inverses ?"
-  ask_are_you_ready <<- "etes-vous pret?"
-  ask_baseline <<- "Quelle est la ligne de base?"
-  ask_bigger_tables_value <<- "Veuillez preciser la valeur pour les tableaux plus grand que 2x2"
-  ask_bootstrap_number_min_500 <<- "veuillez preciser le nombre de bootstrap. Un minimum de 500 est idealement requis. Peut prendre du temps pour N>1000"
-  ask_bootstrap_numbers_1_for_none <<- "Veuillez preciser le nombre de bootstrap. Pour ne pas avoir de bootstrap, choisir 1"
-  ask_bootstraps_number <<- "Nombre de bootstrap ?"
-  ask_cancel_entered_value_not_num <<- "la valeur que vous avez entree n'est pas numerique.Voulez-vous annuler cette analyse ?"
-  ask_cauchy_apriori_distribution <<- "Veuillez preciser la distribution a priori de Cauchy"
-  ask_center <<- "Centrer?"
-  ask_center_numeric_variables <<- "Voulez-vous centrer les variables numeriques ? Centrer est generalement conseille (e.g., Schielzeth, 2010)."
-  ask_chi_squared_type <<- "Veuillez preciser le type de chi carre que vous souhaitez realiser."
-  ask_choose_a_variable_with_at_least_two_modalities <<- "Une variable categorielle doit avoir au moins 2 modalites differentes. Veuillez choisir une variable avec au moins deux modalites"
-  ask_chose_analysis <<- "Veuillez choisir l'analyse que vous desirez realiser."
-  ask_chose_categorial_ranking_factor <<- "Veuillez choisissez le facteur de classement categoriel."
-  ask_chose_cols_corresponding_to_repeated_measures <<- "Veuillez choisir l'ensemble des colonnes correspondant aux modalites des variables en mesures repetees"
-  ask_chose_covariables <<- "Veuillez choisir la ou les covariables"
-  ask_chose_database <<- "Veuillez choisir la base de donnees"
-  ask_chose_defining_groups <<- "Veuillez choisir la definissant les groupes"
-  ask_chose_dependant_variable <<- "Veuillez choisir la variable dependante."
-  ask_chose_first_judge <<- "Veuillez choisir le premier juge"
-  ask_chose_independant_group_variables <<- "Veuillez choisir les variable-s a groupes independants"
-  ask_chose_interaction_model_predictors <<- "Veuillez choisir les predicteurs a entrer dans le modele d'interaction. Il est necessaire d'avoir au moins deux variables"
-  ask_chose_manifest_variables_at_least_three <<- "Veuillez choisir les variables manifestes que vous desirez analyser. Vous devez choisir au moins 3 variables"
-  ask_chose_ranking_categorial_factor <<- "Veuillez choisir le facteur de classement categoriel."
-  ask_chose_rotation <<- "Veuillez choisir le type de rotation. Oblimin est adapte en sciences humaines"
-  ask_chose_sample_variables <<- "Veuillez choisir la ou les variables definissant les effectifs"
-  ask_chose_second_judge <<- "Veuilez choisir le second juge"
-  ask_chose_selection_method <<- "Veuillez choisir la methode de selection que vous souhaitez utiliser"
-  ask_chose_the_working_dir <<- "Veuillez choisir le repertoire de travail"
-  ask_chose_variables_at_least_five <<- "Veuillez choisir les variables que vous desirez analyser. Vous devez choisir au moins 5 variables"
-  ask_chose_variables_at_least_three <<- "Veuillez choisir les variables que vous desirez analyser. Vous devez choisir au moins 3 variables"
-  ask_chose_variable <<- "Veuillez choisir les variables que vous desirez analyser."
-  ask_chose_variable_x_axis <<- "Veuillez choisir la variable en abcisse"
-  ask_chose_variable_y_axis <<- "Veuillez choisir la variable en ordonnee"
-  ask_coding_criterion <<- "Quel critere de codage voulez-vous ?"
-  ask_col_separation_index <<- "Lors de l'enregistrement de votre fichier, quel est l'indice de separation des colonnes ?"
-  ask_complete_or_outliers <<- "Voulez-vous realiser les analyses sur les donnees completes ou sur les donnees sans les valeurs influentes ?"
-  ask_constant_parameters <<- "Parametres constants ?"
-  ask_continue <<- "Continuer ?"
-  ask_contrast_must_respect_ortho <<- "Les contrastes doivent respecter l orthogonalite. Voulez-vous continuer ?"
-  ask_control_variables <<- "Veuillez preciser la ou les variables a controler"
-  ask_convert_dependant_variable_to_dichotomic <<- "voulez-vous convertir la variable dependante en une variable dichotomique, ?"
-  ask_correction_desired <<- "Veuillez preciser le type de correction de la probabilite que vous desirez realiser"
-  ask_correction_type <<- "Type de correction ?"
-  ask_correlated_or_orthogonal_factors <<- "Est-ce que les facteurs sont correles (FALSE) ou sont-ils orthogonaux (TRUE)?"
-  ask_correlation_matrix_could_not_be_computed <<- "La matrice de correlation n'a pu etre realisee. Voulez-vous reessayer ?"
-  ask_correlation_type <<- "Veuillez choisir le type de correlations que vous desirez realiser. Pour les variables dichotomiques, les correlations seront des correlations tetrachoriques"
-  ask_corr_or_partial_correlations <<- "Correlations ou correlations partielles?"
-  ask_could_not_converge_model_verify_correlation_matrix <<- "Nous n'avons pas reussi a faire converger le modele. Veuillez verifier votre matrice de correlations et reessayer avec d'autres parametres"
-  ask_could_not_finish_analysis_respecify_parameters <<- "Nous n'avons pas pu terminer correctement l'analyse. Veuillez tenter de respecifier les parametres"
-  ask_covariables <<- "Covariable-s ?"
-  ask_criterion_for_dichotomy <<- "Veuillez specifier le critere sur lequel vous souhaitez dichotomiser votre variable.Vous pouvez utiliser la mediane ou choisir un seuil specifique."
-  ask_criterion_for_obs_to_keep <<- "Veuillez specifier les criteres des observations que vous desirez conserver/garder."
-  ask_criterion_for_variable <<- "Quel critere voulez-vous utiliser pour la variable"
-  ask_data <<- "Donnees ?"
-  ask_data_format <<- "Quel est le format de vos donnees?"
-  ask_decimal_symbol <<- "Si certaines donnees contiennent des decimales, quel est le symbole indiquant la decimale ?"
-  ask_denominator_variable_or_value <<- "Le denominateur est-il une variable ou une valeur ? "
-  ask_denominator_variable <<- "Veuillez selectionner la variable au denominateur "
-  ask_dependant_variable_with_less_than_three_val_verify_dataset <<- "La variable dependante a moins de trois valeurs differentes. Verifiez vos donnees ou l'analyse que vous tentez de realiser n'est pas pertinente."
-  ask_did_not_specify_nb_factors_repeated_measure_exit <<- "Vous n avez pas precise le nombre de facteurs en mesure repetee, voulez-vous quitte ?"
-  ask_distribution <<- "Distribution ?"
-  ask_distribution_type <<- "Quelle distribution voulez-vous ?"
-  ask_empty_cells <<- "Cellules vides ?"
-  ask_enter_different_values <<- "Veuillez entrer les differentes valeurs"
-  ask_enter_number_of_to_be_removed_variable <<- "Vous devez entrer le numero permettant de savoir quelle observation doit etre supprimee."
-  ask_exit_because_of_alpha_on_non_matrix <<- "Vous essayez de faire un alpha sur autre chose qu'un matrice. Voulez-vous sortir de cette analyse?"
-  ask_exit_no_lower_bound_specified <<- "Vous n'avez pas precise la limite inferieure. Voulez-vous quitter la selection ?"
-  ask_exit_no_upper_bound_specified <<- "Vous n'avez pas precise la limite superieure. Voulez-vous quitter la selection ?"
-  ask_exportation_filename <<- "Quel nom voulez-vous attribuer au fichier ?"
-  ask_factorial_scores <<- "Scores factoriels?"
-  ask_factors_number_for_hierarchical_structure <<- "Veuillez preciser le nombre de facteurs de la structure hierarchique."
-  ask_factors_ortho <<- "Orthogonalite des facteurs ?"
-  ask_factors_superior_level <<- "Nombre de facteurs du niveau superieur ?"
-  ask_family <<- "Veuillez preciser la famille (i.e. forme de la distribution)."
-  ask_file_format <<- "Format du fichier?"
-  ask_file_format_to_import <<- "Dans quel format est enregistre votre fichier ?"
-  ask_first_categorical_set <<- "Veuillez choisir le premier set de facteur(s) categoriel(s)"
-  ask_first_variables_set <<- "Veuillez choisir le premier jeu de variables"
-  ask_fixed_covariables <<- "Covariables fixees ?"
-  ask_freq_constance <<- "Constance de la frequence ?"
-  ask_f_value <<- "Quelle valeur du F voulez-vous utiliser ?"
-  ask_group_variable <<- "Variable [groupes] ?"
-  ask_headers_in_database <<- "Est-ce que le nom des variables est sur la premiere ligne de votre base de donnees ? Choisir TRUE si c'est le cas"
-  ask_hierarchical_analysis <<- "Faut-il realiser une analyse hierarchique ?"
-  ask_how_many_modalities <<- "Combien de modalites"
-  ask_how_standard_error_must_be_estimated <<- "Comment l'erreur standard doit-elle etre estimee ?"
-  ask_how_to_remove <<- "Comment voulez-vous les supprimer?"
-  ask_how_to_treat_missing_values <<- "Des valeurs manquantes ont ete detectees. Comment voulez-vous les traiter ? Garder l'ensemble des observations peut biaiser les resultats."
-  ask_id_variable <<- "Veuillez choisir la variable identifiant les participants"
-  ask_imitate <<- "Imiter ?"
-  ask_independant_variable <<- "Veuillez choisir la variable independante."
-  ask_information_matrix <<- "Matrice d'information ?"
-  ask_integrate_factorial_scores_in_data <<- "Voulez-vous que les scores factoriels soient integres a vos donnees ?"
-  ask_inversed_items <<- "items inverses?"
-  ask_is_model_correct <<- "Est-ce que votre modele est correct ?"
-  ask_latent_variables_number <<- "Veuillez preciser le nombre de variables latentes"
-  ask_level <<- "Veuillez choisir le niveau"
-  ask_likelihood <<- "Vraisemblance ?"
-  ask_linebase_modalities <<- "Veuillez specifier la/les modalite(s) qui serviront pour la ligne de base (e.g. 0). Les autres modalites seront regroupes dans la categorie 1."
-  ask_log_base <<- "Veuillez preciser la base du logarithme.Pour obtenir e, tapez e"
-  ask_lower_bound <<- "Limite inferieure?"
-  ask_mcnemar_repeated_measure <<- "Test de McNemar : les modalites ne sont pas les memes pour le test de McNemar. Est-ce bien un facteur en mesure repetee ?"
-  ask_mediation_type <<- "Quel type de mediation ?"
-  ask_mediator <<- "veuillez choisir le mediateur"
-  ask_minus_left_hand_variables <<- "Veuillez selectionner la -les- variable(s) a gauche du symbole *moins*"
-  ask_minus_right_hand_variables <<- "Veuillez selectionner la -les- variable(s) a droite du symbole *moins*."
-  ask_minus_right_operand_variable_or_value <<- "Les valeurs a droite du symbole *moins* sont-elles une/des variable(s) ou une valeur ? "
-  ask_missing_values_detected_what_to_do <<- "Des valeurs manquantes ont ete detectees. Comment voulez-vous les traiter ?"
-  ask_missing_values_treatment <<- "Traitement des valeurs manquantes ?"
-  ask_missing_values_value_na_on_empty <<- "Si certaines donnees sont manquantes, comment sont-elles definies ? Vous pouvez laisser NA si les cellules sont vides"
-  ask_missing_value_treatment <<- "Nombre de valeurs manquantes par variable. Comment voulez-vous les traiter ?"
-  ask_modalities_for_variable <<- "Quelles modalites voulez-vous selectionner pour la variable"
-  ask_modalities_to_keep <<- "Veuillez selectionner les modalites que vous desirez conserver."
-  ask_name_for_dataset <<- "Quel nom voulez-vous donner aux donnees ?"
-  ask_name_to_attribute_to <<- "Quel nom voulez-vous attribuer a"
-  ask_nb_factors_repeated_measure <<- "Combien de facteurs en mesure repetee ?"
-  ask_new_variable_name <<- "Quel nom voulez-vous attribuer a la nouvelle variable ? "
-  ask_norm_value <<- "Quelle est la valeur de la norme ?"
-  ask_not_enough_obs_verify_dataset <<- "Il n'y a pas assez d'observations pour realiser l'analyse. Veuillez verifier vos donnees net vous assurer qu'il y a au moins trois observations par modalite de chaque facteur"
-  ask_null_hypothesis_tests_or_bayesian_factors <<- "Voulez-vous les tests d'hypothees nuls ou/et les facteurs bayesiens ?"
-  ask_numerator_variable_or_value<<- "Le numerateur est-il une variable ou une valeur ? "
-  ask_numerator_variable <<- "Veuillez selectionner la variable au numerateur "
-  ask_obs_to_remove <<- "Quelle observation souhaitez-vous retirer des analyses ? 0=aucune"
-  ask_other_options <<- "Autres options?"
-  ask_ponderate_analysis_by_a_sample_var <<- "Faut-il ponderer l'analyse par une variable effectif ?"
-  ask_positive_val_variable_or_value <<- "Les valeurs positives sont-elles une/des variable(s) ou une valeur ? "
-  ask_predictor <<- "veuillez preciser le predicteur"
-  ask_press_enter_to_continue <<- "Appuyez [entree] pour continuer"
-  ask_probabilities_for_modalities <<- "Veuillez entrer les probabilites correspondant a chaque modalite de la variable."
-  ask_probabilities <<- "Probabilites ?"
-  ask_probability_value <<- "Quelle valeur de la probabilite voulez-vous utiliser ?"
-  ask_redefine_analysis_because_modalities_product_is_superior_to_obs <<- "Le produit des modalites des variables definissant les groupes est superieur au nombre de vos observations. Il faut au moins une observation par combinaison de modalites de vos variables. Veuillez redefinir votre analyse"
-  ask_regroup_modalities <<- "Voulez-vous faire des regroupements entre les modalites ?"
-  ask_rename_variables_with_special_char <<- "Certaines noms de variables contiennent des caracteres speciaux pouvant creer des bugs. Voulez-vous renommer ces variables ?"
-  ask_results_desired <<- "Quels resultats voulez-vous obtenir ?"
-  ask_results_output <<- "Sorties de resultats ?"
-  ask_sampling_type <<- "Quel type d'echantillonnage avez-vous realise pour votre analyse ?"
-  ask_save_results_in_external_file <<- "Desirez-vous sauvegarder les resultats dans un fichier externe ?"
-  ask_second_categorical_set <<- "Veuillez choisir le second set de facteur(s) categoriel(s)"
-  ask_second_mediator <<- "veuillez preciser le second mediateur."
-  ask_second_variables_set <<- "Veuillez choisir le second jeu de variables"
-  ask_selection_method <<- "Quel methode faut-il appliquer pour la methode de selection ?"
-  ask_select_variables_or_modalities_of_repeated_measure_variable <<- "Veuillez selectionner les variables OU les modalites de la (des) variables a mesure(s) repetee(s)."
-  ask_separation_value <<- "Veuillez preciser la valeur de separation"
-  ask_shorten_long_variables_names <<- "Certaines variables ont des noms particulierement longs pouvant gener la lecture. Voulez-vous les raccourcir?"
-  ask_should_intercept_of_latent_variable_be_fixed_to_zero <<- "Est-ce que l'intercept des variables latentes doit etre fixe a 0 ?"
-  ask_should_intercept_of_obs_variables_be_fixed_to_zero <<- "Faut-il fixer l'intercept des variables observees a 0 ?"
-  ask_simple_or_partial_corr <<- "Correlations simples ou partielles?"
-  ask_specify_all_parameters_or_imitate_specific_software <<- "Voulez-vous specifier tous les parametres [default] ou imiter un logiciel particulier ?"
-  ask_specify_datasheet_to_import <<- "Veuillez specifier la feuille de calcul que vous souhaitez importer"
-  ask_specify_groups <<- "Specifier groupes ?"
-  ask_specify_inverted_item <<- "Veuillez preciser les items inverses"
-  ask_specify_likelihood <<- "Veuillez preciser la vraisemblance."
-  ask_specify_norm_value <<- "Veuillez specifier la valeur de la norme"
-  ask_specify_other_options <<- "Specifier les autres options?"
-  ask_specify_sample <<- "Specifier effectifs ?"
-  ask_specify_sample_variable <<- "Specifier la vriable effectifs ?"
-  ask_specify_variables_for_ranks <<- "Veuillez preciser les variables dont vous souhaiter faire les rangs"
-  ask_specify_variables_type <<- "Veuillez preciser le(s) type(s) de variable(s) que vous souhaitez inclure dans l'analyse.nVous pouvez en choisir plusieurs (e.g., pour anova mixte ou des ancova"
-  ask_standard_error <<- "Erreur standard ?"
-  ask_standardization <<- "Standardisation ?"
-  ask_standardization_vl <<- "Standardisation VL?"
-  ask_standardize_obs_variables_before <<- "Faut-il standardise (i.e. centrer reduire) les variables observees au prelable (TRUE) ou non (FALSE) ?"
-  ask_statistical_approach <<- "Approche statistique ?"
-  ask_subgroups <<- "Vous pouvez decomposer les statistiques descriptives par sous-groupe en choisissant une ou plusieurs variables categorielles. Voulez-vous specifier les sous-groupes ?"
-  ask_sufficient_matrix_for_afe <<- "La matrice est-elle satisfaisante pour une AFE ?"
-  ask_suppress_this_obs <<- "Voulez-vous supprimer cette observation ?"
-  ask_test_hierarchical_structure <<- " Desirez-vous tester une structure hierarchique ? L'omega teste une structure hierarchique et une AFE hierarchique seront realisees."
-  ask_time1 <<- "Veuillez choisir le temps 1."
-  ask_time2 <<- "Veuillez choisir le temps 2."
-  ask_transform_numerical_to_categorial_variables <<- "Vous devez utiliser des variables categorielles. Voulez-vous transformer les variables numeriques en variables categorielles ?"
-  ask_troncature_threshold <<- "Veuillez fixer le seuil de la troncature"
-  ask_t_test_type <<- "Veuillez preciser le type de test t que vous souhaitez realiser."
-  ask_type_correlation <<- "Veuillez preciser le type de correlation que vous souhaitez realiser."
-  ask_upper_bound <<- "Limite superieure?"
-  ask_value_for_missing_values <<- "Par quelle valeur sont definies les valeurs manquantes ?"
-  ask_value_for_operation <<- "Veuillez specifier la valeur pour realiser votre operation mathematique."
-  ask_value_for_selected_obs <<- "Veuillez preciser la valeur sur laquelle les observations doivent etre selectionnees."
-  ask_value <<- "Precisez la valeur?"
-  ask_variabels_for_polyc_tetra_mixt_corr <<- "Veuillez choisir les variables dont il faut realiser les correlations polychorique/tetrachorique/mixte."
-  ask_variable_at_this_point <<- "Quelle variable a cette etape"
-  ask_variable_name <<- "Nom de la nouvelle variable ?"
-  ask_variables_for_description_statistics <<- "veuillez choisir les variables pour lesquelles vous desirez obtenir les statistiques descriptives"
-  ask_variables_groups <<- "Variable(s) groupes ?"
-  ask_variables_names <<- "Nom de variables?"
-  ask_variables_to_abs <<- "Veuillez selectionner les variables dont il faut faire la valeur absolue "
-  ask_variables_to_add <<- "Veuillez selectionner les variables a additionner."
-  ask_variables_to_exp <<- "Veuillez selectionner les variables auxquelles s'applique l'exposant "
-  ask_variables_to_log <<- "Veuillez selectionner les variables dont il faut faire le logarithme "
-  ask_variables_to_mean <<- "Veuillez selectionner les variables a moyenner "
-  ask_variables_to_multiply <<- "Veuillez selectionner les variables a multiplier. "
-  ask_variables_to_order <<- "Veuillez selectionner la (les) variable(s) a trier"
-  ask_variables_type_correlations <<- "Veuillez preciser le type de variables. Des correlations tetra/polychoriques seront realisees sur les variables dichotomiques/ordinales et Bravais-Pearson sur les variables continues"
-  ask_variables_types_correlations <<- "Veuillez preciser le type de variables. Des correlations tetra/polychoriques seront realisees sur les variables ordinales et Bravais-Pearson sur les variables continues"
-  ask_variables_used_for_exponential <<- "Veuillez selectionner les variables servant a l'exponentiel "
-  ask_variables_used_for_groups <<- "Veuillez choisir la ou les variables definissant les groupes"
-  ask_variable <<- "Variable a analyser ?"
-  ask_wanted_model <<- "Veuillez choisir le modele que vous desirez analyser avec aov.plus"
-  ask_what_do_you_want <<- "Que voulez-vous ?"
-  ask_what_is_your_choice <<- "Quel est votre choix ?"
-  ask_what_to_print <<- "Que voulez-vous afficher ?"
-  ask_which_algorithm <<- "Quel algorithme desirez-vous?"
-  ask_which_analysis_you_looking_for <<- "Quelle analyse recherchez vous ?"
-  ask_which_baseline <<- "Quelle est la ligne de base ?"
-  ask_which_constant_parameters <<- "Quels sont les parametres que vous desirez maintenir constants ?"
-  ask_which_contrasts_for_variable <<- "Quels contrastes pour la variable"
-  ask_which_contrasts <<- "Quel types de contraste voulez-vous ?"
-  ask_which_correction <<- "Quelle correction de la probabilite voulez-vous appliquer ? Pour ne pas appliquer de correction, choisir +none+"
-  ask_which_data_to_analyse <<- "Quelles donnees voulez-vous analyser?"
-  ask_which_data_to_export <<- "Quelles donnees voulez-vous exporter ?"
-  ask_which_estimator <<- "Quelles estimateur ?"
-  ask_which_factors_combination_for_adjust_means <<- "Pour quelle combinaison de facteurs desirez-vous afficher les moyennes ajustees ?"
-  ask_which_information_matrix_for_standard_error_estimation <<- "Sur quelle matrice d'information doit se realiser l'estimation des erreurs standards ?"
-  ask_which_mathematical_operation <<- "Veuillez choisir l'operation mathematique que vous desirez realiser "
-  ask_which_operation <<- "Quelle operation voulez-vous?"
-  ask_which_options <<- "Quelles options ?"
-  ask_which_options_to_specify <<- "Quelles options voulez-vous specifier ?"
-  ask_which_output <<- "Quel format souhaitez-vous ?"
-  ask_which_output_results <<- "Quelles sorties de resultats souhaitez-vous ?"
-  ask_which_regression_type <<- "Quel type de regression ?"
-  ask_which_results_warning_on_default_output <<- "Quels resultats souhaitez-vous ? Attention : les sorties par defaut ne peuvent etre sauvegrdees. Si vous voulez une sauvarde, choisissez le detail"
-  ask_which_rotation <<- "Quelle rotation"
-  ask_which_saturation_criterion <<- "Quel est le critere de saturation que vous voulez utiliser ?"
-  ask_which_size_effect <<- "Quelle taille d effet voulez-vous ?"
-  ask_which_squared_sum <<- "Quelle somme des carres voulez-vous utiliser ?"
-  ask_which_test <<- "Quel test voulez-vous utiliser ?"
-  ask_which_value_for_operation <<- "Quelle valeur voulez-vous pour votre operation mathematique ?"
-  ask_which_variable_identifies_participants <<- "Quelle est la variable identifiant les participants ?"
-  ask_you_did_not_chose_a_variable_continue_or_abort <<- "Vous n avez pas choisi de variable. Voulez-vous continuer (ok) ou abandonner (annuler) cette analyse ?"
-  desc_abs_val_applied_to_var <<- "la valeur absolue a ete applique a la variable"
-  desc_accepted_values_are_z_and_grubbs <<- "Les valeurs admises pour critere sont z et Grubbs "
-  desc_all_tests_description <<- "le modele parametrique renvoie l'anova classique,le non parametrique calcule le test de Kruskal Wallis nsi c'est un modele a groupes independants, ou une anova de Friedman pour un modele en Mesures repetees.nLe modele bayesien est l'equivalent du modele teste dans l'anova en adoptant une approche bayesienne,nles statistiques robustes sont des anovas sur des medianes ou les moyennes tronquees avec ou sans bootstrap."
-  desc_alpha_increased_with_value_equals_to <<- "vous multipliez l'erreur de 1e espece. Le risque de commettre une erreur de 1e espece est de"
-  desc_analysis_aborted <<- "L'analyse n'a pas pu aboutir"
-  desc_and <<- "et"
-  desc_and_variabe <<- "et la variable"
-  desc_and_variable_y <<- " et la variable "
-  desc_applied_correction_is <<- "la correction appliquee est la correction de"
-  desc_at_least_10_obs_needed <<- "Il faut au moins 10 observations plus le nombre de variables pour realiser l'analyse. Verifiez vos donnees."
-  desc_at_least_independant_variables_or_repeated_measures <<- "Il est indispensable d'avoir au minimum des variables a groupes independants ou en mesures repetees"
-  desc_at_least_on_contrast_matrix_incorrect <<- "Au moins une de vos matrices de contrastes n'est pas correcte."
-  desc_at_least_one_denom_is_zero <<- "Au moins une des valeurs au denominateur est un 0. La valeur renvoyee dans ce cas est infinie - inf"
-  desc_at_least_one_non_numeric <<- "au moins une variable n'est pas numerique"
-  desc_at_least_one_var_is_not_num <<- "au moins une des variables n'est pas numerique"
-  desc_authorized_values_for_contrasts <<- "Les valeurs autorisees pour les contrastes sont +none+ pour aucun contraste, +pairwise+ pour les comparaisons 2 a 2 ou une liste de coefficients de contrastes"
-  desc_avoid_spaces_and_punctuations <<- "Evitez les espaces ainsi que les signes de ponctuations, a l'exception . et _ "
-  desc_bayesian_factors_could_not_be_computed <<- "Les facteurs bayesiens n'ont pas pu etre calcules."
-  desc_beyond_with_lower_and_upper <<- "au-dela (avec une limite inferieure et superieure"
-  desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance <<- "il y a moins de 3 observations pour un des groupes ou \nla variance d'au moins un groupe vaut 0. Les resultats risquent d'etre considerablement biaises"
-  desc_bootstraps_number_must_be_positive <<- "Le nombre de bootstrap doit etre un nombre entier positif"
-  desc_bootstrap_t_adapt_to_truncated_mean <<- "Le bootstrap-t method est un bootstrap adapte au calcul de la moyenne tronquee"
-  desc_cannot_compute_mahalanobis <<- "Desole, nous ne pouvons pas calculer la distance de Mahalanobis sur vos donnees. Les analyses seront resalisees sur les donnees completes"
-  desc_cannot_group_variables_because_not_described <<- "Vous ne pouvez pas avoir de variable *groupes* etant donne que toutes les variables doivent etre decrites"
-  desc_cannot_have_both_within_RML_arguments <<- "Vous ne pouvez pas avoir a la fois des arguments dans within et RML"
-  desc_cells_for_mcnemar <<- "Les cellules utilisees pour le calcul du McNemar sont celles de la 1e ligne 2e colonne et de la 2e ligne 1e colonne"
-  desc_centered_data_schielzeth_recommandations <<- "En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees"
-  desc_chi_squared_adjustment_on_variable_x <<- "chi deux d'ajustement sur la variable"
-  desc_close_browser_to_come_back <<- "Ne pas oublier de fermer la fenetre htmlt (firexfox, chrome, internet explorer...) pour revenir à la session R"
-  desc_cross_validation_is_not_yet_supported <<- "La validation croisee n'est pas encore disponible."
-  desc_data_saved_in <<- "les donnees sont sauvegardees dans"
-  desc_data_succesfully_ordered <<- "les donnees ont ete triees correctement "
-  desc_descriptive_statistics_on <<- "Statistiques descriptives sur"
-  desc_distribution_is_hypergeometric_when <<- "L'option *Effectif total fixe pour les lignes et les colonnes* lorsque les totaux pour les lignes et les colonnes sont fixes.La distribution est hypergeometrique"
-  desc_each_participant_must_appear_only_once_ <<- "Chaque participant doit apparaître une et une seule fois pour chaque combinaison des modalites"
-  desc_effect_size_by_walker <<- "La taille d'effet est calculee a partir de la formule proposee par Walker, 2003"
-  desc_entered_value_not_num <<- "la valeur entree n'est pas numerique"
-  desc_exponential_has_been_applied_to_var <<- "l'exponentiel a ete applique a la variable"
-  desc_facotrs_must_be_positive_int_inferior_to_variables_num <<- "Le nombre de facteur doit etre un entier positif inferieur au nombre de variables"
-  desc_fb_ratio_between_models <<- "Rapport des FB entre les modeles"
-  desc_file_is_saved_in <<- "le fichier est sauvegarde dans"
-  desc_flattening_and_asymetry_configurable <<- "Vous pouvez specifier la troncature et les parametres pour l'aplatissement et l'asymetrie en choisissant autres options"
-  desc_for_bigger_samples_bootstrap_t_prefered <<- "Pour des echantillons plus importants, les boostrap utilisant la methode t doit etre preferee."
-  desc_for_easier_to_work <<- "Pour que easieR fonctionne correctement, il faut installer Pandoc disponible à l'url suivant : https://github.com/jgm/pandoc/releases"
-  desc_graph_thickness_gives_density <<- "L'epaisseur du graphique donne la densite, permettant de mieux cerner la distribution."
-  desc_has_been_added_to <<- "a ete ajoutee a"
-  desc_has_been_added_to_variable <<- "a ete ajoutee a la variable"
-  desc_has_been_applied_to_variable <<- " a ete applique a la variable"
-  desc_has_been_put_to_the_power_of <<- " a ete elevee a la puissance"
-  desc_has_multiplied_variables <<- "a multiplie la -les- variable-s"
-  desc_highest_value <<- "Valeur la plus elevee"
-  desc_how_to_cite_easier <<- "Pour citer easieR dans vos publication / to cite easieR in you publications use :\n Stefaniak, N. (2020). "
-  desc_identical_option_total_sample <<- "L'option Effectif total fixe pour les colonnes* est identique a la precedente pour les colonnes"
-  desc_identified_outliers <<- "Observations considerees comme influentes"
-  desc_if_true_covariates_as_fixed <<- "Si vrai, on considere les covaries exogenes comme fixes, sinon on les considere comme aleatoires et leurs parametres sont libres"
-  desc_if_true_latent_residuals_one <<- "Si vrai, les residus des variables latentes sont fixes a 1, sinon les parametres de la variable latente sont estimes en fixant le premier indicateur a 1"
-  desc_improve_likelihood_for_each_variable <<- "Amelioration de la vraisemblance pour chaque variable"
-  desc_incorrect_model <<- "Le modele specifie est incorrect. Verifiez vos variables et votre modele"
-  desc_instable_model_high_multicolinearity <<- "La multicolinearite est trop importante. Le modele est instable"
-  desc_insufficient_obs <<- "Le nombre d'observations est insuffisant pour mener a bien les analyses pour ce groupe"
-  desc_insufficient_sample_for_combinations_between <<- "Les effectifs sont insuffisants pour le nombre de combinaisons entre la variable "
-  desc_in_that_case_non_parametric_is_classical_chi_squared <<- "Dans ce cas, le test non parametrique est le test de chi carre classique"
-  desc_issue_in_hierarchical_regression <<- "Un probleme a ete identifie dans les etapes de votre regression hierarchique"
-  desc_kmo_could_not_be_computed_verify_matrix <<- "Le KMO n'a pas pu etre calcule. Verifiez votre matrice de correlation."
-  desc_kmo_must_strictly_be_more_than_a_half <<- "le KMO doit absolument etre superieur a 0.5"
-  desc_kmo_on_matrix_could_not_be_obtained <<- "Le KMO sur la matrice n'a pu etre obtenu."
-  desc_kmo_on_matrix_could_not_be_obtained_trying <<- "Le KMO sur la matrice n'a pu etre obtenu. Nous tentons de realiser un lissage de la matrice de correlation"
-  desc_large_format_must_be_numeric_or_integer <<- "Si vos donnees sont en format large, les mesures doivent toutes etre numeriques ou des entiers (integer)"
-  desc_list_of_objects_still_in_mem <<- "Liste des objects encore en memoire de R"
-  desc_log_with_base <<- "le logarithme de base"
-  desc_manifest_variables_of <<- "Variables manifestes de"
-  desc_manual_contrast_need_coeff_matrice <<- "Si vous entrez des contrastes manuellement, toutes les variables de l'analyse doivent avoir leur matrice de coefficients"
-  desc_matrix_is_singular_mardia_cannot_be_performed <<- "La matrice est singuliere et le test de Mardia ne peut etre realise. Seules les analyses univariees peuvent etre realisees"
-  desc_mcnemar_need_2x2_table_yours_are_different <<- "Le test de McNemar implique un tableau 2x2. Les dimensions de votre tableau sont differentes."
-  desc_modalities_product_must_correspond_to_cols_selected <<- "le produit des modalites de chacune des variables doit correspondre au nombre de colonnes selectionnees."
-  desc_model_contains_error <<- "Le modele ne peut etre evalue. Il doit contenir une erreur"
-  desc_model_could_not_converge <<- "Le modele n'a pas pu converger. Les parametres ont ete adaptes pour permettre au modele de converger"
-  desc_model_seems_incorrect_could_not_be_created <<- "Le modele semble incorrect et n'a pas pu etre cree."
-  desc_most_common_effect_size <<- "la taille d'effet la plus frequente est le eta carre partiel - pes.\nLa taille d'effet la plus precise est le eta carre generalise - ges"
-  desc_multicolinearity_risk <<- "risque de multicolinearite si le determinant de la matrice est inferieur a 0.00001"
-  desc_multiple_ways_to_compute_squares_sum <<- "Il existe plusieurs maniere de calculer la somme des carres. Le choix par defaut des logiciels commerciaux est une somme des carres\nde type 3, mettant la priorite sur les interactions plutot que sur les effets principaux."
-  desc_must_be_dichotomic <<- "modalites. Elle est incompatible avec une regression logistique. Elle doit etre dichotomique"
-  desc_nb_factors_must_be_positive_integer <<- "Le nombre de facteur doit etre un entier positif inferieur au nombre de facteurs"
-  desc_need_at_least_three_observation_by_combination <<- "Certaines combinaisons des modalites ont moins de 3 observations. Vous devez avoir au moins 3 observations pour chaque combinaison"
-  desc_neg_log_impossible <<- "il n'est pas possible de calculer des logarithmes pour une base est negative. NA est renvoye"
-  desc_no_analysis_can_be_performed_given_your_data <<- "Les variables que vous avez choisies pour realiser votre analyse ne permettent de faire aucune analyse. Veuillez redefinir votre analyse"
-  desc_no_data_in_R_memory <<- "il n'y a pas de donnees dans la memoire de R, veuillez importer les donnnees sur lesquelles realiser l'analyse"
-  desc_non_equal_independant_variable_modalities_occurrence <<- "Le nombre d'occurrence pour chaque modalite de votre variable independante n'est pas identique. Veuillez choisir un identifiant participant"
-  desc_non_numeric_value <<- "La valeur entree n'est pas numerique, vous devez entrer une valeur numerique"
-  desc_non_numeric_variable <<- "la variable n est pas numerique"
-  desc_non_param_are_rho_and_tau <<- "Le test non parametrique correspond au rho de Spearman et au tau de Kendall"
-  desc_non_param_is_wilcoxon_or_mann_withney <<- "Le test non parametrique est le test de Wilcoxon (ou Mann-Whitney)"
-  desc_no_obs_for_combination <<- "pas d'observations pour la combinaison"
-  desc_no_result_saved <<- "aucun resultat n'a ete sauvegarde"
-  desc_norm_must_be_numeric <<- "La norme doit etre une valeur numerique."
-  desc_no_saved_analysis_found <<- "Aucune analyse sauvegardee n'a pu etre trouvee"
-  desc_number_of_judge_is <<- "le nombre de juge ="
-  desc_number_of_missing_values <<- "Nombre de valeurs manquantes par variable"
-  desc_number_of_observations_is <<- "le nombre d'observations ="
-  desc_number_outliers_removed <<- "Nombre d'observations retirees"
-  desc_obs_with_asterisk_are_outliers <<- "Les observations marquees d'un asterisque sont considerees comme influentes au moins sur un critere"
-  desc_odd_ratio_cannot_be_computed <<- "On ne peut pas calculer les OR pour des tableaux plus grands que 2x3 ou des tableaux contenant des 0"
-  desc_only_one_dependant_variable_alllowed <<- "Il ne peut y avoir qu'une seule variable dependante."
-  desc_only_one_file_format_at_time_EPS_JPG <<- "Only one file format for saving figure may be used at a time (you have both EPS and JPG specified)."
-  desc_only_one_file_format_at_time_EPS_PDF <<- "Only one file format for saving figure may be used at a time (you have both PDF and EPS specified)."
-  desc_only_one_file_format_at_time_PDF_JPG <<- "Only one file format for saving figure may be used at a time (you have both PDF and JPG specified)."
-  desc_only_values_above_diagonal_are_adjusted_for_multiple_comp <<- "Seules les valeurs au-dessus de la diagonales sont ajustees pour comparaisons multiples"
-  desc_operation_succesful <<- "L'operation mathematique s'est deroulee correctement."
-  desc_order <<- "de tri"
-  desc_outliers_identified_on_4_div_n <<- "les valeurs influentes sont identifiees sur la base de 4/n"
-  desc_outliers_identified_on_mahalanobis <<- "les valeurs influentes sont identifiees sur la base de la distance de Mahalanobis avec un seuil du chi a 0.001"
-  desc_outliers_on_4_div_n <<- "les valeurs influentes sont identifiees sur la base de 4/n"
-  desc_packages_used_for_this_function <<- "Packages utilises pour cette fonction"
-  desc_param_is_BP <<- "Le test parametrique est la correlation de Bravais-Pearson"
-  desc_param_is_t_test <<- "Le test parametrique est le test t classique"
-  desc_param_test_is_classical_reg_robusts_are_m_estimator <<- "Le test parametrique est la regression classique et les tests robustes sont une estimation sur un M estimeur ainsi qu'un bootstrap."
-  desc_percentile_bootstrap_prefered_for_small_samples <<- "la methode du percentile bootstrap doit etre preferee pour les petits echantillons"
-  desc_perfectly_correlated_variables_in_matrix_trying_to_solve <<- "vous tenter de faire une matrice de correlations avec des variables parfaitement correlees. Cela pose souci pour le calcul de la distance de Mahalanobis. Nous tentons de resoudre le souci"
-  desc_polyc_correlations_failed_rho_used_instead <<- "Les correlations polychoriques ont echoue. Les correlations utilisees sont des rho de Spearman"
-  desc_proba_and_IC_estimated_on_bootstrap <<- "Les probabilites et les IC sont estimes sur la base d'un bootsrap. L'IC est corrige pour comparaison multiple, contrairement a la probabilite reportee."
-  desc_probabilities_vector_please_no_fraction <<- "Vecteur des probabilites. Attention : ne pas entrer des fractions"
-  desc_red_dot_is_mean_error_is_sd <<- "Le point rouge est la moyenne. La barre d'erreur est l'ecart-type"
-  desc_references <<- "References des packages utilises pour cette analyse"
-  desc_removed_variable <<- "variable supprimee"
-  desc_removing_outliers_weakens_sample_size <<- "La suppression des valeurs influentes entraîne un effectif trop faible sur certaines modalites pour mener a bien l'analyse"
-  desc_result_succesfully_imported_in <<- "Les resultats ont ete correctement importes dans"
-  desc_robusts_statistics_could_not_be_computed <<- "Les statistiques robustes n'ont pas pu etre realisees"
-  desc_robust_statistics_are_alternative_to_the_principal_but_slower <<- "Les statistiques robustes sont des analyses alternatives a l'analyse principale, impliquant le plus souvent des bootstraps. Ces analyses sont souvent plus lentes"
-  desc_saturation_criterion_must_be_between_zero_and_one <<- "Le critere de saturation doit etre compris entre 0 et 1."
-  desc_search_here <<- "Tapez votre recherche ici"
-  desc_selected_obs_are_in <<- "les observations que vous avez selectionnees sont dans"
-  desc_selection_for_bayesian_factor_does_not_apply_to_complex_models <<- "Les methodes de selection pour les facteurs bayesiens ne s'appliquent pas pour des modeles complexes."
-  desc_should_specify_nb_factors_repeated_measure <<- "vous devez specifier le nombre de facteurs en mesure repetee"
-  desc_single_dependant_variable_allowed_in_paired_t <<- "Il ne peut y avoir qu'une seule variable dependante pour les t de student pour echantillons apparies"
-  desc_singular_matrix_mahalanobis_on_max_info <<- "Votre matrice est singuliere, ce qui pose souci. Nous tentons de de resoudre le souci. Si possible, la distance de Mahalanobis sera alors calculee sur le maximum d'information tout en evitant la singularite."
-  desc_some_values_are_not_numeric <<- "Toutes les valeurs entrees ne sont pas numerique. Veuillez entrer des valeurs numeriques uniquement"
-  desc_special_characters_have_been_removed <<- "Les accents / caracteres speciaux ont volontairement ete supprimes pour assurer la portabilite de easieR sur tous les ordinateurs."
-  desc_specify_f_value <<- "Vous devez specifier la valeur du F. Cette valeur doit etre superieure a 1"
-  desc_specify_lower_bound <<- "vous devez preciser la limite inferieure"
-  desc_specify_probability_value <<- "Vous devez specifier la valeur de la probabilite. Cette valeur doit etre entre 0 et 1"
-  desc_specify_upper_bound<<- "vous devez preciser la limite superieure"
-  desc_standardized_saturation_on_correlation_matrix <<- "saturations standardisees basees sur la matrice de correlations"
-  desc_succesfully_imported <<- "les donnees ont ete importees correctement"
-  desc_succesful_operation <<- "L'operation a ete realisee correctement"
-  desc_tested_model_is <<- "le modele teste est"
-  desc_there_is_no_rotation <<- "il n'y a pas de rotation"
-  desc_the_variable_lower <<- "la variable"
-  desc_the_variable_upper<<- "La variable"
-  desc_this_analysis_will_not_be_performed <<- ". Cette analyse ne sera pas realisee."
-  desc_this_index_is_prefered_for_most_cases <<- " Cet indice est adapte dans la plupart des situations. Le M-estimator modifie doit etre prefere pour N<20"
-  desc_this_is_large_format <<- "ceci est le format large"
-  desc_this_is_long_format <<- "ceci est le format long"
-  desc_times_less <<- "fois moins"
-  desc_times_more <<- "fois plus"
-  desc_to_display_results_use_summary <<- "Pour afficher les resultats, veuillez utiliser summary(modele.cfa)"
-  desc_total_observations <<- "nombre total d'observations"
-  desc_truncature_on_m_estimator_adapts_to_sample <<- "La troncature sur le M-estimator s'adapte en fonction des caracteristiques de l'echantillon."
-  desc_two_cols_are_needed <<- "Pour un facteur en mesures repetees en format large, il faut au moins deux colonnes"
-  desc_two_modalities_for_independante_categorial_variable <<- "Vous devez utiliser une variable independante categorielle a 2 modalites"
-  desc_unauthorized_char_replaced <<- "Des caracteres non autorises ont ete utilises pour le nom. Ces caracteres ont ete remplaces par des points"
-  desc_unavailable_distal_mediations <<- "Les mediations distales ne sont pas disponibles pour le moment / Distal mediations are not available for now"
-  desc_user_exited_aov_plus <<- "vous avez quitte aov.plus"
-  desc_value_must_be_between_zero_and_one <<- "La valeur doit etre comprise entre 0 et 1"
-  desc_value_must_be_numeric <<- "La valeur doit etre numerique et comprise entre le minimum et le maximum de la variable dependante."
-  desc_variable_added <<- "Variable ajoutee"
-  desc_variable_must_be_numeric_and_of_non_null_variance <<- "la variable doit etre numerique et avoir une variance non nulle."
-  desc_variable_must_be_positive_int <<- "la variable doit etre un entier *integer* positif"
-  desc_variables_are_in <<- "les variables selectionnees sont dans"
-  desc_we_could_not_compute_anova_on_medians <<- "Desole, nous n'avons pas pu calcule l'anova sur les medianes, possiblement en raison d'un nombre important d'ex aequo."
-  desc_we_could_not_compute_robust_anova <<- "Desole, nous n'avons pas pu calcule l'anova robuste."
-  desc_working_dir_is_now <<- "Le repertoire de travail est a present"
-  desc_you_can_chose_predefined_or_manual_contrasts <<- "Vous pouvez choisir les contrastes predefinis ou les specifier manuellement. Dans ce dernier cas, veuillez choisir specifier les contrastes"
-  desc_you_can_still_add <<- "Vous pouvez encore ajouter une valeur specifique au total. Laissez 0 si vous ne souhaitez rien ajouter"
-  desc_you_can_still_multiply <<- "Vous pouvez encore multiplier le total par une valeur specifique. Laissez 1 si vous ne souhaitez plus multiplier par une nouvelle valeur"
-  desc_you_did_this_operation <<- "vous avez realise l'operation suivante :"
-  desc_you_exited_afe <<- "vous avez quitte l'AFE"
-  desc_you_have_selected <<- "vous avez selectionne"
-  desc_you_must_give_obs_number <<- "Vous devez entrer le numero de l'observation"
-  desc_your_dependant_variable_has <<- "Votre veriable dependante a"
-  desc_z_must_be_a_number <<- "z doit etre un nombre"
-  desc_author <<- "author: 'Genere automatiquement par easieR'"
-  desc_title <<- "title: 'Resultats de vos analyses'"
-  txt_absolute_value <<- "valeur absolue"
-  txt_added_variables_graph <<- "Graphe des variables ajoutees"
-  txt_additions <<- "additions"
-  txt_additive_effects <<- "Effets additifs"
-  txt_additive_model_variables <<- "Variables modele additif"
-  txt_add_of_cols <<- "addition de colonnes"
-  txt_add_of_specific_value <<- "addition d'une valeur specifique"
-  txt_adequation_adjustement_indexes <<- "Indices d'adequation et d'ajustement"
-  txt_adequation_measurement_of_matrix <<- "Mesure d'adequation de la matrice"
-  txt_adequation_measures <<- "Mesures d'adequation"
-  txt_adequation_outside_diagonal <<- "Adequation basee sur les valeurs en dehors de la diagonale"
-  txt_adjusted_data_loftus_masson <<- "Donnees ajustees (Loftus & Masson, 1994)"
-  txt_adjusted_means_graph <<- "Moyennes ajustee-Graphique"
-  txt_adjusted_means <<- "Moyennes ajustee"
-  txt_adjustement_measure <<- "Mesure d'ajustement"
-  txt_adjusted_p_dot_value <<- "Valeur P corrigée"
-  txt_agreement <<- "Accord"
-  txt_aic_criterion <<- "AIC - Akaike Information criterion"
-  txt_alpha_warning <<- "Avertissement alpha"
-  txt_alternative <<- "alternative"
-  txt_analysis_factor_component <<- "analyses de facteurs et de composantes"
-  txt_analysis_on <<- "analyse sur"
-  txt_analysis_on_truncated_means <<- "Analyse sur les moyennes tronquees"
-  txt_analysis_on_variable <<- "Analyse sur la variable"
-  txt_analysis_premature_abortion <<- "Arret premature de l'analyse"
-  txt_ancova_application_conditions <<- "Conditions d'application de l'ancova"
-  txt_and_the_number_of_obs <<- "et le nombre d'observations ="
-  txt_and_YZ <<- "et YZ ="
-  txt_anova_ancova <<- "analyse de variance et covariance"
-  txt_anova <<- "Anova"
-  txt_anova_on <<- "anova sur"
-  txt_anova_on_modified_huber_estimator <<- "Anova sur l'estimateur modifie de localisation de Huber"
-  txt_anova_on_truncated_means <<- "Anova basee sur les moyennes tronquees"
-  txt_anova_with_welch_correction <<- "Anova avec correction de Welch pour variances heterogenes"
-  txt_apparied_correlations <<- "Correlations appariees"
-  txt_apriori <<- "a priori"
-  txt_autocorrelation <<- "Autocorrelation"
-  txt_backward <<- "Backward"
-  txt_backward_step_descending <<- "Backward- pas-a-pas descendant"
-  txt_barlett_test <<- "Test de Barlett"
-  txt_bayes_factor_10 <<- "Bayes Factor (10)"
-  txt_bayes_factor <<- "BayesFactor"
-  txt_bayesian_approach_hierarchical_models <<- "Approche bayesienne des modeles hierarchique"
-  txt_bayesian_factor_by_group <<- "Facteur bayesien par groupe"
-  txt_bayesian_factor <<- "Facteur bayesien"
-  txt_bayesian_factor_of_model <<- "FB du modele"
-  txt_bayesian_factors_10 <<- "Facteur bayesiens 10"
-  txt_bayesian_factors_compute_null_with_bayesian_approach <<- "Facteurs bayesiens : calcule l'equivalent du test d'hypothese nulle en adoptant une approche bayesienne."
-  txt_bayesian_factors_for_BP <<- "Facteurs Bayesiens pour la correlation de Bravais-Pearson"
-  txt_bayesian_factors_for_spearman <<- "Facteurs Bayesiens pour la correlation de Spearman"
-  txt_bayesian_factors_sequential <<- "Facteurs bayesiens sequentiels"
-  txt_bca_bootstrap_on_m_estimator <<- "Bootstrap de type BCa sur le M-estimator"
-  txt_beta_table <<- "table des betas"
-  txt_between <<- "entre"
-  txt_bidirectionnal <<- "Bidirectionnel"
-  txt_b_m_estimator <<- "b (M estimator)"
-  txt_bootstrap_on_BP <<- "Bootstrap sur la correlation de Bravais Pearson"
-  txt_bootstrap_t_method <<- "bootstrap-t method"
-  txt_bootstrap_t_method_on_truncated_means <<- "Bootstrap utilisant la methode t sur les moyennes tronquees"
-  txt_BP_correlation_by_group <<- "Correlation de Bravais-Pearson par groupe"
-  txt_breusch_pagan_test <<- "Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)"
-  txt_cancel <<- "annuler"
-  txt_cauchy_prior_width <<- "Cauchy Prior Width (r)"
-  txt_center_or_center_reduce <<- "Centrer / centrer reduire"
-  txt_center_reduce <<- "centrer reduire"
-  txt_ceres_graph_linearity <<- "Graphique de Ceres testant la linearite"
-  txt_chi_adjustement <<- "Ajustement"
-  txt_chi_independance <<- "Independance"
-  txt_chi_results_between_var_x <<- "Resultats du chi.deux entre la variable"
-  txt_chi_squared <<- "chi deux"
-  txt_chi_squared_empirical <<- "chi carre empirique"
-  txt_chi_squared_likelihood_max <<- "chi carre du maximum de vraisemblance"
-  txt_chi_squared_null_model <<- "chi carre du modele null"
-  txt_chi_squared_type <<- "Type de khi deux"
-  #txt_choice <<- "choix"
-  txt_coeff_table <<- "Table des coefficients"
-  txt_col_correspoding_to_variable <<- "Colonnes correspondant à la variable"
-  txt_col_mean <<- "moyenne de colonnes"
-  txt_cols <<- "colonnes"
-  txt_col_separator <<- "Separateur de colonnes"
-  txt_cols_in_repeated_measure <<- "Colonnes en mesures repetees"
-  txt_cols_multiplication <<- "multiplication de colonnes"
-  txt_comma <<- "virgule"
-  txt_compare_to_baseline <<- "comparaison a une ligne de base"
-  txt_compare_two_correlations <<- "Comparaison de deux correlations"
-  txt_comparison_of_two_correlations <<- "comparaison des deux correlations"
-  txt_comparison_on_truncated_means <<- "Comparaison basee sur les moyennes tronquees"
-  txt_comparisons_XY <<- "comparaison des correlations XY="
-  txt_comparison_to_norm <<- "Comparaison a une norme"
-  txt_comparison_two_by_two <<- "Comparaison 2 a 2"
-  txt_compile_report <<- "generer un rapport"
-  txt_complementary_results <<- "Resultats complementaires (e.g. contrastes d'interaction et moyennes ajustees)"
-  txt_complete_dataset <<- "Donnees completes"
-  txt_complete_model <<- "Modele complet"
-  txt_complexity <<- "complexite"
-  txt_complex_model <<- "modele complexe"
-  txt_confidance_threshold <<- "Seuil de confiance (1- alpha)"
-  txt_confidence_interval_estimated_by_bootstrap <<- "Intervalle de confiance estime par bootstrap"
-  txt_confidence_interval <<- "Intervalle de confiance"
-  txt_confidence_interval_inferior_limit <<- "Lim.inf"
-  txt_confidence_interval_superior_limit <<- " Lim.sup"
-  txt_confidence_interval_of_saturations_on_bootstrap <<- "Intervalle de confiance des saturations sur la base du bootstrap - peut etre biaise en presence de Heyhood case"
-  txt_confidence_interval_on_bootstrap <<- "Intervalle de confiance base sur le bootstrap"
-  txt_confidence_interval_on_standard_error <<- "Intervalle de confiance base sur l'erreur standard de l'alpha"
-  txt_confirmatory_factorial_analysis <<- "Analyse factorielle confirmatoire"
-  txt_contrast <<- "contraste"
-  txt_contrasts <<- "contrastes"
-  txt_contrasts_for <<- "Contrastes pour"
-  txt_contrasts_table_imitating_commercial_softwares <<- "Table des contrastes imitant les logiciels commerciaux"
-  txt_contrasts_table <<- "Table des contrastes"
-  txt_control_variables <<- "Variable-s a controler"
-  txt_correction_for_polyc_corr_must_be_between_zero_and_one <<- "La correction pour le calcul de correlations polycoriques doit etre comprise entre 0 et 1."
-  txt_correlation_between_scores_and_factors <<- "Correlations des scores avec les facteurs"
-  txt_correlation_between_var_x <<- "Correlation entre la variable"
-  txt_correlation_is <<- "correlation de"
-  txt_correlation_matrix_determinant <<- "Determinant de la matrice de correlation"
-  txt_correlation_matrix_determinant_information <<- "Determinant de la matrice de correlations : information"
-  txt_correlations_between_factors <<- "correlations entre facteurs"
-  txt_correlations_comparison <<- "comparaison de correlations"
-  txt_correlations_matrix_afe <<- "Matrice de correlation utilisee pour AFE"
-  txt_covariance_matrix_adjusted <<- "Matrice de covariance ajustee"
-  txt_covariance_matrix_estimated <<- "Matrice de covariance estimee"
-  txt_cox_snell_r_2 <<- "Cox and Snell R^2"
-  txt_cronbach_alpha <<- "Alpha de Cronbach"
-  txt_cronbach_alpha_on_whole_scale <<- "Alpha de Cronbach sur la totalite de l'echelle"
-  txt_cross_validation <<- "Validation croisee"
-  txt_csv_file <<- "Fichier CSV"
-  txt_cumulated_explaination_ratio <<- "Proportion cumulee de l'explication"
-  txt_cumulated_explained_variance_ratio <<- "proportion de variance expliquee cumulee"
-  txt_dataframe_choice <<- "Choix du dataframe"
-  txt_data_import_export_save <<- "Donnees - (Importation, exportation, sauvegarde)"
-  txt_decimal_separator <<- "Separateur de decimales"
-  txt_default_outputs <<- "Sorties par defaut"
-  txt_delete_observations_with_missing_values <<- "Suppression des observations avec valeurs manquantes"
-  txt_denominator <<- "Denominateur"
-  txt_dependant_variables <<- "Variable-s dependante-s"
-  txt_dependant_variable <<- "Variable dependante"
-  txt_descriptive_statistics_by_group <<- "statistiques descriptives par groupe"
-  txt_detailed_corr_analysis <<- "Analyse detaillee (Bravais Pearson/Spearman/tau) pour une ou peu de correlations"
-  txt_deviation <<- "Deviance"
-  txt_dichotomic_ordinal <<- "dichotomiques/ordinales"
-  txt_difference <<- "Difference"
-  txt_distance_mediation_effect <<- "Effet de mediation distante"
-  txt_distance_mediator <<- "Mediation a distance"
-  txt_do_nothing_keep_all_obs <<- "Ne rien faire - Garder l'ensemble des observations"
-  txt_dot <<- "point"
-  txt_durbin_watson_test_autocorr <<- "Test de Durbin-Watson - autocorrelations"
-  txt_dw_statistic <<- "statistique de D-W"
-  txt_dynamic_crossed_table <<- "Tableau croise dynamique"
-  txt_effect <<- "Effet"
-  txt_equals_to <<- "egal a"
-  txt_error <<- "erreur"
-  txt_estimated_parameters_not_standardized <<- "Parametres estimes non standardises"
-  txt_estimated_parameters <<- "Parametres estimes"
-  txt_estimated_parameters_standardized <<- "Parametres estimes standardises"
-  txt_estimation <<- "estimation"
-  txt_excel_file <<- "Fichier Excel"
-  txt_exogenous_fixed_variables <<- "Variables exogenes fixees [fixed.x=default]"
-  txt_expected <<- "Attendus"
-  txt_expected_sample <<- "Effectifs attendus"
-  txt_experimental_pan_between <<- "Pan experimental entre"
-  txt_explaination_ratio <<- "Proportion de l'explication"
-  txt_explained_variance_ratio <<- "proportion de variance expliquee"
-  txt_explained_variance <<- "Variance expliquee"
-  txt_exponant <<- "exposant"
-  txt_exponant_or_root <<- "exposant ou racine"
-  txt_exponential <<- "exponentiel"
-  txt_export_data <<- "exporter des donnees"
-  txt_factorial_analysis <<- "Analyse factorielle"
-  txt_factorial_analysis_using_fa_with_method <<- "analyse factorielle en utilisant la fonction fa du package psych avec la methode"
-  txt_factorial_exploratory_analysis <<- "Analyse factorielle exploratoire"
-  txt_factor_name <<- "Nom du facteur"
-  txt_factors <<- "facteurs."
-  txt_factors_ortho <<- "Orthogonalite des facteurs [orthogonal=FALSE]"
-  txt_factors_to_keep_accord_to_parallel_analysis_is <<- "le nombre de facteurs a retenir selon l'analyse en parallele est de"
-  txt_fiability_analysis <<- "analyse de fiabilite et d accord"
-  txt_fiability_by_removed_item <<- "fiabilite par item supprime"
-  txt_for_a_detailed_results_description_distal <<- "Pour une description detaillee des resultats, ?distal.med"
-  txt_for_a_detailed_results_description_mediation <<- "Pour une description detaillee des resultats, ?mediation"
-  txt_forward_step_ascending <<- "Forward - pas-a-pas ascendant"
-  txt_friedman_anova_pairwise_comparison <<- "Comparaison 2 a 2 pour ANOVA de Friedman"
-  txt_f_value <<- "valeur du F"
-  txt_get_working_dir <<- "obtenir le repertoire de travail"
-  txt_global_model_estimation <<- "Estimation du modele global"
-  txt_graphic_mean_sd <<- "Representation graphique - Moyenne et ecart-type"
-  txt_graphics <<- "Graphiques"
-  txt_graphics_informations <<- "Informations sur les graphiques"
-  txt_group_analysis <<- "Analyse par groupe"
-  txt_groups_analysis <<- "analyse par groupes"
-  txt_groups_variables <<- "Variable-s groupes"
-  txt_grubbs_test <<- "Test de Grubbs"
-  txt_hierarchical_factorial_analysis <<- "Analyse factorielle hierarchique"
-  txt_hierarchical_model_analysis <<- "Analyse hierarchique des modeles "
-  txt_hierarchical_models_complete_model_sig_at_each_step <<- "Modeles hierarchique - significativite du modele complet a chaque etape"
-  txt_hierarchical_models_deviance_table <<- "Table de l'analyse de la deviance des modeles hierarchiques"
-  txt_hierarchical_models <<- "Modeles hierarchiques"
-  txt_hierarchical_models_variance_analysis_table <<- "Table de l'analyse de variance des modeles hierarchiques"
-  txt_hosmer_lemeshow_r_2 <<- "Hosmer and Lemeshow R^2"
-  txt_hypergeom_total_sample_fixed_rows_cols <<- "hypergeom - Effectif total fixe pour les lignes et les colonnes"
-  txt_hypothesis_analysis <<- "Analyses - Tests d'hypothese"
-  txt_identified_outliers_synthesis <<- "Synthese du nombre d'observations considerees comme influentes"
-  txt_identifying_outliers <<- "Identification des valeurs influentes"
-  txt_id_variable <<- "Variable *Identifiant*"
-  txt_import_data <<- "importer des donnees"
-  txt_imput_missing_values <<- "Imputation de valeurs manquantes"
-  txt_independant_correlations <<- "Correlations independantes"
-  txt_independant_group_variables <<- "Variables a groupes independants"
-  txt_independant_variable <<- "Variable independante"
-  txt_indepmulti_fixed_sample_rows_cols <<- "indepMulti - Effectif fixe pour les colonnes - variable" # RENAME TO COLS only
-  txt_indepmulti_total_fixed_rows_cols <<- "indepMulti - Effectif total fixe pour les lignes - variable" # RENAME TO RAWS only
-  txt_inferior <<- "Inferieur"
-  txt_inferior_or_equal_to <<- "inferieur ou egal a"
-  txt_inferior_proba <<- "probabilite inferieure"
-  txt_inferior_to <<- "inferieur a"
-  txt_inflation_variance_factor <<- "Facteur d'inflation de la variance"
-  txt_influence_method <<- "Mesure d influence"
-  txt_information <<- "Information"
-  txt_init_values <<- "Valeurs de depart"
-  txt_inspect_initial_values <<- "Inspecter les valeurs de depart"
-  txt_inspect_model_matrices <<- "Inspecter les matrices du modele"
-  txt_inspect_model_representation <<- "Inspecter la representation du modele"
-  txt_interaction_effects <<- "Effets d'interaction"
-  txt_interactive_model_variables <<- "Variables modele interactif"
-  txt_is_different_from <<- "est different de"
-  txt_jointmulti_total_fixed_sample <<- "jointMulti - Effectif total fixe"
-  txt_judge1 <<- "Juge 1"
-  txt_judge2 <<- "Juge 2"
-  txt_kaiser_meyer_olkin_index <<- "Indice de Kaiser-Meyer-Olkin global"
-  txt_keep_default_values <<- "Garder les valeurs par defaut"
-  txt_kendall_coeff <<- "Coefficient de concordance de Kendall"
-  txt_kendall_partial_semipartial_tau <<- "Tau partiel/semi-partiel de Kendall"
-  txt_kendall_partial_tau <<- "Tau partiel de Kendall"
-  txt_kendall_semipartial_tau <<- "Tau semi-partiel de Kendall"
-  txt_kendall_tau <<- "Tau de Kendall"
-  txt_kolmogorov_smirnov_comparing_two_distrib <<- "Test de Kolmogorov-Smirnov comparant deux distributions"
-  txt_labeled_outliers <<- "Valeurs considerees comme influentes"
-  txt_latent_variable_name <<- "Nom de la variable latente"
-  txt_less_square_diagonally_pondered <<- "moindre carre pondere diagonalement"
-  txt_less_square_generalized <<- "moindre carre generalises"
-  txt_less_square_not_pondered <<- "moindre carre non pondere"
-  txt_less_square_pondered <<- "moindre carre pondere"
-  txt_levene_test_verifying_homogeneity_variances <<- "Test de Levene verifiant l'homogeneite des variances"
-  txt_likelihood_only_for_estimator <<- "Vraisemblance (seulement pour estimator=ML) [likelihood=default]"
-  txt_likelihood_ratio_g_test <<- "Rapport de vraisemblance (G test)"
-  txt_lilliefors_d <<- "D de Lilliefors"
-  txt_linearity_graph_between_predictors_and_dependant_variable <<- "Graphique testant la linearite entre les predicteurs et la variable dependante"
-  txt_link_only_for_estimator <<- "Lien (seulement pour estimator=MML) [link=probit]"
-  txt_list_of_objects_in_mem <<- "liste des objets en memoire"
-  txt_logarithm <<- "logarithme"
-  txt_long_or_large_format <<- "Format large au format long"
-  txt_lower_bound_rmsea <<- "limite inferieure du RMSEA"
-  txt_mann_whitney_test <<- "test de Mann-Whitney - Wilcoxon"
-  txt_mathematical_operations_on_variables <<- "Operations mathematiques sur des variables"
-  txt_matrix_type <<- "type de matrice"
-  txt_max_likelihood_chi_squared_proba_value <<- "valeur de la probabilite du chi carre du maximum de vraisemblance"
-  txt_max_likelihood <<- "maximum de vraisemblance"
-  txt_mcnemar_results_between_var_x <<- "Resultats du test de McNemar entre la variable"
-  txt_mcnemar_test <<- "Test de McNemar"
-  txt_mcnemar_test_with_continuity_correction <<- "Test de McNemar avec correction de continuite"
-  txt_mcnemar_test_without_yates_correction <<- "Test de McNemar sans correction de continuite"
-  txt_mcnemar_test_with_yates_correction <<- "Test de McNemar avec correction de Yates"
-  txt_mean1 <<- "Moyenne1"
-  txt_mean2 <<- "Moyenne2"
-  txt_mean_complexity <<- "Complexite moyenne"
-  txt_mean_complexity_is <<- "la complexite moyenne est de"
-  txt_means_adjusted_standard_errors <<- "moyennes et erreurs-types ajustees"
-  txt_means_comparison <<- "Comparaison de moyennes"
-  txt_mean_sd_for_adjusted_data <<- "Moyenne et ecart-type pour les donnees ajustees"
-  txt_mean_sd_for_non_adjusted_data <<- "Moyenne et ecart-type pour les donnees non ajustees"
-  txt_mean_sd <<- "Moyenne et ecart-type"
-  txt_measured_variable_name <<- "Nom de la variable mesuree"
-  txt_median <<- "Mediane"
-  txt_mediation_effect <<- "Effets de mediation"
-  txt_mediator2 <<- "Mediateur 2"
-  txt_mediator <<- "Mediateur"
-  txt_method_choice <<- "Choix de la methode"
-  txt_min_correlation_between_scores_and_factors <<- "Correlation minimale possible des scores avec les facteurs"
-  txt_minus <<- "moins"
-  txt_missing_values_treatment <<- "Traitement des valeurs manquantes"
-  txt_mixt_correlations <<- "correlations mixtes"
-  txt_modalities_name_for <<- "Noms des modalites pour"
-  txt_modalities_to_regroup <<- "Modalites a regrouper"
-  txt_modality <<- "modalite"
-  txt_model_degrees_of_freedom <<- "degres de liberte du modele"
-  txt_model_matrix <<- "Matrices du modeles"
-  txt_model_representation <<- "Representation du modele"
-  txt_model_significance <<- "Significativite du modele global"
-  txt_multicolinearity_tests <<- "Tests de multicolinearite"
-  txt_multicolinearity_test <<- "Test de multicolinearite"
-  txt_multiple_imputation_amelia <<- "Multiple imputation - Amelia"
-  txt_multiple_r_square_of_factors_scores <<- "R carre multiple des scores avec les facteurs"
-  txt_multiplication <<- "multiplication"
-  txt_multivariate_normality <<- "Normalite multivariee"
-  txt_nb_variables_measured <<- "Nombre de variables mesurees"
-  txt_negative_values <<- "Valeurs negatives"
-  txt_new_data_set <<- "nouveau set de donnees"
-  txt_new_dir <<- "nouveau repertoire"
-  txt_N_of_XY_corr <<- "N de la correlation XY"
-  txt_N_of_XY_NUM_corr <<- "N de la correlation XY:TXT"
-  txt_N_of_XZ_corr <<- "N de la correlation XZ"
-  txt_N_of_XZ_NUM_corr <<- "N de la correlation XZ:TXT"
-  txt_non_adjusted_data <<- "Donnees non ajustees"
-  txt_non_centered <<- "Non centre"
-  txt_no <<- "non"
-  txt_non_parametric_test <<- "Test non parametrique"
-  txt_non_param_model <<- "Modele non parametrique"
-  txt_non_param_test <<- "test non parametrique"
-  txt_non_pondered_coeff <<- "Coefficient kappa non pondere"
-  txt_non_standardized_residuals <<- "Residus non standardises"
-  txt_null_hypothesis_tests <<- "Tests de H0"
-  txt_null_model_degrees_of_freedom <<- "Degres de liberte du modele null"
-  txt_numerator <<- "Numerateur"
-  txt_objective_function_of_model <<- "fonction objective du modele"
-  txt_objective_function_of_null_model <<- "fonction objective du modele null"
-  txt_objects_in_mem <<- "Objets en memoire"
-  txt_object_to_remove <<- "Objets a supprimer"
-  txt_observed <<- "Observes"
-  txt_observed_sample <<- "Effectifs Observes"
-  txt_odd_ratio <<- "Odd ratio"
-  txt_order <<- "Trier"
-  txt_orthogonals_inverse <<- "orthogonaux inverses"
-  txt_orthogonals <<- "orthogonaux"
-  txt_other_correlations <<- "Autres correlations"
-  txt_other_data <<- "autres donnees"
-  txt_outliers <<- "observations influentes"
-  txt_outliers_synthesis <<- "Synthese des observations influentes"
-  txt_outliers_values <<- "Valeurs influentes"
-  txt_packages_install <<- "Installation des packages"
-  txt_packages_update <<- "mise a jour des packages"
-  txt_packages_verification <<- "Verification des packages"
-  txt_parallel_analysis <<- "analyses paralleles"
-  txt_param_model <<- "Modele parametrique"
-  txt_param_tests <<- "Test parametrique"
-  txt_param_test <<- "test parametrique"
-  txt_partial_and_semi_correlations <<- "Correlations partielle et semi partielle"
-  txt_partial_corr_BP_by_group <<- "Correlation partielle de Bravais-Pearson par groupe"
-  txt_partial_correlations_matrix <<- "Matrice de Correlations partielles"
-  txt_partial_rho <<- "Rho partiel de Spearman"
-  txt_partial_semi_BP <<- "Correlation partielle/semi-partielle de Bravais Pearson"
-  txt_partial_semi_partial_rho <<- "Rho partiel/semi partiel de Spearman"
-  txt_partial_spearman_by_group <<- "Correlation partielle de Spearman par groupe"
-  txt_participants_id <<- "Identifiant participant"
-  txt_partila_correlations <<- "Correlations partielles"
-  txt_percentage_col <<- "Pourcentage par colonne"
-  txt_percentage_row <<- "Pourcentage par ligne"
-  txt_percentage_total <<- "Pourcentage total"
-  txt_percentile_bootstrap_on_m_estimators <<- "Percentile bootstrap sur les M-estimator"
-  txt_p_estimation_with_monter_carlo <<- "Valeur estimee de p par simulation de Monte Carlo"
-  txt_plus <<- "plus"
-  txt_poisson_total_not_fixed_sample <<- "poisson - Effectif total non fixe"
-  txt_polyc_correlations <<- "correlations polychoriques"
-  txt_polynomials <<- "polynomiaux"
-  txt_pondered_kappa <<- "Coefficient kappa pondere"
-  txt_positive_values <<- "Valeurs positives"
-  txt_predicted_probabilities <<- "Probabilites predites"
-  txt_predictor <<- "Predicteur"
-  txt_principal_analysis <<- "Analyse principale"
-  txt_principal_analysis_using_psych_with_algo <<- "analyse en composante principale en utilisant la fonction [principal] du package psych, l'algorithme est"
-  txt_principal_component_analysis <<- "Analyse en composante principale"
-  txt_probabilities <<- "probabilites"
-  txt_probability_matrix <<- "matrice des probabilites"
-  txt_probability_value <<- "valeur de la probabilite"
-  txt_proper_values_index <<- "Indice des valeurs propres"
-  txt_pseudo_r_square_delta <<- "Delta du pseudo R carre"
-  txt_p_value_with_monte_carlo <<- "Valeur p par simulation de Monte Carlo"
-  txt_ranks_lower <<- "rangs"
-  txt_ranks_upper <<- "Rangs"
-  txt_references <<- "References"
-  txt_remove_object_in_memory <<- "Suppression d objet en memoire"
-  txt_replace_by_mean <<- "Remplacer par la moyenne"
-  txt_replace_by_median <<- "Remplacer par la mediane"
-  txt_residual_distribution <<- "Distribution du residu"
-  txt_residual_error <<- "Erreur residuelle"
-  txt_residual <<- "residu"
-  txt_residuals_distribution <<- "Distribution des residus"
-  txt_residue <<- "Residus"
-  txt_residues_significativity_holm_correction <<- "Significativite des residus - probabilite corrigee en appliquant la methode de Holm"
-  txt_residue_standardized_adjusted <<- "Residus standardises ajustes"
-  txt_residue_standardized <<- "Residus standardises"
-  txt_result <<- "Resultat"
-  txt_rho <<- "Rho de Spearman"
-  txt_robust_analysis <<- "Analyses robustes"
-  txt_robusts <<- "robustes"
-  txt_robusts_statistics <<- "Statistiques robustes"
-  txt_robust_statistics <<- "Statistiques robustes - peut prendre du temps"
-  txt_robusts_tests_with_bootstraps <<- "Test robustes - impliquant des bootstraps"
-  txt_rotation_is_a_rotation <<- "la rotation est un rotation"
-  txt_sample_size_NUM <<- "Taille de l'echantillon:TXT"
-  txt_saturations_sum_of_squares <<- "Sommes des carres des saturations"
-  txt_search_for_new_function <<- "rechercher une nouvelle fonction"
-  txt_second_variables_set <<- "Second jeu de variables"
-  txt_selected_data <<- "donnees que vous venez de selectionner"
-  txt_selection_method_akaike <<- "Methode de selection - criteres d'information d'Akaike"
-  txt_selection_method_bayesian_factor <<- "Methodes de selection : facteurs bayesiens"
-  txt_selection_method <<- "Methode de selection"
-  txt_selection_methods <<- "Methodes de selection"
-  txt_selection <<- "selection"
-  txt_select_obs <<- "Selectionner des observations"
-  txt_select_variables <<- "Selectionner des variables"
-  txt_semi_BP <<- "Correlation semi-partielle de Bravais Pearson"
-  txt_semicolon <<- "point virgule"
-  txt_semi_partial_rho <<- "Rho semi-partiel de Spearman"
-  txt_sequential_bayesian_factors_robustness_analysis <<- "Facteurs bayesiens sequentiels - Analyse de robustesse"
-  txt_shapiro_wilk <<- "W de Shapiro-Wilk"
-  txt_simple_mediation_effect <<- "Effets de mediation simple"
-  txt_slopes_homogeneity_between_groups_on_dependant_variable <<- "Test de l'homogeneite des pentes entre les groupes sur la variable dependante"
-  txt_spearman_kendall_corr_by_group <<- "Correlation de Spearman/Kendall par groupe"
-  txt_specific_val_multiplication <<- "multiplication d'une valeur specifique"
-  txt_specify_contrasts <<- "specifier vos contrastes"
-  txt_specify_model <<- "Specifier le modele"
-  txt_specify_working_dir <<- "specifier le repertoire de travail"
-  txt_spss_file <<- "fichier SPSS"
-  txt_square <<- "carree"
-  txt_rectangular <<- "rectangulaire"
-  txt_standardized_parameters <<- "Parametres standardises"
-  txt_statistic <<- "statistique"
-  txt_step <<- "etape"
-  txt_student_bootstrap_on_truncated_means <<- "bootstrap studentise sur les moyennes tronquees"
-  txt_student_t_by_group <<- "t de Student par groupe"
-  txt_student_t_independant <<- "t de student pour echantillons independants"
-  txt_student_t <<- "t de Student"
-  txt_student_t_test_norm <<- "Test de Student - comparaison a une norme"
-  txt_student_t_test_paired <<- "Test de Student - comparaison de deux echantillons apparies"
-  txt_substraction <<- "soustraction"
-  txt_sufficient_factors <<- "facteurs suffise(nt)"
-  txt_superior_or_equal_to <<- "superieur ou egal a"
-  txt_superior_proba <<- "probabilite superieure"
-  txt_superior <<- "Superieur"
-  txt_superior_to <<- "superieur a"
-  txt_supports_alternative <<- "En faveur de l'hypothese alternative"
-  txt_supports_null <<- "En faveur de l'hypothese nulle"
-  txt_suppress_all_outliers <<- "Suppression de l'ensemble des outliers"
-  txt_suppress_outliers_manually <<- "Suppression manuelle"
-  txt_synthesis_table <<- "Tableau de synthese"
-  txt_teaching_material <<- "Materiel pedagogique"
-  txt_tetra_polyc_corr_matrix_or_mixt <<- "Matrice de correlation tetrachorique/polychorique ou mixte"
-  txt_this_tests_if <<- "Cela teste si"
-  txt_threshold <<- "Seuil"
-  txt_time_1 <<- "temps 1"
-  txt_time1 <<- "temps1"
-  txt_time_2 <<- "temps 2"
-  txt_time2 <<- "temps2"
-  txt_tolerance <<- "Tolerance"
-  txt_total_sample_not_fixed <<- "Effectif total non fixe"
-  txt_troncature_num <<- "Troncature:TXT"
-  txt_truncated_means <<- "moyennes tronquees"
-  txt_t_test_choice <<- "Choix du test t"
-  txt_tucker_lewis_fiability_factor <<- "facteur de fiabilite de Tucker Lewis - TLI"
-  txt_two_independant_samples <<- "Deux echantillons independants"
-  txt_two_paired_samples <<- "Deux echantillons apparies"
-  txt_txt_file <<- "Fichier txt"
-  txt_type <<- "Type"
-  txt_understanding_alpha_and_power <<- "Comprendre alpha et la puissance"
-  txt_understanding_bayesian_inference <<- "Comprendre une inference bayesienne"
-  txt_understanding_central_limit_theorem <<- "Comprendre le theorem central limit"
-  txt_understanding_confidance_interval <<- "Comprendre un intervalle de confiance"
-  txt_understanding_corr_2 <<- "Comprendre une correlation 2"
-  txt_understanding_corr <<- "Comprendre la correlation"
-  txt_understanding_heterogenous_variance_effects <<- "Comprendre les effets de variances heterogenes"
-  txt_understanding_likelihood <<- "Comprendre le maximum de vraisemblance"
-  txt_understanding_negative_positive_predic_power <<- "Comprendre le pouvoir predictif positif et le pouvoir predictif negatif"
-  txt_understanding_prev_sens_specificity_2 <<- "Comprendre la prevalence, la sensibilite et la specificite 2"
-  txt_understanding_prev_sens_specificity <<- "Comprendre la prevalence, la sensibilite et la specificite"
-  txt_upper_bound_rmsea <<- "limite superieure du RMSEA"
-  txt_user_exited_easieR <<- "Vous avez quitte easieR"
-  txt_values <<- "valeurs"
-  txt_value <<- "valeur"
-  txt_variable_descriptive_statistics <<- "Statistiques descriptives de la variable"
-  txt_variables_coeff_matrix <<- "Matrice de coefficients variables"
-  txt_variables_contribution_to_model <<- "Contribution des variables au modele"
-  txt_variables_from_step <<- "Variable(s) de cette etape"
-  txt_verify_packages_install <<- "Verifier l installation des packages"
-  txt_view_data <<- "voir des donnees"
-  txt_VIF<<-"FIV"
-  txt_warning <<- "Avertissement"
-  txt_wilcoxon_by_group <<- "Wilcoxon par groupe"
-  txt_without_outliers <<- "Donnees sans valeur influente"
-  txt_without_welch_correction <<- "sans correction de Welch"
-  txt_without_yates_correction <<- "Sans correction de Yates"
-  txt_with_welch_correction <<- "avec correction de Welch"
-  txt_with_yates_correction <<- "Avec correction de Yates"
-  txt_working_dir <<- "Repertoire de travail"
-  txt_x_axis_variables <<- "Variable-s en abcisse"
-  txt_XY_correlation <<- "Correlation entre XY"
-  txt_XY_NUM_correlation <<- "Correlation entre XY:TXT"
-  txt_XZ_correlation <<- "Correlation entre XZ"
-  txt_XZ_NUM_correlation <<- "Correlation entre XZ:TXT"
-  txt_y_axis_variables <<- "Variable-s en ordonnee"
-  txt_yes <<- "oui"
-  txt_your_data <<- "Vos donnees"
-  txt_YZ_correlation <<- "Correlation entre YZ"
-  txt_YZ_NUM_correlation <<- "Correlation entre YZ:TXT"
-  ask_probability_correction <<- "Which p adjustment do you want ? If you do not want any p adjust, choose +none+"
-  ask_contrasts_must_be_ortho <<- "The contrasts must be orthogonal. Do you want to continue ?"
-  desc_bayesian_factors_chosen_in <<- "Facteurs bayesiens is choosen in "
-  desc_cross_validation_issues <<- "cross validation is encountering some issues"
-  desc_easier_metapackage <<- "easieR: An R metapackage. Retrieved from https://github.com/NicolasStefaniak/easieR"
-  desc_first_time_easier <<- " If you are using easieR for the first time, please use the function ez.install in order to ensure that easieR will work properly.n Si vous utilisez easieR pour la 1e fois, veuillez utiliser la fonction ez.install pour vous assurer de bon fonctionnement de easieR."
-  ask_chose_variables <<- "veuillez choisir la ou les variables "
-  ask_correlations_type <<- "Type de correlations ?"
-  ask_dependant_variable_name <<- "Quel est le nom de la variable dependante?"
-  ask_factors_number <<- "Nombre de facteurs ?"
-  ask_filename <<- "Quel nom voulez-vous donner au fichier?"
-  ask_independant_variable_name <<- "Quel est le nom de la variable independante?"
-  ask_is_long_format_correct <<- "Est-ce que la structure dans un format long de vos donnees est correcte ?"
-  ask_model <<- "Modele ?"
-  ask_ordinal_variables <<- "Variables ordinales ?"
-  ask_save_results <<- "Enregistrer les resultats ?"
-  ask_save <<- "Voulez-vous sauvegarder ?"
-  ask_specify_contrasts <<- "Veuillez spécifier les contrastes."
-  ask_variables <<- "Quelles sont les variables a selectionner ?"
-  ask_variables_type <<- "Nature des variables ?"
-  ask_what_to_do <<- "Que voulez-vous faire ?"
-  ask_which_analysis <<- "Quelle analyse voulez-vous?"
-  desc_all_contrasts_description <<- "Les contrastes a priori correspondent aux contrastes qui permettent de tester des hypotheses a priori.\nLes contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction a la probabilite"
-  desc_contrasts_must_be_coeff_matrices_in_list <<- "Les contrates doivent etre des matrices de coefficients placees dans une list dont le nom de chaque niveau correspond a un facteur"
-  desc_percentage_outliers <<- "% d'observations considerees comme influentes"
-  desc_robusts_statistics_could_not_be_computed_verify_WRS <<- "Les statistiques robustes n'ont pas pu etre realisees. Verifiez l'installation du package WRS"
-  desc_some_participants_have_missing_values_on_repeated_measures <<- "Certains participants ont des valeurs manquantes sur les facteurs en mesures repetees. Ils vont etre supprimes des analyses"
-  txt_absence_of_difference_between_groups_test_on <<- "Test de l'absence de difference entre les groupes sur "
-  txt_anova_on_medians <<- "Anova sur les medianes"
-  txt_anova_on_m_estimator <<- "ANOVA sur M estimator"
-  txt_bayesian_factors <<- "Facteurs bayesiens"
-  txt_BP_correlation <<- "Correlation de Bravais-Pearson"
-  txt_center <<- "centrer"
-  txt_cohen_d <<- "D de Cohen"
-  txt_correlations <<- "Correlations"
-  txt_correlations_matrix <<- "Matrice de correlations"
-  txt_descriptive_statistics_of_interaction_between_x <<- "Statistiques descriptives de l'interaction entre"
-  txt_descriptive_statistics <<- "Statistiques descriptives"
-  txt_empirical_chi_square_proba_value <<- "valeur de la probabilite du chi carre empirique"
-  txt_factor <<- "facteur."
-  txt_friedman_anova <<- "Anova de Friedman"
-  txt_import_results <<- "importer des resultats"
-  txt_interface_objects_in_memory <<- "Interface - objets en memoire, nettoyer la memoire, repertoire de travail, langue"
-  txt_intraclass_correlation <<- "Correlation intra-classe"
-  txt_kruskal_wallis_pairwise <<- "Test de Kruskal-Wallis - Comparaison deux a deux"
-  txt_kruskal_wallis_test <<- "Test de Kruskal-Wallis"
-  txt_latent_variables_intercept <<- "Intercept des variables latentes [int.lv.free=FALSE]"
-  txt_observed_variables_intercept <<- "Intercept des variables observees [int.ov.free=FALSE]"
-  txt_logistic_regressions <<- "Regressions logistiques"
-  txt_mauchly_test_sphericity_covariance_matrix <<- "Test de Mauchly testant la sphericite de la matrice de covariance"
-  txt_none <<- "aucun"
-  txt_non_param_analysis <<- "Analyse non parametrique"
-  txt_normality_tests <<- "Tests de normalite"
-  txt_pairwise_comparisons <<- "Comparaisons 2 a 2"
-  txt_pairwise <<- "pairwise"
-  txt_partial_corr_BP <<- "Correlation partielle de Bravais-Pearson"
-  txt_preprocess_sort_select_operations <<- "Pretraitements (tri, selection, operations mathematiques, Traitement des valeurs manquantes)"
-  txt_press_enter_to_continue <<- "Appuyez sur [entree] pour continuer"
-  txt_regressions <<- "regressions"
-  txt_repeated_measures <<- "Mesures repetees"
-  txt_sample_size <<- "taille de l'echantillon"
-  txt_test_model <<- "Modele teste"
-  txt_variables <<- "variables"
-  txt_variable <<- "variable"
-  desc_corr_group_analysis_spec <<- "Si vous souhaitez realiser l'analyse pour differents sous-echantillons en fonction d'un critere categoriel (i.e; realiser une analyse par groupe) \n choisissez oui. Dans ce cas, l'analyse est realisee sur l'echantillon complet et sur les sous-echantillons. \n Si vous desirez l'analyse pour l'echantillon complet uniquement, chosissez non. \n l'analyse par groupe ne s'appliquent pas aux statistiques robustes."
-  desc_outliers_removal_implications <<- "Supprimer l'ensemble des outliers supprime l'ensemble des valeurs au-delà p(chi.deux)< 0.001. Supprimer une observation à la fois permet de faire une analyse detaillee de chaque observation consideree comme influente en partant de la valeur la plus extreme. La procedure s'arrete quand plus aucune observation n'est consideree comme influente"
-  txt_bilateral <<- "Bilateral"
-  desc_no_compatible_object_in_mem_for_aov <<- "il n'y a pas d'objet compatible avec aov.plus dans la memoire de R. Vous devez realiser une analyse de variance au prealable"
-  desc_this_function_means_and_sd_adjusted_interaction_effect_possible <<- "Cette fonction permet de fournir les moyennes et erreurs-types ajustees ainsi que le graphique correspondant. Avec le choix post hoc sur les interactions, vous pouvez tester les effets d'interaction 2 a 2 et les effet simples."
-  txt_anova_plus <<- "Anova plus"
-  desc_center_and_center_reduce_explaination <<- "Centrer permet d'avoir une moyenne a zero en maintenant l'ecart-type. Centrer reduire correspond a la formule du z. La moyenne est de 0 et l'ecart-type vaut 1. La probabilite inferieure correspond a la probabilite d'avoir un z inferieur ou egal au z. La probabilite superieure correspond a la probabilite d'avoir un z superieur ou egal au z"
-  desc_proba_sum_is_not_one_or_not_enough_proba <<- "La somme des probabilites est differente de 1 ou le nombre de probabilites ne correspond pas au nombre de modalites de la variable. Veuillez entrer un vecteur de probabilites valide"
-  desc_if_non_fixed_sample_poisson_law <<- "Si l'effectif total est non fixe, on fait l'hypothese que les observations surviennent en respectant une loi de poisson. La repartition sur les niveaux d'un facteur surviennent avec une probabilite fixe. La distribution est une distribution poisson"
-  desc_distribution_is_joint_multinomial <<- "L'option *Effectif total fixe* doit etre choisi si on fait l'hypohese nulle que la repartition dans chacune des cellules du tableau est fixee. La distribution est une distribution multinomiale jointe"
-  desc_distribution_is_independant_multinomial <<- "L'option Effectif total fixe pour les lignes* doit etre choisi si les effectifs pour chaque ligne est identique, comme lorsqu'on veut s'assurer d'un appariement entre groupes. La distribution est une distribution multinomiale independante"
-  desc_corr_detailed_analysis <<- "l'analyse detaillee permet d'avoir les statistiques descriptives, les tests de normalite, le nuage de points, \n des statistiques robustes, l'ensemble des coefficients de correlations. \n la matrice de correlation permet de contrôler l'erreur de 1e espece et est adaptee pour un grand nombre de correlations \n la comparaison de correlations permet de comparer 2 correlations dependantes ou independantes \n Le choix + autre correlations + permet d'avoir les correlation tetrachoriques et polychoriques"
-  desc_corr_values_must_be_between_min_1_and_1 <<- "Les valeurs des correlations doivent etre comprises entre -1 et 1/n et les effectifs doivent etre des entiers positifs"
-  desc_you_can_choose_contrasts_you_want <<- "Vous pouvez choisir les contrastes que vous souhaitez. Neanmoins les regles concernant l'application des contrastes doivent etre respectees. Les contrastes peuvent etre specifies manuellement. Dans ce cas, veuillez choisir specifier les contrastes"
-  desc_square_matrix_rectangular_matrix <<- "Une matrice carree est une matrice avec toutes les Correlations 2 a 2. Une matrice rectangulaire est une matrice dans laquelle un premier ensemble de variables est mis en correlations avec un second jeu de variables"
-  desc_complete_dataset_vs_identification_outliers_vs_without_outliers <<- "les donnees completes representent l'analyse classique sur toutes les donnees utilisables, l'identification des valeurs influentes permet d'identifier les observations qui sont considerees statistiquement comme influencant les resultats. les analyses sur les donnees sans les valeurs influentes realise l'analyse apres suppression des valeurs influentes. Cette option stocke dans la memoire de R une nouvelle base de donnees sans valeur influente dans un objet portant le nom *nettoyees*"
-  desc_welcome_in_easieR <<- "Welcome in easieR -  For more information, please visit :https://theeasierproject.wordpress.com/"
-  ask_variables_type_for_anova <<- "Veuillez preciser le(s) type(s) de variable(s) que vous souhaitez inclure dans l'analyse.\nVous pouvez en choisir plusieurs (e.g., pour anova mixte ou des ancova"
-  ask_correction_anova_contrasts <<- "Correction ?"
-  txt_independant_groups <<- "Groupes independants"
-  txt_covariables <<- "Covariables"
-  txt_cfa_information_default <<- "information [information=default]"
-  txt_cfa_continuity_correction_zero_keep_margins_default <<- "correction de continuite [zero.keep.margins=default]"
-  txt_cfa_estimator_ml_default <<- "estimateur [estimator=ml])"
-  txt_cfa_groups_null_default <<- "groupes [group=NULL]"
-  txt_cfa_test_standard_default <<- "test [test=standard]"
-  txt_cfa_standard_error_default <<- "erreur standard [se=standard]"
-  txt_cfa_observed_variabes_standardization_true_default <<- "standardisation des variables observees [std.ov=T]"
-  txt_cfa_latent_variables_indicators_estimates_true_default <<- "Estimation des indicateurs des variables latentes [std.lv=FALSE]"
-  desc_wls_corresponds_to_adf_plus_explaination_other_estimators <<- "[WLS] correspond a [ADF]. Les estimateurs avec les extensions [M],[MV],[MVSF],[R] sont des versions robustes des estimateurs classiques [MV],[WLS], [DWLS], [ULS]"
-  ask_observed_variables_intercept_zero <<- "Intercept VO=0 ?"
-  ask_latent_variables_intercept_zero <<- "Intercept VL=0 ?"
-  ask_how_to_treat_exaequo_rank <<- "Comment voulez-vous traiter les ex-aequo ? La methode *average* fait la moyenne entre les ex aequo (le plus habituel), *first* attribue le premier rang ex aequo a la premiere valeur dans les donnees, *laste* a la derniere, *min* attribue la valeur minimale a l'ensemble des ex aequo et *max* la valeur maximale."
-  desc_for_ordinal_and_dicho_varible_prefer_min_res <<- "Pour les variables ordinales et dichomiques, preferez la methode du minimum des residus - minres - ou des moindres carres ponderes - wls. Pour les variables continues, le maximum de vraisemblance si la normalite est respectee - ml"
-  desc_saturation_criterion_show_only_above_threshold <<- "Le critere de saturation permet de n'afficher dans le tableau de resultats que les saturation superieure au seuil fixe"
-  desc_to_find_new_analysis_search_in_english <<- "Pour trouver une nouvelle analyse, il est necessaire de faire votre recherche en anglais. Vous pouvez utiliser plusieurs mots dans la recherche. Une page html reprenant l'ensemble des packages faisant reference a l'analyse recherchee va s'ouvrir."
-  txt_division <<- "division"
-  desc_if_you_select_both_operations_value_will_be_added_to_chose_cols <<- "Si vous selectionnez les deux options en meme temps, la valeur specifiee sera ajoutee a l'ensemble des colonnes choisies et ensuite les colonnes choisies seront additionnees. Pour additionner une valeur specifique au total, veuillez choisir l'option addition de colonnes uniquement."
-  desc_if_you_select_both_operations_value_will_be_multiplied_to_chose_cols <<- "Si vous selectionnez les deux options en meme temps, la valeur specifiee sera multipliee a l'ensemble des colonnes choisies et ensuite les colonnes choisies seront multipliees entre elles. Pour multiplier une valeur specifique au total, veuillez choisir l'option multipication de colonnes uniquement."
-  ask_chose_values_on_left_of_minus_symbol <<- "Veuillez selectionner les valeurs situees a gauche du symbole *moins*. Si plusieurs variables sont selectionnees, les regles du calcul matriciel sont appliques."
-  desc_one_or_same_number_cols_on_both_sides_only <<- "Il ne doit y avoir qu'une colonne ou le nombre de colonnes a droite du symbole *moins* doit etre egal au nombre de colonnes a gauche du symbole *moins*"
-  ask_specify_exponant_value <<- "Veuillez preciser la valeur de l'exposant. NOTE : Pour les racines, l'exposant est l'inverse la valeur. Par exemple, La racine carree vaut 1/2, la racine cubique 1/3... "
-  desc_expression_must_be_correct_example <<- "L'expression doit etre correcte. Vous pouvez utiliser directement le nom des variables les operateurs sont +,-,*,/,^,(,). Une expression correcte serait :"
-  ask_chose_relation_between_vars_regressions_log <<- "Veuillez choisir le(s) type(s) de relations entre les variables. Les effets additifs prennent la forme de y=X1+X2 tandis que les effets d'interaction prennent la forme de Y=X1+X2+X1:X2"
-  ask_variables_order_for_max_likelihood <<- "L'ordre d'entree des variables est important pour le calcul du maximum de vraisemblance. Veuillez preciser l'ordre d'entree des variables"
-  ask_integrate_probabilities_to_dataset <<- "voulez-vous integrer les probabilites a votre base de donnees ?"
-  ask_specify_other_options_regressions <<- "Voulez-vous preciser d'autres options ? Vous pouvez en selectionner plusieurs. Les methodes de selection permettent de selectionner le meilleur modele sur la base de criteres statistiques. Les modeles hierarchiques permettent de comparer plusieurs modeles. Les validations croisees permettent de verifier si un modele n'est pas dependant des donnees. Cette option est a utiliser notamment avec les methodes de selection. L'analyse par groupe permet de realiser la meme regression pour des sous-groupes. Les mesures d'influences sont les autres mesures habituellement utilisees pour identifier les valeurs influentes."
-  desc_possible_apply_multiple_selection_criterion <<- "Il est possible d'appliquer plusieurs criteres de selection simultanement, impliquant ou non plusieurs variables. Veuillez preciser le nombre de variables sur lesquelles vous desirez appliquer un ou plusieurs criteres de selection. Veuillez choisir les variables sur lesquelles vous deirez appliquer une selection"
-  desc_skew_and_kurtosis_between_1_and_3 <<- "Type de skew et kurtosis, doit se situer entre 1 et 3:TXT"
-  desc_with_two_equal_means_ratio_must_be_5_percent <<- "Avec deux moyennes egales, ou pratiquement egales, le taux d'erreurs doit etre de 5%. Modifiez progressivement l'ecart entre les ecart-types et voyez comment le taux d'erreur alpha va etre modifie"
-  desc_bilateral_superior_inferior_test_t <<- "Une analyse bilaterale teste l'existence d'une difference. Le choix superieur teste si la moyenne est strictement superieure \n Le choix inferieur teste l'existence d'une difference strictement inferieure"
-  txt_numeric_variables <<- "Variables numériques"
-  txt_select_language <<- "Choisir la langue"
-  txt_dot_adjusted <<- ".ajustee"
-  txt_bca_inferior_limit <<- "Bca lim inf"
-  txt_bca_inferior_limit <<- "Bca.lim.inf"
-  txt_bca_superior_limit <<- " Bca.lim.sup"
-  txt_bca_superior_limit <<- "Bca lim sup"
-  txt_bca_superior_limit <<- "Bca.lim.sup"
-  txt_centered_dot_reduced <<- "centrer.reduite"
-  txt_chi_dot_squared <<- "chi.2"
-  txt_chi_dot_squared_model <<- "chi.2.modele"
-  txt_chi_dot_squared <<- "chi.carre"
-  txt_chi_dot_squared <<- "chi.deux"
-  txt_chi_dot_squared_adjustment <<- "chi.deux d'ajustement"
-  txt_pairwise_comparison <<- "comparaison 2 a 2"
-  txt_continuous <<- "continues"
-  txt_greenhouse_geisser_huynn_feldt_correction <<- "Correction : Greenhouse-Geisser &  Hyunh-Feldt"
-  txt_df <<- "ddl"
-  txt_df1 <<- "ddl1"
-  txt_df_parenthesis_1 <<- "Ddl(1)"
-  txt_df2 <<- "ddl2"
-  txt_df_parenthesis_2 <<- "Ddl(2)"
-  txt_df_denom <<- "ddl.denom"
-  txt_df_parenthesis_denom <<- "Ddl (dnom)"
-  txt_df_effect <<- "ddl.effet"
-  txt_df_num <<- "ddl.num"
-  txt_df_parenthesis_num <<- "Ddl (num)"
-  txt_df_predictor <<- "ddl predicteur"
-  txt_df_residual <<- "ddl.resid"
-  txt_df_residuals <<- "ddl.residuels"
-  txt_delta_r_squared <<- "Delta R.deux"
-  txt_error <<- "Erreur"
-  txt_error_BP <<- "Erreur.BP"
-  txt_error_spearman <<- "Erreur.Spearman"
-  txt_error_dot_standard_short <<- "erreur.st"
-  txt_error_dot_standard <<- "erreur.standard"
-  txt_error_dot_standard <<- "Erreur.standard"
-  txt_space <<- "espace"
-  txt_estimator <<- "estimateur"
-  txt_global_model_estimate <<- "Estimation  du modele global"
-  txt_hf_p_value <<- "HF.valeur.p"
-  txt_ci_inferior <<- "IC Inf"
-  txt_ci_inferior_limit <<- "IC lim inf"
-  txt_ci_superior_limit <<- "IC lim sup"
-  txt_ci_superior <<- "IC Sup"
-  txt_large <<- "large"
-  txt_large_half <<- "large - 0.5"
-  txt_inferior_limit <<- "lim.inf"
-  txt_ci_inferior_limit_dot <<- "lim.inf.IC"
-  txt_ci_inferior_limit_dot <<- "Lim.inf.IC"
-  txt_ci_superior_limit <<- "lim.sup"
-  txt_ci_superior_limit_dot <<- "lim.sup.IC"
-  txt_ci_superior_limit_dot <<- "Lim.sup.IC"
-  txt_r_squared_matrix <<- "matrice des r.deux"
-  txt_truncated_m <<- "M.tronquee"
-  txt_multiplied_by <<- "multiplie.par"
-  txt_dot_cleaned <<- ".nettoyees"
-  txt_cleaned <<- "nettoyees"
-  txt_bootstrap_dot_number <<- "Nombre.bootstrap"
-  txt_odd_ratio_dot <<- "Odd.ratio"
-  desc_install_bad_packages <<- "Package.mal.installes"
-  desc_install_correct_packages <<- "packages.installes.correctement"
-  txt_critical_p_corrected <<- "p.critique.corrigee"
-  txt_percentile_inferior_limit_dot <<- "Percentile.lim.inf"
-  txt_percentile_superior_limit_dot <<- "Percentile.lim.sup"
-  txt_percentage_removed_obs <<- "Pourcentage.obs.retirees"
-  txt_percent_removed_obs <<- "Pourcent.obs.retirees"
-  txt_r_dot_square <<- "r.carre"
-  txt_r_square <<- "R carre"
-  txt_r_dot_square <<- "R.carre"
-  txt_r_dot_two <<- "r.deux"
-  txt_r_dot_two <<- "R.deux"
-  txt_r_dot_two_adjusted <<- "R.deux.aj"
-  txt_log_regression_dot <<- "Regressions.logistique"
-  txt_multiple_regressions_dot <<- "regressions.multiples"
-  txt_multiple_regressions_dot <<- "Regressions.multiples"
-  txt_rho_dot_square <<- "rho.deux"
-  txt_critical_dot_threshold <<- "seuil.critique"
-  txt_critical_dot_threshold <<- "Seuil.critique"
-  txt_spearman_df <<- "Spearman.ddl"
-  txt_specificity <<- "specifite"
-  txt_ultrawide <<- "ultra large"
-  txt_ultrawide <<- "ultralarge"
-  txt_ultrawide_val <<- "ultra large - 0.707"
-  txt_absolute_dot_val <<- "valeur.absolue."
-  txt_contrast_dot_val <<- "Valeur.contraste"
-  txt_critical_dot_val <<- "Valeur.critique"
-  txt_p_dot_val <<- "valeur.p"
-  txt_p_dot_val_lilliefors <<- "valeur.p Llfrs"
-  txt_p_dot_val_sw <<- "valeur.p SW"
-  txt_test_dot_val <<- "Valeur.test"
-  txt_z_dot_val <<- "valeur.Z"
-  txt_value <<- "value"
-  txt_vector_length_zero <<- "vector of length zero"
-  txt_kendall_w <<- "W.de.Kendall"
-  txt_synthesis <<- "Synthèse"
-  txt_truncated_mean_0_2 <<- "Test sur la moyenne tronquée à 0.2"
-  txt_cramer_v_square <<- "V.carre"
-  txt_effect_size_dot <<- "Taille.effet"
-  txt_gg_p_value <<- "GG.valeur.p"
-  txt_var_explained_dot <<- "Var.expliquee"
-  V.sq<<-"V.carre"
+  .dico <<- new.env(parent=emptyenv())
+  assign("ask_2x2_table" , "tableau 2x2 ?" , envir=.dico)
+  assign("ask_2x2_table_value" , "Veuillez preciser la valeur pour les tableaux 2x2" , envir=.dico)
+  assign("ask_add_a_value_to_empty_cells" , "Faut-il ajouter une valeur aux cellules vides pour les correlations polychorique ? Pour specifier les valeurs,choisissez TRUE, sinon choisissez [default]" , envir=.dico)
+  assign("ask_add_value_to_total" , "voulez-vous encore ajouter une valeur au total ?" , envir=.dico)
+  assign("ask_analysis_by_group" , "Analyse par groupe?" , envir=.dico)
+  assign("ask_analysis_on_complete_data_or_remove_outliers" , "Desirez-vous l'analyse sur les donnees completes ou sur les donnees pour lesquelles les valeurs influentes ont ete enlevees ?" , envir=.dico)
+  assign("ask_analysis_type" , "Quelle analyse voulez-vous realiser?" , envir=.dico)
+  assign("ask_are_frequences_free_parameters" , "est-ce que les frequences des differents group est un parametre libre ? " , envir=.dico)
+  assign("ask_are_there_inversed_items" , "Y a-t-il des items inverses ?" , envir=.dico)
+  assign("ask_are_you_ready" , "etes-vous pret?" , envir=.dico)
+  assign("ask_baseline" , "Quelle est la ligne de base?" , envir=.dico)
+  assign("ask_bigger_tables_value" , "Veuillez preciser la valeur pour les tableaux plus grand que 2x2" , envir=.dico)
+  assign("ask_bootstrap_number_min_500" , "veuillez preciser le nombre de bootstrap. Un minimum de 500 est idealement requis. Peut prendre du temps pour N>1000" , envir=.dico)
+  assign("ask_bootstrap_numbers_1_for_none" , "Veuillez preciser le nombre de bootstrap. Pour ne pas avoir de bootstrap, choisir 1" , envir=.dico)
+  assign("ask_bootstraps_number" , "Nombre de bootstrap ?" , envir=.dico)
+  assign("ask_cancel_entered_value_not_num" , "la valeur que vous avez entree n'est pas numerique.Voulez-vous annuler cette analyse ?" , envir=.dico)
+  assign("ask_cauchy_apriori_distribution" , "Veuillez preciser la distribution a priori de Cauchy" , envir=.dico)
+  assign("ask_center" , "Centrer?" , envir=.dico)
+  assign("ask_center_numeric_variables" , "Voulez-vous centrer les variables numeriques ? Centrer est generalement conseille (e.g., Schielzeth, 2010)." , envir=.dico)
+  assign("ask_chi_squared_type" , "Veuillez preciser le type de chi carre que vous souhaitez realiser." , envir=.dico)
+  assign("ask_choose_a_variable_with_at_least_two_modalities" , "Une variable categorielle doit avoir au moins 2 modalites differentes. Veuillez choisir une variable avec au moins deux modalites" , envir=.dico)
+  assign("ask_chose_analysis" , "Veuillez choisir l'analyse que vous desirez realiser." , envir=.dico)
+  assign("ask_chose_categorial_ranking_factor" , "Veuillez choisissez le facteur de classement categoriel." , envir=.dico)
+  assign("ask_chose_cols_corresponding_to_repeated_measures" , "Veuillez choisir l'ensemble des colonnes correspondant aux modalites des variables en mesures repetees" , envir=.dico)
+  assign("ask_chose_covariables" , "Veuillez choisir la ou les covariables" , envir=.dico)
+  assign("ask_chose_database" , "Veuillez choisir la base de donnees" , envir=.dico)
+  assign("ask_chose_defining_groups" , "Veuillez choisir la definissant les groupes" , envir=.dico)
+  assign("ask_chose_dependant_variable" , "Veuillez choisir la variable dependante." , envir=.dico)
+  assign("ask_chose_first_judge" , "Veuillez choisir le premier juge" , envir=.dico)
+  assign("ask_chose_independant_group_variables" , "Veuillez choisir les variable-s a groupes independants" , envir=.dico)
+  assign("ask_chose_interaction_model_predictors" , "Veuillez choisir les predicteurs a entrer dans le modele d'interaction. Il est necessaire d'avoir au moins deux variables" , envir=.dico)
+  assign("ask_chose_manifest_variables_at_least_three" , "Veuillez choisir les variables manifestes que vous desirez analyser. Vous devez choisir au moins 3 variables" , envir=.dico)
+  assign("ask_chose_ranking_categorial_factor" , "Veuillez choisir le facteur de classement categoriel." , envir=.dico)
+  assign("ask_chose_rotation" , "Veuillez choisir le type de rotation. Oblimin est adapte en sciences humaines" , envir=.dico)
+  assign("ask_chose_sample_variables" , "Veuillez choisir la ou les variables definissant les effectifs" , envir=.dico)
+  assign("ask_chose_second_judge" , "Veuilez choisir le second juge" , envir=.dico)
+  assign("ask_chose_selection_method" , "Veuillez choisir la methode de selection que vous souhaitez utiliser" , envir=.dico)
+  assign("ask_chose_the_working_dir" , "Veuillez choisir le repertoire de travail" , envir=.dico)
+  assign("ask_chose_variables_at_least_five" , "Veuillez choisir les variables que vous desirez analyser. Vous devez choisir au moins 5 variables" , envir=.dico)
+  assign("ask_chose_variables_at_least_three" , "Veuillez choisir les variables que vous desirez analyser. Vous devez choisir au moins 3 variables" , envir=.dico)
+  assign("ask_chose_variable" , "Veuillez choisir les variables que vous desirez analyser." , envir=.dico)
+  assign("ask_chose_variable_x_axis" , "Veuillez choisir la variable en abcisse" , envir=.dico)
+  assign("ask_chose_variable_y_axis" , "Veuillez choisir la variable en ordonnee" , envir=.dico)
+  assign("ask_coding_criterion" , "Quel critere de codage voulez-vous ?" , envir=.dico)
+  assign("ask_col_separation_index" , "Lors de l'enregistrement de votre fichier, quel est l'indice de separation des colonnes ?" , envir=.dico)
+  assign("ask_complete_or_outliers" , "Voulez-vous realiser les analyses sur les donnees completes ou sur les donnees sans les valeurs influentes ?" , envir=.dico)
+  assign("ask_constant_parameters" , "Parametres constants ?" , envir=.dico)
+  assign("ask_continue" , "Continuer ?" , envir=.dico)
+  assign("ask_contrast_must_respect_ortho" , "Les contrastes doivent respecter l orthogonalite. Voulez-vous continuer ?" , envir=.dico)
+  assign("ask_control_variables" , "Veuillez preciser la ou les variables a controler" , envir=.dico)
+  assign("ask_convert_dependant_variable_to_dichotomic" , "voulez-vous convertir la variable dependante en une variable dichotomique, ?" , envir=.dico)
+  assign("ask_correction_desired" , "Veuillez preciser le type de correction de la probabilite que vous desirez realiser" , envir=.dico)
+  assign("ask_correction_type" , "Type de correction ?" , envir=.dico)
+  assign("ask_correlated_or_orthogonal_factors" , "Est-ce que les facteurs sont correles (FALSE) ou sont-ils orthogonaux (TRUE)?" , envir=.dico)
+  assign("ask_correlation_matrix_could_not_be_computed" , "La matrice de correlation n'a pu etre realisee. Voulez-vous reessayer ?" , envir=.dico)
+  assign("ask_correlation_type" , "Veuillez choisir le type de correlations que vous desirez realiser. Pour les variables dichotomiques, les correlations seront des correlations tetrachoriques" , envir=.dico)
+  assign("ask_corr_or_partial_correlations" , "Correlations ou correlations partielles?" , envir=.dico)
+  assign("ask_could_not_converge_model_verify_correlation_matrix" , "Nous n'avons pas reussi a faire converger le modele. Veuillez verifier votre matrice de correlations et reessayer avec d'autres parametres" , envir=.dico)
+  assign("ask_could_not_finish_analysis_respecify_parameters" , "Nous n'avons pas pu terminer correctement l'analyse. Veuillez tenter de respecifier les parametres" , envir=.dico)
+  assign("ask_covariables" , "Covariable-s ?" , envir=.dico)
+  assign("ask_criterion_for_dichotomy" , "Veuillez specifier le critere sur lequel vous souhaitez dichotomiser votre variable.Vous pouvez utiliser la mediane ou choisir un seuil specifique." , envir=.dico)
+  assign("ask_criterion_for_obs_to_keep" , "Veuillez specifier les criteres des observations que vous desirez conserver/garder." , envir=.dico)
+  assign("ask_criterion_for_variable" , "Quel critere voulez-vous utiliser pour la variable" , envir=.dico)
+  assign("ask_data" , "Donnees ?" , envir=.dico)
+  assign("ask_data_format" , "Quel est le format de vos donnees?" , envir=.dico)
+  assign("ask_decimal_symbol" , "Si certaines donnees contiennent des decimales, quel est le symbole indiquant la decimale ?" , envir=.dico)
+  assign("ask_denominator_variable_or_value" , "Le denominateur est-il une variable ou une valeur ? " , envir=.dico)
+  assign("ask_denominator_variable" , "Veuillez selectionner la variable au denominateur " , envir=.dico)
+  assign("ask_dependant_variable_with_less_than_three_val_verify_dataset" , "La variable dependante a moins de trois valeurs differentes. Verifiez vos donnees ou l'analyse que vous tentez de realiser n'est pas pertinente." , envir=.dico)
+  assign("ask_did_not_specify_nb_factors_repeated_measure_exit" , "Vous n avez pas precise le nombre de facteurs en mesure repetee, voulez-vous quitte ?" , envir=.dico)
+  assign("ask_distribution" , "Distribution ?" , envir=.dico)
+  assign("ask_distribution_type" , "Quelle distribution voulez-vous ?" , envir=.dico)
+  assign("ask_empty_cells" , "Cellules vides ?" , envir=.dico)
+  assign("ask_enter_different_values" , "Veuillez entrer les differentes valeurs" , envir=.dico)
+  assign("ask_enter_number_of_to_be_removed_variable" , "Vous devez entrer le numero permettant de savoir quelle observation doit etre supprimee." , envir=.dico)
+  assign("ask_exit_because_of_alpha_on_non_matrix" , "Vous essayez de faire un alpha sur autre chose qu'un matrice. Voulez-vous sortir de cette analyse?" , envir=.dico)
+  assign("ask_exit_no_lower_bound_specified" , "Vous n'avez pas precise la limite inferieure. Voulez-vous quitter la selection ?" , envir=.dico)
+  assign("ask_exit_no_upper_bound_specified" , "Vous n'avez pas precise la limite superieure. Voulez-vous quitter la selection ?" , envir=.dico)
+  assign("ask_exportation_filename" , "Quel nom voulez-vous attribuer au fichier ?" , envir=.dico)
+  assign("ask_factorial_scores" , "Scores factoriels?" , envir=.dico)
+  assign("ask_factors_number_for_hierarchical_structure" , "Veuillez preciser le nombre de facteurs de la structure hierarchique." , envir=.dico)
+  assign("ask_factors_ortho" , "Orthogonalite des facteurs ?" , envir=.dico)
+  assign("ask_factors_superior_level" , "Nombre de facteurs du niveau superieur ?" , envir=.dico)
+  assign("ask_family" , "Veuillez preciser la famille (i.e. forme de la distribution)." , envir=.dico)
+  assign("ask_file_format" , "Format du fichier?" , envir=.dico)
+  assign("ask_file_format_to_import" , "Dans quel format est enregistre votre fichier ?" , envir=.dico)
+  assign("ask_first_categorical_set" , "Veuillez choisir le premier set de facteur(s) categoriel(s)" , envir=.dico)
+  assign("ask_first_variables_set" , "Veuillez choisir le premier jeu de variables" , envir=.dico)
+  assign("ask_fixed_covariables" , "Covariables fixees ?" , envir=.dico)
+  assign("ask_freq_constance" , "Constance de la frequence ?" , envir=.dico)
+  assign("ask_f_value" , "Quelle valeur du F voulez-vous utiliser ?" , envir=.dico)
+  assign("ask_group_variable" , "Variable [groupes] ?" , envir=.dico)
+  assign("ask_headers_in_database" , "Est-ce que le nom des variables est sur la premiere ligne de votre base de donnees ? Choisir TRUE si c'est le cas" , envir=.dico)
+  assign("ask_hierarchical_analysis" , "Faut-il realiser une analyse hierarchique ?" , envir=.dico)
+  assign("ask_how_many_modalities" , "Combien de modalites" , envir=.dico)
+  assign("ask_how_standard_error_must_be_estimated" , "Comment l'erreur standard doit-elle etre estimee ?" , envir=.dico)
+  assign("ask_how_to_remove" , "Comment voulez-vous les supprimer?" , envir=.dico)
+  assign("ask_how_to_treat_missing_values" , "Des valeurs manquantes ont ete detectees. Comment voulez-vous les traiter ? Garder l'ensemble des observations peut biaiser les resultats." , envir=.dico)
+  assign("ask_id_variable" , "Veuillez choisir la variable identifiant les participants" , envir=.dico)
+  assign("ask_imitate" , "Imiter ?" , envir=.dico)
+  assign("ask_independant_variable" , "Veuillez choisir la variable independante." , envir=.dico)
+  assign("ask_information_matrix" , "Matrice d'information ?" , envir=.dico)
+  assign("ask_integrate_factorial_scores_in_data" , "Voulez-vous que les scores factoriels soient integres a vos donnees ?" , envir=.dico)
+  assign("ask_inversed_items" , "items inverses?" , envir=.dico)
+  assign("ask_is_model_correct" , "Est-ce que votre modele est correct ?" , envir=.dico)
+  assign("ask_latent_variables_number" , "Veuillez preciser le nombre de variables latentes" , envir=.dico)
+  assign("ask_level" , "Veuillez choisir le niveau" , envir=.dico)
+  assign("ask_likelihood" , "Vraisemblance ?" , envir=.dico)
+  assign("ask_linebase_modalities" , "Veuillez specifier la/les modalite(s) qui serviront pour la ligne de base (e.g. 0). Les autres modalites seront regroupes dans la categorie 1." , envir=.dico)
+  assign("ask_log_base" , "Veuillez preciser la base du logarithme.Pour obtenir e, tapez e" , envir=.dico)
+  assign("ask_lower_bound" , "Limite inferieure?" , envir=.dico)
+  assign("ask_mcnemar_repeated_measure" , "Test de McNemar : les modalites ne sont pas les memes pour le test de McNemar. Est-ce bien un facteur en mesure repetee ?" , envir=.dico)
+  assign("ask_mediation_type" , "Quel type de mediation ?" , envir=.dico)
+  assign("ask_mediator" , "veuillez choisir le mediateur" , envir=.dico)
+  assign("ask_minus_left_hand_variables" , "Veuillez selectionner la -les- variable(s) a gauche du symbole *moins*" , envir=.dico)
+  assign("ask_minus_right_hand_variables" , "Veuillez selectionner la -les- variable(s) a droite du symbole *moins*." , envir=.dico)
+  assign("ask_minus_right_operand_variable_or_value" , "Les valeurs a droite du symbole *moins* sont-elles une/des variable(s) ou une valeur ? " , envir=.dico)
+  assign("ask_missing_values_detected_what_to_do" , "Des valeurs manquantes ont ete detectees. Comment voulez-vous les traiter ?" , envir=.dico)
+  assign("ask_missing_values_treatment" , "Traitement des valeurs manquantes ?" , envir=.dico)
+  assign("ask_missing_values_value_na_on_empty" , "Si certaines donnees sont manquantes, comment sont-elles definies ? Vous pouvez laisser NA si les cellules sont vides" , envir=.dico)
+  assign("ask_missing_value_treatment" , "Nombre de valeurs manquantes par variable. Comment voulez-vous les traiter ?" , envir=.dico)
+  assign("ask_modalities_for_variable" , "Quelles modalites voulez-vous selectionner pour la variable" , envir=.dico)
+  assign("ask_modalities_to_keep" , "Veuillez selectionner les modalites que vous desirez conserver." , envir=.dico)
+  assign("ask_name_for_dataset" , "Quel nom voulez-vous donner aux donnees ?" , envir=.dico)
+  assign("ask_name_to_attribute_to" , "Quel nom voulez-vous attribuer a" , envir=.dico)
+  assign("ask_nb_factors_repeated_measure" , "Combien de facteurs en mesure repetee ?" , envir=.dico)
+  assign("ask_new_variable_name" , "Quel nom voulez-vous attribuer a la nouvelle variable ? " , envir=.dico)
+  assign("ask_norm_value" , "Quelle est la valeur de la norme ?" , envir=.dico)
+  assign("ask_not_enough_obs_verify_dataset" , "Il n'y a pas assez d'observations pour realiser l'analyse. Veuillez verifier vos donnees net vous assurer qu'il y a au moins trois observations par modalite de chaque facteur" , envir=.dico)
+  assign("ask_null_hypothesis_tests_or_bayesian_factors" , "Voulez-vous les tests d'hypothees nuls ou/et les facteurs bayesiens ?" , envir=.dico)
+  assign("ask_numerator_variable_or_value" , "Le numerateur est-il une variable ou une valeur ? " , envir=.dico)
+  assign("ask_numerator_variable" , "Veuillez selectionner la variable au numerateur " , envir=.dico)
+  assign("ask_obs_to_remove" , "Quelle observation souhaitez-vous retirer des analyses ? 0=aucune" , envir=.dico)
+  assign("ask_other_options" , "Autres options?" , envir=.dico)
+  assign("ask_ponderate_analysis_by_a_sample_var" , "Faut-il ponderer l'analyse par une variable effectif ?" , envir=.dico)
+  assign("ask_positive_val_variable_or_value" , "Les valeurs positives sont-elles une/des variable(s) ou une valeur ? " , envir=.dico)
+  assign("ask_predictor" , "veuillez preciser le predicteur" , envir=.dico)
+  assign("ask_press_enter_to_continue" , "Appuyez [entree] pour continuer" , envir=.dico)
+  assign("ask_probabilities_for_modalities" , "Veuillez entrer les probabilites correspondant a chaque modalite de la variable." , envir=.dico)
+  assign("ask_probabilities" , "Probabilites ?" , envir=.dico)
+  assign("ask_probability_value" , "Quelle valeur de la probabilite voulez-vous utiliser ?" , envir=.dico)
+  assign("ask_redefine_analysis_because_modalities_product_is_superior_to_obs" , "Le produit des modalites des variables definissant les groupes est superieur au nombre de vos observations. Il faut au moins une observation par combinaison de modalites de vos variables. Veuillez redefinir votre analyse" , envir=.dico)
+  assign("ask_regroup_modalities" , "Voulez-vous faire des regroupements entre les modalites ?" , envir=.dico)
+  assign("ask_rename_variables_with_special_char" , "Certaines noms de variables contiennent des caracteres speciaux pouvant creer des bugs. Voulez-vous renommer ces variables ?" , envir=.dico)
+  assign("ask_results_desired" , "Quels resultats voulez-vous obtenir ?" , envir=.dico)
+  assign("ask_results_output" , "Sorties de resultats ?" , envir=.dico)
+  assign("ask_sampling_type" , "Quel type d'echantillonnage avez-vous realise pour votre analyse ?" , envir=.dico)
+  assign("ask_save_results_in_external_file" , "Desirez-vous sauvegarder les resultats dans un fichier externe ?" , envir=.dico)
+  assign("ask_second_categorical_set" , "Veuillez choisir le second set de facteur(s) categoriel(s)" , envir=.dico)
+  assign("ask_second_mediator" , "veuillez preciser le second mediateur." , envir=.dico)
+  assign("ask_second_variables_set" , "Veuillez choisir le second jeu de variables" , envir=.dico)
+  assign("ask_selection_method" , "Quel methode faut-il appliquer pour la methode de selection ?" , envir=.dico)
+  assign("ask_select_variables_or_modalities_of_repeated_measure_variable" , "Veuillez selectionner les variables OU les modalites de la (des) variables a mesure(s) repetee(s)." , envir=.dico)
+  assign("ask_separation_value" , "Veuillez preciser la valeur de separation" , envir=.dico)
+  assign("ask_shorten_long_variables_names" , "Certaines variables ont des noms particulierement longs pouvant gener la lecture. Voulez-vous les raccourcir?" , envir=.dico)
+  assign("ask_should_intercept_of_latent_variable_be_fixed_to_zero" , "Est-ce que l'intercept des variables latentes doit etre fixe a 0 ?" , envir=.dico)
+  assign("ask_should_intercept_of_obs_variables_be_fixed_to_zero" , "Faut-il fixer l'intercept des variables observees a 0 ?" , envir=.dico)
+  assign("ask_simple_or_partial_corr" , "Correlations simples ou partielles?" , envir=.dico)
+  assign("ask_specify_all_parameters_or_imitate_specific_software" , "Voulez-vous specifier tous les parametres [default] ou imiter un logiciel particulier ?" , envir=.dico)
+  assign("ask_specify_datasheet_to_import" , "Veuillez specifier la feuille de calcul que vous souhaitez importer" , envir=.dico)
+  assign("ask_specify_groups" , "Specifier groupes ?" , envir=.dico)
+  assign("ask_specify_inverted_item" , "Veuillez preciser les items inverses" , envir=.dico)
+  assign("ask_specify_likelihood" , "Veuillez preciser la vraisemblance." , envir=.dico)
+  assign("ask_specify_norm_value" , "Veuillez specifier la valeur de la norme" , envir=.dico)
+  assign("ask_specify_other_options" , "Specifier les autres options?" , envir=.dico)
+  assign("ask_specify_sample" , "Specifier effectifs ?" , envir=.dico)
+  assign("ask_specify_sample_variable" , "Specifier la vriable effectifs ?" , envir=.dico)
+  assign("ask_specify_variables_for_ranks" , "Veuillez preciser les variables dont vous souhaiter faire les rangs" , envir=.dico)
+  assign("ask_specify_variables_type" , "Veuillez preciser le(s) type(s) de variable(s) que vous souhaitez inclure dans l'analyse.nVous pouvez en choisir plusieurs (e.g., pour anova mixte ou des ancova" , envir=.dico)
+  assign("ask_standard_error" , "Erreur standard ?" , envir=.dico)
+  assign("ask_standardization" , "Standardisation ?" , envir=.dico)
+  assign("ask_standardization_vl" , "Standardisation VL?" , envir=.dico)
+  assign("ask_standardize_obs_variables_before" , "Faut-il standardise (i.e. centrer reduire) les variables observees au prelable (TRUE) ou non (FALSE) ?" , envir=.dico)
+  assign("ask_statistical_approach" , "Approche statistique ?" , envir=.dico)
+  assign("ask_subgroups" , "Vous pouvez decomposer les statistiques descriptives par sous-groupe en choisissant une ou plusieurs variables categorielles. Voulez-vous specifier les sous-groupes ?" , envir=.dico)
+  assign("ask_sufficient_matrix_for_afe" , "La matrice est-elle satisfaisante pour une AFE ?" , envir=.dico)
+  assign("ask_suppress_this_obs" , "Voulez-vous supprimer cette observation ?" , envir=.dico)
+  assign("ask_test_hierarchical_structure" , " Desirez-vous tester une structure hierarchique ? L'omega teste une structure hierarchique et une AFE hierarchique seront realisees." , envir=.dico)
+  assign("ask_time1" , "Veuillez choisir le temps 1." , envir=.dico)
+  assign("ask_time2" , "Veuillez choisir le temps 2." , envir=.dico)
+  assign("ask_transform_numerical_to_categorial_variables" , "Vous devez utiliser des variables categorielles. Voulez-vous transformer les variables numeriques en variables categorielles ?" , envir=.dico)
+  assign("ask_troncature_threshold" , "Veuillez fixer le seuil de la troncature" , envir=.dico)
+  assign("ask_t_test_type" , "Veuillez preciser le type de test t que vous souhaitez realiser." , envir=.dico)
+  assign("ask_type_correlation" , "Veuillez preciser le type de correlation que vous souhaitez realiser." , envir=.dico)
+  assign("ask_upper_bound" , "Limite superieure?" , envir=.dico)
+  assign("ask_value_for_missing_values" , "Par quelle valeur sont definies les valeurs manquantes ?" , envir=.dico)
+  assign("ask_value_for_operation" , "Veuillez specifier la valeur pour realiser votre operation mathematique." , envir=.dico)
+  assign("ask_value_for_selected_obs" , "Veuillez preciser la valeur sur laquelle les observations doivent etre selectionnees." , envir=.dico)
+  assign("ask_value" , "Precisez la valeur?" , envir=.dico)
+  assign("ask_variabels_for_polyc_tetra_mixt_corr" , "Veuillez choisir les variables dont il faut realiser les correlations polychorique/tetrachorique/mixte." , envir=.dico)
+  assign("ask_variable_at_this_point" , "Quelle variable a cette etape" , envir=.dico)
+  assign("ask_variable_name" , "Nom de la nouvelle variable ?" , envir=.dico)
+  assign("ask_variables_for_description_statistics" , "veuillez choisir les variables pour lesquelles vous desirez obtenir les statistiques descriptives" , envir=.dico)
+  assign("ask_variables_groups" , "Variable(s) groupes ?" , envir=.dico)
+  assign("ask_variables_names" , "Nom de variables?" , envir=.dico)
+  assign("ask_variables_to_abs" , "Veuillez selectionner les variables dont il faut faire la valeur absolue " , envir=.dico)
+  assign("ask_variables_to_add" , "Veuillez selectionner les variables a additionner." , envir=.dico)
+  assign("ask_variables_to_exp" , "Veuillez selectionner les variables auxquelles s'applique l'exposant " , envir=.dico)
+  assign("ask_variables_to_log" , "Veuillez selectionner les variables dont il faut faire le logarithme " , envir=.dico)
+  assign("ask_variables_to_mean" , "Veuillez selectionner les variables a moyenner " , envir=.dico)
+  assign("ask_variables_to_multiply" , "Veuillez selectionner les variables a multiplier. " , envir=.dico)
+  assign("ask_variables_to_order" , "Veuillez selectionner la (les) variable(s) a trier" , envir=.dico)
+  assign("ask_variables_type_correlations" , "Veuillez preciser le type de variables. Des correlations tetra/polychoriques seront realisees sur les variables dichotomiques/ordinales et Bravais-Pearson sur les variables continues" , envir=.dico)
+  assign("ask_variables_types_correlations" , "Veuillez preciser le type de variables. Des correlations tetra/polychoriques seront realisees sur les variables ordinales et Bravais-Pearson sur les variables continues" , envir=.dico)
+  assign("ask_variables_used_for_exponential" , "Veuillez selectionner les variables servant a l'exponentiel " , envir=.dico)
+  assign("ask_variables_used_for_groups" , "Veuillez choisir la ou les variables definissant les groupes" , envir=.dico)
+  assign("ask_variable" , "Variable a analyser ?" , envir=.dico)
+  assign("ask_wanted_model" , "Veuillez choisir le modele que vous desirez analyser avec aov.plus" , envir=.dico)
+  assign("ask_what_do_you_want" , "Que voulez-vous ?" , envir=.dico)
+  assign("ask_what_is_your_choice" , "Quel est votre choix ?" , envir=.dico)
+  assign("ask_what_to_print" , "Que voulez-vous afficher ?" , envir=.dico)
+  assign("ask_which_algorithm" , "Quel algorithme desirez-vous?" , envir=.dico)
+  assign("ask_which_analysis_you_looking_for" , "Quelle analyse recherchez vous ?" , envir=.dico)
+  assign("ask_which_baseline" , "Quelle est la ligne de base ?" , envir=.dico)
+  assign("ask_which_constant_parameters" , "Quels sont les parametres que vous desirez maintenir constants ?" , envir=.dico)
+  assign("ask_which_contrasts_for_variable" , "Quels contrastes pour la variable" , envir=.dico)
+  assign("ask_which_contrasts" , "Quel types de contraste voulez-vous ?" , envir=.dico)
+  assign("ask_which_correction" , "Quelle correction de la probabilite voulez-vous appliquer ? Pour ne pas appliquer de correction, choisir +none+" , envir=.dico)
+  assign("ask_which_data_to_analyse" , "Quelles donnees voulez-vous analyser?" , envir=.dico)
+  assign("ask_which_data_to_export" , "Quelles donnees voulez-vous exporter ?" , envir=.dico)
+  assign("ask_which_estimator" , "Quelles estimateur ?" , envir=.dico)
+  assign("ask_which_factors_combination_for_adjust_means" , "Pour quelle combinaison de facteurs desirez-vous afficher les moyennes ajustees ?" , envir=.dico)
+  assign("ask_which_information_matrix_for_standard_error_estimation" , "Sur quelle matrice d'information doit se realiser l'estimation des erreurs standards ?" , envir=.dico)
+  assign("ask_which_mathematical_operation" , "Veuillez choisir l'operation mathematique que vous desirez realiser " , envir=.dico)
+  assign("ask_which_operation" , "Quelle operation voulez-vous?" , envir=.dico)
+  assign("ask_which_options" , "Quelles options ?" , envir=.dico)
+  assign("ask_which_options_to_specify" , "Quelles options voulez-vous specifier ?" , envir=.dico)
+  assign("ask_which_output" , "Quel format souhaitez-vous ?" , envir=.dico)
+  assign("ask_which_output_results" , "Quelles sorties de resultats souhaitez-vous ?" , envir=.dico)
+  assign("ask_which_regression_type" , "Quel type de regression ?" , envir=.dico)
+  assign("ask_which_results_warning_on_default_output" , "Quels resultats souhaitez-vous ? Attention : les sorties par defaut ne peuvent etre sauvegrdees. Si vous voulez une sauvarde, choisissez le detail" , envir=.dico)
+  assign("ask_which_rotation" , "Quelle rotation" , envir=.dico)
+  assign("ask_which_saturation_criterion" , "Quel est le critere de saturation que vous voulez utiliser ?" , envir=.dico)
+  assign("ask_which_size_effect" , "Quelle taille d effet voulez-vous ?" , envir=.dico)
+  assign("ask_which_squared_sum" , "Quelle somme des carres voulez-vous utiliser ?" , envir=.dico)
+  assign("ask_which_test" , "Quel test voulez-vous utiliser ?" , envir=.dico)
+  assign("ask_which_value_for_operation" , "Quelle valeur voulez-vous pour votre operation mathematique ?" , envir=.dico)
+  assign("ask_which_variable_identifies_participants" , "Quelle est la variable identifiant les participants ?" , envir=.dico)
+  assign("ask_you_did_not_chose_a_variable_continue_or_abort" , "Vous n avez pas choisi de variable. Voulez-vous continuer (ok) ou abandonner (annuler) cette analyse ?" , envir=.dico)
+  assign("desc_abs_val_applied_to_var" , "la valeur absolue a ete applique a la variable" , envir=.dico)
+  assign("desc_accepted_values_are_z_and_grubbs" , "Les valeurs admises pour critere sont z et Grubbs " , envir=.dico)
+  assign("desc_all_tests_description" , "le modele parametrique renvoie l'anova classique,le non parametrique calcule le test de Kruskal Wallis nsi c'est un modele a groupes independants, ou une anova de Friedman pour un modele en Mesures repetees.nLe modele bayesien est l'equivalent du modele teste dans l'anova en adoptant une approche bayesienne,nles statistiques robustes sont des anovas sur des medianes ou les moyennes tronquees avec ou sans bootstrap." , envir=.dico)
+  assign("desc_alpha_increased_with_value_equals_to" , "vous multipliez l'erreur de 1e espece. Le risque de commettre une erreur de 1e espece est de" , envir=.dico)
+  assign("desc_analysis_aborted" , "L'analyse n'a pas pu aboutir" , envir=.dico)
+  assign("desc_and" , "et" , envir=.dico)
+  assign("desc_and_variabe" , "et la variable" , envir=.dico)
+  assign("desc_and_variable_y" , " et la variable " , envir=.dico)
+  assign("desc_applied_correction_is" , "la correction appliquee est la correction de" , envir=.dico)
+  assign("desc_at_least_10_obs_needed" , "Il faut au moins 10 observations plus le nombre de variables pour realiser l'analyse. Verifiez vos donnees." , envir=.dico)
+  assign("desc_at_least_independant_variables_or_repeated_measures" , "Il est indispensable d'avoir au minimum des variables a groupes independants ou en mesures repetees" , envir=.dico)
+  assign("desc_at_least_on_contrast_matrix_incorrect" , "Au moins une de vos matrices de contrastes n'est pas correcte." , envir=.dico)
+  assign("desc_at_least_one_denom_is_zero" , "Au moins une des valeurs au denominateur est un 0. La valeur renvoyee dans ce cas est infinie - inf" , envir=.dico)
+  assign("desc_at_least_one_non_numeric" , "au moins une variable n'est pas numerique" , envir=.dico)
+  assign("desc_at_least_one_var_is_not_num" , "au moins une des variables n'est pas numerique" , envir=.dico)
+  assign("desc_authorized_values_for_contrasts" , "Les valeurs autorisees pour les contrastes sont +none+ pour aucun contraste, +pairwise+ pour les comparaisons 2 a 2 ou une liste de coefficients de contrastes" , envir=.dico)
+  assign("desc_avoid_spaces_and_punctuations" , "Evitez les espaces ainsi que les signes de ponctuations, a l'exception . et _ " , envir=.dico)
+  assign("desc_bayesian_factors_could_not_be_computed" , "Les facteurs bayesiens n'ont pas pu etre calcules." , envir=.dico)
+  assign("desc_beyond_with_lower_and_upper" , "au-dela (avec une limite inferieure et superieure" , envir=.dico)
+  assign("desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance" , "il y a moins de 3 observations pour un des groupes ou \nla variance d'au moins un groupe vaut 0. Les resultats risquent d'etre considerablement biaises" , envir=.dico)
+  assign("desc_bootstraps_number_must_be_positive" , "Le nombre de bootstrap doit etre un nombre entier positif" , envir=.dico)
+  assign("desc_bootstrap_t_adapt_to_truncated_mean" , "Le bootstrap-t method est un bootstrap adapte au calcul de la moyenne tronquee" , envir=.dico)
+  assign("desc_cannot_compute_mahalanobis" , "Desole, nous ne pouvons pas calculer la distance de Mahalanobis sur vos donnees. Les analyses seront resalisees sur les donnees completes" , envir=.dico)
+  assign("desc_cannot_group_variables_because_not_described" , "Vous ne pouvez pas avoir de variable *groupes* etant donne que toutes les variables doivent etre decrites" , envir=.dico)
+  assign("desc_cannot_have_both_within_RML_arguments" , "Vous ne pouvez pas avoir a la fois des arguments dans within et RML" , envir=.dico)
+  assign("desc_cells_for_mcnemar" , "Les cellules utilisees pour le calcul du McNemar sont celles de la 1e ligne 2e colonne et de la 2e ligne 1e colonne" , envir=.dico)
+  assign("desc_centered_data_schielzeth_recommandations" , "En accord avec les recommandations de Schielzeth 2010, les donnees ont ete prealablement centrees" , envir=.dico)
+  assign("desc_chi_squared_adjustment_on_variable_x" , "chi deux d'ajustement sur la variable" , envir=.dico)
+  assign("desc_close_browser_to_come_back" , "Ne pas oublier de fermer la fenetre htmlt (firexfox, chrome, internet explorer...) pour revenir à la session R" , envir=.dico)
+  assign("desc_cross_validation_is_not_yet_supported" , "La validation croisee n'est pas encore disponible." , envir=.dico)
+  assign("desc_data_saved_in" , "les donnees sont sauvegardees dans" , envir=.dico)
+  assign("desc_data_succesfully_ordered" , "les donnees ont ete triees correctement " , envir=.dico)
+  assign("desc_descriptive_statistics_on" , "Statistiques descriptives sur" , envir=.dico)
+  assign("desc_distribution_is_hypergeometric_when" , "L'option *Effectif total fixe pour les lignes et les colonnes* lorsque les totaux pour les lignes et les colonnes sont fixes.La distribution est hypergeometrique" , envir=.dico)
+  assign("desc_each_participant_must_appear_only_once_" , "Chaque participant doit apparaître une et une seule fois pour chaque combinaison des modalites" , envir=.dico)
+  assign("desc_effect_size_by_walker" , "La taille d'effet est calculee a partir de la formule proposee par Walker, 2003" , envir=.dico)
+  assign("desc_entered_value_not_num" , "la valeur entree n'est pas numerique" , envir=.dico)
+  assign("desc_exponential_has_been_applied_to_var" , "l'exponentiel a ete applique a la variable" , envir=.dico)
+  assign("desc_facotrs_must_be_positive_int_inferior_to_variables_num" , "Le nombre de facteur doit etre un entier positif inferieur au nombre de variables" , envir=.dico)
+  assign("desc_fb_ratio_between_models" , "Rapport des FB entre les modeles" , envir=.dico)
+  assign("desc_file_is_saved_in" , "le fichier est sauvegarde dans" , envir=.dico)
+  assign("desc_flattening_and_asymetry_configurable" , "Vous pouvez specifier la troncature et les parametres pour l'aplatissement et l'asymetrie en choisissant autres options" , envir=.dico)
+  assign("desc_for_bigger_samples_bootstrap_t_prefered" , "Pour des echantillons plus importants, les boostrap utilisant la methode t doit etre preferee." , envir=.dico)
+  assign("desc_for_easier_to_work" , "Pour que easieR fonctionne correctement, il faut installer Pandoc disponible à l'url suivant : https://github.com/jgm/pandoc/releases" , envir=.dico)
+  assign("desc_graph_thickness_gives_density" , "L'epaisseur du graphique donne la densite, permettant de mieux cerner la distribution." , envir=.dico)
+  assign("desc_has_been_added_to" , "a ete ajoutee a" , envir=.dico)
+  assign("desc_has_been_added_to_variable" , "a ete ajoutee a la variable" , envir=.dico)
+  assign("desc_has_been_applied_to_variable" , " a ete applique a la variable" , envir=.dico)
+  assign("desc_has_been_put_to_the_power_of" , " a ete elevee a la puissance" , envir=.dico)
+  assign("desc_has_multiplied_variables" , "a multiplie la -les- variable-s" , envir=.dico)
+  assign("desc_highest_value" , "Valeur la plus elevee" , envir=.dico)
+  assign("desc_how_to_cite_easier" , "Pour citer easieR dans vos publication / to cite easieR in you publications use :\n Stefaniak, N. (2020). " , envir=.dico)
+  assign("desc_identical_option_total_sample" , "L'option Effectif total fixe pour les colonnes* est identique a la precedente pour les colonnes" , envir=.dico)
+  assign("desc_identified_outliers" , "Observations considerees comme influentes" , envir=.dico)
+  assign("desc_if_true_covariates_as_fixed" , "Si vrai, on considere les covaries exogenes comme fixes, sinon on les considere comme aleatoires et leurs parametres sont libres" , envir=.dico)
+  assign("desc_if_true_latent_residuals_one" , "Si vrai, les residus des variables latentes sont fixes a 1, sinon les parametres de la variable latente sont estimes en fixant le premier indicateur a 1" , envir=.dico)
+  assign("desc_improve_likelihood_for_each_variable" , "Amelioration de la vraisemblance pour chaque variable" , envir=.dico)
+  assign("desc_incorrect_model" , "Le modele specifie est incorrect. Verifiez vos variables et votre modele" , envir=.dico)
+  assign("desc_instable_model_high_multicolinearity" , "La multicolinearite est trop importante. Le modele est instable" , envir=.dico)
+  assign("desc_insufficient_obs" , "Le nombre d'observations est insuffisant pour mener a bien les analyses pour ce groupe" , envir=.dico)
+  assign("desc_insufficient_sample_for_combinations_between" , "Les effectifs sont insuffisants pour le nombre de combinaisons entre la variable " , envir=.dico)
+  assign("desc_in_that_case_non_parametric_is_classical_chi_squared" , "Dans ce cas, le test non parametrique est le test de chi carre classique" , envir=.dico)
+  assign("desc_issue_in_hierarchical_regression" , "Un probleme a ete identifie dans les etapes de votre regression hierarchique" , envir=.dico)
+  assign("desc_kmo_could_not_be_computed_verify_matrix" , "Le KMO n'a pas pu etre calcule. Verifiez votre matrice de correlation." , envir=.dico)
+  assign("desc_kmo_must_strictly_be_more_than_a_half" , "le KMO doit absolument etre superieur a 0.5" , envir=.dico)
+  assign("desc_kmo_on_matrix_could_not_be_obtained" , "Le KMO sur la matrice n'a pu etre obtenu." , envir=.dico)
+  assign("desc_kmo_on_matrix_could_not_be_obtained_trying" , "Le KMO sur la matrice n'a pu etre obtenu. Nous tentons de realiser un lissage de la matrice de correlation" , envir=.dico)
+  assign("desc_large_format_must_be_numeric_or_integer" , "Si vos donnees sont en format large, les mesures doivent toutes etre numeriques ou des entiers (integer)" , envir=.dico)
+  assign("desc_list_of_objects_still_in_mem" , "Liste des objects encore en memoire de R" , envir=.dico)
+  assign("desc_log_with_base" , "le logarithme de base" , envir=.dico)
+  assign("desc_manifest_variables_of" , "Variables manifestes de" , envir=.dico)
+  assign("desc_manual_contrast_need_coeff_matrice" , "Si vous entrez des contrastes manuellement, toutes les variables de l'analyse doivent avoir leur matrice de coefficients" , envir=.dico)
+  assign("desc_matrix_is_singular_mardia_cannot_be_performed" , "La matrice est singuliere et le test de Mardia ne peut etre realise. Seules les analyses univariees peuvent etre realisees" , envir=.dico)
+  assign("desc_mcnemar_need_2x2_table_yours_are_different" , "Le test de McNemar implique un tableau 2x2. Les dimensions de votre tableau sont differentes." , envir=.dico)
+  assign("desc_modalities_product_must_correspond_to_cols_selected" , "le produit des modalites de chacune des variables doit correspondre au nombre de colonnes selectionnees." , envir=.dico)
+  assign("desc_model_contains_error" , "Le modele ne peut etre evalue. Il doit contenir une erreur" , envir=.dico)
+  assign("desc_model_could_not_converge" , "Le modele n'a pas pu converger. Les parametres ont ete adaptes pour permettre au modele de converger" , envir=.dico)
+  assign("desc_model_seems_incorrect_could_not_be_created" , "Le modele semble incorrect et n'a pas pu etre cree." , envir=.dico)
+  assign("desc_most_common_effect_size" , "la taille d'effet la plus frequente est le eta carre partiel - pes.\nLa taille d'effet la plus precise est le eta carre generalise - ges" , envir=.dico)
+  assign("desc_multicolinearity_risk" , "risque de multicolinearite si le determinant de la matrice est inferieur a 0.00001" , envir=.dico)
+  assign("desc_multiple_ways_to_compute_squares_sum" , "Il existe plusieurs maniere de calculer la somme des carres. Le choix par defaut des logiciels commerciaux est une somme des carres\nde type 3, mettant la priorite sur les interactions plutot que sur les effets principaux." , envir=.dico)
+  assign("desc_must_be_dichotomic" , "modalites. Elle est incompatible avec une regression logistique. Elle doit etre dichotomique" , envir=.dico)
+  assign("desc_nb_factors_must_be_positive_integer" , "Le nombre de facteur doit etre un entier positif inferieur au nombre de facteurs" , envir=.dico)
+  assign("desc_need_at_least_three_observation_by_combination" , "Certaines combinaisons des modalites ont moins de 3 observations. Vous devez avoir au moins 3 observations pour chaque combinaison" , envir=.dico)
+  assign("desc_neg_log_impossible" , "il n'est pas possible de calculer des logarithmes pour une base est negative. NA est renvoye" , envir=.dico)
+  assign("desc_no_analysis_can_be_performed_given_your_data" , "Les variables que vous avez choisies pour realiser votre analyse ne permettent de faire aucune analyse. Veuillez redefinir votre analyse" , envir=.dico)
+  assign("desc_no_data_in_R_memory" , "il n'y a pas de donnees dans la memoire de R, veuillez importer les donnnees sur lesquelles realiser l'analyse" , envir=.dico)
+  assign("desc_non_equal_independant_variable_modalities_occurrence" , "Le nombre d'occurrence pour chaque modalite de votre variable independante n'est pas identique. Veuillez choisir un identifiant participant" , envir=.dico)
+  assign("desc_non_numeric_value" , "La valeur entree n'est pas numerique, vous devez entrer une valeur numerique" , envir=.dico)
+  assign("desc_non_numeric_variable" , "la variable n est pas numerique" , envir=.dico)
+  assign("desc_non_param_are_rho_and_tau" , "Le test non parametrique correspond au rho de Spearman et au tau de Kendall" , envir=.dico)
+  assign("desc_non_param_is_wilcoxon_or_mann_withney" , "Le test non parametrique est le test de Wilcoxon (ou Mann-Whitney)" , envir=.dico)
+  assign("desc_no_obs_for_combination" , "pas d'observations pour la combinaison" , envir=.dico)
+  assign("desc_no_result_saved" , "aucun resultat n'a ete sauvegarde" , envir=.dico)
+  assign("desc_norm_must_be_numeric" , "La norme doit etre une valeur numerique." , envir=.dico)
+  assign("desc_no_saved_analysis_found" , "Aucune analyse sauvegardee n'a pu etre trouvee" , envir=.dico)
+  assign("desc_number_of_judge_is" , "le nombre de juge =" , envir=.dico)
+  assign("desc_number_of_missing_values" , "Nombre de valeurs manquantes par variable" , envir=.dico)
+  assign("desc_number_of_observations_is" , "le nombre d'observations =" , envir=.dico)
+  assign("desc_number_outliers_removed" , "Nombre d'observations retirees" , envir=.dico)
+  assign("desc_obs_with_asterisk_are_outliers" , "Les observations marquees d'un asterisque sont considerees comme influentes au moins sur un critere" , envir=.dico)
+  assign("desc_odd_ratio_cannot_be_computed" , "On ne peut pas calculer les OR pour des tableaux plus grands que 2x3 ou des tableaux contenant des 0" , envir=.dico)
+  assign("desc_only_one_dependant_variable_alllowed" , "Il ne peut y avoir qu'une seule variable dependante." , envir=.dico)
+  assign("desc_only_one_file_format_at_time_EPS_JPG" , "Only one file format for saving figure may be used at a time (you have both EPS and JPG specified)." , envir=.dico)
+  assign("desc_only_one_file_format_at_time_EPS_PDF" , "Only one file format for saving figure may be used at a time (you have both PDF and EPS specified)." , envir=.dico)
+  assign("desc_only_one_file_format_at_time_PDF_JPG" , "Only one file format for saving figure may be used at a time (you have both PDF and JPG specified)." , envir=.dico)
+  assign("desc_only_values_above_diagonal_are_adjusted_for_multiple_comp" , "Seules les valeurs au-dessus de la diagonales sont ajustees pour comparaisons multiples" , envir=.dico)
+  assign("desc_operation_succesful" , "L'operation mathematique s'est deroulee correctement." , envir=.dico)
+  assign("desc_order" , "de tri" , envir=.dico)
+  assign("desc_outliers_identified_on_4_div_n" , "les valeurs influentes sont identifiees sur la base de 4/n" , envir=.dico)
+  assign("desc_outliers_identified_on_mahalanobis" , "les valeurs influentes sont identifiees sur la base de la distance de Mahalanobis avec un seuil du chi a 0.001" , envir=.dico)
+  assign("desc_outliers_on_4_div_n" , "les valeurs influentes sont identifiees sur la base de 4/n" , envir=.dico)
+  assign("desc_packages_used_for_this_function" , "Packages utilises pour cette fonction" , envir=.dico)
+  assign("desc_param_is_BP" , "Le test parametrique est la correlation de Bravais-Pearson" , envir=.dico)
+  assign("desc_param_is_t_test" , "Le test parametrique est le test t classique" , envir=.dico)
+  assign("desc_param_test_is_classical_reg_robusts_are_m_estimator" , "Le test parametrique est la regression classique et les tests robustes sont une estimation sur un M estimeur ainsi qu'un bootstrap." , envir=.dico)
+  assign("desc_percentile_bootstrap_prefered_for_small_samples" , "la methode du percentile bootstrap doit etre preferee pour les petits echantillons" , envir=.dico)
+  assign("desc_perfectly_correlated_variables_in_matrix_trying_to_solve" , "vous tenter de faire une matrice de correlations avec des variables parfaitement correlees. Cela pose souci pour le calcul de la distance de Mahalanobis. Nous tentons de resoudre le souci" , envir=.dico)
+  assign("desc_polyc_correlations_failed_rho_used_instead" , "Les correlations polychoriques ont echoue. Les correlations utilisees sont des rho de Spearman" , envir=.dico)
+  assign("desc_proba_and_IC_estimated_on_bootstrap" , "Les probabilites et les IC sont estimes sur la base d'un bootsrap. L'IC est corrige pour comparaison multiple, contrairement a la probabilite reportee." , envir=.dico)
+  assign("desc_probabilities_vector_please_no_fraction" , "Vecteur des probabilites. Attention : ne pas entrer des fractions" , envir=.dico)
+  assign("desc_red_dot_is_mean_error_is_sd" , "Le point rouge est la moyenne. La barre d'erreur est l'ecart-type" , envir=.dico)
+  assign("desc_references" , "References des packages utilises pour cette analyse" , envir=.dico)
+  assign("desc_removed_variable" , "variable supprimee" , envir=.dico)
+  assign("desc_removing_outliers_weakens_sample_size" , "La suppression des valeurs influentes entraîne un effectif trop faible sur certaines modalites pour mener a bien l'analyse" , envir=.dico)
+  assign("desc_result_succesfully_imported_in" , "Les resultats ont ete correctement importes dans" , envir=.dico)
+  assign("desc_robusts_statistics_could_not_be_computed" , "Les statistiques robustes n'ont pas pu etre realisees" , envir=.dico)
+  assign("desc_robust_statistics_are_alternative_to_the_principal_but_slower" , "Les statistiques robustes sont des analyses alternatives a l'analyse principale, impliquant le plus souvent des bootstraps. Ces analyses sont souvent plus lentes" , envir=.dico)
+  assign("desc_saturation_criterion_must_be_between_zero_and_one" , "Le critere de saturation doit etre compris entre 0 et 1." , envir=.dico)
+  assign("desc_search_here" , "Tapez votre recherche ici" , envir=.dico)
+  assign("desc_selected_obs_are_in" , "les observations que vous avez selectionnees sont dans" , envir=.dico)
+  assign("desc_selection_for_bayesian_factor_does_not_apply_to_complex_models" , "Les methodes de selection pour les facteurs bayesiens ne s'appliquent pas pour des modeles complexes." , envir=.dico)
+  assign("desc_should_specify_nb_factors_repeated_measure" , "vous devez specifier le nombre de facteurs en mesure repetee" , envir=.dico)
+  assign("desc_single_dependant_variable_allowed_in_paired_t" , "Il ne peut y avoir qu'une seule variable dependante pour les t de student pour echantillons apparies" , envir=.dico)
+  assign("desc_singular_matrix_mahalanobis_on_max_info" , "Votre matrice est singuliere, ce qui pose souci. Nous tentons de de resoudre le souci. Si possible, la distance de Mahalanobis sera alors calculee sur le maximum d'information tout en evitant la singularite." , envir=.dico)
+  assign("desc_some_values_are_not_numeric" , "Toutes les valeurs entrees ne sont pas numerique. Veuillez entrer des valeurs numeriques uniquement" , envir=.dico)
+  assign("desc_special_characters_have_been_removed" , "Les accents / caracteres speciaux ont volontairement ete supprimes pour assurer la portabilite de easieR sur tous les ordinateurs." , envir=.dico)
+  assign("desc_specify_f_value" , "Vous devez specifier la valeur du F. Cette valeur doit etre superieure a 1" , envir=.dico)
+  assign("desc_specify_lower_bound" , "vous devez preciser la limite inferieure" , envir=.dico)
+  assign("desc_specify_probability_value" , "Vous devez specifier la valeur de la probabilite. Cette valeur doit etre entre 0 et 1" , envir=.dico)
+  assign("desc_specify_upper_bound" , "vous devez preciser la limite superieure" , envir=.dico)
+  assign("desc_standardized_saturation_on_correlation_matrix" , "saturations standardisees basees sur la matrice de correlations" , envir=.dico)
+  assign("desc_succesfully_imported" , "les donnees ont ete importees correctement" , envir=.dico)
+  assign("desc_succesful_operation" , "L'operation a ete realisee correctement" , envir=.dico)
+  assign("desc_tested_model_is" , "le modele teste est" , envir=.dico)
+  assign("desc_there_is_no_rotation" , "il n'y a pas de rotation" , envir=.dico)
+  assign("desc_the_variable_lower" , "la variable" , envir=.dico)
+  assign("desc_the_variable_upper" , "La variable" , envir=.dico)
+  assign("desc_this_analysis_will_not_be_performed" , ". Cette analyse ne sera pas realisee." , envir=.dico)
+  assign("desc_this_index_is_prefered_for_most_cases" , " Cet indice est adapte dans la plupart des situations. Le M-estimator modifie doit etre prefere pour N<20" , envir=.dico)
+  assign("desc_this_is_large_format" , "ceci est le format large" , envir=.dico)
+  assign("desc_this_is_long_format" , "ceci est le format long" , envir=.dico)
+  assign("desc_times_less" , "fois moins" , envir=.dico)
+  assign("desc_times_more" , "fois plus" , envir=.dico)
+  assign("desc_to_display_results_use_summary" , "Pour afficher les resultats, veuillez utiliser summary(modele.cfa)" , envir=.dico)
+  assign("desc_total_observations" , "nombre total d'observations" , envir=.dico)
+  assign("desc_truncature_on_m_estimator_adapts_to_sample" , "La troncature sur le M-estimator s'adapte en fonction des caracteristiques de l'echantillon." , envir=.dico)
+  assign("desc_two_cols_are_needed" , "Pour un facteur en mesures repetees en format large, il faut au moins deux colonnes" , envir=.dico)
+  assign("desc_two_modalities_for_independante_categorial_variable" , "Vous devez utiliser une variable independante categorielle a 2 modalites" , envir=.dico)
+  assign("desc_unauthorized_char_replaced" , "Des caracteres non autorises ont ete utilises pour le nom. Ces caracteres ont ete remplaces par des points" , envir=.dico)
+  assign("desc_unavailable_distal_mediations" , "Les mediations distales ne sont pas disponibles pour le moment / Distal mediations are not available for now" , envir=.dico)
+  assign("desc_user_exited_aov_plus" , "vous avez quitte aov.plus" , envir=.dico)
+  assign("desc_value_must_be_between_zero_and_one" , "La valeur doit etre comprise entre 0 et 1" , envir=.dico)
+  assign("desc_value_must_be_numeric" , "La valeur doit etre numerique et comprise entre le minimum et le maximum de la variable dependante." , envir=.dico)
+  assign("desc_variable_added" , "Variable ajoutee" , envir=.dico)
+  assign("desc_variable_must_be_numeric_and_of_non_null_variance" , "la variable doit etre numerique et avoir une variance non nulle." , envir=.dico)
+  assign("desc_variable_must_be_positive_int" , "la variable doit etre un entier *integer* positif" , envir=.dico)
+  assign("desc_variables_are_in" , "les variables selectionnees sont dans" , envir=.dico)
+  assign("desc_we_could_not_compute_anova_on_medians" , "Desole, nous n'avons pas pu calcule l'anova sur les medianes, possiblement en raison d'un nombre important d'ex aequo." , envir=.dico)
+  assign("desc_we_could_not_compute_robust_anova" , "Desole, nous n'avons pas pu calcule l'anova robuste." , envir=.dico)
+  assign("desc_working_dir_is_now" , "Le repertoire de travail est a present" , envir=.dico)
+  assign("desc_you_can_chose_predefined_or_manual_contrasts" , "Vous pouvez choisir les contrastes predefinis ou les specifier manuellement. Dans ce dernier cas, veuillez choisir specifier les contrastes" , envir=.dico)
+  assign("desc_you_can_still_add" , "Vous pouvez encore ajouter une valeur specifique au total. Laissez 0 si vous ne souhaitez rien ajouter" , envir=.dico)
+  assign("desc_you_can_still_multiply" , "Vous pouvez encore multiplier le total par une valeur specifique. Laissez 1 si vous ne souhaitez plus multiplier par une nouvelle valeur" , envir=.dico)
+  assign("desc_you_did_this_operation" , "vous avez realise l'operation suivante :" , envir=.dico)
+  assign("desc_you_exited_afe" , "vous avez quitte l'AFE" , envir=.dico)
+  assign("desc_you_have_selected" , "vous avez selectionne" , envir=.dico)
+  assign("desc_you_must_give_obs_number" , "Vous devez entrer le numero de l'observation" , envir=.dico)
+  assign("desc_your_dependant_variable_has" , "Votre veriable dependante a" , envir=.dico)
+  assign("desc_z_must_be_a_number" , "z doit etre un nombre" , envir=.dico)
+  assign("desc_author" , "author: 'Genere automatiquement par easieR'" , envir=.dico)
+  assign("desc_title" , "title: 'Resultats de vos analyses'" , envir=.dico)
+  assign("txt_absolute_value" , "valeur absolue" , envir=.dico)
+  assign("txt_added_variables_graph" , "Graphe des variables ajoutees" , envir=.dico)
+  assign("txt_additions" , "additions" , envir=.dico)
+  assign("txt_additive_effects" , "Effets additifs" , envir=.dico)
+  assign("txt_additive_model_variables" , "Variables modele additif" , envir=.dico)
+  assign("txt_add_of_cols" , "addition de colonnes" , envir=.dico)
+  assign("txt_add_of_specific_value" , "addition d'une valeur specifique" , envir=.dico)
+  assign("txt_adequation_adjustement_indexes" , "Indices d'adequation et d'ajustement" , envir=.dico)
+  assign("txt_adequation_measurement_of_matrix" , "Mesure d'adequation de la matrice" , envir=.dico)
+  assign("txt_adequation_measures" , "Mesures d'adequation" , envir=.dico)
+  assign("txt_adequation_outside_diagonal" , "Adequation basee sur les valeurs en dehors de la diagonale" , envir=.dico)
+  assign("txt_adjusted_data_loftus_masson" , "Donnees ajustees (Loftus & Masson, 1994)" , envir=.dico)
+  assign("txt_adjusted_means_graph" , "Moyennes ajustee-Graphique" , envir=.dico)
+  assign("txt_adjusted_means" , "Moyennes ajustee" , envir=.dico)
+  assign("txt_adjustement_measure" , "Mesure d'ajustement" , envir=.dico)
+  assign("txt_adjusted_p_dot_value" , "Valeur P corrigée" , envir=.dico)
+  assign("txt_agreement" , "Accord" , envir=.dico)
+  assign("txt_aic_criterion" , "AIC - Akaike Information criterion" , envir=.dico)
+  assign("txt_alpha_warning" , "Avertissement alpha" , envir=.dico)
+  assign("txt_alternative" , "alternative" , envir=.dico)
+  assign("txt_analysis_factor_component" , "analyses de facteurs et de composantes" , envir=.dico)
+  assign("txt_analysis_on" , "analyse sur" , envir=.dico)
+  assign("txt_analysis_on_truncated_means" , "Analyse sur les moyennes tronquees" , envir=.dico)
+  assign("txt_analysis_on_variable" , "Analyse sur la variable" , envir=.dico)
+  assign("txt_analysis_premature_abortion" , "Arret premature de l'analyse" , envir=.dico)
+  assign("txt_ancova_application_conditions" , "Conditions d'application de l'ancova" , envir=.dico)
+  assign("txt_and_the_number_of_obs" , "et le nombre d'observations =" , envir=.dico)
+  assign("txt_and_YZ" , "et YZ =" , envir=.dico)
+  assign("txt_anova_ancova" , "analyse de variance et covariance" , envir=.dico)
+  assign("txt_anova" , "Anova" , envir=.dico)
+  assign("txt_anova_on" , "anova sur" , envir=.dico)
+  assign("txt_anova_on_modified_huber_estimator" , "Anova sur l'estimateur modifie de localisation de Huber" , envir=.dico)
+  assign("txt_anova_on_truncated_means" , "Anova basee sur les moyennes tronquees" , envir=.dico)
+  assign("txt_anova_with_welch_correction" , "Anova avec correction de Welch pour variances heterogenes" , envir=.dico)
+  assign("txt_apparied_correlations" , "Correlations appariees" , envir=.dico)
+  assign("txt_apriori" , "a priori" , envir=.dico)
+  assign("txt_autocorrelation" , "Autocorrelation" , envir=.dico)
+  assign("txt_backward" , "Backward" , envir=.dico)
+  assign("txt_backward_step_descending" , "Backward- pas-a-pas descendant" , envir=.dico)
+  assign("txt_barlett_test" , "Test de Barlett" , envir=.dico)
+  assign("txt_bayes_factor_10" , "Bayes Factor (10)" , envir=.dico)
+  assign("txt_bayes_factor" , "BayesFactor" , envir=.dico)
+  assign("txt_bayesian_approach_hierarchical_models" , "Approche bayesienne des modeles hierarchique" , envir=.dico)
+  assign("txt_bayesian_factor_by_group" , "Facteur bayesien par groupe" , envir=.dico)
+  assign("txt_bayesian_factor" , "Facteur bayesien" , envir=.dico)
+  assign("txt_bayesian_factor_of_model" , "FB du modele" , envir=.dico)
+  assign("txt_bayesian_factors_10" , "Facteur bayesiens 10" , envir=.dico)
+  assign("txt_bayesian_factors_compute_null_with_bayesian_approach" , "Facteurs bayesiens : calcule l'equivalent du test d'hypothese nulle en adoptant une approche bayesienne." , envir=.dico)
+  assign("txt_bayesian_factors_for_BP" , "Facteurs Bayesiens pour la correlation de Bravais-Pearson" , envir=.dico)
+  assign("txt_bayesian_factors_for_spearman" , "Facteurs Bayesiens pour la correlation de Spearman" , envir=.dico)
+  assign("txt_bayesian_factors_sequential" , "Facteurs bayesiens sequentiels" , envir=.dico)
+  assign("txt_bca_bootstrap_on_m_estimator" , "Bootstrap de type BCa sur le M-estimator" , envir=.dico)
+  assign("txt_beta_table" , "table des betas" , envir=.dico)
+  assign("txt_between" , "entre" , envir=.dico)
+  assign("txt_bidirectionnal" , "Bidirectionnel" , envir=.dico)
+  assign("txt_b_m_estimator" , "b (M estimator)" , envir=.dico)
+  assign("txt_bootstrap_on_BP" , "Bootstrap sur la correlation de Bravais Pearson" , envir=.dico)
+  assign("txt_bootstrap_t_method" , "bootstrap-t method" , envir=.dico)
+  assign("txt_bootstrap_t_method_on_truncated_means" , "Bootstrap utilisant la methode t sur les moyennes tronquees" , envir=.dico)
+  assign("txt_BP_correlation_by_group" , "Correlation de Bravais-Pearson par groupe" , envir=.dico)
+  assign("txt_breusch_pagan_test" , "Verification de la non-constance de la variance d'erreur (test de Breusch-Pagan)" , envir=.dico)
+  assign("txt_cancel" , "annuler" , envir=.dico)
+  assign("txt_cauchy_prior_width" , "Cauchy Prior Width (r)" , envir=.dico)
+  assign("txt_center_or_center_reduce" , "Centrer / centrer reduire" , envir=.dico)
+  assign("txt_center_reduce" , "centrer reduire" , envir=.dico)
+  assign("txt_ceres_graph_linearity" , "Graphique de Ceres testant la linearite" , envir=.dico)
+  assign("txt_chi_adjustement" , "Ajustement" , envir=.dico)
+  assign("txt_chi_independance" , "Independance" , envir=.dico)
+  assign("txt_chi_results_between_var_x" , "Resultats du chi.deux entre la variable" , envir=.dico)
+  assign("txt_chi_squared" , "chi deux" , envir=.dico)
+  assign("txt_chi_squared_empirical" , "chi carre empirique" , envir=.dico)
+  assign("txt_chi_squared_likelihood_max" , "chi carre du maximum de vraisemblance" , envir=.dico)
+  assign("txt_chi_squared_null_model" , "chi carre du modele null" , envir=.dico)
+  assign("txt_chi_squared_type" , "Type de khi deux" , envir=.dico)
+  assign("txt_coeff_table" , "Table des coefficients" , envir=.dico)
+  assign("txt_col_correspoding_to_variable" , "Colonnes correspondant à la variable" , envir=.dico)
+  assign("txt_col_mean" , "moyenne de colonnes" , envir=.dico)
+  assign("txt_cols" , "colonnes" , envir=.dico)
+  assign("txt_col_separator" , "Separateur de colonnes" , envir=.dico)
+  assign("txt_cols_in_repeated_measure" , "Colonnes en mesures repetees" , envir=.dico)
+  assign("txt_cols_multiplication" , "multiplication de colonnes" , envir=.dico)
+  assign("txt_comma" , "virgule" , envir=.dico)
+  assign("txt_compare_to_baseline" , "comparaison a une ligne de base" , envir=.dico)
+  assign("txt_compare_two_correlations" , "Comparaison de deux correlations" , envir=.dico)
+  assign("txt_comparison_of_two_correlations" , "comparaison des deux correlations" , envir=.dico)
+  assign("txt_comparison_on_truncated_means" , "Comparaison basee sur les moyennes tronquees" , envir=.dico)
+  assign("txt_comparisons_XY" , "comparaison des correlations XY=" , envir=.dico)
+  assign("txt_comparison_to_norm" , "Comparaison a une norme" , envir=.dico)
+  assign("txt_comparison_two_by_two" , "Comparaison 2 a 2" , envir=.dico)
+  assign("txt_compile_report" , "generer un rapport" , envir=.dico)
+  assign("txt_complementary_results" , "Resultats complementaires (e.g. contrastes d'interaction et moyennes ajustees)" , envir=.dico)
+  assign("txt_complete_dataset" , "Donnees completes" , envir=.dico)
+  assign("txt_complete_model" , "Modele complet" , envir=.dico)
+  assign("txt_complexity" , "complexite" , envir=.dico)
+  assign("txt_complex_model" , "modele complexe" , envir=.dico)
+  assign("txt_confidance_threshold" , "Seuil de confiance (1- alpha)" , envir=.dico)
+  assign("txt_confidence_interval_estimated_by_bootstrap" , "Intervalle de confiance estime par bootstrap" , envir=.dico)
+  assign("txt_confidence_interval" , "Intervalle de confiance" , envir=.dico)
+  assign("txt_confidence_interval_inferior_limit" , "Lim.inf" , envir=.dico)
+  assign("txt_confidence_interval_superior_limit" , " Lim.sup" , envir=.dico)
+  assign("txt_confidence_interval_of_saturations_on_bootstrap" , "Intervalle de confiance des saturations sur la base du bootstrap - peut etre biaise en presence de Heyhood case" , envir=.dico)
+  assign("txt_confidence_interval_on_bootstrap" , "Intervalle de confiance base sur le bootstrap" , envir=.dico)
+  assign("txt_confidence_interval_on_standard_error" , "Intervalle de confiance base sur l'erreur standard de l'alpha" , envir=.dico)
+  assign("txt_confirmatory_factorial_analysis" , "Analyse factorielle confirmatoire" , envir=.dico)
+  assign("txt_contrast" , "contraste" , envir=.dico)
+  assign("txt_contrasts" , "contrastes" , envir=.dico)
+  assign("txt_contrasts_for" , "Contrastes pour" , envir=.dico)
+  assign("txt_contrasts_table_imitating_commercial_softwares" , "Table des contrastes imitant les logiciels commerciaux" , envir=.dico)
+  assign("txt_contrasts_table" , "Table des contrastes" , envir=.dico)
+  assign("txt_control_variables" , "Variable-s a controler" , envir=.dico)
+  assign("txt_correction_for_polyc_corr_must_be_between_zero_and_one" , "La correction pour le calcul de correlations polycoriques doit etre comprise entre 0 et 1." , envir=.dico)
+  assign("txt_correlation_between_scores_and_factors" , "Correlations des scores avec les facteurs" , envir=.dico)
+  assign("txt_correlation_between_var_x" , "Correlation entre la variable" , envir=.dico)
+  assign("txt_correlation_is" , "correlation de" , envir=.dico)
+  assign("txt_correlation_matrix_determinant" , "Determinant de la matrice de correlation" , envir=.dico)
+  assign("txt_correlation_matrix_determinant_information" , "Determinant de la matrice de correlations : information" , envir=.dico)
+  assign("txt_correlations_between_factors" , "correlations entre facteurs" , envir=.dico)
+  assign("txt_correlations_comparison" , "comparaison de correlations" , envir=.dico)
+  assign("txt_correlations_matrix_afe" , "Matrice de correlation utilisee pour AFE" , envir=.dico)
+  assign("txt_covariance_matrix_adjusted" , "Matrice de covariance ajustee" , envir=.dico)
+  assign("txt_covariance_matrix_estimated" , "Matrice de covariance estimee" , envir=.dico)
+  assign("txt_cox_snell_r_2" , "Cox and Snell R^2" , envir=.dico)
+  assign("txt_cronbach_alpha" , "Alpha de Cronbach" , envir=.dico)
+  assign("txt_cronbach_alpha_on_whole_scale" , "Alpha de Cronbach sur la totalite de l'echelle" , envir=.dico)
+  assign("txt_cross_validation" , "Validation croisee" , envir=.dico)
+  assign("txt_csv_file" , "Fichier CSV" , envir=.dico)
+  assign("txt_cumulated_explaination_ratio" , "Proportion cumulee de l'explication" , envir=.dico)
+  assign("txt_cumulated_explained_variance_ratio" , "proportion de variance expliquee cumulee" , envir=.dico)
+  assign("txt_dataframe_choice" , "Choix du dataframe" , envir=.dico)
+  assign("txt_data_import_export_save" , "Donnees - (Importation, exportation, sauvegarde)" , envir=.dico)
+  assign("txt_decimal_separator" , "Separateur de decimales" , envir=.dico)
+  assign("txt_default_outputs" , "Sorties par defaut" , envir=.dico)
+  assign("txt_delete_observations_with_missing_values" , "Suppression des observations avec valeurs manquantes" , envir=.dico)
+  assign("txt_denominator" , "Denominateur" , envir=.dico)
+  assign("txt_dependant_variables" , "Variable-s dependante-s" , envir=.dico)
+  assign("txt_dependant_variable" , "Variable dependante" , envir=.dico)
+  assign("txt_descriptive_statistics_by_group" , "statistiques descriptives par groupe" , envir=.dico)
+  assign("txt_detailed_corr_analysis" , "Analyse detaillee (Bravais Pearson/Spearman/tau) pour une ou peu de correlations" , envir=.dico)
+  assign("txt_deviation" , "Deviance" , envir=.dico)
+  assign("txt_dichotomic_ordinal" , "dichotomiques/ordinales" , envir=.dico)
+  assign("txt_difference" , "Difference" , envir=.dico)
+  assign("txt_distance_mediation_effect" , "Effet de mediation distante" , envir=.dico)
+  assign("txt_distance_mediator" , "Mediation a distance" , envir=.dico)
+  assign("txt_do_nothing_keep_all_obs" , "Ne rien faire - Garder l'ensemble des observations" , envir=.dico)
+  assign("txt_dot" , "point" , envir=.dico)
+  assign("txt_durbin_watson_test_autocorr" , "Test de Durbin-Watson - autocorrelations" , envir=.dico)
+  assign("txt_dw_statistic" , "statistique de D-W" , envir=.dico)
+  assign("txt_dynamic_crossed_table" , "Tableau croise dynamique" , envir=.dico)
+  assign("txt_effect" , "Effet" , envir=.dico)
+  assign("txt_equals_to" , "egal a" , envir=.dico)
+  assign("txt_error" , "erreur" , envir=.dico)
+  assign("txt_estimated_parameters_not_standardized" , "Parametres estimes non standardises" , envir=.dico)
+  assign("txt_estimated_parameters" , "Parametres estimes" , envir=.dico)
+  assign("txt_estimated_parameters_standardized" , "Parametres estimes standardises" , envir=.dico)
+  assign("txt_estimation" , "estimation" , envir=.dico)
+  assign("txt_excel_file" , "Fichier Excel" , envir=.dico)
+  assign("txt_exogenous_fixed_variables" , "Variables exogenes fixees [fixed.x=default]" , envir=.dico)
+  assign("txt_expected" , "Attendus" , envir=.dico)
+  assign("txt_expected_sample" , "Effectifs attendus" , envir=.dico)
+  assign("txt_experimental_pan_between" , "Pan experimental entre" , envir=.dico)
+  assign("txt_explaination_ratio" , "Proportion de l'explication" , envir=.dico)
+  assign("txt_explained_variance_ratio" , "proportion de variance expliquee" , envir=.dico)
+  assign("txt_explained_variance" , "Variance expliquee" , envir=.dico)
+  assign("txt_exponant" , "exposant" , envir=.dico)
+  assign("txt_exponant_or_root" , "exposant ou racine" , envir=.dico)
+  assign("txt_exponential" , "exponentiel" , envir=.dico)
+  assign("txt_export_data" , "exporter des donnees" , envir=.dico)
+  assign("txt_factorial_analysis" , "Analyse factorielle" , envir=.dico)
+  assign("txt_factorial_analysis_using_fa_with_method" , "analyse factorielle en utilisant la fonction fa du package psych avec la methode" , envir=.dico)
+  assign("txt_factorial_exploratory_analysis" , "Analyse factorielle exploratoire" , envir=.dico)
+  assign("txt_factor_name" , "Nom du facteur" , envir=.dico)
+  assign("txt_factors" , "facteurs." , envir=.dico)
+  assign("txt_factors_ortho" , "Orthogonalite des facteurs [orthogonal=FALSE]" , envir=.dico)
+  assign("txt_factors_to_keep_accord_to_parallel_analysis_is" , "le nombre de facteurs a retenir selon l'analyse en parallele est de" , envir=.dico)
+  assign("txt_fiability_analysis" , "analyse de fiabilite et d accord" , envir=.dico)
+  assign("txt_fiability_by_removed_item" , "fiabilite par item supprime" , envir=.dico)
+  assign("txt_for_a_detailed_results_description_distal" , "Pour une description detaillee des resultats, ?distal.med" , envir=.dico)
+  assign("txt_for_a_detailed_results_description_mediation" , "Pour une description detaillee des resultats, ?mediation" , envir=.dico)
+  assign("txt_forward_step_ascending" , "Forward - pas-a-pas ascendant" , envir=.dico)
+  assign("txt_friedman_anova_pairwise_comparison" , "Comparaison 2 a 2 pour ANOVA de Friedman" , envir=.dico)
+  assign("txt_f_value" , "valeur du F" , envir=.dico)
+  assign("txt_get_working_dir" , "obtenir le repertoire de travail" , envir=.dico)
+  assign("txt_global_model_estimation" , "Estimation du modele global" , envir=.dico)
+  assign("txt_graphic_mean_sd" , "Representation graphique - Moyenne et ecart-type" , envir=.dico)
+  assign("txt_graphics" , "Graphiques" , envir=.dico)
+  assign("txt_graphics_informations" , "Informations sur les graphiques" , envir=.dico)
+  assign("txt_group_analysis" , "Analyse par groupe" , envir=.dico)
+  assign("txt_groups_analysis" , "analyse par groupes" , envir=.dico)
+  assign("txt_groups_variables" , "Variable-s groupes" , envir=.dico)
+  assign("txt_grubbs_test" , "Test de Grubbs" , envir=.dico)
+  assign("txt_hierarchical_factorial_analysis" , "Analyse factorielle hierarchique" , envir=.dico)
+  assign("txt_hierarchical_model_analysis" , "Analyse hierarchique des modeles " , envir=.dico)
+  assign("txt_hierarchical_models_complete_model_sig_at_each_step" , "Modeles hierarchique - significativite du modele complet a chaque etape" , envir=.dico)
+  assign("txt_hierarchical_models_deviance_table" , "Table de l'analyse de la deviance des modeles hierarchiques" , envir=.dico)
+  assign("txt_hierarchical_models" , "Modeles hierarchiques" , envir=.dico)
+  assign("txt_hierarchical_models_variance_analysis_table" , "Table de l'analyse de variance des modeles hierarchiques" , envir=.dico)
+  assign("txt_hosmer_lemeshow_r_2" , "Hosmer and Lemeshow R^2" , envir=.dico)
+  assign("txt_hypergeom_total_sample_fixed_rows_cols" , "hypergeom - Effectif total fixe pour les lignes et les colonnes" , envir=.dico)
+  assign("txt_hypothesis_analysis" , "Analyses - Tests d'hypothese" , envir=.dico)
+  assign("txt_identified_outliers_synthesis" , "Synthese du nombre d'observations considerees comme influentes" , envir=.dico)
+  assign("txt_identifying_outliers" , "Identification des valeurs influentes" , envir=.dico)
+  assign("txt_id_variable" , "Variable *Identifiant*" , envir=.dico)
+  assign("txt_import_data" , "importer des donnees" , envir=.dico)
+  assign("txt_imput_missing_values" , "Imputation de valeurs manquantes" , envir=.dico)
+  assign("txt_independant_correlations" , "Correlations independantes" , envir=.dico)
+  assign("txt_independant_group_variables" , "Variables a groupes independants" , envir=.dico)
+  assign("txt_independant_variable" , "Variable independante" , envir=.dico)
+  assign("txt_indepmulti_fixed_sample_rows_cols" , "indepMulti - Effectif fixe pour les colonnes - variable"  , envir=.dico)
+  assign("txt_indepmulti_total_fixed_rows_cols" , "indepMulti - Effectif total fixe pour les lignes - variable" , envir=.dico)
+  assign("txt_inferior" , "Inferieur" , envir=.dico)
+  assign("txt_inferior_or_equal_to" , "inferieur ou egal a" , envir=.dico)
+  assign("txt_inferior_proba" , "probabilite inferieure" , envir=.dico)
+  assign("txt_inferior_to" , "inferieur a" , envir=.dico)
+  assign("txt_inflation_variance_factor" , "Facteur d'inflation de la variance" , envir=.dico)
+  assign("txt_influence_method" , "Mesure d influence" , envir=.dico)
+  assign("txt_information" , "Information" , envir=.dico)
+  assign("txt_init_values" , "Valeurs de depart" , envir=.dico)
+  assign("txt_inspect_initial_values" , "Inspecter les valeurs de depart" , envir=.dico)
+  assign("txt_inspect_model_matrices" , "Inspecter les matrices du modele" , envir=.dico)
+  assign("txt_inspect_model_representation" , "Inspecter la representation du modele" , envir=.dico)
+  assign("txt_interaction_effects" , "Effets d'interaction" , envir=.dico)
+  assign("txt_interactive_model_variables" , "Variables modele interactif" , envir=.dico)
+  assign("txt_is_different_from" , "est different de" , envir=.dico)
+  assign("txt_jointmulti_total_fixed_sample" , "jointMulti - Effectif total fixe" , envir=.dico)
+  assign("txt_judge1" , "Juge 1" , envir=.dico)
+  assign("txt_judge2" , "Juge 2" , envir=.dico)
+  assign("txt_kaiser_meyer_olkin_index" , "Indice de Kaiser-Meyer-Olkin global" , envir=.dico)
+  assign("txt_keep_default_values" , "Garder les valeurs par defaut" , envir=.dico)
+  assign("txt_kendall_coeff" , "Coefficient de concordance de Kendall" , envir=.dico)
+  assign("txt_kendall_partial_semipartial_tau" , "Tau partiel/semi-partiel de Kendall" , envir=.dico)
+  assign("txt_kendall_partial_tau" , "Tau partiel de Kendall" , envir=.dico)
+  assign("txt_kendall_semipartial_tau" , "Tau semi-partiel de Kendall" , envir=.dico)
+  assign("txt_kendall_tau" , "Tau de Kendall" , envir=.dico)
+  assign("txt_kolmogorov_smirnov_comparing_two_distrib" , "Test de Kolmogorov-Smirnov comparant deux distributions" , envir=.dico)
+  assign("txt_labeled_outliers" , "Valeurs considerees comme influentes" , envir=.dico)
+  assign("txt_latent_variable_name" , "Nom de la variable latente" , envir=.dico)
+  assign("txt_less_square_diagonally_pondered" , "moindre carre pondere diagonalement" , envir=.dico)
+  assign("txt_less_square_generalized" , "moindre carre generalises" , envir=.dico)
+  assign("txt_less_square_not_pondered" , "moindre carre non pondere" , envir=.dico)
+  assign("txt_less_square_pondered" , "moindre carre pondere" , envir=.dico)
+  assign("txt_levene_test_verifying_homogeneity_variances" , "Test de Levene verifiant l'homogeneite des variances" , envir=.dico)
+  assign("txt_likelihood_only_for_estimator" , "Vraisemblance (seulement pour estimator=ML) [likelihood=default]" , envir=.dico)
+  assign("txt_likelihood_ratio_g_test" , "Rapport de vraisemblance (G test)" , envir=.dico)
+  assign("txt_lilliefors_d" , "D de Lilliefors" , envir=.dico)
+  assign("txt_linearity_graph_between_predictors_and_dependant_variable" , "Graphique testant la linearite entre les predicteurs et la variable dependante" , envir=.dico)
+  assign("txt_link_only_for_estimator" , "Lien (seulement pour estimator=MML) [link=probit]" , envir=.dico)
+  assign("txt_list_of_objects_in_mem" , "liste des objets en memoire" , envir=.dico)
+  assign("txt_logarithm" , "logarithme" , envir=.dico)
+  assign("txt_long_or_large_format" , "Format large au format long" , envir=.dico)
+  assign("txt_lower_bound_rmsea" , "limite inferieure du RMSEA" , envir=.dico)
+  assign("txt_mann_whitney_test" , "test de Mann-Whitney - Wilcoxon" , envir=.dico)
+  assign("txt_mathematical_operations_on_variables" , "Operations mathematiques sur des variables" , envir=.dico)
+  assign("txt_matrix_type" , "type de matrice" , envir=.dico)
+  assign("txt_max_likelihood_chi_squared_proba_value" , "valeur de la probabilite du chi carre du maximum de vraisemblance" , envir=.dico)
+  assign("txt_max_likelihood" , "maximum de vraisemblance" , envir=.dico)
+  assign("txt_mcnemar_results_between_var_x" , "Resultats du test de McNemar entre la variable" , envir=.dico)
+  assign("txt_mcnemar_test" , "Test de McNemar" , envir=.dico)
+  assign("txt_mcnemar_test_with_continuity_correction" , "Test de McNemar avec correction de continuite" , envir=.dico)
+  assign("txt_mcnemar_test_without_yates_correction" , "Test de McNemar sans correction de continuite" , envir=.dico)
+  assign("txt_mcnemar_test_with_yates_correction" , "Test de McNemar avec correction de Yates" , envir=.dico)
+  assign("txt_mean1" , "Moyenne1" , envir=.dico)
+  assign("txt_mean2" , "Moyenne2" , envir=.dico)
+  assign("txt_mean_complexity" , "Complexite moyenne" , envir=.dico)
+  assign("txt_mean_complexity_is" , "la complexite moyenne est de" , envir=.dico)
+  assign("txt_means_adjusted_standard_errors" , "moyennes et erreurs-types ajustees" , envir=.dico)
+  assign("txt_means_comparison" , "Comparaison de moyennes" , envir=.dico)
+  assign("txt_mean_sd_for_adjusted_data" , "Moyenne et ecart-type pour les donnees ajustees" , envir=.dico)
+  assign("txt_mean_sd_for_non_adjusted_data" , "Moyenne et ecart-type pour les donnees non ajustees" , envir=.dico)
+  assign("txt_mean_sd" , "Moyenne et ecart-type" , envir=.dico)
+  assign("txt_measured_variable_name" , "Nom de la variable mesuree" , envir=.dico)
+  assign("txt_median" , "Mediane" , envir=.dico)
+  assign("txt_mediation_effect" , "Effets de mediation" , envir=.dico)
+  assign("txt_mediator2" , "Mediateur 2" , envir=.dico)
+  assign("txt_mediator" , "Mediateur" , envir=.dico)
+  assign("txt_method_choice" , "Choix de la methode" , envir=.dico)
+  assign("txt_min_correlation_between_scores_and_factors" , "Correlation minimale possible des scores avec les facteurs" , envir=.dico)
+  assign("txt_minus" , "moins" , envir=.dico)
+  assign("txt_missing_values_treatment" , "Traitement des valeurs manquantes" , envir=.dico)
+  assign("txt_mixt_correlations" , "correlations mixtes" , envir=.dico)
+  assign("txt_modalities_name_for" , "Noms des modalites pour" , envir=.dico)
+  assign("txt_modalities_to_regroup" , "Modalites a regrouper" , envir=.dico)
+  assign("txt_modality" , "modalite" , envir=.dico)
+  assign("txt_model_degrees_of_freedom" , "degres de liberte du modele" , envir=.dico)
+  assign("txt_model_matrix" , "Matrices du modeles" , envir=.dico)
+  assign("txt_model_representation" , "Representation du modele" , envir=.dico)
+  assign("txt_model_significance" , "Significativite du modele global" , envir=.dico)
+  assign("txt_multicolinearity_tests" , "Tests de multicolinearite" , envir=.dico)
+  assign("txt_multicolinearity_test" , "Test de multicolinearite" , envir=.dico)
+  assign("txt_multiple_imputation_amelia" , "Multiple imputation - Amelia" , envir=.dico)
+  assign("txt_multiple_r_square_of_factors_scores" , "R carre multiple des scores avec les facteurs" , envir=.dico)
+  assign("txt_multiplication" , "multiplication" , envir=.dico)
+  assign("txt_multivariate_normality" , "Normalite multivariee" , envir=.dico)
+  assign("txt_nb_variables_measured" , "Nombre de variables mesurees" , envir=.dico)
+  assign("txt_negative_values" , "Valeurs negatives" , envir=.dico)
+  assign("txt_new_data_set" , "nouveau set de donnees" , envir=.dico)
+  assign("txt_new_dir" , "nouveau repertoire" , envir=.dico)
+  assign("txt_N_of_XY_corr" , "N de la correlation XY" , envir=.dico)
+  assign("txt_N_of_XY_NUM_corr" , "N de la correlation XY:TXT" , envir=.dico)
+  assign("txt_N_of_XZ_corr" , "N de la correlation XZ" , envir=.dico)
+  assign("txt_N_of_XZ_NUM_corr" , "N de la correlation XZ:TXT" , envir=.dico)
+  assign("txt_non_adjusted_data" , "Donnees non ajustees" , envir=.dico)
+  assign("txt_non_centered" , "Non centre" , envir=.dico)
+  assign("txt_no" , "non" , envir=.dico)
+  assign("txt_non_parametric_test" , "Test non parametrique" , envir=.dico)
+  assign("txt_non_param_model" , "Modele non parametrique" , envir=.dico)
+  assign("txt_non_param_test" , "test non parametrique" , envir=.dico)
+  assign("txt_non_pondered_coeff" , "Coefficient kappa non pondere" , envir=.dico)
+  assign("txt_non_standardized_residuals" , "Residus non standardises" , envir=.dico)
+  assign("txt_null_hypothesis_tests" , "Tests de H0" , envir=.dico)
+  assign("txt_null_model_degrees_of_freedom" , "Degres de liberte du modele null" , envir=.dico)
+  assign("txt_numerator" , "Numerateur" , envir=.dico)
+  assign("txt_objective_function_of_model" , "fonction objective du modele" , envir=.dico)
+  assign("txt_objective_function_of_null_model" , "fonction objective du modele null" , envir=.dico)
+  assign("txt_objects_in_mem" , "Objets en memoire" , envir=.dico)
+  assign("txt_object_to_remove" , "Objets a supprimer" , envir=.dico)
+  assign("txt_observed" , "Observes" , envir=.dico)
+  assign("txt_observed_sample" , "Effectifs Observes" , envir=.dico)
+  assign("txt_odd_ratio" , "Odd ratio" , envir=.dico)
+  assign("txt_order" , "Trier" , envir=.dico)
+  assign("txt_orthogonals_inverse" , "orthogonaux inverses" , envir=.dico)
+  assign("txt_orthogonals" , "orthogonaux" , envir=.dico)
+  assign("txt_other_correlations" , "Autres correlations" , envir=.dico)
+  assign("txt_other_data" , "autres donnees" , envir=.dico)
+  assign("txt_outliers" , "observations influentes" , envir=.dico)
+  assign("txt_outliers_synthesis" , "Synthese des observations influentes" , envir=.dico)
+  assign("txt_outliers_values" , "Valeurs influentes" , envir=.dico)
+  assign("txt_packages_install" , "Installation des packages" , envir=.dico)
+  assign("txt_packages_update" , "mise a jour des packages" , envir=.dico)
+  assign("txt_packages_verification" , "Verification des packages" , envir=.dico)
+  assign("txt_parallel_analysis" , "analyses paralleles" , envir=.dico)
+  assign("txt_param_model" , "Modele parametrique" , envir=.dico)
+  assign("txt_param_tests" , "Test parametrique" , envir=.dico)
+  assign("txt_param_test" , "test parametrique" , envir=.dico)
+  assign("txt_partial_and_semi_correlations" , "Correlations partielle et semi partielle" , envir=.dico)
+  assign("txt_partial_corr_BP_by_group" , "Correlation partielle de Bravais-Pearson par groupe" , envir=.dico)
+  assign("txt_partial_correlations_matrix" , "Matrice de Correlations partielles" , envir=.dico)
+  assign("txt_partial_rho" , "Rho partiel de Spearman" , envir=.dico)
+  assign("txt_partial_semi_BP" , "Correlation partielle/semi-partielle de Bravais Pearson" , envir=.dico)
+  assign("txt_partial_semi_partial_rho" , "Rho partiel/semi partiel de Spearman" , envir=.dico)
+  assign("txt_partial_spearman_by_group" , "Correlation partielle de Spearman par groupe" , envir=.dico)
+  assign("txt_participants_id" , "Identifiant participant" , envir=.dico)
+  assign("txt_partila_correlations" , "Correlations partielles" , envir=.dico)
+  assign("txt_percentage_col" , "Pourcentage par colonne" , envir=.dico)
+  assign("txt_percentage_row" , "Pourcentage par ligne" , envir=.dico)
+  assign("txt_percentage_total" , "Pourcentage total" , envir=.dico)
+  assign("txt_percentile_bootstrap_on_m_estimators" , "Percentile bootstrap sur les M-estimator" , envir=.dico)
+  assign("txt_p_estimation_with_monter_carlo" , "Valeur estimee de p par simulation de Monte Carlo" , envir=.dico)
+  assign("txt_plus" , "plus" , envir=.dico)
+  assign("txt_poisson_total_not_fixed_sample" , "poisson - Effectif total non fixe" , envir=.dico)
+  assign("txt_polyc_correlations" , "correlations polychoriques" , envir=.dico)
+  assign("txt_polynomials" , "polynomiaux" , envir=.dico)
+  assign("txt_pondered_kappa" , "Coefficient kappa pondere" , envir=.dico)
+  assign("txt_positive_values" , "Valeurs positives" , envir=.dico)
+  assign("txt_predicted_probabilities" , "Probabilites predites" , envir=.dico)
+  assign("txt_predictor" , "Predicteur" , envir=.dico)
+  assign("txt_principal_analysis" , "Analyse principale" , envir=.dico)
+  assign("txt_principal_analysis_using_psych_with_algo" , "analyse en composante principale en utilisant la fonction [principal] du package psych, l'algorithme est" , envir=.dico)
+  assign("txt_principal_component_analysis" , "Analyse en composante principale" , envir=.dico)
+  assign("txt_probabilities" , "probabilites" , envir=.dico)
+  assign("txt_probability_matrix" , "matrice des probabilites" , envir=.dico)
+  assign("txt_probability_value" , "valeur de la probabilite" , envir=.dico)
+  assign("txt_proper_values_index" , "Indice des valeurs propres" , envir=.dico)
+  assign("txt_pseudo_r_square_delta" , "Delta du pseudo R carre" , envir=.dico)
+  assign("txt_p_value_with_monte_carlo" , "Valeur p par simulation de Monte Carlo" , envir=.dico)
+  assign("txt_ranks_lower" , "rangs" , envir=.dico)
+  assign("txt_ranks_upper" , "Rangs" , envir=.dico)
+  assign("txt_references" , "References" , envir=.dico)
+  assign("txt_remove_object_in_memory" , "Suppression d objet en memoire" , envir=.dico)
+  assign("txt_replace_by_mean" , "Remplacer par la moyenne" , envir=.dico)
+  assign("txt_replace_by_median" , "Remplacer par la mediane" , envir=.dico)
+  assign("txt_residual_distribution" , "Distribution du residu" , envir=.dico)
+  assign("txt_residual_error" , "Erreur residuelle" , envir=.dico)
+  assign("txt_residual" , "residu" , envir=.dico)
+  assign("txt_residuals_distribution" , "Distribution des residus" , envir=.dico)
+  assign("txt_residue" , "Residus" , envir=.dico)
+  assign("txt_residues_significativity_holm_correction" , "Significativite des residus - probabilite corrigee en appliquant la methode de Holm" , envir=.dico)
+  assign("txt_residue_standardized_adjusted" , "Residus standardises ajustes" , envir=.dico)
+  assign("txt_residue_standardized" , "Residus standardises" , envir=.dico)
+  assign("txt_result" , "Resultat" , envir=.dico)
+  assign("txt_rho" , "Rho de Spearman" , envir=.dico)
+  assign("txt_robust_analysis" , "Analyses robustes" , envir=.dico)
+  assign("txt_robusts" , "robustes" , envir=.dico)
+  assign("txt_robusts_statistics" , "Statistiques robustes" , envir=.dico)
+  assign("txt_robust_statistics" , "Statistiques robustes - peut prendre du temps" , envir=.dico)
+  assign("txt_robusts_tests_with_bootstraps" , "Test robustes - impliquant des bootstraps" , envir=.dico)
+  assign("txt_rotation_is_a_rotation" , "la rotation est un rotation" , envir=.dico)
+  assign("txt_sample_size_NUM" , "Taille de l'echantillon:TXT" , envir=.dico)
+  assign("txt_saturations_sum_of_squares" , "Sommes des carres des saturations" , envir=.dico)
+  assign("txt_search_for_new_function" , "rechercher une nouvelle fonction" , envir=.dico)
+  assign("txt_second_variables_set" , "Second jeu de variables" , envir=.dico)
+  assign("txt_selected_data" , "donnees que vous venez de selectionner" , envir=.dico)
+  assign("txt_selection_method_akaike" , "Methode de selection - criteres d'information d'Akaike" , envir=.dico)
+  assign("txt_selection_method_bayesian_factor" , "Methodes de selection : facteurs bayesiens" , envir=.dico)
+  assign("txt_selection_method" , "Methode de selection" , envir=.dico)
+  assign("txt_selection_methods" , "Methodes de selection" , envir=.dico)
+  assign("txt_selection" , "selection" , envir=.dico)
+  assign("txt_select_obs" , "Selectionner des observations" , envir=.dico)
+  assign("txt_select_variables" , "Selectionner des variables" , envir=.dico)
+  assign("txt_semi_BP" , "Correlation semi-partielle de Bravais Pearson" , envir=.dico)
+  assign("txt_semicolon" , "point virgule" , envir=.dico)
+  assign("txt_semi_partial_rho" , "Rho semi-partiel de Spearman" , envir=.dico)
+  assign("txt_sequential_bayesian_factors_robustness_analysis" , "Facteurs bayesiens sequentiels - Analyse de robustesse" , envir=.dico)
+  assign("txt_shapiro_wilk" , "W de Shapiro-Wilk" , envir=.dico)
+  assign("txt_simple_mediation_effect" , "Effets de mediation simple" , envir=.dico)
+  assign("txt_slopes_homogeneity_between_groups_on_dependant_variable" , "Test de l'homogeneite des pentes entre les groupes sur la variable dependante" , envir=.dico)
+  assign("txt_spearman_kendall_corr_by_group" , "Correlation de Spearman/Kendall par groupe" , envir=.dico)
+  assign("txt_specific_val_multiplication" , "multiplication d'une valeur specifique" , envir=.dico)
+  assign("txt_specify_contrasts" , "specifier vos contrastes" , envir=.dico)
+  assign("txt_specify_model" , "Specifier le modele" , envir=.dico)
+  assign("txt_specify_working_dir" , "specifier le repertoire de travail" , envir=.dico)
+  assign("txt_spss_file" , "fichier SPSS" , envir=.dico)
+  assign("txt_square" , "carree" , envir=.dico)
+  assign("txt_rectangular" , "rectangulaire" , envir=.dico)
+  assign("txt_standardized_parameters" , "Parametres standardises" , envir=.dico)
+  assign("txt_statistic" , "statistique" , envir=.dico)
+  assign("txt_step" , "etape" , envir=.dico)
+  assign("txt_student_bootstrap_on_truncated_means" , "bootstrap studentise sur les moyennes tronquees" , envir=.dico)
+  assign("txt_student_t_by_group" , "t de Student par groupe" , envir=.dico)
+  assign("txt_student_t_independant" , "t de student pour echantillons independants" , envir=.dico)
+  assign("txt_student_t" , "t de Student" , envir=.dico)
+  assign("txt_student_t_test_norm" , "Test de Student - comparaison a une norme" , envir=.dico)
+  assign("txt_student_t_test_paired" , "Test de Student - comparaison de deux echantillons apparies" , envir=.dico)
+  assign("txt_substraction" , "soustraction" , envir=.dico)
+  assign("txt_sufficient_factors" , "facteurs suffise(nt)" , envir=.dico)
+  assign("txt_superior_or_equal_to" , "superieur ou egal a" , envir=.dico)
+  assign("txt_superior_proba" , "probabilite superieure" , envir=.dico)
+  assign("txt_superior" , "Superieur" , envir=.dico)
+  assign("txt_superior_to" , "superieur a" , envir=.dico)
+  assign("txt_supports_alternative" , "En faveur de l'hypothese alternative" , envir=.dico)
+  assign("txt_supports_null" , "En faveur de l'hypothese nulle" , envir=.dico)
+  assign("txt_suppress_all_outliers" , "Suppression de l'ensemble des outliers" , envir=.dico)
+  assign("txt_suppress_outliers_manually" , "Suppression manuelle" , envir=.dico)
+  assign("txt_synthesis_table" , "Tableau de synthese" , envir=.dico)
+  assign("txt_teaching_material" , "Materiel pedagogique" , envir=.dico)
+  assign("txt_tetra_polyc_corr_matrix_or_mixt" , "Matrice de correlation tetrachorique/polychorique ou mixte" , envir=.dico)
+  assign("txt_this_tests_if" , "Cela teste si" , envir=.dico)
+  assign("txt_threshold" , "Seuil" , envir=.dico)
+  assign("txt_time_1" , "temps 1" , envir=.dico)
+  assign("txt_time1" , "temps1" , envir=.dico)
+  assign("txt_time_2" , "temps 2" , envir=.dico)
+  assign("txt_time2" , "temps2" , envir=.dico)
+  assign("txt_tolerance" , "Tolerance" , envir=.dico)
+  assign("txt_total_sample_not_fixed" , "Effectif total non fixe" , envir=.dico)
+  assign("txt_troncature_num" , "Troncature:TXT" , envir=.dico)
+  assign("txt_truncated_means" , "moyennes tronquees" , envir=.dico)
+  assign("txt_t_test_choice" , "Choix du test t" , envir=.dico)
+  assign("txt_tucker_lewis_fiability_factor" , "facteur de fiabilite de Tucker Lewis - TLI" , envir=.dico)
+  assign("txt_two_independant_samples" , "Deux echantillons independants" , envir=.dico)
+  assign("txt_two_paired_samples" , "Deux echantillons apparies" , envir=.dico)
+  assign("txt_txt_file" , "Fichier txt" , envir=.dico)
+  assign("txt_type" , "Type" , envir=.dico)
+  assign("txt_understanding_alpha_and_power" , "Comprendre alpha et la puissance" , envir=.dico)
+  assign("txt_understanding_bayesian_inference" , "Comprendre une inference bayesienne" , envir=.dico)
+  assign("txt_understanding_central_limit_theorem" , "Comprendre le theorem central limit" , envir=.dico)
+  assign("txt_understanding_confidance_interval" , "Comprendre un intervalle de confiance" , envir=.dico)
+  assign("txt_understanding_corr_2" , "Comprendre une correlation 2" , envir=.dico)
+  assign("txt_understanding_corr" , "Comprendre la correlation" , envir=.dico)
+  assign("txt_understanding_heterogenous_variance_effects" , "Comprendre les effets de variances heterogenes" , envir=.dico)
+  assign("txt_understanding_likelihood" , "Comprendre le maximum de vraisemblance" , envir=.dico)
+  assign("txt_understanding_negative_positive_predic_power" , "Comprendre le pouvoir predictif positif et le pouvoir predictif negatif" , envir=.dico)
+  assign("txt_understanding_prev_sens_specificity_2" , "Comprendre la prevalence, la sensibilite et la specificite 2" , envir=.dico)
+  assign("txt_understanding_prev_sens_specificity" , "Comprendre la prevalence, la sensibilite et la specificite" , envir=.dico)
+  assign("txt_upper_bound_rmsea" , "limite superieure du RMSEA" , envir=.dico)
+  assign("txt_user_exited_easieR" , "Vous avez quitte easieR" , envir=.dico)
+  assign("txt_values" , "valeurs" , envir=.dico)
+  assign("txt_value" , "valeur" , envir=.dico)
+  assign("txt_variable_descriptive_statistics" , "Statistiques descriptives de la variable" , envir=.dico)
+  assign("txt_variables_coeff_matrix" , "Matrice de coefficients variables" , envir=.dico)
+  assign("txt_variables_contribution_to_model" , "Contribution des variables au modele" , envir=.dico)
+  assign("txt_variables_from_step" , "Variable(s) de cette etape" , envir=.dico)
+  assign("txt_verify_packages_install" , "Verifier l installation des packages" , envir=.dico)
+  assign("txt_view_data" , "voir des donnees" , envir=.dico)
+  assign("txt_VIF" , "FIV" , envir=.dico)
+  assign("txt_warning" , "Avertissement" , envir=.dico)
+  assign("txt_wilcoxon_by_group" , "Wilcoxon par groupe" , envir=.dico)
+  assign("txt_without_outliers" , "Donnees sans valeur influente" , envir=.dico)
+  assign("txt_without_welch_correction" , "sans correction de Welch" , envir=.dico)
+  assign("txt_without_yates_correction" , "Sans correction de Yates" , envir=.dico)
+  assign("txt_with_welch_correction" , "avec correction de Welch" , envir=.dico)
+  assign("txt_with_yates_correction" , "Avec correction de Yates" , envir=.dico)
+  assign("txt_working_dir" , "Repertoire de travail" , envir=.dico)
+  assign("txt_x_axis_variables" , "Variable-s en abcisse" , envir=.dico)
+  assign("txt_XY_correlation" , "Correlation entre XY" , envir=.dico)
+  assign("txt_XY_NUM_correlation" , "Correlation entre XY:TXT" , envir=.dico)
+  assign("txt_XZ_correlation" , "Correlation entre XZ" , envir=.dico)
+  assign("txt_XZ_NUM_correlation" , "Correlation entre XZ:TXT" , envir=.dico)
+  assign("txt_y_axis_variables" , "Variable-s en ordonnee" , envir=.dico)
+  assign("txt_yes" , "oui" , envir=.dico)
+  assign("txt_your_data" , "Vos donnees" , envir=.dico)
+  assign("txt_YZ_correlation" , "Correlation entre YZ" , envir=.dico)
+  assign("txt_YZ_NUM_correlation" , "Correlation entre YZ:TXT" , envir=.dico)
+  assign("ask_probability_correction" , "Which p adjustment do you want ? If you do not want any p adjust, choose +none+" , envir=.dico)
+  assign("ask_contrasts_must_be_ortho" , "The contrasts must be orthogonal. Do you want to continue ?" , envir=.dico)
+  assign("desc_bayesian_factors_chosen_in" , "Facteurs bayesiens is choosen in " , envir=.dico)
+  assign("desc_cross_validation_issues" , "cross validation is encountering some issues" , envir=.dico)
+  assign("desc_easier_metapackage" , "easieR: An R metapackage. Retrieved from https://github.com/NicolasStefaniak/easieR" , envir=.dico)
+  assign("desc_first_time_easier" , " If you are using easieR for the first time, please use the function ez.install in order to ensure that easieR will work properly.n Si vous utilisez easieR pour la 1e fois, veuillez utiliser la fonction ez.install pour vous assurer de bon fonctionnement de easieR." , envir=.dico)
+  assign("ask_chose_variables" , "veuillez choisir la ou les variables " , envir=.dico)
+  assign("ask_correlations_type" , "Type de correlations ?" , envir=.dico)
+  assign("ask_dependant_variable_name" , "Quel est le nom de la variable dependante?" , envir=.dico)
+  assign("ask_factors_number" , "Nombre de facteurs ?" , envir=.dico)
+  assign("ask_filename" , "Quel nom voulez-vous donner au fichier?" , envir=.dico)
+  assign("ask_independant_variable_name" , "Quel est le nom de la variable independante?" , envir=.dico)
+  assign("ask_is_long_format_correct" , "Est-ce que la structure dans un format long de vos donnees est correcte ?" , envir=.dico)
+  assign("ask_model" , "Modele ?" , envir=.dico)
+  assign("ask_ordinal_variables" , "Variables ordinales ?" , envir=.dico)
+  assign("ask_save_results" , "Enregistrer les resultats ?" , envir=.dico)
+  assign("ask_save" , "Voulez-vous sauvegarder ?" , envir=.dico)
+  assign("ask_specify_contrasts" , "Veuillez spécifier les contrastes." , envir=.dico)
+  assign("ask_variables" , "Quelles sont les variables a selectionner ?" , envir=.dico)
+  assign("ask_variables_type" , "Nature des variables ?" , envir=.dico)
+  assign("ask_what_to_do" , "Que voulez-vous faire ?" , envir=.dico)
+  assign("ask_which_analysis" , "Quelle analyse voulez-vous?" , envir=.dico)
+  assign("desc_all_contrasts_description" , "Les contrastes a priori correspondent aux contrastes qui permettent de tester des hypotheses a priori.\nLes contrastes 2 a 2 permettent de faire toutes les comparaisons 2 a 2 en appliquant ou non une correction a la probabilite" , envir=.dico)
+  assign("desc_contrasts_must_be_coeff_matrices_in_list" , "Les contrates doivent etre des matrices de coefficients placees dans une list dont le nom de chaque niveau correspond a un facteur" , envir=.dico)
+  assign("desc_percentage_outliers" , "% d'observations considerees comme influentes" , envir=.dico)
+  assign("desc_robusts_statistics_could_not_be_computed_verify_WRS" , "Les statistiques robustes n'ont pas pu etre realisees. Verifiez l'installation du package WRS" , envir=.dico)
+  assign("desc_some_participants_have_missing_values_on_repeated_measures" , "Certains participants ont des valeurs manquantes sur les facteurs en mesures repetees. Ils vont etre supprimes des analyses" , envir=.dico)
+  assign("txt_absence_of_difference_between_groups_test_on" , "Test de l'absence de difference entre les groupes sur " , envir=.dico)
+  assign("txt_anova_on_medians" , "Anova sur les medianes" , envir=.dico)
+  assign("txt_anova_on_m_estimator" , "ANOVA sur M estimator" , envir=.dico)
+  assign("txt_bayesian_factors" , "Facteurs bayesiens" , envir=.dico)
+  assign("txt_BP_correlation" , "Correlation de Bravais-Pearson" , envir=.dico)
+  assign("txt_center" , "centrer" , envir=.dico)
+  assign("txt_cohen_d" , "D de Cohen" , envir=.dico)
+  assign("txt_correlations" , "Correlations" , envir=.dico)
+  assign("txt_correlations_matrix" , "Matrice de correlations" , envir=.dico)
+  assign("txt_descriptive_statistics_of_interaction_between_x" , "Statistiques descriptives de l'interaction entre" , envir=.dico)
+  assign("txt_descriptive_statistics" , "Statistiques descriptives" , envir=.dico)
+  assign("txt_empirical_chi_square_proba_value" , "valeur de la probabilite du chi carre empirique" , envir=.dico)
+  assign("txt_factor" , "facteur." , envir=.dico)
+  assign("txt_friedman_anova" , "Anova de Friedman" , envir=.dico)
+  assign("txt_import_results" , "importer des resultats" , envir=.dico)
+  assign("txt_interface_objects_in_memory" , "Interface - objets en memoire, nettoyer la memoire, repertoire de travail, langue" , envir=.dico)
+  assign("txt_intraclass_correlation" , "Correlation intra-classe" , envir=.dico)
+  assign("txt_kruskal_wallis_pairwise" , "Test de Kruskal-Wallis - Comparaison deux a deux" , envir=.dico)
+  assign("txt_kruskal_wallis_test" , "Test de Kruskal-Wallis" , envir=.dico)
+  assign("txt_latent_variables_intercept" , "Intercept des variables latentes [int.lv.free=FALSE]" , envir=.dico)
+  assign("txt_observed_variables_intercept" , "Intercept des variables observees [int.ov.free=FALSE]" , envir=.dico)
+  assign("txt_logistic_regressions" , "Regressions logistiques" , envir=.dico)
+  assign("txt_mauchly_test_sphericity_covariance_matrix" , "Test de Mauchly testant la sphericite de la matrice de covariance" , envir=.dico)
+  assign("txt_none" , "aucun" , envir=.dico)
+  assign("txt_non_param_analysis" , "Analyse non parametrique" , envir=.dico)
+  assign("txt_normality_tests" , "Tests de normalite" , envir=.dico)
+  assign("txt_pairwise_comparisons" , "Comparaisons 2 a 2" , envir=.dico)
+  assign("txt_pairwise" , "pairwise" , envir=.dico)
+  assign("txt_partial_corr_BP" , "Correlation partielle de Bravais-Pearson" , envir=.dico)
+  assign("txt_preprocess_sort_select_operations" , "Pretraitements (tri, selection, operations mathematiques, Traitement des valeurs manquantes)" , envir=.dico)
+  assign("txt_press_enter_to_continue" , "Appuyez sur [entree] pour continuer" , envir=.dico)
+  assign("txt_regressions" , "regressions" , envir=.dico)
+  assign("txt_repeated_measures" , "Mesures repetees" , envir=.dico)
+  assign("txt_sample_size" , "taille de l'echantillon" , envir=.dico)
+  assign("txt_test_model" , "Modele teste" , envir=.dico)
+  assign("txt_variables" , "variables" , envir=.dico)
+  assign("txt_variable" , "variable" , envir=.dico)
+  assign("desc_corr_group_analysis_spec" , "Si vous souhaitez realiser l'analyse pour differents sous-echantillons en fonction d'un critere categoriel (i.e; realiser une analyse par groupe) \n choisissez oui. Dans ce cas, l'analyse est realisee sur l'echantillon complet et sur les sous-echantillons. \n Si vous desirez l'analyse pour l'echantillon complet uniquement, chosissez non. \n l'analyse par groupe ne s'appliquent pas aux statistiques robustes." , envir=.dico)
+  assign("desc_outliers_removal_implications" , "Supprimer l'ensemble des outliers supprime l'ensemble des valeurs au-delà p(chi.deux)< 0.001. Supprimer une observation à la fois permet de faire une analyse detaillee de chaque observation consideree comme influente en partant de la valeur la plus extreme. La procedure s'arrete quand plus aucune observation n'est consideree comme influente" , envir=.dico)
+  assign("txt_bilateral" , "Bilateral" , envir=.dico)
+  assign("desc_no_compatible_object_in_mem_for_aov" , "il n'y a pas d'objet compatible avec aov.plus dans la memoire de R. Vous devez realiser une analyse de variance au prealable" , envir=.dico)
+  assign("desc_this_function_means_and_sd_adjusted_interaction_effect_possible" , "Cette fonction permet de fournir les moyennes et erreurs-types ajustees ainsi que le graphique correspondant. Avec le choix post hoc sur les interactions, vous pouvez tester les effets d'interaction 2 a 2 et les effet simples." , envir=.dico)
+  assign("txt_anova_plus" , "Anova plus" , envir=.dico)
+  assign("desc_center_and_center_reduce_explaination" , "Centrer permet d'avoir une moyenne a zero en maintenant l'ecart-type. Centrer reduire correspond a la formule du z. La moyenne est de 0 et l'ecart-type vaut 1. La probabilite inferieure correspond a la probabilite d'avoir un z inferieur ou egal au z. La probabilite superieure correspond a la probabilite d'avoir un z superieur ou egal au z" , envir=.dico)
+  assign("desc_proba_sum_is_not_one_or_not_enough_proba" , "La somme des probabilites est differente de 1 ou le nombre de probabilites ne correspond pas au nombre de modalites de la variable. Veuillez entrer un vecteur de probabilites valide" , envir=.dico)
+  assign("desc_if_non_fixed_sample_poisson_law" , "Si l'effectif total est non fixe, on fait l'hypothese que les observations surviennent en respectant une loi de poisson. La repartition sur les niveaux d'un facteur surviennent avec une probabilite fixe. La distribution est une distribution poisson" , envir=.dico)
+  assign("desc_distribution_is_joint_multinomial" , "L'option *Effectif total fixe* doit etre choisi si on fait l'hypohese nulle que la repartition dans chacune des cellules du tableau est fixee. La distribution est une distribution multinomiale jointe" , envir=.dico)
+  assign("desc_distribution_is_independant_multinomial" , "L'option Effectif total fixe pour les lignes* doit etre choisi si les effectifs pour chaque ligne est identique, comme lorsqu'on veut s'assurer d'un appariement entre groupes. La distribution est une distribution multinomiale independante" , envir=.dico)
+  assign("desc_corr_detailed_analysis" , "l'analyse detaillee permet d'avoir les statistiques descriptives, les tests de normalite, le nuage de points, \n des statistiques robustes, l'ensemble des coefficients de correlations. \n la matrice de correlation permet de contrôler l'erreur de 1e espece et est adaptee pour un grand nombre de correlations \n la comparaison de correlations permet de comparer 2 correlations dependantes ou independantes \n Le choix + autre correlations + permet d'avoir les correlation tetrachoriques et polychoriques" , envir=.dico)
+  assign("desc_corr_values_must_be_between_min_1_and_1" , "Les valeurs des correlations doivent etre comprises entre -1 et 1/n et les effectifs doivent etre des entiers positifs" , envir=.dico)
+  assign("desc_you_can_choose_contrasts_you_want" , "Vous pouvez choisir les contrastes que vous souhaitez. Neanmoins les regles concernant l'application des contrastes doivent etre respectees. Les contrastes peuvent etre specifies manuellement. Dans ce cas, veuillez choisir specifier les contrastes" , envir=.dico)
+  assign("desc_square_matrix_rectangular_matrix" , "Une matrice carree est une matrice avec toutes les Correlations 2 a 2. Une matrice rectangulaire est une matrice dans laquelle un premier ensemble de variables est mis en correlations avec un second jeu de variables" , envir=.dico)
+  assign("desc_complete_dataset_vs_identification_outliers_vs_without_outliers" , "les donnees completes representent l'analyse classique sur toutes les donnees utilisables, l'identification des valeurs influentes permet d'identifier les observations qui sont considerees statistiquement comme influencant les resultats. les analyses sur les donnees sans les valeurs influentes realise l'analyse apres suppression des valeurs influentes. Cette option stocke dans la memoire de R une nouvelle base de donnees sans valeur influente dans un objet portant le nom *nettoyees*" , envir=.dico)
+  assign("desc_welcome_in_easieR" , "Welcome in easieR -  For more information, please visit :https://theeasierproject.wordpress.com/" , envir=.dico)
+  assign("ask_variables_type_for_anova" , "Veuillez preciser le(s) type(s) de variable(s) que vous souhaitez inclure dans l'analyse.\nVous pouvez en choisir plusieurs (e.g., pour anova mixte ou des ancova" , envir=.dico)
+  assign("ask_correction_anova_contrasts" , "Correction ?" , envir=.dico)
+  assign("txt_independant_groups" , "Groupes independants" , envir=.dico)
+  assign("txt_covariables" , "Covariables" , envir=.dico)
+  assign("txt_cfa_information_default" , "information [information=default]" , envir=.dico)
+  assign("txt_cfa_continuity_correction_zero_keep_margins_default" , "correction de continuite [zero.keep.margins=default]" , envir=.dico)
+  assign("txt_cfa_estimator_ml_default" , "estimateur [estimator=ml])" , envir=.dico)
+  assign("txt_cfa_groups_null_default" , "groupes [group=NULL]" , envir=.dico)
+  assign("txt_cfa_test_standard_default" , "test [test=standard]" , envir=.dico)
+  assign("txt_cfa_standard_error_default" , "erreur standard [se=standard]" , envir=.dico)
+  assign("txt_cfa_observed_variabes_standardization_true_default" , "standardisation des variables observees [std.ov=T]" , envir=.dico)
+  assign("txt_cfa_latent_variables_indicators_estimates_true_default" , "Estimation des indicateurs des variables latentes [std.lv=FALSE]" , envir=.dico)
+  assign("desc_wls_corresponds_to_adf_plus_explaination_other_estimators" , "[WLS] correspond a [ADF]. Les estimateurs avec les extensions [M],[MV],[MVSF],[R] sont des versions robustes des estimateurs classiques [MV],[WLS], [DWLS], [ULS]" , envir=.dico)
+  assign("ask_observed_variables_intercept_zero" , "Intercept VO=0 ?" , envir=.dico)
+  assign("ask_latent_variables_intercept_zero" , "Intercept VL=0 ?" , envir=.dico)
+  assign("ask_how_to_treat_exaequo_rank" , "Comment voulez-vous traiter les ex-aequo ? La methode *average* fait la moyenne entre les ex aequo (le plus habituel), *first* attribue le premier rang ex aequo a la premiere valeur dans les donnees, *laste* a la derniere, *min* attribue la valeur minimale a l'ensemble des ex aequo et *max* la valeur maximale." , envir=.dico)
+  assign("desc_for_ordinal_and_dicho_varible_prefer_min_res" , "Pour les variables ordinales et dichomiques, preferez la methode du minimum des residus - minres - ou des moindres carres ponderes - wls. Pour les variables continues, le maximum de vraisemblance si la normalite est respectee - ml" , envir=.dico)
+  assign("desc_saturation_criterion_show_only_above_threshold" , "Le critere de saturation permet de n'afficher dans le tableau de resultats que les saturation superieure au seuil fixe" , envir=.dico)
+  assign("desc_to_find_new_analysis_search_in_english" , "Pour trouver une nouvelle analyse, il est necessaire de faire votre recherche en anglais. Vous pouvez utiliser plusieurs mots dans la recherche. Une page html reprenant l'ensemble des packages faisant reference a l'analyse recherchee va s'ouvrir." , envir=.dico)
+  assign("txt_division" , "division" , envir=.dico)
+  assign("desc_if_you_select_both_operations_value_will_be_added_to_chose_cols" , "Si vous selectionnez les deux options en meme temps, la valeur specifiee sera ajoutee a l'ensemble des colonnes choisies et ensuite les colonnes choisies seront additionnees. Pour additionner une valeur specifique au total, veuillez choisir l'option addition de colonnes uniquement." , envir=.dico)
+  assign("desc_if_you_select_both_operations_value_will_be_multiplied_to_chose_cols" , "Si vous selectionnez les deux options en meme temps, la valeur specifiee sera multipliee a l'ensemble des colonnes choisies et ensuite les colonnes choisies seront multipliees entre elles. Pour multiplier une valeur specifique au total, veuillez choisir l'option multipication de colonnes uniquement." , envir=.dico)
+  assign("ask_chose_values_on_left_of_minus_symbol" , "Veuillez selectionner les valeurs situees a gauche du symbole *moins*. Si plusieurs variables sont selectionnees, les regles du calcul matriciel sont appliques." , envir=.dico)
+  assign("desc_one_or_same_number_cols_on_both_sides_only" , "Il ne doit y avoir qu'une colonne ou le nombre de colonnes a droite du symbole *moins* doit etre egal au nombre de colonnes a gauche du symbole *moins*" , envir=.dico)
+  assign("ask_specify_exponant_value" , "Veuillez preciser la valeur de l'exposant. NOTE : Pour les racines, l'exposant est l'inverse la valeur. Par exemple, La racine carree vaut 1/2, la racine cubique 1/3... " , envir=.dico)
+  assign("desc_expression_must_be_correct_example" , "L'expression doit etre correcte. Vous pouvez utiliser directement le nom des variables les operateurs sont +,-,*,/,^,(,). Une expression correcte serait :" , envir=.dico)
+  assign("ask_chose_relation_between_vars_regressions_log" , "Veuillez choisir le(s) type(s) de relations entre les variables. Les effets additifs prennent la forme de y=X1+X2 tandis que les effets d'interaction prennent la forme de Y=X1+X2+X1:X2" , envir=.dico)
+  assign("ask_variables_order_for_max_likelihood" , "L'ordre d'entree des variables est important pour le calcul du maximum de vraisemblance. Veuillez preciser l'ordre d'entree des variables" , envir=.dico)
+  assign("ask_integrate_probabilities_to_dataset" , "voulez-vous integrer les probabilites a votre base de donnees ?" , envir=.dico)
+  assign("ask_specify_other_options_regressions" , "Voulez-vous preciser d'autres options ? Vous pouvez en selectionner plusieurs. Les methodes de selection permettent de selectionner le meilleur modele sur la base de criteres statistiques. Les modeles hierarchiques permettent de comparer plusieurs modeles. Les validations croisees permettent de verifier si un modele n'est pas dependant des donnees. Cette option est a utiliser notamment avec les methodes de selection. L'analyse par groupe permet de realiser la meme regression pour des sous-groupes. Les mesures d'influences sont les autres mesures habituellement utilisees pour identifier les valeurs influentes." , envir=.dico)
+  assign("desc_possible_apply_multiple_selection_criterion" , "Il est possible d'appliquer plusieurs criteres de selection simultanement, impliquant ou non plusieurs variables. Veuillez preciser le nombre de variables sur lesquelles vous desirez appliquer un ou plusieurs criteres de selection. Veuillez choisir les variables sur lesquelles vous deirez appliquer une selection" , envir=.dico)
+  assign("desc_skew_and_kurtosis_between_1_and_3" , "Type de skew et kurtosis, doit se situer entre 1 et 3:TXT" , envir=.dico)
+  assign("desc_with_two_equal_means_ratio_must_be_5_percent" , "Avec deux moyennes egales, ou pratiquement egales, le taux d'erreurs doit etre de 5%. Modifiez progressivement l'ecart entre les ecart-types et voyez comment le taux d'erreur alpha va etre modifie" , envir=.dico)
+  assign("desc_bilateral_superior_inferior_test_t" , "Une analyse bilaterale teste l'existence d'une difference. Le choix superieur teste si la moyenne est strictement superieure \n Le choix inferieur teste l'existence d'une difference strictement inferieure" , envir=.dico)
+  assign("txt_numeric_variables" , "Variables numériques" , envir=.dico)
+  assign("txt_select_language" , "Choisir la langue" , envir=.dico)
+  assign("txt_dot_adjusted" , ".ajustee" , envir=.dico)
+  assign("txt_bca_inferior_limit" , "Bca lim inf" , envir=.dico)
+  assign("txt_bca_inferior_limit" , "Bca.lim.inf" , envir=.dico)
+  assign("txt_bca_superior_limit" , " Bca.lim.sup" , envir=.dico)
+  assign("txt_bca_superior_limit" , "Bca lim sup" , envir=.dico)
+  assign("txt_bca_superior_limit" , "Bca.lim.sup" , envir=.dico)
+  assign("txt_centered_dot_reduced" , "centrer.reduite" , envir=.dico)
+  assign("txt_chi_dot_squared" , "chi.2" , envir=.dico)
+  assign("txt_chi_dot_squared_model" , "chi.2.modele" , envir=.dico)
+  assign("txt_chi_dot_squared" , "chi.carre" , envir=.dico)
+  assign("txt_chi_dot_squared" , "chi.deux" , envir=.dico)
+  assign("txt_chi_dot_squared_adjustment" , "chi.deux d'ajustement" , envir=.dico)
+  assign("txt_pairwise_comparison" , "comparaison 2 a 2" , envir=.dico)
+  assign("txt_continuous" , "continues" , envir=.dico)
+  assign("txt_greenhouse_geisser_huynn_feldt_correction" , "Correction : Greenhouse-Geisser &  Hyunh-Feldt" , envir=.dico)
+  assign("txt_df" , "ddl" , envir=.dico)
+  assign("txt_df1" , "ddl1" , envir=.dico)
+  assign("txt_df_parenthesis_1" , "Ddl(1)" , envir=.dico)
+  assign("txt_df2" , "ddl2" , envir=.dico)
+  assign("txt_df_parenthesis_2" , "Ddl(2)" , envir=.dico)
+  assign("txt_df_denom" , "ddl.denom" , envir=.dico)
+  assign("txt_df_parenthesis_denom" , "Ddl (dnom)" , envir=.dico)
+  assign("txt_df_effect" , "ddl.effet" , envir=.dico)
+  assign("txt_df_num" , "ddl.num" , envir=.dico)
+  assign("txt_df_parenthesis_num" , "Ddl (num)" , envir=.dico)
+  assign("txt_df_predictor" , "ddl predicteur" , envir=.dico)
+  assign("txt_df_residual" , "ddl.resid" , envir=.dico)
+  assign("txt_df_residuals" , "ddl.residuels" , envir=.dico)
+  assign("txt_delta_r_squared" , "Delta R.deux" , envir=.dico)
+  assign("txt_error" , "Erreur" , envir=.dico)
+  assign("txt_error_BP" , "Erreur.BP" , envir=.dico)
+  assign("txt_error_spearman" , "Erreur.Spearman" , envir=.dico)
+  assign("txt_error_dot_standard_short" , "erreur.st" , envir=.dico)
+  assign("txt_error_dot_standard" , "erreur.standard" , envir=.dico)
+  assign("txt_error_dot_standard" , "Erreur.standard" , envir=.dico)
+  assign("txt_space" , "espace" , envir=.dico)
+  assign("txt_estimator" , "estimateur" , envir=.dico)
+  assign("txt_global_model_estimate" , "Estimation  du modele global" , envir=.dico)
+  assign("txt_hf_p_value" , "HF.valeur.p" , envir=.dico)
+  assign("txt_ci_inferior" , "IC Inf" , envir=.dico)
+  assign("txt_ci_inferior_limit" , "IC lim inf" , envir=.dico)
+  assign("txt_ci_superior_limit" , "IC lim sup" , envir=.dico)
+  assign("txt_ci_superior" , "IC Sup" , envir=.dico)
+  assign("txt_large" , "large" , envir=.dico)
+  assign("txt_large_half" , "large - 0.5" , envir=.dico)
+  assign("txt_inferior_limit" , "lim.inf" , envir=.dico)
+  assign("txt_ci_inferior_limit_dot" , "lim.inf.IC" , envir=.dico)
+  assign("txt_ci_inferior_limit_dot" , "Lim.inf.IC" , envir=.dico)
+  assign("txt_ci_superior_limit" , "lim.sup" , envir=.dico)
+  assign("txt_ci_superior_limit_dot" , "lim.sup.IC" , envir=.dico)
+  assign("txt_ci_superior_limit_dot" , "Lim.sup.IC" , envir=.dico)
+  assign("txt_r_squared_matrix" , "matrice des r.deux" , envir=.dico)
+  assign("txt_truncated_m" , "M.tronquee" , envir=.dico)
+  assign("txt_multiplied_by" , "multiplie.par" , envir=.dico)
+  assign("txt_dot_cleaned" , ".nettoyees" , envir=.dico)
+  assign("txt_cleaned" , "nettoyees" , envir=.dico)
+  assign("txt_bootstrap_dot_number" , "Nombre.bootstrap" , envir=.dico)
+  assign("txt_odd_ratio_dot" , "Odd.ratio" , envir=.dico)
+  assign("desc_install_bad_packages" , "Package.mal.installes" , envir=.dico)
+  assign("desc_install_correct_packages" , "packages.installes.correctement" , envir=.dico)
+  assign("txt_critical_p_corrected" , "p.critique.corrigee" , envir=.dico)
+  assign("txt_percentile_inferior_limit_dot" , "Percentile.lim.inf" , envir=.dico)
+  assign("txt_percentile_superior_limit_dot" , "Percentile.lim.sup" , envir=.dico)
+  assign("txt_percentage_removed_obs" , "Pourcentage.obs.retirees" , envir=.dico)
+  assign("txt_percent_removed_obs" , "Pourcent.obs.retirees" , envir=.dico)
+  assign("txt_r_dot_square" , "r.carre" , envir=.dico)
+  assign("txt_r_square" , "R carre" , envir=.dico)
+  assign("txt_r_dot_square" , "R.carre" , envir=.dico)
+  assign("txt_r_dot_two" , "r.deux" , envir=.dico)
+  assign("txt_r_dot_two" , "R.deux" , envir=.dico)
+  assign("txt_r_dot_two_adjusted" , "R.deux.aj" , envir=.dico)
+  assign("txt_log_regression_dot" , "Regressions.logistique" , envir=.dico)
+  assign("txt_multiple_regressions_dot" , "regressions.multiples" , envir=.dico)
+  assign("txt_multiple_regressions_dot" , "Regressions.multiples" , envir=.dico)
+  assign("txt_rho_dot_square" , "rho.deux" , envir=.dico)
+  assign("txt_critical_dot_threshold" , "seuil.critique" , envir=.dico)
+  assign("txt_critical_dot_threshold" , "Seuil.critique" , envir=.dico)
+  assign("txt_spearman_df" , "Spearman.ddl" , envir=.dico)
+  assign("txt_specificity" , "specifite" , envir=.dico)
+  assign("txt_ultrawide" , "ultra large" , envir=.dico)
+  assign("txt_ultrawide" , "ultralarge" , envir=.dico)
+  assign("txt_ultrawide_val" , "ultra large - 0.707" , envir=.dico)
+  assign("txt_absolute_dot_val" , "valeur.absolue." , envir=.dico)
+  assign("txt_contrast_dot_val" , "Valeur.contraste" , envir=.dico)
+  assign("txt_critical_dot_val" , "Valeur.critique" , envir=.dico)
+  assign("txt_p_dot_val" , "valeur.p" , envir=.dico)
+  assign("txt_p_dot_val_lilliefors" , "valeur.p Llfrs" , envir=.dico)
+  assign("txt_p_dot_val_sw" , "valeur.p SW" , envir=.dico)
+  assign("txt_test_dot_val" , "Valeur.test" , envir=.dico)
+  assign("txt_z_dot_val" , "valeur.Z" , envir=.dico)
+  assign("txt_value" , "value" , envir=.dico)
+  assign("txt_vector_length_zero" , "vector of length zero" , envir=.dico)
+  assign("txt_kendall_w" , "W.de.Kendall" , envir=.dico)
+  assign("txt_synthesis" , "Synthèse" , envir=.dico)
+  assign("txt_truncated_mean_0_2" , "Test sur la moyenne tronquée à 0.2" , envir=.dico)
+  assign("txt_cramer_v_square" , "V.carre" , envir=.dico)
+  assign("txt_effect_size_dot" , "Taille.effet" , envir=.dico)
+  assign("txt_gg_p_value" , "GG.valeur.p" , envir=.dico)
+  assign("txt_var_explained_dot" , "Var.expliquee" , envir=.dico)
+  assign("txt_V_sq_" , "V.carre" , envir=.dico)
 }

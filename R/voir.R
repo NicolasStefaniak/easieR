@@ -12,6 +12,6 @@ function(){
 }
 
 voir.msg<-function(){
-msg<-txt_dataframe_choice
+msg<-.dico[["txt_dataframe_choice"]]
 
 return(msg)}

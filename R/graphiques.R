@@ -9,7 +9,7 @@ function(){
   nom<-data[[1]]
   data<-data[[2]]
 
-  msgBox(desc_close_browser_to_come_back)
+  msgBox(.dico[["desc_close_browser_to_come_back"]])
    print(ref1(packages))
   if (Sys.info()[[1]]=='Darwin') {
     options(browser = 'open')
