@@ -1,4 +1,6 @@
 load_en_EN <- function() {
+  require(rlang)
+  env_bind(current_env(), ask_2x2_table ="Table 2x2 ?")
   ask_2x2_table <<- "Table 2x2?"
   ask_2x2_table_value <<- "Please specify the value for tables 2x2"
   ask_add_a_value_to_empty_cells <<- "Does an empty cell value for polychoric correlations need to be added? To specify the values, choose TRUE, otherwise choose [default]"
@@ -435,8 +437,8 @@ load_en_EN <- function() {
   txt_adjusted_means_graph <<- "Adjusted-Graphic Averages"
   txt_adjusted_means <<- "Adjusted Averages"
   txt_adjustement_measure <<- "Adjustment measures"
-  txt_agreement <<- "Agreement"
   txt_adjusted_p_dot_value <<- "Adjusted p value"
+  txt_agreement <<- "Agreement"
   txt_aic_criterion <<- "AIC - Akaike Information criteria"
   txt_alpha_warning <<- "Alpha warning"
   txt_alternative <<- "alternative"
@@ -519,8 +521,8 @@ load_en_EN <- function() {
   txt_confidance_threshold <<- "Confidence threshold (1- alpha)"
   txt_confidence_interval_estimated_by_bootstrap <<- "Interval of trust estimates by bootstrap"
   txt_confidence_interval <<- "Confidential Interval"
-  txt_confidence_interval_superior_limit<<- "Upper bound CI"
   txt_confidence_interval_inferior_limit  <<- "Lower bound CI"
+  txt_confidence_interval_superior_limit<<- "Upper bound CI"
   txt_confidence_interval_of_saturations_on_bootstrap <<- "Interval of confidence of saturations on the basis of bootstrap - may be biased in presence of Heyhood case"
   txt_confidence_interval_on_bootstrap <<- "Trust interval based on bootstrap"
   txt_confidence_interval_on_standard_error <<- "Confidence interval based on standard alpha error"
@@ -893,6 +895,7 @@ load_en_EN <- function() {
   txt_variables_from_step <<- "Variable of this step"
   txt_verify_packages_install <<- "Check package installation"
   txt_view_data <<- "see data"
+  txt_VIF<<-"VIF"
   txt_warning <<- "Warning"
   txt_wilcoxon_by_group <<- "Wilcoxon by group"
   txt_without_outliers <<- "Data without influential value"
@@ -975,7 +978,6 @@ load_en_EN <- function() {
   txt_test_model <<- "Test model"
   txt_variables <<- "variables"
   txt_variable <<- "variable"
-  txt_VIF<<-"VIF"
   desc_corr_group_analysis_spec <<- "If you want to perform the analysis for different subsamples based on a categorical criterion (i.e.; perform a group analysis) \n choose yes. In this case, the analysis is done on the complete sample and on the subsamples. \n If you want the analysis for the complete sample only, choose no. The group analysis does not apply to robust statistics."
   desc_outliers_removal_implications <<- "Delete all outliers removes all values beyond p(chi.two)< 0.001. Delete one observation at a time makes it possible to make a detailed analysis of each observation considered to be influential from the most extreme value. The procedure stops when no more observations are considered influential"
   txt_bilateral <<- "Bilateral"
