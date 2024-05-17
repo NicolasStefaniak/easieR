@@ -192,10 +192,8 @@ if(scale==T || scale==txt_center) {
                         centre<-pred2[centre]}else{centre<-NULL}
   if(!is.null(centre)){
         if(length(centre)==1) data[,centre]-mean(data[,centre],na.rm=T)->data[,centre] else{
-    sapply(X=data[,centre], function(X){X-mean(X, na.rm=T)})->data[,centre]
+    sapply(X=data[,centre], FUN = function(X){X-mean(X, na.rm=T)})->data[,centre]
   }
-  
-  sapply(X=data[, names(which(sapply(data[,pred2],class)!="factor"))], fun)->data[,names(which(sapply(data[,pred2],class)!="factor"))]
   
 }
 }
