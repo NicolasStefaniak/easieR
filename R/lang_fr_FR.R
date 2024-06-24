@@ -385,7 +385,7 @@ assign("desc_succesful_operation", "L'operation a ete realisee correctement",env
 assign("desc_tested_model_is", "le modele teste est",envir=.dico)
 assign("desc_there_is_no_rotation", "il n'y a pas de rotation",envir=.dico)
 assign("desc_the_variable_lower", "la variable",envir=.dico)
-assign("desc_the_variable_upper= "La variable",envir=.dico)
+assign("desc_the_variable_upper", "La variable",envir=.dico)
 assign("desc_this_analysis_will_not_be_performed", ". Cette analyse ne sera pas realisee.",envir=.dico)
 assign("desc_this_index_is_prefered_for_most_cases", "Cet indice est adapte dans la plupart des situations. Le M-estimator modifie doit etre prefere pour N<20",envir=.dico)
 assign("desc_this_is_large_format", "ceci est le format large",envir=.dico)
@@ -628,8 +628,8 @@ assign("txt_imput_missing_values", "Imputation de valeurs manquantes",envir=.dic
 assign("txt_independant_correlations", "Correlations independantes",envir=.dico)
 assign("txt_independant_group_variables", "Variables a groupes independants",envir=.dico)
 assign("txt_independant_variable", "Variable independante",envir=.dico)
-assign("txt_indepmulti_fixed_sample_rows_cols", "indepMulti - Effectif fixe pour les colonnes - variable",# RENAME TO COLS only,envir=.dico)
-assign("txt_indepmulti_total_fixed_rows_cols", "indepMulti - Effectif total fixe pour les lignes - variable",# RENAME TO RAWS only,envir=.dico)
+assign("txt_indepmulti_fixed_sample_rows_cols", "indepMulti - Effectif fixe pour les colonnes - variable",envir=.dico)# RENAME TO COLS only
+assign("txt_indepmulti_total_fixed_rows_cols", "indepMulti - Effectif total fixe pour les lignes - variable",envir=.dico) ,# RENAME TO RAWS only
 assign("txt_inferior", "Inferieur",envir=.dico)
 assign("txt_inferior_or_equal_to", "inferieur ou egal a",envir=.dico)
 assign("txt_inferior_proba", "probabilite inferieure",envir=.dico)
@@ -893,7 +893,7 @@ assign("txt_variables_contribution_to_model", "Contribution des variables au mod
 assign("txt_variables_from_step", "Variable(s) de cette etape",envir=.dico)
 assign("txt_verify_packages_install", "Verifier l installation des packages",envir=.dico)
 assign("txt_view_data", "voir des donnees",envir=.dico)
-assign("txt_VIF="FIV",envir=.dico)
+assign("txt_VIF","FIV",envir=.dico)
 assign("txt_warning", "Avertissement",envir=.dico)
 assign("txt_wilcoxon_by_group", "Wilcoxon par groupe",envir=.dico)
 assign("txt_without_outliers", "Donnees sans valeur influente",envir=.dico)
@@ -1128,7 +1128,7 @@ assign("txt_cramer_v_square", "V.carre",envir=.dico)
 assign("txt_effect_size_dot", "Taille.effet",envir=.dico)
 assign("txt_gg_p_value", "GG.valeur.p",envir=.dico)
 assign("txt_var_explained_dot", "Var.expliquee",envir=.dico)
-assign("V.sq="V.carre"envir=.dico)
+assign("V.sq","V.carre", envir=.dico)
 
 
   
