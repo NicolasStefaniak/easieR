@@ -336,7 +336,7 @@ assign("desc_norm_must_be_numeric", "La norme doit etre une valeur numerique.",e
 assign("desc_no_saved_analysis_found", "Aucune analyse sauvegardee n'a pu etre trouvee",envir=.dico)
 assign("desc_number_of_judge_is", "le nombre de juge",envir=.dico)
 assign("desc_number_of_missing_values", "Nombre de valeurs manquantes par variable",envir=.dico)
-assign("desc_number_of_observations_is", "le nombre d'observations",",envir=.dico)
+assign("desc_number_of_observations_is", "le nombre d'observations",envir=.dico)
 assign("desc_number_outliers_removed", "Nombre d'observations retirees",envir=.dico)
 assign("desc_obs_with_asterisk_are_outliers", "Les observations marquees d'un asterisque sont considerees comme influentes au moins sur un critere",envir=.dico)
 assign("desc_odd_ratio_cannot_be_computed", "On ne peut pas calculer les OR pour des tableaux plus grands que 2x3 ou des tableaux contenant des 0",envir=.dico)
