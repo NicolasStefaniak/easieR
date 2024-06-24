@@ -594,7 +594,7 @@ assign("txt_factorial_analysis_using_fa_with_method ", "factorial analysis using
 assign("txt_factorial_exploratory_analysis ", "Exploratory factor analysis",envir=.dico)
 assign("txt_factor_name ", "factor name",envir=.dico)
 assign("txt_factors ", "factors. ",envir=.dico)
-assign("txt_factors_ortho ", "Orthogonality of factors [orthogonal",FALSE]",envir=.dico)
+assign("txt_factors_ortho ", "Orthogonality of factors [orthogonal,FALSE]",envir=.dico)
 assign("txt_factors_to_keep_accord_to_parallel_analysis_is ", "the number of factors to remember according to the parallel analysis is",envir=.dico)
 assign("txt_fiability_analysis ", "Analysis of reliability and agreement",envir=.dico)
 assign("txt_fiability_by_removed_item ", "reliability by item deletes",envir=.dico)
