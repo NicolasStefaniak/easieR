@@ -667,7 +667,7 @@ assign("txt_likelihood_only_for_estimator ", "True (only for estimator=ML) [like
 assign("txt_likelihood_ratio_g_test ", "Ratio of likelihood (G test)",envir=.dico)
 assign("txt_lilliefors_d ", "D de Lilliefors",envir=.dico)
 assign("txt_linearity_graph_between_predictors_and_dependant_variable ", "Character testing linearite between predictors and dependent variable",envir=.dico)
-assign("txt_link_only_for_estimator ", "Link (only for estimator",MML) [link",probit]",envir=.dico)
+assign("txt_link_only_for_estimator ", "Link (only for estimator = ML) [link =probit]",envir=.dico)
 assign("txt_list_of_objects_in_mem ", "list of objects in memory",envir=.dico)
 assign("txt_logarithm ", "logarithm",envir=.dico)
 assign("txt_long_or_large_format ", "Long format wide format",envir=.dico)
