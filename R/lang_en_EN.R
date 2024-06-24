@@ -1008,7 +1008,7 @@ assign("txt_cfa_observed_variabes_standardization_true_default ", "standardizati
 assign("txt_cfa_latent_variables_indicators_estimates_true_default ", "Estimation of indicators of latent variables [std.lv",FALSE]",envir=.dico)
 assign("desc_wls_corresponds_to_adf_plus_explaination_other_estimators ", "[WLS] corresponds to [ADF]. Estimators with extensions [M],[MV],[MVSF],[R] are robust versions of classic estimators [MV],[WLS], [DWLS], [ULS]",envir=.dico)
 assign("ask_observed_variables_intercept_zero ", "Intercept VO",0?",envir=.dico)
-assign("ask_latent_variables_intercept_zero ", "Intercept VL",0?",envir=.dico)
+assign("ask_latent_variables_intercept_zero ", "Intercept VL = 0?",envir=.dico)
 assign("ask_how_to_treat_exaequo_rank ", "How do you want to treat ex-aequo? The method *warning* is the average between ex aequo (the most usual), *first* assigns the first ranking ex aequo to the first value in the data, *last* to the last, *min* assigns the minimum value to all ex aequo and *max* the maximum value. ",envir=.dico)
 assign("desc_for_ordinal_and_dicho_varible_prefer_min_res ", "For the ordinal and dichomic variables, choose the method of minimum residus - minres - or least weighting squares - wls. For continuous variables, the maximum likelihood if normalite is respected - ml",envir=.dico)
 assign("desc_saturation_criterion_show_only_above_threshold ", "The saturation criterion allows the results table to show only saturation above the fixed threshold",envir=.dico)
