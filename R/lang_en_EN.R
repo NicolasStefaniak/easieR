@@ -1,6 +1,6 @@
 load_en_EN <- function() {
    .dico <<- new.env(parent = emptyenv())
-
+assign("ask_2x2_table", "tableau 2x2 ?",envir=.dico)
 assign("ask_2x2_table_value","Veuillez preciser la valeur pour les tableaux 2x2",envir=.dico)
 assign("ask_add_a_value_to_empty_cells","Faut-il ajouter une valeur aux cellules vides pour les correlations polychorique ? Pour specifier les valeurs,choisissez TRUE, sinon choisissez [default]",envir=.dico)
 assign("ask_add_value_to_total","voulez-vous encore ajouter une valeur au total ?",envir=.dico)
