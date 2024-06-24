@@ -132,7 +132,7 @@ assign("ask_not_enough_obs_verify_dataset ", "There are not enough observations 
 assign("ask_null_hypothesis_tests_or_bayesian_factors ", "Do you want null hypothesis tests or/and Bayesian factors?",envir=.dico)
 assign("ask_numerator_variable_or_value ", "Is the numerator a variable or a value? ",envir=.dico)
 assign("ask_numerator_variable ", "Please select the variable at the numerator ",envir=.dico)
-assign("ask_obs_to_remove ", "What observation do you want to remove from analyses? 0",none",envir=.dico)
+assign("ask_obs_to_remove ", "What observation do you want to remove from analyses? 0 = none",envir=.dico)
 assign("ask_other_options ", "Other options?",envir=.dico)
 assign("ask_ponderate_analysis_by_a_sample_var ", "Does the analysis need to be weighted by an effective variable?",envir=.dico)
 assign("ask_positive_val_variable_or_value ", "Are the positive values a variable(s) or a value? ",envir=.dico)
