@@ -1129,7 +1129,7 @@ require(rlang)
   txt_effect_size_dot = "Effect.size",
   txt_gg_p_value = "GG.p.value",
   txt_var_explained_dot = "Var.explained",
-   V.sq="V.squared"),
+   V.sq="V.squared")
 
   
   
