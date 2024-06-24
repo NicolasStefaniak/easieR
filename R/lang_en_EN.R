@@ -337,7 +337,7 @@ assign("desc_norm_must_be_numeric ", "The standard must be a numeric value. ",en
 assign("desc_no_saved_analysis_found ", "No backup analysis could be found",envir=.dico)
 assign("desc_number_of_judge_is ", "the number of judges ",envir=.dico)
 assign("desc_number_of_missing_values ", "Number of missing values per variable",envir=.dico)
-assign("desc_number_of_observations_is ", "number of observations ",",envir=.dico)
+assign("desc_number_of_observations_is ", "number of observations ",envir=.dico)
 assign("desc_number_outliers_removed ", "Number of observations withdrawn",envir=.dico)
 assign("desc_obs_with_asterisk_are_outliers ", "The observations marked with an asterisk are considered to be influential at least on a criteria",envir=.dico)
 assign("desc_odd_ratio_cannot_be_computed ", "Or cannot be calculated for tables larger than 2x3 or tables containing 0",envir=.dico)
