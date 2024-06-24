@@ -129,7 +129,7 @@ assign("ask_new_variable_name", "Quel nom voulez-vous attribuer a la nouvelle va
 assign("ask_norm_value", "Quelle est la valeur de la norme ?",envir=.dico)
 assign("ask_not_enough_obs_verify_dataset", "Il n'y a pas assez d'observations pour realiser l'analyse. Veuillez verifier vos donnees net vous assurer qu'il y a au moins trois observations par modalite de chaque facteur",envir=.dico)
 assign("ask_null_hypothesis_tests_or_bayesian_factors", "Voulez-vous les tests d'hypothees nuls ou/et les facteurs bayesiens ?",envir=.dico)
-assign("ask_numerator_variable_or_value= "Le numerateur est-il une variable ou une valeur ? ",envir=.dico)
+assign("ask_numerator_variable_or_value", "Le numerateur est-il une variable ou une valeur ?",envir=.dico)
 assign("ask_numerator_variable", "Veuillez selectionner la variable au numerateur ",envir=.dico)
 assign("ask_obs_to_remove", "Quelle observation souhaitez-vous retirer des analyses ? '0'=aucune",envir=.dico)
 assign("ask_other_options", "Autres options?",envir=.dico)
