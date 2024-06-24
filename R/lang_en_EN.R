@@ -1129,5 +1129,5 @@ assign("txt_cramer_v_square ", "V.square",envir=.dico)
 assign("txt_effect_size_dot ", "Effect.size",envir=.dico)
 assign("txt_gg_p_value ", "GG.p.value",envir=.dico)
 assign("txt_var_explained_dot ", "Var.explained",envir=.dico)
-assign("V.sq","V.squared")envir=.dico)
+assign("V.sq","V.squared", envir=.dico)
 }
