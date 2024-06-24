@@ -1130,7 +1130,7 @@ load_fr_FR <- function() {
   txt_effect_size_dot = "Taille.effet",
   txt_gg_p_value = "GG.valeur.p",
   txt_var_explained_dot = "Var.expliquee",
-  V.sq="V.carre",
+  V.sq="V.carre"
 )
   
 }
