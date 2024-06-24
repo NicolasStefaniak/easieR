@@ -661,7 +661,7 @@ ref1 <-
   packageStartupMessage(desc_first_time_easier)
   packageStartupMessage(desc_special_characters_have_been_removed)
   packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 05/10/2024")
+  packageStartupMessage("Last update 06/24/2024")
   packageStartupMessage("##############")
 
 }
