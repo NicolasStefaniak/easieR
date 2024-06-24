@@ -334,7 +334,7 @@ assign("desc_no_obs_for_combination", "pas d'observations pour la combinaison",e
 assign("desc_no_result_saved", "aucun resultat n'a ete sauvegarde",envir=.dico)
 assign("desc_norm_must_be_numeric", "La norme doit etre une valeur numerique.",envir=.dico)
 assign("desc_no_saved_analysis_found", "Aucune analyse sauvegardee n'a pu etre trouvee",envir=.dico)
-assign("desc_number_of_judge_is", "le nombre de juge",",envir=.dico)
+assign("desc_number_of_judge_is", "le nombre de juge",envir=.dico)
 assign("desc_number_of_missing_values", "Nombre de valeurs manquantes par variable",envir=.dico)
 assign("desc_number_of_observations_is", "le nombre d'observations",",envir=.dico)
 assign("desc_number_outliers_removed", "Nombre d'observations retirees",envir=.dico)
