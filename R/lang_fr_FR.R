@@ -378,7 +378,7 @@ assign("desc_special_characters_have_been_removed", "Les accents / caracteres sp
 assign("desc_specify_f_value", "Vous devez specifier la valeur du F. Cette valeur doit etre superieure a 1",envir=.dico)
 assign("desc_specify_lower_bound", "vous devez preciser la limite inferieure",envir=.dico)
 assign("desc_specify_probability_value", "Vous devez specifier la valeur de la probabilite. Cette valeur doit etre entre 0 et 1",envir=.dico)
-assign("desc_specify_upper_bound= "vous devez preciser la limite superieure",envir=.dico)
+assign("desc_specify_upper_bound", "vous devez preciser la limite superieure",envir=.dico)
 assign("desc_standardized_saturation_on_correlation_matrix", "saturations standardisees basees sur la matrice de correlations",envir=.dico)
 assign("desc_succesfully_imported", "les donnees ont ete importees correctement",envir=.dico)
 assign("desc_succesful_operation", "L'operation a ete realisee correctement",envir=.dico)
