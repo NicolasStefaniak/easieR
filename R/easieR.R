@@ -16,12 +16,12 @@ easieR <-
 
     choix <- dlgList(easieR.msg("2"), preselect=NULL, multiple = FALSE, title=easieR.msg("3"))$res
     if(length(choix)==0) return(writeLines(easieR.msg("4"))) else {
-      if(choix %in%c(txt_data_import_export_save, txt_data_import_export_save)) Resultats <- donnees()
-      if(choix %in% c(txt_hypothesis_analysis, txt_hypothesis_analysis)) Resultats <-analyse(html=html)
-      if(choix%in%c(txt_interface_objects_in_memory, txt_interface_objects_in_memory)) Resultats <- interfaceR()
-      if(choix%in% c(txt_preprocess_sort_select_operations, txt_preprocess_sort_select_operations)) Resultats<-preprocess()
-      if(choix%in% c(txt_teaching_material, txt_teaching_material)) return(teaching())
-      if(choix%in%c(txt_graphics, txt_graphics)) return(graphiques())
+      if(choix %in%c(.dico$txt_data_import_export_save, .dico$txt_data_import_export_save)) Resultats <- donnees()
+      if(choix %in% c(.dico$txt_hypothesis_analysis, .dico$txt_hypothesis_analysis)) Resultats <-analyse(html=html)
+      if(choix%in%c(.dico$txt_interface_objects_in_memory, .dico$txt_interface_objects_in_memory)) Resultats <- interfaceR()
+      if(choix%in% c(.dico$txt_preprocess_sort_select_operations, .dico$txt_preprocess_sort_select_operations)) Resultats<-preprocess()
+      if(choix%in% c(.dico$txt_teaching_material, .dico$txt_teaching_material)) return(teaching())
+      if(choix%in%c(.dico$txt_graphics, .dico$txt_graphics)) return(graphiques())
       return(Resultats)
     }
   }
@@ -29,34 +29,34 @@ easieR <-
 easieR.msg<-function(msg="1"){
    #if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
    #  msg<-switch(msg,
-   #              "1"=c(desc_for_easier_to_work) ,
-   #              "2"=c(txt_data_import_export_save,
-   #                    txt_preprocess_sort_select_operations,
-   #                    txt_hypothesis_analysis, txt_graphics,
-   #                  txt_interface_objects_in_memory,
-   #                  txt_teaching_material),
-   #              "3"=ask_what_do_you_want,
-   #              "4"=txt_user_exited_easieR)
+   #              "1"=c(.dico$desc_for_easier_to_work) ,
+   #              "2"=c(.dico$txt_data_import_export_save,
+   #                    .dico$txt_preprocess_sort_select_operations,
+   #                    .dico$txt_hypothesis_analysis, .dico$txt_graphics,
+   #                  .dico$txt_interface_objects_in_memory,
+   #                  .dico$txt_teaching_material),
+   #              "3"=.dico$ask_what_do_you_want,
+   #              "4"=.dico$txt_user_exited_easieR)
    #  }else {
    #    msg<-switch(msg, "1"="In order to ensure that easieR is properly installed, please install Pandoc at the following url :
    #   https://github.com/jgm/pandoc/releases",
-   #                "2"=c("Data - (Import, export, save)", txt_preprocess_sort_select_operations,
+   #                "2"=c("Data - (Import, export, save)", .dico$txt_preprocess_sort_select_operations,
    #                      "Analyses - Hypothesis tests", "Graphics",
-   #                    txt_interface_objects_in_memory,
+   #                    .dico$txt_interface_objects_in_memory,
    #                    "Teaching material"),
    #                "3"="What do you want to do?",
    #                "4"="User has terminated easieR")
    #
    # }
-   if      (msg=="1") c(desc_for_easier_to_work) -> msg
-   else if (msg=="2") c(txt_data_import_export_save,
-			txt_preprocess_sort_select_operations,
-			txt_hypothesis_analysis,
-			txt_graphics,
-			txt_interface_objects_in_memory,
-			txt_teaching_material) -> msg
-   else if (msg=="3") ask_what_do_you_want -> msg
-   else if (msg=="4") txt_user_exited_easieR -> msg
+   if      (msg=="1") c(.dico$desc_for_easier_to_work) -> msg
+   else if (msg=="2") c(.dico$txt_data_import_export_save,
+			.dico$txt_preprocess_sort_select_operations,
+			.dico$txt_hypothesis_analysis,
+			.dico$txt_graphics,
+			.dico$txt_interface_objects_in_memory,
+			.dico$txt_teaching_material) -> msg
+   else if (msg=="3") .dico$ask_what_do_you_want -> msg
+   else if (msg=="4") .dico$txt_user_exited_easieR -> msg
 
   return(msg)
 }
@@ -73,7 +73,7 @@ easieR.msg<-function(msg="1"){
 
 
 
-#### statistiques descriptives ####
+#### statistiques .dico$descriptives ####
 
 
 #### permet d'identifier et enlever les valeurs influentes ####
@@ -90,7 +90,7 @@ VI.multiples<-function(data, X){
   nvar<-length(X)
   try(psych::outlier(data[,X], bad=T, na.rm=T,plot=T),silent=T)->essai
   if(class(essai)=='try-error'){
-    msgBox(desc_singular_matrix_mahalanobis_on_max_info)
+    msgBox(.dico$desc_singular_matrix_mahalanobis_on_max_info)
     data2<-data
     rankifremoved <- sapply(1:ncol(data2), function (x) qr(data2[,-x])$rank)
     which(rankifremoved == max(rankifremoved))->rangs
@@ -109,13 +109,13 @@ VI.multiples<-function(data, X){
     if(class(essai)=='try-error') {
       corr.test(data2[,X])$r->matrice
       if(any(abs(matrice)==1)) {
-        msgBox(desc_perfectly_correlated_variables_in_matrix_trying_to_solve)
+        msgBox(.dico$desc_perfectly_correlated_variables_in_matrix_trying_to_solve)
         which(abs(matrice)==1, arr.ind=TRUE)->un
         un<-un[-which(un[,1]==un[,2]),]
         data2[,-un[,2]]->data2
         try(psych::outlier(data2), silent=T)->essai
         if(class(essai)=='try-error') {
-          writeLines(desc_cannot_compute_mahalanobis)
+          writeLines(.dico$desc_cannot_compute_mahalanobis)
           0->data$D.Mahalanobis  }
       }else{essai-> data$D.Mahalanobis}
     } else{ essai-> data$D.Mahalanobis
@@ -128,30 +128,30 @@ VI.multiples<-function(data, X){
   data[which(data$D.Mahalanobis>seuil),]->outliers
   length(outliers[,1])/length(data[,1])*100->pourcent
 
-  msgBox(paste(round(pourcent,2), desc_percentage_outliers))
+  msgBox(paste(round(pourcent,2), .dico$desc_percentage_outliers))
 
 
   if(pourcent!=0){
-    writeLines(desc_outliers_removal_implications)
+    writeLines(.dico$desc_outliers_removal_implications)
 
-    suppr<- dlgList(c(txt_suppress_all_outliers, txt_suppress_outliers_manually),
-                    preselect=c(txt_suppress_all_outliers), multiple = FALSE, title=ask_how_to_remove)$res
+    suppr<- dlgList(c(.dico$txt_suppress_all_outliers, .dico$txt_suppress_outliers_manually),
+                    preselect=c(.dico$txt_suppress_all_outliers), multiple = FALSE, title=.dico$ask_how_to_remove)$res
     if(length(suppr)==0) return(NULL)
-    if(suppr==txt_suppress_all_outliers) {data[which(data$D.Mahalanobis<seuil),]->data
-      outliers->Resultats[[txt_labeled_outliers]]}else{
+    if(suppr==.dico$txt_suppress_all_outliers) {data[which(data$D.Mahalanobis<seuil),]->data
+      outliers->Resultats[[.dico$txt_labeled_outliers]]}else{
         suppression<-"yes"
         outliers<-data.frame()
         while(suppression=="yes"){
           print(data[which.max(data$D.Mahalanobis),])
-          cat (ask_press_enter_to_continue)
+          cat (.dico$ask_press_enter_to_continue)
           line <- readline()
-          dlgMessage(ask_suppress_this_obs, "yesno")$res->suppression
+          dlgMessage(.dico$ask_suppress_this_obs, "yesno")$res->suppression
           if(suppression=="yes") {rbind(outliers, data[which.max(data$D.Mahalanobis),])->outliers
             data[-which.max(data$D.Mahalanobis),]->data
 
           }
         }
-        Resultats[[txt_labeled_outliers]]<-outliers
+        Resultats[[.dico$txt_labeled_outliers]]<-outliers
       }
   }
   Resultats$data<-data
@@ -217,11 +217,11 @@ VI.multiples<-function(data, X){
   etend.y<-max.y-min.y
   y_breaks<-c(min.y, min.y+1/4*etend.y ,min.y+1/2*etend.y ,min.y+3/4*etend.y , max.y )
   y_labs<-as.character(round(exp(y_breaks),2))
-  reorder( c("moyen", txt_large, txt_ultrawide),levels(SBF$rscale))->levels(SBF$rscale)
-  p1 <- ggplot(SBF, aes(x = n, y = log(BF), group=rscale)) + ylab(txt_bayesian_factors_10) +
-    # p1 <- ggplot(SBF, aes(x = as.factor(n), y = log(BF), group=rscale)) + ylab(txt_bayesian_factors_10) +
+  reorder( c("moyen", .dico$txt_large, .dico$txt_ultrawide),levels(SBF$rscale))->levels(SBF$rscale)
+  p1 <- ggplot(SBF, aes(x = n, y = log(BF), group=rscale)) + ylab(.dico$txt_bayesian_factors_10) +
+    # p1 <- ggplot(SBF, aes(x = as.factor(n), y = log(BF), group=rscale)) + ylab(.dico$txt_bayesian_factors_10) +
     xlab("n")+ geom_line(aes(linetype=rscale))+ geom_point()
-  p1<-p1+theme(plot.title = element_text(size = 12))+ggtitle(txt_sequential_bayesian_factors_robustness_analysis)
+  p1<-p1+theme(plot.title = element_text(size = 12))+ggtitle(.dico$txt_sequential_bayesian_factors_robustness_analysis)
   p1<-p1+scale_y_continuous(breaks = y_breaks, labels =y_labs )
   return(p1)
 }
@@ -248,7 +248,7 @@ VI.multiples<-function(data, X){
 
 
 
-.var.type<-function(X=NULL, info=T, data=NULL, type=NULL, check.prod=T, message=NULL, multiple=F, title=txt_variable, out=NULL){
+.var.type<-function(X=NULL, info=T, data=NULL, type=NULL, check.prod=T, message=NULL, multiple=F, title=.dico$txt_variable, out=NULL){
   # permet de selectionner des variables
   # verifie les conditions pour les variables qui doivent respecter certaines conditions
   # data : data.frame name which allow to check whether the variable is the data.frame
@@ -279,20 +279,20 @@ VI.multiples<-function(data, X){
 
   if(!is.null(type) && type=="factor"){
     if(all(sapply(data[,X], class)%in% c("factor", "character"))!=T ) {
-      res<-okCancelBox(ask_transform_numerical_to_categorial_variables)
+      res<-okCancelBox(.dico$ask_transform_numerical_to_categorial_variables)
       if(res==F) {X<-NULL
       .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title, out=out)->Resultats
       return(Resultats)}
     }
     if(length(X)==1) factor(data[,X])->data[,X] else lapply(data[, X], factor)->data[, X]
     if((length(X)==1 && nlevels(data[,X])<2) | (length(X)>1 && any(sapply(data[, X], nlevels)<2))) {
-      okCancelBox(ask_choose_a_variable_with_at_least_two_modalities)
+      okCancelBox(.dico$ask_choose_a_variable_with_at_least_two_modalities)
       .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title,out=out)->Resultats
       return(Resultats)
     }
     if(check.prod){
       if(length(X)>1 && prod(sapply(data[,X],nlevels))>length(data[,1])) {
-        msgBox(ask_redefine_analysis_because_modalities_product_is_superior_to_obs)
+        msgBox(.dico$ask_redefine_analysis_because_modalities_product_is_superior_to_obs)
         .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title,out=out)->Resultats
         return(Resultats)
       }
@@ -303,7 +303,7 @@ VI.multiples<-function(data, X){
   }
   if(!is.null(type) && type=="integer"){
     if((any(data[,X]%%1==0) %in% c(FALSE, NA)) || min(data[,X])<0) {
-      okCancelBox(desc_variable_must_be_positive_int)
+      okCancelBox(.dico$desc_variable_must_be_positive_int)
       X<-NULL
       .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title, out=out)->Resultats
       return(Resultats)
@@ -312,7 +312,7 @@ VI.multiples<-function(data, X){
   if(!is.null(type) && type=="numeric"){
     if(length(X)==1) moy<-is.na(mean(data[,X],na.rm=T)) else moy<-any(is.na(sapply(data[,X], mean, na.rm=T)))
     if(any(moy!=0) || any(var(data[,X],na.rm=T)==0)){
-      okCancelBox(desc_variable_must_be_numeric_and_of_non_null_variance)
+      okCancelBox(.dico$desc_variable_must_be_numeric_and_of_non_null_variance)
       X<-NULL
       .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title, out=out)->Resultats
       return(Resultats)
@@ -346,35 +346,35 @@ VI.multiples<-function(data, X){
     choix<-c()
     if(param==T){
       if(info) writeLines(msg.options1)
-      choix<-c(choix, txt_param_tests)
+      choix<-c(choix, .dico$txt_param_tests)
     }
     if(non.param==T) {
       if(info) writeLines(msg.options2)
-      choix<-c(choix, txt_non_parametric_test)
+      choix<-c(choix, .dico$txt_non_parametric_test)
     }
     if(robust==T) {
-      if(info) writeLines(desc_robust_statistics_are_alternative_to_the_principal_but_slower)
-      choix<-c(choix, txt_robusts_tests_with_bootstraps)
+      if(info) writeLines(.dico$desc_robust_statistics_are_alternative_to_the_principal_but_slower)
+      choix<-c(choix, .dico$txt_robusts_tests_with_bootstraps)
     }
     if(Bayes==T) {
-      if(info) writeLines(txt_bayesian_factors_compute_null_with_bayesian_approach)
-      choix<-c(choix, txt_bayesian_factors)
+      if(info) writeLines(.dico$txt_bayesian_factors_compute_null_with_bayesian_approach)
+      choix<-c(choix, .dico$txt_bayesian_factors)
     }
 
-    choix<- dlgList(choix, preselect=choix, multiple = TRUE, title=ask_which_analysis)$res
+    choix<- dlgList(choix, preselect=choix, multiple = TRUE, title=.dico$ask_which_analysis)$res
     if(length(choix)==0) return(NULL)
   }
   Resultats$choix<-choix
 
-  if(exists('choix') && any(choix== txt_robusts_tests_with_bootstraps) || !is.null(n.boot)){{
+  if(exists('choix') && any(choix== .dico$txt_robusts_tests_with_bootstraps) || !is.null(n.boot)){{
     if(!is.null(n.boot) && ((class(n.boot)!="numeric" & class(n.boot)!="integer") ||  n.boot%%1!=0 || n.boot<1)){
-      msgBox(desc_bootstraps_number_must_be_positive)
+      msgBox(.dico$desc_bootstraps_number_must_be_positive)
       n.boot<-NULL
     }
     while(is.null(n.boot)){
-      writeLines(ask_bootstrap_numbers_1_for_none)
+      writeLines(.dico$ask_bootstrap_numbers_1_for_none)
 
-      n.boot<-dlgInput(ask_bootstraps_number, 1000)$res
+      n.boot<-dlgInput(.dico$ask_bootstraps_number, 1000)$res
       if(length(n.boot)==0) {.ez.options(options=options, n.boot=NULL,param=param, non.param=non.param, robust=robust,
                                          Bayes=Bayes, msg.options1=msg.options1, msg.options2=msg.options2, info=T, dial=T,
                                          choix=choix,sauvegarde=F, outlier=NULL,rscale=rscale)->Resultats
@@ -383,7 +383,7 @@ VI.multiples<-function(data, X){
       tail(n.boot[[1]],n=1)->n.boot
       as.numeric(n.boot)->n.boot
       if(is.na(n.boot) ||  n.boot%%1!=0 || n.boot<1){
-        msgBox(desc_bootstraps_number_must_be_positive)
+        msgBox(.dico$desc_bootstraps_number_must_be_positive)
         n.boot<-NULL
       }
     }
@@ -391,9 +391,9 @@ VI.multiples<-function(data, X){
     Resultats$n.boot<-n.boot
   }
   if(!is.null(rscale)){
-    if(dial & any(choix==txt_bayesian_factors)|| (is.numeric(rscale) & (rscale<0.1 | rscale>2)) || (!is.numeric(rscale) & rscale%in% c("moyen", txt_large, txt_ultrawide)==F)) {
-      if(info) writeLines(ask_cauchy_apriori_distribution)
-      rscale<-dlgList(c("moyen", txt_large, txt_ultrawide), preselect="moyen", multiple = F, title=ask_distribution_type)$res
+    if(dial & any(choix==.dico$txt_bayesian_factors)|| (is.numeric(rscale) & (rscale<0.1 | rscale>2)) || (!is.numeric(rscale) & rscale%in% c("moyen", .dico$txt_large, .dico$txt_ultrawide)==F)) {
+      if(info) writeLines(.dico$ask_cauchy_apriori_distribution)
+      rscale<-dlgList(c("moyen", .dico$txt_large, .dico$txt_ultrawide), preselect="moyen", multiple = F, title=.dico$ask_distribution_type)$res
       if(length(rscale)==0) {
         .ez.options(options=options, n.boot=NULL,param=param, non.param=non.param, robust=robust,
                     Bayes=Bayes, msg.options1=msg.options1, msg.options2=msg.options2, info=T, dial=T,
@@ -401,7 +401,7 @@ VI.multiples<-function(data, X){
       }
     }
     if(is.character(rscale)) {
-      ifelse(rscale=="moyen", rscale<-2^0.5/2, ifelse(rscale==txt_large, rscale<-1, ifelse(rscale==txt_ultrawide, rscale<-2^0.5, rscale<-rscale)))
+      ifelse(rscale=="moyen", rscale<-2^0.5/2, ifelse(rscale==.dico$txt_large, rscale<-1, ifelse(rscale==.dico$txt_ultrawide, rscale<-2^0.5, rscale<-rscale)))
       Resultats$rscalei<-T
     } else Resultats$rscalei<-F
 
@@ -411,12 +411,12 @@ VI.multiples<-function(data, X){
 
   if(any(options=="outlier")){
     if(dial || is.null(outlier)||
-       (dial==F & any(outlier %in%c(txt_complete_dataset, txt_identifying_outliers,txt_without_outliers,
+       (dial==F & any(outlier %in%c(.dico$txt_complete_dataset, .dico$txt_identifying_outliers,.dico$txt_without_outliers,
                                    "complete", "id", "removed"))==F)) {
-      if(info==TRUE) writeLines(desc_complete_dataset_vs_identification_outliers_vs_without_outliers)
-      Resultats$desires<- dlgList(c(txt_complete_dataset, txt_identifying_outliers,txt_without_outliers),
-                                  preselect=c(txt_complete_dataset,txt_identifying_outliers, txt_without_outliers),
-                                  multiple = TRUE, title=ask_which_analysis)$res
+      if(info==TRUE) writeLines(.dico$desc_complete_dataset_vs_identification_outliers_vs_without_outliers)
+      Resultats$desires<- dlgList(c(.dico$txt_complete_dataset, .dico$txt_identifying_outliers,.dico$txt_without_outliers),
+                                  preselect=c(.dico$txt_complete_dataset,.dico$txt_identifying_outliers, .dico$txt_without_outliers),
+                                  multiple = TRUE, title=.dico$ask_which_analysis)$res
       if(length(Resultats$desires)==0) {.ez.options(options=options, n.boot=NULL,param=param, non.param=non.param, robust=robust,
                                                     Bayes=Bayes, msg.options1=msg.options1, msg.options2=msg.options2, info=T, dial=T,
                                                     choix=choix,sauvegarde=F, outlier=NULL,rscale=rscale)->Resultats
@@ -424,7 +424,7 @@ VI.multiples<-function(data, X){
     } else Resultats$desires<-outlier
   }
 
-  if( dial==T) {Resultats$sauvegarde<- dlgList(c(TRUE, FALSE), preselect=FALSE, multiple = FALSE, title=ask_save_results)$res
+  if( dial==T) {Resultats$sauvegarde<- dlgList(c(TRUE, FALSE), preselect=FALSE, multiple = FALSE, title=.dico$ask_save_results)$res
   if(length(Resultats$sauvegarde)==0) {.ez.options(options=options, n.boot=NULL,param=param, non.param=non.param, robust=robust,
                                                    Bayes=Bayes, msg.options1=msg.options1, msg.options2=msg.options2, info=T, dial=T,
                                                    choix=choix,sauvegarde=F, outlier=NULL,rscale=rscale)->Resultats
@@ -441,7 +441,7 @@ VI.multiples<-function(data, X){
   try(get("ez.history", envir=.GlobalEnv),silent=T)->ez.history
   if(class(ez.history)=='try-error') {ez.history<-list()
   ez.history$Analyse[[1]]<-data
-  names(ez.history)[length(ez.history)]<-paste(txt_analysis_on,nom)
+  names(ez.history)[length(ez.history)]<-paste(.dico$txt_analysis_on,nom)
   names(ez.history[[length(ez.history)]])[1]<-nom
   ez.history[[length(ez.history)]]$historique<-command
   }else{
@@ -450,7 +450,7 @@ VI.multiples<-function(data, X){
       ez.history[[length(ez.history)]]$historique<-rbind(ez.history[[length(ez.history)]]$historique,command)
     }else {
       ez.history$Analyse[[1]]<-data
-      names(ez.history)[length(ez.history)]<-paste(txt_analysis_on,nom)
+      names(ez.history)[length(ez.history)]<-paste(.dico$txt_analysis_on,nom)
       names(ez.history[[length(ez.history)]])[1]<-nom
       ez.history[[length(ez.history)]]$historique<-command
     }
@@ -498,10 +498,10 @@ VI.multiples<-function(data, X){
       shapiro.test(data[,"res"])->Shapiro_Wilk # realise le Shapiro-Wilk
       lillie.test(data[,"res"])->Lilliefors  # realise le Lilliefors
       round(data.frame(Shapiro_Wilk$statistic,Shapiro_Wilk$p.value, Lilliefors$statistic, Lilliefors$p.value),4)->normalite
-      names(normalite)<-c(txt_shapiro_wilk, txt_p_dot_val_sw, txt_lilliefors_d, txt_p_dot_val_lilliefors)
+      names(normalite)<-c(.dico$txt_shapiro_wilk, .dico$txt_p_dot_val_sw, .dico$txt_lilliefors_d, .dico$txt_p_dot_val_lilliefors)
       dimnames(normalite)[1]<-" "
 #      format(normalite, width = max(sapply(names(normalite), nchar)), justify = "centre")->normalite
-      n2[[txt_normality_tests]]<-normalite}
+      n2[[.dico$txt_normality_tests]]<-normalite}
 
 
     #p1<-ggplot(data, aes(x=res))+geom_histogram(aes(y=..density..))
@@ -509,9 +509,9 @@ VI.multiples<-function(data, X){
     p1<-p1+ stat_function(fun = dnorm, colour = "red",
                           args = list(mean = mean(data[,"res"], na.rm = TRUE),
                                       sd = sd(data[,"res"], na.rm = TRUE)))
-    p1<-p1+theme(plot.title = element_text(size = 12))+labs(x = txt_residual_distribution)
+    p1<-p1+theme(plot.title = element_text(size = 12))+labs(x = .dico$txt_residual_distribution)
     #print(p1)
-    n2[[txt_residuals_distribution]]<-p1
+    n2[[.dico$txt_residuals_distribution]]<-p1
     p2<-ggplot(data, aes(sample=res))+stat_qq()
     p2<-p2+theme(plot.title = element_text(size = 12))+ggtitle("QQplot")
     n2$"QQplot"<-p2
@@ -525,8 +525,8 @@ VI.multiples<-function(data, X){
                  "skew"=mardia.results$skew,"p.skew"=mardia.results$p.skew,"small.skew"= mardia.results$small.skew,"p.small"= mardia.results$p.small,
                  "kurtosis"=mardia.results$kurtosis,"p.kurtosis"=mardia.results$p.kurt )->n2
     } else {
-      msgBox(desc_matrix_is_singular_mardia_cannot_be_performed)
-       n2<-data.frame(txt_shapiro_wilk=NULL, txt_p_dot_val_sw=NULL, txt_lilliefors_d=NULL, txt_p_dot_val_lilliefors=NULL)
+      msgBox(.dico$desc_matrix_is_singular_mardia_cannot_be_performed)
+       n2<-data.frame(.dico$txt_shapiro_wilk=NULL, .dico$txt_p_dot_val_sw=NULL, .dico$txt_lilliefors_d=NULL, .dico$txt_p_dot_val_lilliefors=NULL)
       for(i in 1:length(X)){
         X[i]->Z
         .normalite(data=data, X=Z,Y=Y)->nor1
@@ -541,7 +541,7 @@ VI.multiples<-function(data, X){
 
 
 # cree la liste avec tous les resultats
-.stat.desc.out<-function(X=NULL, groupes=NULL, data=NULL, tr=.1, type=3, plot=T){
+.stat..dico$desc.out<-function(X=NULL, groupes=NULL, data=NULL, tr=.1, type=3, plot=T){
 	  packages<-c('psych', 'ggplot2')
 	 test2<-try(lapply(packages, library, character.only=T), silent=T)
   data_summary <- function(x) {
@@ -559,16 +559,16 @@ VI.multiples<-function(data, X){
 
   if(length(X)!=0){
     if(is.null(groupes)) NULL->groupes2 else data.frame(data[,groupes])->groupes2
-    try(  psych::describeBy(data[,X], group=groupes2,mat=(!is.null(groupes)),type=type,digits=4, check=FALSE,skew = TRUE,
-                            ranges = TRUE,trim=tr, fast=FALSE), silent=T)->psych.desc
-    if(any(class(psych.desc)=='try-error')) {
-      psych::describeBy(data[,X], group=groupes2,mat=F,type=type,digits=15, check=FALSE,skew = TRUE,
-                        ranges = TRUE,trim=tr)->psych.desc
+    try(  psych::.dico$describeBy(data[,X], group=groupes2,mat=(!is.null(groupes)),type=type,digits=4, check=FALSE,skew = TRUE,
+                            ranges = TRUE,trim=tr, fast=FALSE), silent=T)->psych..dico$desc
+    if(any(class(psych..dico$desc)=='try-error')) {
+      psych::.dico$describeBy(data[,X], group=groupes2,mat=F,type=type,digits=15, check=FALSE,skew = TRUE,
+                        ranges = TRUE,trim=tr)->psych..dico$desc
       expand.grid(sapply(groupes2, levels))->modalites
       for(i in 1:length(modalites[,1])) {
-        if(is.null(psych.desc[[i]])) paste(desc_no_obs_for_combination, paste(unlist(modalites[i,]), collapse=" & "))->Resultats[[i]] else   psych.desc[[i]]->Resultats[[i]]
+        if(is.null(psych..dico$desc[[i]])) paste(.dico$desc_no_obs_for_combination, paste(unlist(modalites[i,]), collapse=" & "))->Resultats[[i]] else   psych..dico$desc[[i]]->Resultats[[i]]
         paste(unlist(modalites[i,]), collapse=" & ")->names(Resultats)[i]}
-    } else psych.desc-> Resultats[[txt_numeric_variables]]
+    } else psych..dico$desc-> Resultats[[.dico$txt_numeric_variables]]
 
 
 
@@ -614,8 +614,8 @@ VI.multiples<-function(data, X){
         })
 
         Resultats$Graphiques<-graphiques
-        Resultats[[txt_graphics_informations]][[1]]<-desc_graph_thickness_gives_density
-        Resultats[[txt_graphics_informations]][[2]]<-desc_red_dot_is_mean_error_is_sd
+        Resultats[[.dico$txt_graphics_informations]][[1]]<-.dico$desc_graph_thickness_gives_density
+        Resultats[[.dico$txt_graphics_informations]][[2]]<-.dico$desc_red_dot_is_mean_error_is_sd
       }
     }
 
@@ -636,14 +636,14 @@ ref1 <-
     require('bibtex')
     c('base', packages, 'bibtex')->packages
      if(Sys.info()[[1]]=="Windows"){
-    file.nametxt<-paste0(tempdir(), "\\references.bib")
+    file.name.dico$txt<-paste0(tempdir(), "\\references.bib")
       } else {
-      file.nametxt<-paste0(tempdir(), "/references.bib")
+      file.name.dico$txt<-paste0(tempdir(), "/references.bib")
       }
 
-    write.bib(packages, file=file.nametxt)
-    bibtex::read.bib(file.nametxt)->Resultats
-    file.remove(file.nametxt)
+    write.bib(packages, file=file.name.dico$txt)
+    bibtex::read.bib(file.name.dico$txt)->Resultats
+    file.remove(file.name.dico$txt)
     return(Resultats)
   }
 
@@ -652,14 +652,14 @@ ref1 <-
 .onAttach <- function(libname, pkgname) {
   load_language(lang='auto')
   textVersion =
-         paste(desc_how_to_cite_easier,
-               desc_easier_metapackage,
+         paste(.dico$desc_how_to_cite_easier,
+               .dico$desc_easier_metapackage,
                sep = "")
 
   packageStartupMessage("##############")
-  packageStartupMessage(desc_welcome_in_easieR)
-  packageStartupMessage(desc_first_time_easier)
-  packageStartupMessage(desc_special_characters_have_been_removed)
+  packageStartupMessage(.dico$desc_welcome_in_easieR)
+  packageStartupMessage(.dico$desc_first_time_easier)
+  packageStartupMessage(.dico$desc_special_characters_have_been_removed)
   packageStartupMessage(textVersion)
   packageStartupMessage("Last update 06/24/2024")
   packageStartupMessage("##############")
