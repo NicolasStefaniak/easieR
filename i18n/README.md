@@ -70,6 +70,10 @@ Not tested :
 
 2) The "dictionnaries" method loads a lot of objects in memory. This is potentially annoying. Placeholders variables are stored in accessible variables. Moreove those variables are made global (might not be good practise).
 
+# Doing
+
+- Make placeholders variables less visible to the user environment: create an environment `.dico` into which placeholders are stored.
+
 # Done
 
 - Language can be dynamically selected from GUI (`Interface` > `Choose language`) or command-line (e.g. `load_language("English")`)
@@ -78,5 +82,9 @@ Not tested :
 # TODO
 
 - Chose better variables names for placeholders
-- Make placeholders variables less visible to the user environment
 - Data interpolation system ("placeholders for data" inside placeholders)
+
+# References
+
+- [https://stackoverflow.com/questions/34254716/how-to-define-hidden-global-variables-inside-r-packages](https://stackoverflow.com/questions/34254716/how-to-define-hidden-global-variables-inside-r-packages) - Define hidden global variables inside R packages
+- [http://adv-r.had.co.nz/Environments.html](http://adv-r.had.co.nz/Environments.html)

@@ -8,10 +8,10 @@
 #               \n la matrice de correlation permet de contrôler l'erreur de 1e espece et est adaptee pour un grand nombre de correlations
 #               \n la comparaison de correlations permet de comparer 2 correlations dependantes ou independantes
 #               \n Le choix + autre correlations + permet d'avoir les correlation tetrachoriques et polychoriques")
-#    dlgList(c(txt_detailed_corr_analysis,
-#              txt_correlations_matrix,
-#              txt_compare_two_correlations,
-#              txt_other_correlations), preselect=NULL, multiple = FALSE, title=ask_which_analysis)$res->choix
+#    dlgList(c(.dico[["txt_detailed_corr_analysis"]],
+#              .dico[["txt_correlations_matrix"]],
+#              .dico[["txt_compare_two_correlations"]],
+#              .dico[["txt_other_correlations"]]), preselect=NULL, multiple = FALSE, title=.dico[["ask_which_analysis"]])$res->choix
 #    if(length(choix)==0) return(analyse())
 #    switch(choix,
 #           txt_detailed_corr_analysis=corr.complet(html=html)->Resultats,
@@ -26,16 +26,16 @@ choix.corr <-
     c('svDialogs')->packages
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages)
       require(packages)}
-    writeLines(desc_corr_detailed_analysis)
-    dlgList(c(txt_detailed_corr_analysis,
-              txt_correlations_matrix,
-              txt_compare_two_correlations,
-              txt_other_correlations), preselect=NULL, multiple = FALSE, title=ask_which_analysis)$res->choix
+    writeLines(.dico[["desc_corr_detailed_analysis"]])
+    dlgList(c(.dico[["txt_detailed_corr_analysis"]],
+              .dico[["txt_correlations_matrix"]],
+              .dico[["txt_compare_two_correlations"]],
+              .dico[["txt_other_correlations"]]), preselect=NULL, multiple = FALSE, title=.dico[["ask_which_analysis"]])$res->choix
     if(length(choix)==0) return(analyse())
 
-    if(choix==txt_detailed_corr_analysis) corr.complet(html=html)->Resultats
-    if(choix==txt_correlations_matrix) corr.matrice(html=html)->Resultats
-    if(choix==txt_compare_two_correlations) comp.corr(html=html)->Resultats
-    if(choix==txt_other_correlations) tetrapoly(html=html)->Resultats
+    if(choix==.dico[["txt_detailed_corr_analysis"]]) corr.complet(html=html)->Resultats
+    if(choix==.dico[["txt_correlations_matrix"]]) corr.matrice(html=html)->Resultats
+    if(choix==.dico[["txt_compare_two_correlations"]]) comp.corr(html=html)->Resultats
+    if(choix==.dico[["txt_other_correlations"]]) tetrapoly(html=html)->Resultats
     return(Resultats)
   }

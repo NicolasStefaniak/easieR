@@ -64,7 +64,7 @@ function(){
     )
 
           list()->Resultats
-    Resultats[[desc_install_correct_packages]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
-    Resultats[[desc_install_bad_packages]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
+    Resultats[[.dico[["desc_install_correct_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
+    Resultats[[.dico[["desc_install_bad_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
     return(Resultats)
 }
