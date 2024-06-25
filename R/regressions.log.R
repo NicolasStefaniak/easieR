@@ -185,10 +185,17 @@ regressions.log <-
       pred<-attributes(terms(as.formula(modele)))$term.labels
       Resultats[[.dico[["txt_descriptive_statistics"]]]]<-.stat.desc.out(X=variables, groupes=NULL, data=data, tr=.1, type=3, plot=T)
 
-      if(scale==T || scale==.dico[["txt_center"]]) {Resultats$info<-.dico[["desc_centered_data_schielzeth_recommandations"]]
-      fun<-function(X){X-mean(X)}
-      variables[-1]->pred2
-      sapply(X=data[, names(which(sapply(data[,pred2],class)!="factor"))], fun)->data[,names(which(sapply(data[,pred2],class)!="factor"))]
+      if(scale==T || scale==.dico[["txt_center"]]) {
+	  Resultats$info<-.dico[["desc_centered_data_schielzeth_recommandations"]]
+	  variables[-1]->pred2
+	  if(length(pred2)>1) { which(!sapply(data[,pred2[which(pred2 %in% variables)]],class)%in%c("factor", "character"))->centre
+	  centre<-pred2[centre]}else{centre<-NULL}
+	  if(!is.null(centre)){
+	      if(length(centre)==1) data[,centre]-mean(data[,centre],na.rm=T)->data[,centre] else{
+		  sapply(X=data[,centre], FUN = function(X){X-mean(X, na.rm=T)})->data[,centre]
+	      }
+
+	  }
       }
       if(class(data[,variables[1]])=="character") factor(data[,variables[1]])->data[,variables[1]]
 
