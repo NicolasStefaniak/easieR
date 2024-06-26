@@ -73,7 +73,7 @@ easieR.msg<-function(msg="1"){
 
 
 
-#### statistiques .dico$descriptives ####
+#### statistiques descriptives ####
 
 
 #### permet d'identifier et enlever les valeurs influentes ####
@@ -542,7 +542,7 @@ VI.multiples<-function(data, X){
 
 
 # cree la liste avec tous les resultats
-.stat..dico$desc.out<-function(X=NULL, groupes=NULL, data=NULL, tr=.1, type=3, plot=T){
+.stat.desc.out<-function(X=NULL, groupes=NULL, data=NULL, tr=.1, type=3, plot=T){
 	  packages<-c('psych', 'ggplot2')
 	 test2<-try(lapply(packages, library, character.only=T), silent=T)
   data_summary <- function(x) {
@@ -560,11 +560,11 @@ VI.multiples<-function(data, X){
 
   if(length(X)!=0){
     if(is.null(groupes)) NULL->groupes2 else data.frame(data[,groupes])->groupes2
-    try(  psych::.dico$describeBy(data[,X], group=groupes2,mat=(!is.null(groupes)),type=type,digits=4, check=FALSE,skew = TRUE,
-                            ranges = TRUE,trim=tr, fast=FALSE), silent=T)->psych..dico$desc
-    if(any(class(psych..dico$desc)=='try-error')) {
-      psych::.dico$describeBy(data[,X], group=groupes2,mat=F,type=type,digits=15, check=FALSE,skew = TRUE,
-                        ranges = TRUE,trim=tr)->psych..dico$desc
+    try(  psych::describeBy(data[,X], group=groupes2,mat=(!is.null(groupes)),type=type,digits=4, check=FALSE,skew = TRUE,
+                            ranges = TRUE,trim=tr, fast=FALSE), silent=T)->psych.desc
+    if(any(class(psych.desc)=='try-error')) {
+      psych::describeBy(data[,X], group=groupes2,mat=F,type=type,digits=15, check=FALSE,skew = TRUE,
+                        ranges = TRUE,trim=tr)->psych.desc
       expand.grid(sapply(groupes2, levels))->modalites
       for(i in 1:length(modalites[,1])) {
         if(is.null(psych.desc[[i]])) paste(.dico[["desc_no_obs_for_combination"]], paste(unlist(modalites[i,]), collapse=" & "))->Resultats[[i]] else   psych.desc[[i]]->Resultats[[i]]
@@ -637,14 +637,14 @@ ref1 <-
     require('bibtex')
     c('base', packages, 'bibtex')->packages
      if(Sys.info()[[1]]=="Windows"){
-    file.name.dico$txt<-paste0(tempdir(), "\\references.bib")
+    file.nametxt<-paste0(tempdir(), "\\references.bib")
       } else {
-      file.name.dico$txt<-paste0(tempdir(), "/references.bib")
+      file.nametxt<-paste0(tempdir(), "/references.bib")
       }
 
-    write.bib(packages, file=file.name.dico$txt)
-    bibtex::read.bib(file.name.dico$txt)->Resultats
-    file.remove(file.name.dico$txt)
+    write.bib(packages, file=file.nametxt)
+    bibtex::read.bib(file.nametxt)->Resultats
+    file.remove(file.nametxt)
     return(Resultats)
   }
 
