@@ -9,6 +9,6 @@ function(){
     }
   if(class(fichier)=='try-error') return(donnees())
   openFileInOS(fichier)
-    Resultats<-paste(desc_result_succesfully_imported_in, fichier)
+    Resultats<-paste(.dico[["desc_result_succesfully_imported_in"]], fichier)
   return(Resultats)
 }

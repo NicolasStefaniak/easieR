@@ -93,20 +93,20 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   # type : either "msg" or "title"
   # number : number of message
   #if(grepl("French",Sys.setlocale()) | grepl("fr",Sys.setlocale())) {
-  msg<-c(ask_chose_cols_corresponding_to_repeated_measures,
-         txt_col_correspoding_to_variable,
-         desc_should_specify_nb_factors_repeated_measure,
-         ask_did_not_specify_nb_factors_repeated_measure_exit,
-         desc_non_numeric_value,
-         desc_you_have_selected, txt_cols,
-         desc_modalities_product_must_correspond_to_cols_selected,
-         ask_press_enter_to_continue)
+  msg<-c(.dico[["ask_chose_cols_corresponding_to_repeated_measures"]],
+         .dico[["txt_col_correspoding_to_variable"]],
+         .dico[["desc_should_specify_nb_factors_repeated_measure"]],
+         .dico[["ask_did_not_specify_nb_factors_repeated_measure_exit"]],
+         .dico[["desc_non_numeric_value"]],
+         .dico[["desc_you_have_selected"]], .dico[["txt_cols"]],
+         .dico[["desc_modalities_product_must_correspond_to_cols_selected"]],
+         .dico[["ask_press_enter_to_continue"]])
 
 
-  title<-c(txt_cols_in_repeated_measure ,txt_nb_variables_measured, txt_measured_variable_name,
-           ask_nb_factors_repeated_measure,
-           txt_factor_name,ask_how_many_modalities,txt_modality, txt_modalities_name_for,
-           ask_is_long_format_correct)
+  title<-c(.dico[["txt_cols_in_repeated_measure"]] ,.dico[["txt_nb_variables_measured"]], .dico[["txt_measured_variable_name"]],
+           .dico[["ask_nb_factors_repeated_measure"]],
+           .dico[["txt_factor_name"]],.dico[["ask_how_many_modalities"]],.dico[["txt_modality"]], .dico[["txt_modalities_name_for"]],
+           .dico[["ask_is_long_format_correct"]])
 
   #} else {
   #  msg<-c("Please choose all the columns corresponding to the repeaed measure levels",
@@ -120,7 +120,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
   #  title<-c("Columns in repeated measures", "Number of measured variables", "Name of measured variable",
   #           "How many repeated measures variables ?",
   #           "name of the factor", "How many levels", "level", "Name of levels for",
-  #           ask_is_long_format_correct)
+  #           .dico[["ask_is_long_format_correct"]])
   #}
 
   ifelse(type=="msg", r<-msg, r<-title)
@@ -183,7 +183,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
 
     } else {
       varying[[1]]<-  varying2
-      v.names <- dlgInput(paste(.ez.reshape.msg("title",3),1), txt_variable)$res
+      v.names <- dlgInput(paste(.ez.reshape.msg("title",3),1), .dico[["txt_variable"]])$res
       if(length(v.names)==0) { return(ez.reshape())}
       strsplit(v.names, ":")->v.names
       v.names<-gsub("[^[:alnum:]]", ".", v.names)
@@ -251,7 +251,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
         writeLines(paste(.ez.reshape.msg("msg",6), length(varying[[1]]),.ez.reshape.msg("msg",7) ))
         writeLines(.ez.reshape.msg("msg",8))
         for(i in 1:N.facteurs) {
-          dlgInput(paste(.ez.reshape.msg("title",5),i), paste(txt_variable,i, sep="."))$res->IV.names[[i]]
+          dlgInput(paste(.ez.reshape.msg("title",5),i), paste(.dico[["txt_variable"]],i, sep="."))$res->IV.names[[i]]
           if(length(IV.names[[i]])==0) return(ez.reshape(data=data, varying=varying))
           strsplit(IV.names[[i]], ":")->IV.names[[i]]
           tail(IV.names[[i]][[1]],n=1)->IV.names[[i]]
@@ -335,7 +335,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
 LCS <- function (a, b) {
   m <- length(a)
   n <- length(b)
-  if (m == 0 || n == 0) stop (txt_vector_length_zero)
+  if (m == 0 || n == 0) stop (.dico[["txt_vector_length_zero"]])
 
   # creates a table
   M <- matrix(nrow = m + 1, ncol = n + 1)

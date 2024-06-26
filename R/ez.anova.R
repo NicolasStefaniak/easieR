@@ -57,25 +57,25 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   complet[["aov.plus.in"]]<-NULL
   
   
-  if(any(outlier %in% c("complete", txt_complete_dataset,txt_complete_dataset))){
+  if(any(outlier %in% c("complete", .dico[["txt_complete_dataset"]],.dico[["txt_complete_dataset"]]))){
     Resultats[[.ez.anova.msg("title", 12)]]<-complet
-    aov.plus.in->aov.plus.list[[txt_complete_dataset]]}
+    aov.plus.in->aov.plus.list[[.dico[["txt_complete_dataset"]]]]}
   
-  if(any(outlier %in% c("id", "removed" , txt_identifying_outliers, txt_without_outliers,
-                        txt_identifying_outliers, txt_without_outliers))) { 
+  if(any(outlier %in% c("id", "removed" , .dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
+                        .dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]]))) { 
     if(is.null(data$'residu')) {
       Resultats[[.ez.anova.msg("title", 55)]]<-.ez.anova.msg("msg", 34)
       return(Resultats)}
     valeurs.influentes(X='residu', critere="Grubbs",z=3.26, data=data)->influentes
     
-    if(any(outlier %in% c(txt_identifying_outliers,"id",txt_identifying_outliers ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
-    if(any(outlier %in% c( txt_without_outliers,  txt_without_outliers,"removed" ))){
+    if(any(outlier %in% c(.dico[["txt_identifying_outliers"]],"id",.dico[["txt_identifying_outliers"]] ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
+    if(any(outlier %in% c( .dico[["txt_without_outliers"]],  .dico[["txt_without_outliers"]],"removed" ))){
       
-      #if(!is.null(influentes[[txt_outliers]][,id])){
-      #  setdiff(data[,as.character(id)],influentes[[txt_outliers]][,as.character(id)])->diffs
-      #if(influentes[[txt_outliers_synthesis]]$Synthese[1]!=0){
-      if(influentes[[txt_outliers_synthesis]][[txt_synthesis]][1]!=0){
-        setdiff(data[,as.character(id)],influentes[[txt_outliers]][,as.character(id)])->diffs
+      #if(!is.null(influentes[[.dico[["txt_outliers"]]]][,id])){
+      #  setdiff(data[,as.character(id)],influentes[[.dico[["txt_outliers"]]]][,as.character(id)])->diffs
+      #if(influentes[[.dico[["txt_outliers_synthesis"]]]]$Synthese[1]!=0){
+      if(influentes[[.dico[["txt_outliers_synthesis"]]]][[.dico[["txt_synthesis"]]]][1]!=0){
+        setdiff(data[,as.character(id)],influentes[[.dico[["txt_outliers"]]]][,as.character(id)])->diffs
         data[which(data[,id] %in% diffs), ]->nettoyees
         factor(nettoyees[,id])->nettoyees[,id]
         nett<-.ez.anova.out(data=nettoyees, DV=DV, between=between, within=within,id=id, cov=cov,  
@@ -84,10 +84,10 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         nett[["data"]]<-NULL
         nett[["aov.plus.in"]]<-NULL
         Resultats[[.ez.anova.msg("title", 14)]]<-nett
-        aov.plus.in->aov.plus.list[[txt_without_outliers]]
+        aov.plus.in->aov.plus.list[[.dico[["txt_without_outliers"]]]]
       }
-      print(!all(outlier %in% c("complete", txt_complete_dataset,txt_complete_dataset)))
-    if(!any(outlier %in% c("complete", txt_complete_dataset,txt_complete_dataset)))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
+      print(!all(outlier %in% c("complete", .dico[["txt_complete_dataset"]],.dico[["txt_complete_dataset"]])))
+    if(!any(outlier %in% c("complete", .dico[["txt_complete_dataset"]],.dico[["txt_complete_dataset"]])))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
       
     }
     
@@ -104,7 +104,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   if(!is.null(cov)) cov<-paste(unique(cov), collapse="','", sep="") 
   param<-paste(unique(param), collapse="','", sep="") 
   outlier<-paste(unique(outlier), collapse="','", sep="")
-  if(!any(contrasts%in%c("none", txt_none, txt_pairwise, txt_comparison_two_by_two))){
+  if(!any(contrasts%in%c("none", .dico[["txt_none"]], .dico[["txt_pairwise"]], .dico[["txt_comparison_two_by_two"]]))){
     cont.call<-"list("
     for(i in 1:length(contrasts)){
       if(i>1) cont.call<-paste0(cont.call, ",")
@@ -121,9 +121,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                ", p.adjust = '", p.adjust, "', n.boot = ", n.boot, ",rscaleFixed = ", rscaleFixed, ", rscaleRandom = ", rscaleRandom, ")")
   Resultats$call<-call
   
-  .add.history(data=data, command=Resultats$Call, nom=txt_anova)
-  .add.result(Resultats=Resultats, name =paste(txt_anova, Sys.time() ))
-  if(save==T) save(Resultats=Resultats ,choix =paste(txt_anova_on, nom), env=.e)
+  .add.history(data=data, command=Resultats$Call, nom=.dico[["txt_anova"]])
+  .add.result(Resultats=Resultats, name =paste(.dico[["txt_anova"]], Sys.time() ))
+  if(save==T) save(Resultats=Resultats ,choix =paste(.dico[["txt_anova_on"]], nom), env=.e)
   ref1(packages)->Resultats[[.ez.anova.msg("title", 56)]]
   if(html) try(ez.html(Resultats), silent=T) 
   return(Resultats)
@@ -137,59 +137,59 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 .ez.anova.msg<-function(type, number){
   # type : either "msg" or "title"
   # number : number of message 
-    msg<-c(ask_variables_type_for_anova,
-           desc_at_least_independant_variables_or_repeated_measures,
-           ask_select_variables_or_modalities_of_repeated_measure_variable,
-           ask_which_variable_identifies_participants,
-           desc_each_participant_must_appear_only_once_,
-           desc_two_cols_are_needed,
-           desc_large_format_must_be_numeric_or_integer,
-           ask_chose_independant_group_variables,
-	   ask_you_did_not_chose_a_variable_continue_or_abort,
-           ask_chose_dependant_variable, 
-           desc_some_participants_have_missing_values_on_repeated_measures,
-           ask_chose_covariables,
-	   ask_not_enough_obs_verify_dataset,
-	   desc_all_tests_description,
-	   desc_complete_dataset_vs_identification_outliers_vs_without_outliers,
-           desc_cannot_have_both_within_RML_arguments,
-	   desc_most_common_effect_size,
-	   desc_multiple_ways_to_compute_squares_sum,
-           ask_save_results,
-           ask_dependant_variable_with_less_than_three_val_verify_dataset,
-	   desc_all_contrasts_description,
-           desc_you_can_chose_predefined_or_manual_contrasts,
-           ask_contrast_must_respect_ortho,
-           desc_contrasts_must_be_coeff_matrices_in_list,
-           desc_manual_contrast_need_coeff_matrice,
-           ask_which_correction,
-           desc_authorized_values_for_contrasts,
-           desc_at_least_on_contrast_matrix_incorrect,
-	   desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance,
-           desc_bayesian_factors_could_not_be_computed,
-           desc_we_could_not_compute_anova_on_medians,
-           desc_proba_and_IC_estimated_on_bootstrap,
-           desc_we_could_not_compute_robust_anova, desc_analysis_aborted
+    msg<-c(.dico[["ask_variables_type_for_anova"]],
+           .dico[["desc_at_least_independant_variables_or_repeated_measures"]],
+           .dico[["ask_select_variables_or_modalities_of_repeated_measure_variable"]],
+           .dico[["ask_which_variable_identifies_participants"]],
+           .dico[["desc_each_participant_must_appear_only_once_"]],
+           .dico[["desc_two_cols_are_needed"]],
+           .dico[["desc_large_format_must_be_numeric_or_integer"]],
+           .dico[["ask_chose_independant_group_variables"]],
+	   .dico[["ask_you_did_not_chose_a_variable_continue_or_abort"]],
+           .dico[["ask_chose_dependant_variable"]], 
+           .dico[["desc_some_participants_have_missing_values_on_repeated_measures"]],
+           .dico[["ask_chose_covariables"]],
+	   .dico[["ask_not_enough_obs_verify_dataset"]],
+	   .dico[["desc_all_tests_description"]],
+	   .dico[["desc_complete_dataset_vs_identification_outliers_vs_without_outliers"]],
+           .dico[["desc_cannot_have_both_within_RML_arguments"]],
+	   .dico[["desc_most_common_effect_size"]],
+	   .dico[["desc_multiple_ways_to_compute_squares_sum"]],
+           .dico[["ask_save_results"]],
+           .dico[["ask_dependant_variable_with_less_than_three_val_verify_dataset"]],
+	   .dico[["desc_all_contrasts_description"]],
+           .dico[["desc_you_can_chose_predefined_or_manual_contrasts"]],
+           .dico[["ask_contrast_must_respect_ortho"]],
+           .dico[["desc_contrasts_must_be_coeff_matrices_in_list"]],
+           .dico[["desc_manual_contrast_need_coeff_matrice"]],
+           .dico[["ask_which_correction"]],
+           .dico[["desc_authorized_values_for_contrasts"]],
+           .dico[["desc_at_least_on_contrast_matrix_incorrect"]],
+	   .dico[["desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance"]],
+           .dico[["desc_bayesian_factors_could_not_be_computed"]],
+           .dico[["desc_we_could_not_compute_anova_on_medians"]],
+           .dico[["desc_proba_and_IC_estimated_on_bootstrap"]],
+           .dico[["desc_we_could_not_compute_robust_anova"]], .dico[["desc_analysis_aborted"]]
     )
     
     
-    title<-c(ask_variables_type, txt_repeated_measures,txt_participants_id,txt_independant_group_variables,
-             txt_dependant_variable, ask_covariables,
-             txt_param_model, txt_non_param_model,txt_bayesian_factors, txt_robust_statistics,
-             ask_which_analysis,txt_complete_dataset,txt_identifying_outliers, txt_without_outliers,
-             ask_results_desired, ask_which_size_effect,ask_which_squared_sum,
-             ask_save, txt_apriori,  txt_comparison_two_by_two, txt_none,ask_which_contrasts,
-             txt_contrasts_for, txt_specify_contrasts,ask_which_baseline, txt_descriptive_statistics,txt_test_model,
-             txt_variable_descriptive_statistics,txt_descriptive_statistics_of_interaction_between_x,txt_warning,
-             txt_normality_tests,txt_ancova_application_conditions,txt_absence_of_difference_between_groups_test_on,
-             txt_slopes_homogeneity_between_groups_on_dependant_variable,
-             txt_levene_test_verifying_homogeneity_variances,txt_mauchly_test_sphericity_covariance_matrix,
-             txt_principal_analysis,txt_anova_with_welch_correction, txt_pairwise_comparisons,txt_contrasts,
-             txt_variables_coeff_matrix,txt_contrasts_table,txt_contrasts_table_imitating_commercial_softwares,txt_bayesian_factors,
-             txt_non_param_analysis,txt_kruskal_wallis_test,txt_friedman_anova,txt_friedman_anova_pairwise_comparison,
-             txt_kruskal_wallis_pairwise  ,txt_anova_on_medians,txt_principal_analysis,txt_anova_on_truncated_means,
-             txt_anova_on_m_estimator, txt_anova_on_modified_huber_estimator,txt_analysis_premature_abortion,
-             desc_references
+    title<-c(.dico[["ask_variables_type"]], .dico[["txt_repeated_measures"]],.dico[["txt_participants_id"]],.dico[["txt_independant_group_variables"]],
+             .dico[["txt_dependant_variable"]], .dico[["ask_covariables"]],
+             .dico[["txt_param_model"]], .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
+             .dico[["ask_which_analysis"]],.dico[["txt_complete_dataset"]],.dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
+             .dico[["ask_results_desired"]], .dico[["ask_which_size_effect"]],.dico[["ask_which_squared_sum"]],
+             .dico[["ask_save"]], .dico[["txt_apriori"]],  .dico[["txt_comparison_two_by_two"]], .dico[["txt_none"]],.dico[["ask_which_contrasts"]],
+             .dico[["txt_contrasts_for"]], .dico[["txt_specify_contrasts"]],.dico[["ask_which_baseline"]], .dico[["txt_descriptive_statistics"]],.dico[["txt_test_model"]],
+             .dico[["txt_variable_descriptive_statistics"]],.dico[["txt_descriptive_statistics_of_interaction_between_x"]],.dico[["txt_warning"]],
+             .dico[["txt_normality_tests"]],.dico[["txt_ancova_application_conditions"]],.dico[["txt_absence_of_difference_between_groups_test_on"]],
+             .dico[["txt_slopes_homogeneity_between_groups_on_dependant_variable"]],
+             .dico[["txt_levene_test_verifying_homogeneity_variances"]],.dico[["txt_mauchly_test_sphericity_covariance_matrix"]],
+             .dico[["txt_principal_analysis"]],.dico[["txt_anova_with_welch_correction"]], .dico[["txt_pairwise_comparisons"]],.dico[["txt_contrasts"]],
+             .dico[["txt_variables_coeff_matrix"]],.dico[["txt_contrasts_table"]],.dico[["txt_contrasts_table_imitating_commercial_softwares"]],.dico[["txt_bayesian_factors"]],
+             .dico[["txt_non_param_analysis"]],.dico[["txt_kruskal_wallis_test"]],.dico[["txt_friedman_anova"]],.dico[["txt_friedman_anova_pairwise_comparison"]],
+             .dico[["txt_kruskal_wallis_pairwise"]]  ,.dico[["txt_anova_on_medians"]],.dico[["txt_principal_analysis"]],.dico[["txt_anova_on_truncated_means"]],
+             .dico[["txt_anova_on_m_estimator"]], .dico[["txt_anova_on_modified_huber_estimator"]],.dico[["txt_analysis_premature_abortion"]],
+             .dico[["desc_references"]]
              
     )
     
@@ -204,7 +204,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   #         "Please choose between participant variables.",
   #         "You have not chosen any variable. Do you want to continue (ok) or to leave (cancel) this analysis ?",
   #         "Please choose the dependant variable",
-  #         desc_some_participants_have_missing_values_on_repeated_measures,
+  #         .dico[["desc_some_participants_have_missing_values_on_repeated_measures"]],
   #         "Please choose the covariables",
   #         "The number of observations is not enough given the number of levels for each variable. \nPlease ensure that there are at least 3 observations for each combination of levels",
   #         "The parametruc model is the usual anova presented in statistical packages. The non parametric test is \nthe Kruskal Wallis test for one way anova and Friedman test for repeated measure anova.\n
@@ -215,12 +215,12 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   #         "There are several ways to estimate the Sum of Squares. Default value for comercial softwares is Type 3,\nwhich prioritizes interaction instead of main effects",
   #         "Do you want to save the results of the analysis?",
   #         "The dependant variable has less than 3 unique different values. Check your data or the analysis that you try to make is not relevant.",
-  #         desc_all_contrasts_description,
+  #         .dico[["desc_all_contrasts_description"]],
   #         "You may use one of predefined contrast matrix or state the contrast by yourself. In the latter case, you must choose state the contrasts.",
-  #         ask_contrasts_must_be_ortho,
-  #         desc_contrasts_must_be_coeff_matrices_in_list,
+  #         .dico[["ask_contrasts_must_be_ortho"]],
+  #         .dico[["desc_contrasts_must_be_coeff_matrices_in_list"]],
   #         "If you choose the coefficients yourself, all the variables in the analysis must have their coefficient matrix",
-  #         ask_probability_correction,
+  #         .dico[["ask_probability_correction"]],
   #         "Allowed values for contrasts are +none+, +pairwise+ or a list with the coefficients of contrasts.",
   #         "At least one of your contrast matrix is not correct.",
   #         "There are less than 3 observations for at least one group or the variance for one groupe is 0. Results are probably biased",
@@ -233,21 +233,21 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   #  
   #  
   #  
-  #  title<-c("Which kind of variable ?", txt_repeated_measures, "Id of individuals", "Between participant variables",
-  #           "Dependant variable",ask_covariables,
-  #           "Parametric", "Non parametric",txt_bayesian_factors, "Robust statistics - might take some time",
+  #  title<-c("Which kind of variable ?", .dico[["txt_repeated_measures"]], "Id of individuals", "Between participant variables",
+  #           "Dependant variable",.dico[["ask_covariables"]],
+  #           "Parametric", "Non parametric",.dico[["txt_bayesian_factors"]], "Robust statistics - might take some time",
   #           "Which analysis do you want ?", "Complete dataset", "Identification of outliers", "Dataset with outliers removed",
   #           "Which results do you want ?", "Which effect size do you want?", "Which sum of squares do you want ?","Do you want to save?",
-  #           txt_apriori, txt_pairwise, "none", "Please choose the type of contrast", "Contrasts for", "Choose your own contrasts",
-  #           "Which level is the baseline?","Descriptive statistics", txt_test_model, "Descriptive for",
-  #           txt_descriptive_statistics_of_interaction_between_x,"Warning","Normal distribution test",
-  #           "Assumptions of ancova",txt_absence_of_difference_between_groups_test_on,
+  #           .dico[["txt_apriori"]], .dico[["txt_pairwise"]], "none", "Please choose the type of contrast", "Contrasts for", "Choose your own contrasts",
+  #           "Which level is the baseline?","Descriptive statistics", .dico[["txt_test_model"]], "Descriptive for",
+  #           .dico[["txt_descriptive_statistics_of_interaction_between_x"]],"Warning","Normal distribution test",
+  #           "Assumptions of ancova",.dico[["txt_absence_of_difference_between_groups_test_on"]],
   #           "Homogeneity of slopes between groups on the dependant variable",
-  #           "Levene's test testing homogeneity of variances",txt_mauchly_test_sphericity_covariance_matrix,"Main analysis",
-  #           "Welch's ANOVA for heterogeneous variances",txt_pairwise_comparisons,"contrasts","Matrix of coefficients",
-  #           "Table of contrasts","Contrasts that mimics commercial software",txt_bayesian_factors, txt_non_param_analysis, txt_kruskal_wallis_test, txt_friedman_anova,
-  #           "Friedman pairwise comparison",txt_kruskal_wallis_pairwise, txt_anova_on_medians,"Main analysis",
-  #           "Anova on trimmed mean", txt_anova_on_m_estimator,"Anova on modified Huber estimator", "A problem occurred. The analysis has stopped",
+  #           "Levene's test testing homogeneity of variances",.dico[["txt_mauchly_test_sphericity_covariance_matrix"]],"Main analysis",
+  #           "Welch's ANOVA for heterogeneous variances",.dico[["txt_pairwise_comparisons"]],"contrasts","Matrix of coefficients",
+  #           "Table of contrasts","Contrasts that mimics commercial software",.dico[["txt_bayesian_factors"]], .dico[["txt_non_param_analysis"]], .dico[["txt_kruskal_wallis_test"]], .dico[["txt_friedman_anova"]],
+  #           "Friedman pairwise comparison",.dico[["txt_kruskal_wallis_pairwise"]], .dico[["txt_anova_on_medians"]],"Main analysis",
+  #           "Anova on trimmed mean", .dico[["txt_anova_on_m_estimator"]],"Anova on modified Huber estimator", "A problem occurred. The analysis has stopped",
   #           "References of packages used for this analysis")
   #  
   #}
@@ -259,7 +259,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 .contrastes.ez<-function(data, between=NULL, within=NULL, contrasts="none", p.adjust="none", dial=T){
   options (warn=1)
   c(between, unlist(within))->betweenwithin
-  if(any(!contrasts%in%c("none",txt_pairwise,txt_none,txt_pairwise_comparison)) & class(contrasts)!="list") {
+  if(any(!contrasts%in%c("none",.dico[["txt_pairwise"]],.dico[["txt_none"]],.dico[["txt_pairwise_comparison"]])) & class(contrasts)!="list") {
     okCancelBox( .ez.anova.msg("msg", 27))
     return(.contrastes.ez(data=data, between=between, within=within, contrasts="none", p.adjust="none", dial=T))
   }
@@ -297,7 +297,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(length(type.cont)==0) return(NULL)
     Resultats$type.cont<-type.cont
     
-    if(type.cont==txt_apriori) {
+    if(type.cont==.dico[["txt_apriori"]]) {
       
       writeLines(.ez.anova.msg("msg", 21))
       cont.exemple<-list()
@@ -332,13 +332,13 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         if (type.cont2=="consec") { emmeans:::consec.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
         if (type.cont2=="mean.change") { emmeans:::mean_chg.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
         
-        if(type.cont2 %in% c(txt_specify_contrasts, txt_specify_contrasts)){
+        if(type.cont2 %in% c(.dico[["txt_specify_contrasts"]], .dico[["txt_specify_contrasts"]])){
           ortho<-FALSE
           while(ortho!=TRUE){
             own.cont<-matrix(rep(0,times=(nlevels(data[,betweenwithin[i]])*(nlevels(data[,betweenwithin[i]])-1))), 
                              nrow=nlevels(data[,betweenwithin[i]]))
             dimnames( own.cont)[[1]]<-levels(data[,betweenwithin[i]])
-            dimnames( own.cont)[[2]]<-paste(txt_contrast, 1:(nlevels(data[,betweenwithin[i]])-1), sep=".")
+            dimnames( own.cont)[[2]]<-paste(.dico[["txt_contrast"]], 1:(nlevels(data[,betweenwithin[i]])-1), sep=".")
             own.cont<-fix( own.cont)
             if(any(colSums( own.cont)!=0)|(nlevels(data[,betweenwithin[i]])>2 & 
                                            max(rle(c( own.cont))$lengths)>2*(nlevels(data[,betweenwithin[i]])-2))) ortho<-FALSE else {
@@ -357,20 +357,20 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
           
         }
         
-        dimnames(contrastes[[i]])[[2]]<-paste(txt_contrast, 1:(ncol(contrastes[[i]])), sep=".")
+        dimnames(contrastes[[i]])[[2]]<-paste(.dico[["txt_contrast"]], 1:(ncol(contrastes[[i]])), sep=".")
         dimnames(contrastes[[i]])[[1]]<-levels(data[,betweenwithin[i]])
       }
       names(contrastes)<-betweenwithin
       Resultats$contrastes<-contrastes     
       
     }else{
-      if(type.cont %in% c(txt_comparison_two_by_two,txt_pairwise, txt_pairwise, "none", txt_none))  { Resultats$contrastes<-type.cont
+      if(type.cont %in% c(.dico[["txt_comparison_two_by_two"]],.dico[["txt_pairwise"]], .dico[["txt_pairwise"]], "none", .dico[["txt_none"]]))  { Resultats$contrastes<-type.cont
       contrastes<-type.cont}
       
     }
   }else{
     contrastes<-list()
-    if(any(contrasts %in% c(txt_comparison_two_by_two,txt_pairwise, txt_pairwise, "none", txt_none))) {
+    if(any(contrasts %in% c(.dico[["txt_comparison_two_by_two"]],.dico[["txt_pairwise"]], .dico[["txt_pairwise"]], "none", .dico[["txt_none"]]))) {
       Resultats$contrastes<-contrasts
       contrastes<-contrasts
       }else{
@@ -380,7 +380,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       j<-which(names(data)==names(contrasts)[[i]])
       noms<-list()
       noms[[1]]<-levels(data[,j])
-      noms[[2]]<-paste(txt_contrast, 1:(ncol(cont2)), sep=".")
+      noms[[2]]<-paste(.dico[["txt_contrast"]], 1:(ncol(cont2)), sep=".")
       dimnames(cont2)<-noms
       contrastes[[i]]<-cont2 
     }
@@ -388,13 +388,13 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     Resultats$contrastes<-contrastes
     }
   }
-  if((dial & all(contrastes %in% c(txt_comparison_two_by_two,txt_pairwise, txt_pairwise))) || 
+  if((dial & all(contrastes %in% c(.dico[["txt_comparison_two_by_two"]],.dico[["txt_pairwise"]], .dico[["txt_pairwise"]]))) || 
      (!p.adjust %in% c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
                        "sidak","dunnettx","mvt" ,"none" ))){
     list()->p.adjust
     writeLines(.ez.anova.msg("msg", 26) )
     dlgList(c("holm", "hochberg", "hommel", "bonferroni", "fdr","tukey","scheffe",
-              "sidak","dunnettx","mvt" ,"none"), preselect="holm", multiple = FALSE, title=ask_correction_anova_contrasts)$res->p.adjust
+              "sidak","dunnettx","mvt" ,"none"), preselect="holm", multiple = FALSE, title=.dico[["ask_correction_anova_contrasts"]])$res->p.adjust
     
     if(length(p.adjust)==0) return(contrastes.ez())
     
@@ -409,9 +409,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   list()->Resultats
   
   if(dial || !any(param %in% c("param", "non param", "bayes", "robust",
-                               txt_param_model, txt_non_param_model,txt_bayesian_factors, txt_robust_statistics,
-                               txt_param_model, txt_non_param_model,txt_bayesian_factors, txt_robust_statistics))){
-                               #"Parametric", "Non parametric",txt_bayesian_factors, "Robust statistics - might take some time"))){
+                               .dico[["txt_param_model"]], .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
+                               .dico[["txt_param_model"]], .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]]))){
+                               #"Parametric", "Non parametric",.dico[["txt_bayesian_factors"]], "Robust statistics - might take some time"))){
     writeLines(.ez.anova.msg("msg",14))
     msg<-c(.ez.anova.msg("title",7),.ez.anova.msg("title",9))
     if(is.null(cov)) {    
@@ -426,15 +426,15 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   
   
-  if(dial | !any(outlier%in% c("complete","id", "removed",txt_complete_dataset,txt_identifying_outliers, txt_without_outliers,
-                               txt_complete_dataset,txt_identifying_outliers, txt_without_outliers)) ){
+  if(dial | !any(outlier%in% c("complete","id", "removed",.dico[["txt_complete_dataset"]],.dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
+                               .dico[["txt_complete_dataset"]],.dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]])) ){
     outlier<-c(.ez.anova.msg("title",12),.ez.anova.msg("title",13),.ez.anova.msg("title",14))
     outlier<- dlgList(outlier, preselect=outlier,multiple = TRUE, title=.ez.anova.msg("title",15))$res
     if(length(outlier)==0) return(.options.aov(between=between, within=within, cov=cov))
   }
   
   
-  if(any(param %in% c(txt_param_model, "Parametric", "param"))){
+  if(any(param %in% c(.dico[["txt_param_model"]], "Parametric", "param"))){
     if(!ES %in% c("ges", "pes") | dial){
     writeLines(.ez.anova.msg("msg",17))
     ES<- dlgList(c("ges", "pes"), preselect=c("ges"),multiple = FALSE, title=.ez.anova.msg("title",16))$res
@@ -480,19 +480,19 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   if(is.null(c(between,within, RML))) {
     index<-1 # From when language was hard coded in easieR. TODO 
-    type.v<-matrix(c(txt_independant_groups, txt_repeated_measures, txt_covariables,
-	             txt_independant_groups, txt_repeated_measures, txt_covariables), ncol=2)
+    type.v<-matrix(c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]], .dico[["txt_covariables"]],
+	             .dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]], .dico[["txt_covariables"]]), ncol=2)
     writeLines(.ez.anova.msg("msg", 1))
     type.v2<-dlgList(type.v[,index], multiple = TRUE, title=.ez.anova.msg("title", 1))$res
     if(length(type.v2)==0) return(.ez.anova.in())
     type.v<-type.v[which(type.v[, index]%in%type.v2),1]
-    if(!any(type.v %in% c(txt_independant_groups, txt_repeated_measures))) {
+    if(!any(type.v %in% c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]]))) {
       writeLines(.ez.anova.msg("msg",2))
       return(.ez.anova.in())
     }
   } 
   
-  if(any(type.v==txt_repeated_measures) | !is.null(within) | !is.null(RML)) {
+  if(any(type.v==.dico[["txt_repeated_measures"]]) | !is.null(within) | !is.null(RML)) {
     if(!is.null(RML)) within<-RML
     within<-.var.type(X=within, info=T, data=data, type=NULL, check.prod=F, message=.ez.anova.msg("msg",3),  multiple=TRUE, 
                       title=.ez.anova.msg("title",2), out=NULL)
@@ -541,8 +541,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                      IV.names=IV.names, IV.levels=RML.factor) 
     nom<-paste0(nom, ".long")
     reshape.data<-TRUE
-    DV<-txt_value
-    within<-setdiff(names(data), c(idvar, txt_value,"IDeasy"))
+    DV<-.dico[["txt_value"]]
+    within<-setdiff(names(data), c(idvar, .dico[["txt_value"]],"IDeasy"))
     if(length(within)>1) {
       data[,within]<-lapply(data[, within], factor)
       within<-within[-which(within=="time")]
@@ -569,7 +569,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 
     	  
       
-  if(any(type.v==txt_independant_groups) | !is.null(between)){
+  if(any(type.v==.dico[["txt_independant_groups"]]) | !is.null(between)){
     between<-.var.type(X=between, info=T, data=data, type="factor", check.prod=F, message=.ez.anova.msg("msg",8),  multiple=TRUE, 
                        title=.ez.anova.msg("title",4), out=diffs)
     if(is.null(between)) {
@@ -609,7 +609,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   
   
-  if(any(type.v==txt_covariables)) {
+  if(any(type.v==.dico[["txt_covariables"]])) {
     
     cov<-.var.type(X=cov, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",12),  multiple=TRUE, 
                    title=.ez.anova.msg("title",6), out=diffs)
@@ -645,8 +645,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     msgBox(.ez.anova.msg("msg",13))
     return(NULL)
   }
-#if(any(param %in% c(txt_param_model, "Parametric", "param")))  
-  if(any(options.out$param %in% c("param", txt_param_model, "Parametric", "param"))){
+#if(any(param %in% c(.dico[["txt_param_model"]], "Parametric", "param")))  
+  if(any(options.out$param %in% c("param", .dico[["txt_param_model"]], "Parametric", "param"))){
     contrasts<-.contrastes.ez(data=data, between=between, within=within, contrasts=contrasts, dial=dial, p.adjust=p.adjust)
     if(is.null(contrasts)) return(.ez.anova.in()) 
   } else contrasts<-NULL
@@ -725,7 +725,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     return(Resultats)
   }  
   
-  if(any(param %in% c(txt_param_model,"param", "Parametric"))){
+  if(any(param %in% c(.dico[["txt_param_model"]],"param", "Parametric"))){
     if(any(Resultats[[2]][[1]]$sd==0)) Resultats[[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",29)
     options(contrasts=c("contr.sum","contr.poly"))
     if(!is.null(cov)) factorize<-FALSE else factorize<-TRUE
@@ -754,14 +754,14 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       for(i in 1:length(cov)){
         aov(as.formula(paste0(cov[i], "~",pred.ind)), data=data)->aov.cov
         Anova(aov.cov, type="III")->aov.cov
-        names(aov.cov)<-c("SC", txt_df, "F", txt_p_dot_val) 
+        names(aov.cov)<-c("SC", .dico[["txt_df"]], "F", .dico[["txt_p_dot_val"]]) 
         
         Resultats[[.ez.anova.msg("title",32)]][[paste0(.ez.anova.msg("title",33), cov[i])]]<-aov.cov
         if(i==1) {paste(cov[1],"*")->cov2} else {paste0(cov2, cov[i],"*")->cov2}
       }
       aov(as.formula(paste0(DV, "~", cov2,pred.ind)), data=data)->aov.cov
       Anova(aov.cov, type="III")->aov.cov
-      names(aov.cov)<-c("SC", txt_df, "F", txt_p_dot_val)
+      names(aov.cov)<-c("SC", .dico[["txt_df"]], "F", .dico[["txt_p_dot_val"]])
       Resultats[[.ez.anova.msg("title",32)]][[.ez.anova.msg("title",34)]]<-aov.cov
       
     }
@@ -770,7 +770,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       paste0(DV, "~",pred.ind)->modele2
       Levene<-leveneTest(as.formula(modele2),data=data) # test de Levene pour homogeneite des variances
       Levene<-round(unlist(Levene)[c(1,2,3,5)],3)
-      names(Levene)<-c(txt_df1,txt_df2,"F",txt_p_dot_val)
+      names(Levene)<-c(.dico[["txt_df1"]],.dico[["txt_df2"]],"F",.dico[["txt_p_dot_val"]])
       Resultats[[.ez.anova.msg("title",35)]]<- Levene
     }
     
@@ -791,21 +791,21 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       aov.out2b<-round(aov.out2$sphericity.test,5)
       aov.out2b<-matrix(aov.out2b, ncol=2)
-      dimnames(aov.out2b)<-list(dimnames(aov.out2$sphericity.test)[[1]], c("Stat", txt_p_dot_val))
+      dimnames(aov.out2b)<-list(dimnames(aov.out2$sphericity.test)[[1]], c("Stat", .dico[["txt_p_dot_val"]]))
       Resultats[[.ez.anova.msg("title",36)]]<-aov.out2b
     }
 
     aov.out3<-aov.out[[1]]
     aov.out3<-data.frame(aov.out3)
-    names(aov.out3)<-c(txt_df_num, txt_df_denom, "CME", "F", ES, txt_p_dot_val )
+    names(aov.out3)<-c(.dico[["txt_df_num"]], .dico[["txt_df_denom"]], "CME", "F", ES, .dico[["txt_p_dot_val"]] )
     omega.out<-effectsize::omega_squared(aov.out$Anova)
     aov.out3<-cbind(aov.out3, omega.2=omega.out[match(rownames(aov.out3), omega.out$Parameter),2])
     
     Resultats[[.ez.anova.msg("title",37)]]<- aov.out3
     if(!is.null(within) && any( sapply(data[,c(unlist(within))],nlevels)>2)) {
       GG.HF<-data.frame(round(aov.out2$pval.adjustments,5))
-      names(GG.HF)<-c("GG.eps", txt_gg_p_value,"HF.eps", txt_hf_p_value)
-      Resultats[[txt_greenhouse_geisser_huynn_feldt_correction]]<-GG.HF}
+      names(GG.HF)<-c("GG.eps", .dico[["txt_gg_p_value"]],"HF.eps", .dico[["txt_hf_p_value"]])
+      Resultats[[.dico[["txt_greenhouse_geisser_huynn_feldt_correction"]]]]<-GG.HF}
     if(length(between)==1 & is.null(within) & is.null(cov)) {
       Welch<-oneway.test(as.formula(paste(DV,"~", between)),data=data)
       Welch<-round(data.frame("F"=Welch$statistic,"num"=Welch$parameter[1],"denom"=Welch$parameter[2],"p"=Welch$p.value),4)
@@ -817,10 +817,10 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     aov.plus.in$em.out<-em.out
     
     
-    if(!is.list(contrasts) && any(contrasts %in% c(txt_pairwise,  txt_comparison_two_by_two ))){
+    if(!is.list(contrasts) && any(contrasts %in% c(.dico[["txt_pairwise"]],  .dico[["txt_comparison_two_by_two"]] ))){
       pair<-pairs(em.out, adjust=p.adjust)
       pair<-summary(pair)
-      names(pair)[which(names(pair)=="p.value")]<-txt_p_dot_val
+      names(pair)[which(names(pair)=="p.value")]<-.dico[["txt_p_dot_val"]]
       Resultats[[.ez.anova.msg("title",39)]]<-pair
     }
     
@@ -879,7 +879,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
        round( ifelse(table.cont$d.Cohen==T, (2*table.cont$t.ratio)/(nlevels(data[,id])^0.5), table.cont$t.ratio/(nlevels(data[,id])^0.5)),4)->table.cont$d.Cohen}else{
           round(table.cont$t.ratio/((nlevels(data[,id]))^0.5),4)->table.cont$d.Cohen}
       
-        names(table.cont)<-c(txt_contrast,txt_estimation, txt_error_dot_standard_short, txt_df,"t", txt_p_dot_val, txt_r_square, "d Cohen")
+        names(table.cont)<-c(.dico[["txt_contrast"]],.dico[["txt_estimation"]], .dico[["txt_error_dot_standard_short"]], .dico[["txt_df"]],"t", .dico[["txt_p_dot_val"]], .dico[["txt_r_square"]], "d Cohen")
 
     
       
@@ -931,7 +931,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         
         round(Table.contrasts,4)->Table.contrasts
         data.frame(Table.contrasts)->Table.contrasts  
-        names(Table.contrasts)<-c(txt_estimator, txt_df,"t", txt_p_dot_val)
+        names(Table.contrasts)<-c(.dico[["txt_estimator"]], .dico[["txt_df"]],"t", .dico[["txt_p_dot_val"]])
         Table.contrasts$t^2/(Table.contrasts$t^2+Table.contrasts$ddl)->Table.contrasts$R.2
         round(Table.contrasts$t/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen 
         dimnames(Table.contrasts)[[1]]<-table.cont[,1]
@@ -941,7 +941,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   }
 
   ##### Bayes 
-  if(any(param %in% c("bayes",txt_bayesian_factors, txt_bayesian_factors)) )  {
+  if(any(param %in% c("bayes",.dico[["txt_bayesian_factors"]], .dico[["txt_bayesian_factors"]])) )  {
     modeleBF<-paste0(DV,"~")
     if(!is.null(cov)){
       for(i in 1 : length(cov)){
@@ -970,12 +970,12 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   
   
-  if(any(param %in% c( "non param", txt_non_param_model, "Non parametric"))){
+  if(any(param %in% c( "non param", .dico[["txt_non_param_model"]], "Non parametric"))){
     if(!is.null(between)){
       kruskal.test(as.formula( paste0(DV, "~",between[1])), data = data)->KW
       round(data.frame(KW$statistic,KW$parameter,KW$p.value),4)->KW
      
-        names(KW)<-c("H",txt_df,txt_p_dot_val)
+        names(KW)<-c("H",.dico[["txt_df"]],.dico[["txt_p_dot_val"]])
       
       round((KW$H-nlevels(data[,between])+1)/(length(data[,1])-nlevels(data[,between])),4)->eta
       if(eta<0.0001) "<0.001"->KW$eta.2.H else KW$eta.2.H
@@ -993,7 +993,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       friedman<-friedman.test(as.formula(paste0(DV,"~", within[[1]], "|", id )),data=data)
       friedman<-round(data.frame(friedman$statistic,friedman$parameter,friedman$p.value),4)
       friedman$W.de.Kendall<-round(friedman[,1]/(nrow(data)*(nlevels(data[,unlist(within)])-1)),4)
-      names(friedman)<-c(txt_chi_dot_squared,txt_df,txt_p_dot_val, txt_kendall_w)
+      names(friedman)<-c(.dico[["txt_chi_dot_squared"]],.dico[["txt_df"]],.dico[["txt_p_dot_val"]], .dico[["txt_kendall_w"]])
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",47)]]<-friedman
       ans<-frdAllPairsExactTest(y=data[,DV],groups=data[,within], blocks=data[,id], p.adjust = p.adjust)
       comp<-expand.grid(dimnames(ans$p.value))
@@ -1007,20 +1007,20 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   }
   
   
-  if(any(param %in% c(txt_robust_statistics, "robust", "Robust statistics - might take some time"))){
+  if(any(param %in% c(.dico[["txt_robust_statistics"]], "robust", "Robust statistics - might take some time"))){
     if(length(between)==1 & is.null(within)){
       split(data[,DV], data[,between])->robuste
       try(unlist(WRS::med1way(robuste,iter = n.boot)), silent=T)->mediane
       if(class(mediane)!='try-error'){
-        names(mediane)<-c("Test", txt_critical_dot_val,txt_p_dot_val)
+        names(mediane)<-c("Test", .dico[["txt_critical_dot_val"]],.dico[["txt_p_dot_val"]])
         Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-round(mediane,4)
         # revoir
         if(is.list(contrasts)){
           contrasts<-contrasts[[1]]
           cont<-WRS::medpb(robuste,alpha=.05,nboot=n.boot,con=contrasts,bhop=FALSE)
-          dimnames(cont$output)[[2]]<-c("Num.cont",txt_contrast_dot_val,
-                                          txt_p_dot_val,txt_critical_p_corrected,txt_ci_inferior_limit_dot,txt_ci_superior_limit_dot,
-				       txt_adjusted_p_dot_value)
+          dimnames(cont$output)[[2]]<-c("Num.cont",.dico[["txt_contrast_dot_val"]],
+                                          .dico[["txt_p_dot_val"]],.dico[["txt_critical_p_corrected"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],
+				       .dico[["txt_adjusted_p_dot_value"]])
           
           Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-cont$output
         }
@@ -1037,7 +1037,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         WRS2::t1way(as.formula(paste0(DV, "~",between)), tr=.2,data=data)->AR1
         WRS2::t1waybt(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot,data=data)->AR2
         data.frame(AR1[[2]],AR1[[3]],AR1[[1]],AR2[[2]],AR2[[3]],AR2[[4]], AR2[[5]])->AR1
-        names(AR1)<-c(txt_df_num,txt_df_denom,"Stat",txt_p_dot_val,txt_var_explained_dot,txt_effect_size_dot,txt_bootstrap_dot_number )
+        names(AR1)<-c(.dico[["txt_df_num"]],.dico[["txt_df_denom"]],"Stat",.dico[["txt_p_dot_val"]],.dico[["txt_var_explained_dot"]],.dico[["txt_effect_size_dot"]],.dico[["txt_bootstrap_dot_number"]] )
         
         
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-AR1
@@ -1047,7 +1047,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         try(WRS::mcppb20(robuste, tr=.2, nboot=n.boot, con=contrasts),silent=T)->cont2
         if(class(cont)!= 'try-error') {
           cont<-data.frame(cont$psihat[,2],cont$test[,4],cont$test[,5],cont$test[,2],cont$test[,3],cont2$psihat[,4],cont2$psihat[,5],cont2$psihat[,6])
-          names(cont)<-c(txt_contrast_dot_val,txt_error_dot_standard,txt_df,"test",txt_critical_dot_threshold,txt_ci_inferior_limit_dot,txt_ci_superior_limit_dot,txt_p_dot_val)
+          names(cont)<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_error_dot_standard"]],.dico[["txt_df"]],"test",.dico[["txt_critical_dot_threshold"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
           Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",42)]] <-cont
         }
         
@@ -1063,7 +1063,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       try( WRS2::t2way(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, tr = 0.2), silent=T)->T2
       if(class(T2)!='try-error'){
         T2<-matrix(unlist(T2[c(1:6)]), ncol=2, byrow=T)
-        dimnames(T2)[[2]]<-c(txt_value, txt_p_dot_val)
+        dimnames(T2)[[2]]<-c(.dico[["txt_value"]], .dico[["txt_p_dot_val"]])
         c(names(data[,between]), paste(names(data[,between])[1],":",names(data[,between])[2]))->dimnames(T2)[[1]]
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-T2
       }
@@ -1071,7 +1071,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "mom", nboot = n.boot),silent=T)
       if(class(mom)!='try-error')  {
         mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
-        dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(txt_p_dot_val))
+        dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(.dico[["txt_p_dot_val"]]))
          Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
       }
      
@@ -1079,7 +1079,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
      WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "median", nboot = n.boot),silent=T)
   if(class(mom)!='try-error')  {
     mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
-    dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(txt_p_dot_val))
+    dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(.dico[["txt_p_dot_val"]]))
     Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-mom
   }
       
@@ -1088,7 +1088,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(med)<-c("psihat", txt_p_dot_val, txt_inferior_limit,txt_ci_superior_limit)
+        names(med)<-c("psihat", .dico[["txt_p_dot_val"]], .dico[["txt_inferior_limit"]],.dico[["txt_ci_superior_limit"]])
         dimnames(med)[[1]]<-names(mediane[[2]])
         Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",42)]]<-med
       }
@@ -1098,7 +1098,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
                  valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
-        names(med)<-c("psihat", txt_p_dot_val, txt_inferior_limit,txt_ci_superior_limit)
+        names(med)<-c("psihat", .dico[["txt_p_dot_val"]], .dico[["txt_inferior_limit"]],.dico[["txt_ci_superior_limit"]])
         dimnames(med)[[1]]<-names(mediane[[2]])
         Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-med
       }
@@ -1118,6 +1118,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       if(class(ANOVA.tr)!='try-error'){
         
         ANOVA.tr<-round(data.frame(txt_test_dot_val= ANOVA.tr$test,txt_df1=ANOVA.tr$df1, txt_df2=ANOVA.tr$df2,txt_p_dot_val=ANOVA.tr$p.value),4)
+        names(ANOVA.tr)<-c(.dico[["txt_test_dot_val"]], .dico[["txt_df1"]], .dico[["txt_df2"]], .dico[["txt_p_dot_val"]])
         
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-ANOVA.tr
         if((nlevels(data[,within[[1]]]))>2) {
@@ -1136,13 +1137,13 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         tronquees2<-matrix(unlist(unlist(tronquees)[c(1:12)]),ncol=4, byrow=T)
         tronquees2<-data.frame(tronquees2)
         rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
-        names(tronquees2)<-c("F", txt_p_dot_val, txt_df1, txt_df2)
+        names(tronquees2)<-c("F", .dico[["txt_p_dot_val"]], .dico[["txt_df1"]], .dico[["txt_df2"]])
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees2
         WRS2::sppba(modeleR, data[,id], data=data, est = "mom", avg = TRUE, nboot = n.boot, MDIS = FALSE)->MoMa 
         WRS2::sppbb(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMb
         WRS2::sppbi(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMi 
         MoM<-data.frame("effet"= c(between,within[[1]],"interaction"), txt_p_dot_val=c(MoMa$p.value,MoMb$p.value, MoMi$p.value) )
-	names(MoM) <- c(txt_effect,txt_p_dot_val)
+	names(MoM) <- c(.dico[["txt_effect"]],.dico[["txt_p_dot_val"]])
         Resultats[[.ez.anova.msg("title",54)]][[.ez.anova.msg("title",51)]]  <-MoM
       }else Resultats[[.ez.anova.msg("title",10)]]<-.ez.anova.msg("msg",33)
     }

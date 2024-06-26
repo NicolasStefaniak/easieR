@@ -5,14 +5,14 @@ exporterD <-
       require(packages)}
     list()->Resultats
     data <- dlgList(Filter( function(x) 'data.frame' %in% class( get(x) ), ls(envir=.GlobalEnv)), multiple = FALSE,
-                    title=ask_which_data_to_export)$res
+                    title=.dico[["ask_which_data_to_export"]])$res
     if(length(data)==0) return(donnees())
     data<-get(data)
-    nom <- dlgInput(ask_exportation_filename, "Nouveau.fichier")$res
+    nom <- dlgInput(.dico[["ask_exportation_filename"]], "Nouveau.fichier")$res
     if(length(nom)==0) nom<-"Nouveau.fichier"
     strsplit(nom, ":")->nom
     tail(nom[[1]],n=1)->nom
     write.csv(data, file=paste(nom, ".csv"))
-    paste(desc_file_is_saved_in, getwd())->Resultats
+    paste(.dico[["desc_file_is_saved_in"]], getwd())->Resultats
     return(Resultats)
   }
