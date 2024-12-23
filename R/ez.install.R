@@ -74,11 +74,7 @@ ez.install <-
         print(pack.uninst)
         flush.console()
         install.packages(pack.uninst, quiet=TRUE)
-        #WRS is a special case because it is not on CRAN
-        if (!("WRS" %in% rownames(installed.packages()))) {
-          # third: install an additional package which provides some C functions
-          devtools::install_github("nicebread/WRS", subdir="pkg")
-        }
+        
       }
 
 
@@ -164,7 +160,6 @@ function(){
                       'svDialogs',
                       'TeachingDemos',
                       'textclean',
-                      'WRS',
                       'WRS2'
     )
 
