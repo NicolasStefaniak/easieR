@@ -707,6 +707,7 @@ load_fr_FR <- function() {
   assign("txt_model_matrix" , "Matrices du modeles" , envir=.dico)
   assign("txt_model_representation" , "Representation du modele" , envir=.dico)
   assign("txt_model_significance" , "Significativite du modele global" , envir=.dico)
+  assign("txt_mosaic_plot" , "Graphe en mosaique" , envir=.dico)
   assign("txt_multicolinearity_tests" , "Tests de multicolinearite" , envir=.dico)
   assign("txt_multicolinearity_test" , "Test de multicolinearite" , envir=.dico)
   assign("txt_multiple_imputation_amelia" , "Multiple imputation - Amelia" , envir=.dico)
