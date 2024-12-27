@@ -204,8 +204,13 @@ chi <-
           names(attributes(tab)$dimnames)<-c(X,Y)
         }
         # graphique
-        spineplot(tab, col=topo.colors(nlevels(data[,Y])))
-        Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
+        V1<-data[,X]
+	V2<-data[,Y]
+	Resultats[["txt_mosaic_plot"]]<-ggplot() +
+  			geom_mosaic(aes(x = product(V1, V2), fill=V1), na.rm=TRUE) +
+  			labs(x=X, y=Y, fill=X )+
+  			theme_mosaic()
+	      Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
         if(choix==.dico[["txt_chi_independance"]]){
           mon.chi<-chisq.test(tab, B=n.boot, correct=F)
           Resultats[[.dico[["txt_expected_sample"]]]]<-mon.chi$expected
