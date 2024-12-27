@@ -199,8 +199,8 @@ chi <-
       if((choix!=.dico[["txt_chi_adjustement"]])){
         if (is.null(Effectifs)) {
           tab<-table(data[,X],data[ ,Y], dnn=c(X, Y)) 
-           V1<-data[,X]
-	         V2<-data[,Y]
+           V1<<-data[,X]
+	         V2<<-data[,Y]
           }else {
           tab<-tapply(data[,Effectifs],list(data[,X],data[,Y]),sum,na.rm=TRUE)
           tab[is.na(tab)] <- 0
@@ -208,8 +208,8 @@ chi <-
           names(attributes(tab)$dimnames)<-c(X,Y)
           data<-data[,c(X,Y,Effectifs )]
       data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
-      V1<-data[,X]
-	    V2<-data[,Y]
+      V1<<-data[,X]
+	    V2<<-data[,Y]
 
         }
         # graphique
