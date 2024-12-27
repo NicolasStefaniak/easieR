@@ -204,8 +204,8 @@ chi <-
           names(attributes(tab)$dimnames)<-c(X,Y)
         }
         # graphique
-<<<<<<< HEAD
-  if(i.null(Effectifs) {
+
+  if(is.null(Effectifs)) {
     V1<-data[,X]
 	  V2<-data[,Y]
     }else{
