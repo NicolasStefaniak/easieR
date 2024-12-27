@@ -197,23 +197,32 @@ chi <-
 
       }
       if((choix!=.dico[["txt_chi_adjustement"]])){
-        if (is.null(Effectifs)) tab<-table(data[,X],data[ ,Y], dnn=c(X, Y))else {
+        if (is.null(Effectifs)) {
+          tab<-table(data[,X],data[ ,Y], dnn=c(X, Y)) 
+           V1<-data[,X]
+	         V2<-data[,Y]
+          }else {
           tab<-tapply(data[,Effectifs],list(data[,X],data[,Y]),sum,na.rm=TRUE)
           tab[is.na(tab)] <- 0
           as.table(tab)->tab
           names(attributes(tab)$dimnames)<-c(X,Y)
-        }
-        # graphique
-
-  if(is.null(Effectifs)) {
-    V1<-data[,X]
-	  V2<-data[,Y]
-    }else{
-      data<-data[,c(X,Y,Effectifs )]
+          data<-data[,c(X,Y,Effectifs )]
       data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
       V1<-data[,X]
 	    V2<-data[,Y]
-    }
+
+        }
+        # graphique
+
+ # if(is.null(Effectifs)) {
+ #   V1<-data[,X]
+ #	  V2<-data[,Y]
+ #   }else{
+#      data<-data[,c(X,Y,Effectifs )]
+ #     data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
+ #     V1<-data[,X]
+#	    V2<-data[,Y]
+#    }
 	Resultats[["txt_mosaic_plot"]]<-ggplot() +
   			geom_mosaic(aes(x = product(V1, V2), fill=V1), na.rm=TRUE) +
   			labs(x=X, y=Y, fill=X )+
