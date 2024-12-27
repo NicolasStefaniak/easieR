@@ -210,9 +210,12 @@ chi <-
           mon.chi<-chisq.test(tab, B=n.boot, correct=F)
           mon.chi$expected->Resultats[[.dico[["txt_expected_sample"]]]]
           if(any(choix2 %in% c(.dico[["txt_non_parametric_test"]],.dico[["txt_robusts_tests_with_bootstraps"]])))    {
-            SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
-                            txt_df=mon.chi$parameter, Cramer(mon.chi))
-            names(SY)<-c(.dico[["txt_chi_dot_squared"]], .dico[["txt_df"]], "V.Cramer",  V.sq)
+            #SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
+            #                txt_df=mon.chi$parameter, Cramer(mon.chi))
+            # names(SY)<-c(.dico[["txt_chi_dot_squared"]], .dico[["txt_df"]], "V.Cramer",  'V.2')
+		  SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
+                            txt_df=mon.chi$parameter)
+		SY<-cbind(SY, Cramer(mon.chi))		 
             if(any(choix2==.dico[["txt_non_parametric_test"]])) SY[[.dico[["txt_p_dot_val"]]]]<-round(mon.chi$p.value,4)
             try(fisher.test(tab),silent=T)->fisher
             if(class(fisher)!='try-error') SY$Fisher.Exact.Test=round(fisher$p.value,4)
