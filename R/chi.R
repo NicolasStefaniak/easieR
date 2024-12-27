@@ -208,8 +208,8 @@ chi <-
           names(attributes(tab)$dimnames)<-c(X,Y)
           data<-data[,c(X,Y,Effectifs )]
       data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
-      V1<<-data[,X]
-	    V2<<-data[,Y]
+      V1<-data[,X]
+	    V2<-data[,Y]
 
         }
         # graphique
@@ -226,10 +226,12 @@ chi <-
 	
         Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
 
+       local( 
         Resultats[[.dico[["txt_mosaic_plot"]]]]<-ggplot() +
   			geom_mosaic(aes(x = product(V1, V2), fill=V1), na.rm=TRUE) +
   			labs(x=X, y=Y, fill=X )+
   			theme_mosaic()
+        )
 
 
         if(choix==.dico[["txt_chi_independance"]]){
