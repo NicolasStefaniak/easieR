@@ -227,12 +227,12 @@ chi <-
         Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
 
        local( {
-        Resultats[[.dico[["txt_mosaic_plot"]]]]<-ggplot() +
+        graph<<-ggplot() +
   			geom_mosaic(aes(x = product(V1, V2), fill=V1), na.rm=TRUE) +
   			labs(x=X, y=Y, fill=X )+
   			theme_mosaic()
       })
-
+      Resultats[[.dico[["txt_mosaic_plot"]]]]<-graph
 
         if(choix==.dico[["txt_chi_independance"]]){
           mon.chi<-chisq.test(tab, B=n.boot, correct=F)
