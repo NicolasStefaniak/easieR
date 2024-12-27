@@ -205,10 +205,10 @@ chi <-
         }
         # graphique
         spineplot(tab, col=topo.colors(nlevels(data[,Y])))
-        table.margins(tab)->Resultats[[.dico[["txt_observed_sample"]]]]
+        Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
         if(choix==.dico[["txt_chi_independance"]]){
           mon.chi<-chisq.test(tab, B=n.boot, correct=F)
-          mon.chi$expected->Resultats[[.dico[["txt_expected_sample"]]]]
+          Resultats[[.dico[["txt_expected_sample"]]]]<-mon.chi$expected
           if(any(choix2 %in% c(.dico[["txt_non_parametric_test"]],.dico[["txt_robusts_tests_with_bootstraps"]])))    {
             #SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
             #                txt_df=mon.chi$parameter, Cramer(mon.chi))
