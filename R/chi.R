@@ -228,17 +228,21 @@ chi <-
             #SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
             #                txt_df=mon.chi$parameter, Cramer(mon.chi))
             # names(SY)<-c(.dico[["txt_chi_dot_squared"]], .dico[["txt_df"]], "V.Cramer",  'V.2')
-		  SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
+		        SY<-data.frame( txt_chi_dot_squared=round(mon.chi$statistic,4),
                             txt_df=mon.chi$parameter)
-		SY<-cbind(SY, Cramer(mon.chi))		 
-            if(any(choix2==.dico[["txt_non_parametric_test"]])) SY[[.dico[["txt_p_dot_val"]]]]<-round(mon.chi$p.value,4)
+            names(SY)<-c(.dico[["txt_chi_dot_squared"]], .dico[["txt_df"]])
+		        if(any(choix2==.dico[["txt_non_parametric_test"]])) SY[[.dico[["txt_p_dot_val"]]]]<-round(mon.chi$p.value,4)
             try(fisher.test(tab),silent=T)->fisher
             if(class(fisher)!='try-error') SY$Fisher.Exact.Test=round(fisher$p.value,4)
+            SY<-cbind(SY, Cramer(mon.chi))		 
+            
             if(all(dim(tab)==2)){
               mon.chi<-chisq.test(tab, B=n.boot, correct=T)
-              AY<-data.frame(txt_chi_dot_squared=round(mon.chi$statistic,4),txt_df=mon.chi$parameter,   Cramer(mon.chi),valeur.p=round(mon.chi$p.value,4) ,Fisher.Exact.Test="" )
-              names(AY)<-c(.dico[["txt_chi_dot_squared"]],.dico[["txt_df"]],"V.Cramer",  V.sq, .dico[["txt_p_dot_val"]],"Fisher.Exact.Test")
+              AY<-data.frame(txt_chi_dot_squared=round(mon.chi$statistic,4),txt_df=mon.chi$parameter,valeur.p=round(mon.chi$p.value,4) ,Fisher.Exact.Test="" )
+              #names(AY)<-c(.dico[["txt_chi_dot_squared"]],.dico[["txt_df"]],"V.Cramer", .dico[["txt_p_dot_val"]],"Fisher.Exact.Test")
               if(any(choix2==.dico[["txt_non_parametric_test"]])) AY[[.dico[["txt_p_dot_val"]]]]<-round(mon.chi$p.value,4)
+              if(class(fisher)!='try-error') AY$Fisher.Exact.Test=round(fisher$p.value,4)
+              AY<-cbind(AY, Cramer(mon.chi))   
               SY<-rbind(SY, AY)
               dimnames(SY)[[1]]<-c(.dico[["txt_without_yates_correction"]], .dico[["txt_with_yates_correction"]])
             } else dimnames(SY)[[1]][1]<-c(.dico[["txt_without_yates_correction"]])
