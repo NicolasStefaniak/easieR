@@ -15,7 +15,7 @@ Description: easieR aims to provide a flexible graphic user interface (GUI), all
     best of R. The functions are compiled in order to provide a structured output. For all the analyses, assumptions are 
     checked, user can choose between parametric, non parametric and robust statistics (based on WRS and WRS2 packages). 
     It also allows user to easily identify and remove outliers from the analyses and to save results in nice output. 
-Depends: R (>= 3.6.0), 
+Depends: R (>= 4.3.0), 
 Imports: afex,
          akima,  
          Amelia, 
