@@ -207,9 +207,9 @@ chi <-
           tab<-as.table(tab)
           names(attributes(tab)$dimnames)<-c(X,Y)
           data<-data[,c(X,Y,Effectifs )]
-      data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
-      V1<-data[,X]
-	    V2<-data[,Y]
+          data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
+          V1<<-data[,X]
+	        V2<<-data[,Y]
 
         }
         # graphique
