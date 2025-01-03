@@ -214,15 +214,7 @@ chi <-
         }
         # graphique
 
- # if(is.null(Effectifs)) {
- #   V1<-data[,X]
- #	  V2<-data[,Y]
- #   }else{
-#      data<-data[,c(X,Y,Effectifs )]
- #     data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
- #     V1<-data[,X]
-#	    V2<-data[,Y]
-#    }
+
 	
         Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
 
@@ -314,9 +306,11 @@ chi <-
             MCN<-mcnemar.test(tab, correct=F)
             MCN<-data.frame(txt_chi_dot_squared=round(MCN$statistic,3), txt_df=MCN$parameter, txt_p_dot_val= round(MCN$p.value,4))
             names(MCN)<-c(.dico[["txt_chi_dot_squared"]], .dico[["txt_df"]], .dico[["txt_p_dot_val"]])
+            MCN$g.Cohen<-(tab[1,2]/(tab[1,2]+tab[2,1])-0.5)
             MCN2<-mcnemar.test(tab, correct=T)
             MCN2<-data.frame(txt_chi_dot_squared=round(MCN2$statistic,3), txt_df=MCN2$parameter, txt_p_dot_val= round(MCN2$p.value,4))
             names(MCN2)<-c(.dico[["txt_chi_dot_squared"]], .dico[["txt_df"]], .dico[["txt_p_dot_val"]])
+            MCN2$g.Cohen<-(tab[1,2]/(tab[1,2]+tab[2,1])-0.5)
             MCN<-rbind(MCN, MCN2)
             dimnames(MCN)[[1]]<-c(.dico[["txt_mcnemar_test_without_yates_correction"]], .dico[["txt_mcnemar_test_with_continuity_correction"]] )
             MCN->Resultats[[.dico[["txt_mcnemar_test_with_yates_correction"]]]] # test de McNemar
