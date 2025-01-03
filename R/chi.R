@@ -204,7 +204,7 @@ chi <-
           }else {
           tab<-tapply(data[,Effectifs],list(data[,X],data[,Y]),sum,na.rm=TRUE)
           tab[is.na(tab)] <- 0
-          as.table(tab)->tab
+          tab<-as.table(tab)
           names(attributes(tab)$dimnames)<-c(X,Y)
           data<-data[,c(X,Y,Effectifs )]
       data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
@@ -313,7 +313,7 @@ chi <-
             MCN2$g.Cohen<-(tab[1,2]/(tab[1,2]+tab[2,1])-0.5)
             MCN<-rbind(MCN, MCN2)
             dimnames(MCN)[[1]]<-c(.dico[["txt_mcnemar_test_without_yates_correction"]], .dico[["txt_mcnemar_test_with_continuity_correction"]] )
-            MCN->Resultats[[.dico[["txt_mcnemar_test_with_yates_correction"]]]] # test de McNemar
+            MCN->Resultats[[.dico[["txt_mcnemar_test"]]]] # test de McNemar
           }
           if(any(choix2==.dico[["txt_bayesian_factors"]])) {
             bf<-proportionBF(y=tab[1,2], tab[1,2]+tab[2,1], p=0.5,rscale=rscale)
