@@ -702,7 +702,7 @@ test.t <-
                                              lim.sup.IC = pb2gen.modele$conf.int[2]),3)
 
 
-            names(pb2gen.modele)<-c("Test", .dico[["txt_p_dot_val"]], .dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]], .dico[["txt_p_dot_val"]])
+            names(pb2gen.modele)<-c("Test", .dico[["txt_p_dot_val"]], .dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]])
             Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_percentile_bootstrap_on_m_estimators"]]]]<-pb2gen.modele
             Resultats[[.dico[["txt_robusts_statistics"]]]]$Informations<-c(.dico[["desc_percentile_bootstrap_prefered_for_small_samples"]],
                                                .dico[["desc_for_bigger_samples_bootstrap_t_prefered"]])
