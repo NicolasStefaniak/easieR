@@ -99,8 +99,8 @@ test.t <-
             }
           }
       } else {
-        X1<-as.character(formula[2])
-        Y<-as.character(formula[3])
+        X1<-as.character(formula[3])
+        Y<-as.character(formula[2])
       }
 
 
