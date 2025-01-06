@@ -274,6 +274,7 @@ load_fr_FR <- function() {
   assign("desc_descriptive_statistics_on" , "Statistiques descriptives sur" , envir=.dico)
   assign("desc_distribution_is_hypergeometric_when" , "L'option *Effectif total fixe pour les lignes et les colonnes* lorsque les totaux pour les lignes et les colonnes sont fixes.La distribution est hypergeometrique" , envir=.dico)
   assign("desc_each_participant_must_appear_only_once_" , "Chaque participant doit apparaître une et une seule fois pour chaque combinaison des modalites" , envir=.dico)
+  assign("desc_effect_size" , "Taille_d_effet" , envir=.dico)
   assign("desc_effect_size_by_walker" , "La taille d'effet est calculee a partir de la formule proposee par Walker, 2003" , envir=.dico)
   assign("desc_entered_value_not_num" , "la valeur entree n'est pas numerique" , envir=.dico)
   assign("desc_exponential_has_been_applied_to_var" , "l'exponentiel a ete applique a la variable" , envir=.dico)
