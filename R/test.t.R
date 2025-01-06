@@ -646,7 +646,7 @@ test.t <-
 
       }
       if(any(param=="non param")| any(param==.dico[["txt_non_parametric_test"]])) {
-        WT<-wilcox.test(modele, paired=F,data=data, alternative=alternative, conf.int=T, conf.level=0.95)
+        WT<-wilcox.test(modele, data=data, alternative=alternative, conf.int=T, conf.level=0.95)
         if(alternative!="two.sided")  abs(qnorm(WT$p.value))->z else abs(qnorm(WT$p.value/2))->z
         r<-z/(length(data[,X]))^0.5
         Resultats[[.dico[["txt_mann_whitney_test"]]]]<- data.frame("Wilcoxon W"=WT$statistic, txt_p_dot_val=round(WT$p.value,4), "z"=round(z,4), "r"=round(r,4),
