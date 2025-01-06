@@ -552,17 +552,17 @@ test.t <-
       as.formula(paste0(X," ~ ",Y))->modele
       if(any(param=="param") | any(param==.dico[["txt_param_tests"]])){
         Resultats[[.dico[["txt_normality_tests"]]]]<-.normalite(data=data, X=X, Y=Y)
-        car::leveneTest(data[ ,X], data[ ,Y])->Levene # test de Levene pour homogeneite des variances
-        round(unlist(Levene)[c(1,2,3,5)],3)->Levene
+        Levene<-car::leveneTest(data[ ,X], data[ ,Y]) # test de Levene pour homogeneite des variances
+       Levene<- round(unlist(Levene)[c(1,2,3,5)],3)
         names(Levene)<-c(.dico[["txt_df1"]],.dico[["txt_df2"]],"F",.dico[["txt_p_dot_val"]])
-        Levene->Resultats[[.dico[["txt_levene_test_verifying_homogeneity_variances"]]]]
-        t.test(modele, data=data, alternative=alternative,  var.equal=TRUE, conf.level=0.95)->student
-        round(student$statistic^2/(student$statistic^2+student$parameter),3)->R.deux
-        d_cohen<-round(cohensD(modele , data=data, method = "pooled"),3)
-        data.frame(student[9], round(student$statistic,3), student$parameter, round(student$p.value,3), round(student$conf.int[1],4),
-                   round(student$conf.int[2],4),  R.deux, d_cohen)->student
-        t.test(modele, data=data, alternative=alternative,  var.equal=FALSE, conf.level=0.95)->corrige
-        corrige$statistic^2/(corrige$statistic^2+corrige$parameter)->R.deux.corr
+       Resultats[[.dico[["txt_levene_test_verifying_homogeneity_variances"]]]]<- Levene
+       student<- t.test(modele, data=data, alternative=alternative,  var.equal=TRUE, conf.level=0.95)
+       R.deux<- round(student$statistic^2/(student$statistic^2+student$parameter),3)
+       d_cohen<-round(cohensD(modele , data=data, method = "pooled"),3)
+       student<- data.frame(student[9], round(student$statistic,3), student$parameter, round(student$p.value,3), round(student$conf.int[1],4),
+                   round(student$conf.int[2],4),  R.deux, d_cohen)
+        corrige<-t.test(modele, data=data, alternative=alternative,  var.equal=FALSE, conf.level=0.95)
+        R.deux.corr<-corrige$statistic^2/(corrige$statistic^2+corrige$parameter)
         d_cohen.corr<-cohensD(modele , data=data, method = "unequal")
         data.frame(corrige[9], round(corrige$statistic,3), round(corrige$parameter,3), round(corrige$p.value,3), round(corrige$conf.int[1],4),
                    round(corrige$conf.int[2],4),  R.deux, d_cohen)->corrige
@@ -611,7 +611,7 @@ test.t <-
         ##### Debut du graphique  Bayes Factor Robustness Check
 
         # what is the t-value for the data?
-        tVal <-  t.test(formula=modele, data=data, paired = FALSE, conf.level = 0.95, alternative=alternative)$statistic
+        tVal <-  t.test(formula=modele, data=data,  conf.level = 0.95, alternative=alternative)$statistic
         # how many points in the prior should be explored?
         nPoints <- 1000
         # what Cauchy rates should be explored?
