@@ -540,7 +540,7 @@ test.t <-
       }
 
       if(any(param==.dico[["txt_robusts"]]| any(param==.dico[["txt_robusts_tests_with_bootstraps"]])) ){
-        try(WRS::yuend(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], tr=.2),silent=T)->moy.tr
+        try(yuend(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], tr=.2),silent=T)->moy.tr
         if(class(moy.tr)!='try-error'){
           round(unlist(moy.tr),3)->moy.tr
           names(moy.tr)<-c(.dico[["txt_ci_inferior"]],.dico[["txt_ci_superior"]], .dico[["txt_p_dot_val"]], .dico[["txt_mean1"]], .dico[["txt_mean2"]], .dico[["txt_difference"]],"se", "Stat", "n", .dico[["txt_df"]])
@@ -695,7 +695,7 @@ test.t <-
                                              lim.inf.IC = yuen.bt.modele$conf.int[1],
                                              lim.sup.IC = yuen.bt.modele$conf.int[2]),3)
             yuen.bt.modele->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_bootstrap_t_method_on_truncated_means"]]]]
-            WRS::pb2gen(g1[,X],g2[,X], nboot=n.boot)->pb2gen.modele### calcule le bootstrap sur le M-estimateur et fournit l intervalle de confiance.
+            WRS2::pb2gen(modele, data= data, nboot=n.boot)->pb2gen.modele### calcule le bootstrap sur le M-estimateur et fournit l intervalle de confiance.
             round(unlist(pb2gen.modele)[1:6],4)->pb2gen.modele
             names(pb2gen.modele)<-c("M.estimator.G1", "M.estimator.G2", "diff", .dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]], .dico[["txt_p_dot_val"]])
             pb2gen.modele->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_percentile_bootstrap_on_m_estimators"]]]]
