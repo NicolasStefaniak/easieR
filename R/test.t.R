@@ -707,7 +707,8 @@ test.t <-
             Resultats[[.dico[["txt_robusts_statistics"]]]]$Informations<-c(.dico[["desc_percentile_bootstrap_prefered_for_small_samples"]],
                                                .dico[["desc_for_bigger_samples_bootstrap_t_prefered"]])
           }
-
+          g1<-data[which(data[, Y]==levels(data[, Y])[1]), ]
+          g2<-data[which(data[, Y]==levels(data[, Y])[2]), ]
           easieR::ks(g1[,X],g2[,X],w=F,sig=T)->KS
           round(unlist(KS),4)->KS
           names(KS)<-c("KS", .dico[["txt_critical_dot_threshold"]],.dico[["txt_p_dot_val"]])
