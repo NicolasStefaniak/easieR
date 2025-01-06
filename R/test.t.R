@@ -391,27 +391,34 @@ test.t <-
       }
 
       if(any(param==.dico[["txt_robusts"]]| any(param==.dico[["txt_robusts_tests_with_bootstraps"]]))){
-        try( round(unlist(WRS::trimci(data[,X],tr=.2,alpha=.05, null.value=mu)),4), silent=T)->m.tr
-        if(class(m.tr)!='try-error'){
-          names(m.tr)<-c(.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]], .dico[["txt_truncated_m"]],"test.t", "se",.dico[["txt_p_dot_val"]],"n")
-          #m.tr->Resultats$'Test sur la moyenne tronquee a 0.2'
-          m.tr->Resultats[[.dico[["txt_truncated_mean_0_2"]]]]
-          data[,X]->x
-          try(WRS::trimcibt(x, tr=.2,alpha=.05,nboot=n.boot,plotit=T,op=3)$ci, silent=T)->trimci
-          try(WRS::mestci(x,alpha=.05,nboot=n.boot,bend=1.28,os=F),silent=T)->M.estimator
-          try(WRS:: momci(x,alpha=.05,nboot=n.boot),silent=T)->MoM
+        trimci<-try(trimcibt(x,nv=mu ,  tr=.2,alpha=.05,nboot=n.boot,plotit=T,op=3)$ci, silent=T)
+        
+        if(class(trimci)!='try-error'){
+          trimci<-c(trimci$ci[1], trimci$ci[2], trimci$estimate, trimci$test.stat,trimci$p.value )
+          names(trimci)<-c(.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]], .dico[["txt_truncated_m"]],
+          "t", .dico[["txt_p_dot_val"]])
+          
+         
+         Resultats[[.dico[["txt_truncated_mean_0_2"]]]]<-trimci
+
+          M.estimator<-try(c(mest(x,alpha=.05,nboot=n.boot)- mestse(TOLD$TOLD) , 
+          mest(x,alpha=.05,nboot=n.boot)+ mestse(TOLD$TOLD) ),silent=T)
+
+          MoM<-try(momci(x,alpha=.05,nboot=n.boot),silent=T)
           IC.robustes<-data.frame()
-          if(class(trimci)!='try-error') {IC.robustes<-rbind(IC.robustes,trimci)
+          if(class(trimci)!='try-error') {
+          IC.robustes<-rbind(IC.robustes,c(trimci$ci[1], trimci$ci[2]))
           dimnames(IC.robustes)[[1]][1]<-.dico[["txt_bootstrap_t_method"]]}
-          if(class(M.estimator)!='try-error') {IC.robustes<-rbind(IC.robustes,M.estimator$ci)
+          if(class(M.estimator)!='try-error') {
+            IC.robustes<-rbind(IC.robustes,M.estimator)
           dimnames(IC.robustes)[[1]][length(IC.robustes[,1])]<-"M-estimator"}
           if(class(MoM)!='try-error') {IC.robustes<-rbind(IC.robustes,MoM$ci)
           dimnames(IC.robustes)[[1]][length(IC.robustes[,1])]<-"M-estimator modifie"}
           if(all(dim(IC.robustes)!=0)) names(IC.robustes )<-c(.dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]])
           Resultats[[.dico[["txt_robusts_statistics"]]]]<-IC.robustes
-          c(.dico[["desc_bootstrap_t_adapt_to_truncated_mean"]],
+          Resultats$info<-c(.dico[["desc_bootstrap_t_adapt_to_truncated_mean"]],
             .dico[["desc_this_index_is_prefered_for_most_cases"]],
-            .dico[["desc_truncature_on_m_estimator_adapts_to_sample"]])->Resultats$infos
+            .dico[["desc_truncature_on_m_estimator_adapts_to_sample"]])
         } else Resultats[[.dico[["txt_robusts_statistics"]]]]<-.dico[["desc_robusts_statistics_could_not_be_computed_verify_WRS"]]
       }
 
@@ -668,20 +675,18 @@ test.t <-
       }
 
       if(any(param==.dico[["txt_robusts"]]| any(param==.dico[["txt_robusts_tests_with_bootstraps"]])) ){
-        g1<-data[which(data[,Y]==levels(data[,Y])[1]),]- # on cree une base de Donnees avec le groupe 1 uniquement (sans valeur aberrantes)
-        g2<-data[which(data[,Y]==levels(data[,Y])[2]),] # on cree une base de Donnees avec le groupe 2 uniquement (sans valeur aberrantes)
-        try(yuen(g1[,X],g2[,X]), silent=T)->yuen.modele### fournit la probabilite associee a des moyennes tronquees.Par defaut, la troncature est de 0.20
+               yuen.modele<-try(yuen(modele, data= data), silent=T)### fournit la probabilite associee a des moyennes tronquees.Par defaut, la troncature est de 0.20
         if(class(yuen.modele)!='try-error'){
-          round(unlist(yuen.modele),4)->yuen.modele
-          cbind(yuen.modele[1:2], yuen.modele[3:4])->yuen.desc
-          dimnames(yuen.desc)[[1]]<-levels(data[,Y])
-          dimnames(yuen.desc)[[2]]<-c("n", .dico[["txt_truncated_means"]])
-          yuen.desc->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_descriptive_statistics"]]]]
+            yuen.modele<- c(yuen.modele$conf.int[1], yuen.modele$conf.int[2], yuen.modele$diff,
+            yuen.modele$test, yuen.modele$df, yuen.modele$p.value, yuen.modele$effsize)
+    
 
-          yuen.modele[c(5,6,8,9,10,11,12,7)]->yuen.modele
-          names(yuen.modele)<-c(.dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]],
-                                .dico[["txt_difference"]],"Err-type","Stat", .dico[["txt_threshold"]], .dico[["txt_df"]],.dico[["txt_p_dot_val"]])
-          yuen.modele->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_analysis_on_truncated_means"]]]]
+            names(yuen.modele)<-c(.dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]],
+                        .dico[["txt_difference"]], 
+                    .dico[["txt_df"]],.dico[["txt_p_dot_val"]], .dico[["desc_effect_size"]])
+
+             Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_analysis_on_truncated_means"]]]]<-yuen.modele
+          
           if(n.boot>99){
             WRS2::yuenbt(modele, data= data, nboot=n.boot, side=T)->yuen.bt.modele ### fournit la probabilite associee a des moyennes tronquees apres un bootstrap.
             yuen.bt.modele<-round(data.frame(test = yuen.bt.modele$test,
@@ -718,10 +723,10 @@ test.t <-
     #### 5 fonctions qui seront appelees pour realiser l'analyse
     options (warn=-1)
     # chargement des packages
-    packages<-c('BayesFactor', 'svDialogs', 'outliers', 'nortest','psych', 'lsr','ggplot2', 'reshape2', 'car', 'plyr')
+    packages<-c('BayesFactor', 'svDialogs', 'outliers', 'nortest','psych', 'lsr','ggplot2', 'reshape2', 'car', 'plyr','WRS2')
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== 'try-error') return(ez.install())
-    try(library("WRS"),silent=T)
+  
     .e <- environment()
     Resultats<-list()
     try( windows(record=T), silent=T)->win
@@ -1038,70 +1043,23 @@ ksties.sub<-function(crit,x,y,alpha){
 }
 
 
-#yuen<-function(x,y=NULL,tr=.2,alpha=.05){
-  #
-  #  Perform Yuen's test for trimmed means on the data in x and y.
-  #  The default amount of trimming is 20%
-  #  Missing values (values stored as NA) are automatically removed.
-  #
-  #  A confidence interval for the trimmed mean of x minus the
-  #  the trimmed mean of y is computed and returned in yuen$ci.
-  #  The p-value is returned in yuen$p.value
-  #
-  #  x, y: The data for the two groups are stored in x and y
-  #  tr=.2: indicates that the default amount of trimming is .2
-  #         tr=0 results in using the sample mean
-  #
-  #  The function returns both a confidence interval and a p-value.
-  #  
-  #  For an omnibus test with more than two independent groups,
-  #  use t1way.
-  #  This function uses winvar from chapter 2.
-  #
-  if(is.null(y)){
-    if(is.matrix(x) || is.data.frame(x)){
-      y=x[,2]
-      x=x[,1]
-    }
-    if(is.list(x)){
-      y=x[[2]]
-      x=x[[1]]
-    }
-  }
-  if(tr==.5)stop("Using tr=.5 is not allowed; use a method designed for medians")
-  if(tr>.25)print("Warning: with tr>.25 type I error control might be poor")
-  x<-x[!is.na(x)]  # Remove any missing values in x
-  y<-y[!is.na(y)]  # Remove any missing values in y
-  h1<-length(x)-2*floor(tr*length(x))
-  h2<-length(y)-2*floor(tr*length(y))
-  q1<-(length(x)-1)*winvar(x,tr)/(h1*(h1-1))
-  q2<-(length(y)-1)*winvar(y,tr)/(h2*(h2-1))
-  df<-(q1+q2)^2/((q1^2/(h1-1))+(q2^2/(h2-1)))
-  crit<-qt(1-alpha/2,df)
-  dif<-mean(x,tr)-mean(y,tr)
-  low<-dif-crit*sqrt(q1+q2)
-  up<-dif+crit*sqrt(q1+q2)
-  test<-abs(dif/sqrt(q1+q2))
-  yuen<-2*(1-pt(test,df))
-  list(n1=length(x),n2=length(y),est.1=mean(x,tr),est.2=mean(y,tr),ci=c(low,up),p.value=yuen,dif=dif,se=sqrt(q1+q2),teststat=test,crit=crit,df=df)
-#}
-
-#winvar<-function(x,tr=.2,na.rm=FALSE,STAND=NULL){
-  #
-  #  Compute the gamma Winsorized variance for the data in the vector x.
-  #  tr is the amount of Winsorization which defaults to .2.
-  #
-  remx=x
-  x<-x[!is.na(x)]
-  y<-sort(x)
-  n<-length(x)
-  ibot<-floor(tr*n)+1
-  itop<-length(x)-ibot+1
-  xbot<-y[ibot]
-  xtop<-y[itop]
-  y<-ifelse(y<=xbot,xbot,y)
-  y<-ifelse(y>=xtop,xtop,y)
-  wv<-var(y)
-  if(!na.rm)if(sum(is.na(remx)>0))wv=NA
-  wv
-#}
+momci<-function(x,alpha=.05,nboot=2000,bend=2.24,SEED=TRUE,null.value=0){
+#
+#   Compute a bootstrap, .95 confidence interval for the
+#   MOM-estimator of location based on Huber's Psi.
+#   The default number of bootstrap samples is nboot=500
+#
+if(SEED)set.seed(2) # set seed of random number generator so that
+#             results can be duplicated.
+#print("Taking bootstrap samples. Please wait.")
+data<-matrix(sample(x,size=length(x)*nboot,replace=TRUE),nrow=nboot)
+est=mom(x,bend=bend)
+bvec<-apply(data,1,mom,bend)
+bvec<-sort(bvec)
+low<-round((alpha/2)*nboot)
+up<-nboot-low
+low<-low+1
+pv=mean(bvec>null.value)+.5*mean(bvec==null.value)
+pv=2*min(c(pv,1-pv))
+list(ci=c(bvec[low],bvec[up]),p.value=pv,est.mom=est)
+}
