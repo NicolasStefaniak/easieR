@@ -70,7 +70,8 @@ test.t <-
 
         }
 
-        if(choix==.dico[["txt_two_paired_samples"]]) {multiple<-F
+        if(choix==.dico[["txt_two_paired_samples"]]) {
+          multiple<-F
         if(length(X)>1){
           msgBox(.dico[["desc_single_dependant_variable_allowed_in_paired_t"]])
           X<-NULL }}else multiple<-T
@@ -86,21 +87,30 @@ test.t <-
             if(choix==.dico[["txt_two_paired_samples"]] && format==.dico[["txt_large"]]) type<-"numeric" else type<-"factor"
             Y<-.var.type(X=Y, info=info, data=data, type=type, check.prod=F, message=msg4,  multiple=FALSE, title=title2, out=X1)
             if(is.null(Y)) {
-              test.t.in(X=NULL, Y=NULL, data=NULL, choix=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,alternative="two.sided",
-                        formula=NULL,n.boot=NULL, rscale=NULL)->Resultats
+              Resultats<-test.t.in(X=NULL, Y=NULL, data=NULL, choix=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,alternative="two.sided",
+                        formula=NULL,n.boot=NULL, rscale=NULL)
               return(Resultats)}
             data<-Y$data
             Y<-Y$X
             if(class(data[,Y])=="factor" && nlevels(data[,Y])!=2) {
               msgBox(.dico[["desc_two_modalities_for_independante_categorial_variable"]])
-              test.t.in(X=NULL, Y=NULL, data=NULL, choix=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,alternative="two.sided",
-                        formula=NULL,n.boot=NULL, rscale=NULL)->Resultats
+              Resultats<-test.t.in(X=NULL, Y=NULL, data=NULL, choix=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,alternative="two.sided",
+                        formula=NULL,n.boot=NULL, rscale=NULL)
               return(Resultats)
             }
           }
       } else {
-        X1<-as.character(formula[3])
-        Y<-as.character(formula[2])
+        X1<-as.character(formula[2])
+        Y<-as.character(formula[3])
+        if(is.null(Y)) {
+              Resultats<-test.t.in(X=NULL, Y=NULL, data=NULL, choix=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,alternative="two.sided",
+                        formula=NULL,n.boot=NULL, rscale=NULL)
+              return(Resultats)}
+        if(class(data[,Y])=="factor" && nlevels(data[,Y])!=2) {
+              msgBox(.dico[["desc_two_modalities_for_independante_categorial_variable"]])
+              Resultats<-test.t.in(X=NULL, Y=NULL, data=NULL, choix=NULL, param=NULL, outlier=NULL, sauvegarde=NULL, info=T, group=NULL,alternative="two.sided",
+                        formula=NULL,n.boot=NULL, rscale=NULL)
+        }  
       }
 
 
