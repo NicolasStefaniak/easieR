@@ -682,7 +682,7 @@ test.t <-
     
 
             names(yuen.modele)<-c(.dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]],
-                        .dico[["txt_difference"]], 
+                        .dico[["txt_difference"]], "Test",
                     .dico[["txt_df"]],.dico[["txt_p_dot_val"]], .dico[["desc_effect_size"]])
 
              Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_analysis_on_truncated_means"]]]]<-yuen.modele
@@ -695,10 +695,15 @@ test.t <-
                                              lim.inf.IC = yuen.bt.modele$conf.int[1],
                                              lim.sup.IC = yuen.bt.modele$conf.int[2]),3)
             yuen.bt.modele->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_bootstrap_t_method_on_truncated_means"]]]]
-            WRS2::pb2gen(modele, data= data, nboot=n.boot)->pb2gen.modele### calcule le bootstrap sur le M-estimateur et fournit l intervalle de confiance.
-            round(unlist(pb2gen.modele)[1:6],4)->pb2gen.modele
-            names(pb2gen.modele)<-c("M.estimator.G1", "M.estimator.G2", "diff", .dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]], .dico[["txt_p_dot_val"]])
-            pb2gen.modele->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_percentile_bootstrap_on_m_estimators"]]]]
+            pb2gen.modele<-WRS2::pb2gen(modele, data= data, nboot=n.boot)### calcule le bootstrap sur le M-estimateur et fournit l intervalle de confiance.
+            pb2gen.modele<-round(data.frame(test = pb2gen.modele$test,
+                                             valeur.p = pb2gen.modele$p.value,
+                                             lim.inf.IC = pb2gen.modele$conf.int[1],
+                                             lim.sup.IC = pb2gen.modele$conf.int[2]),3)
+
+
+            names(pb2gen.modele)<-c("Test", .dico[["txt_p_dot_val"]], .dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]], .dico[["txt_p_dot_val"]])
+            Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_percentile_bootstrap_on_m_estimators"]]]]<-pb2gen.modele
             Resultats[[.dico[["txt_robusts_statistics"]]]]$Informations<-c(.dico[["desc_percentile_bootstrap_prefered_for_small_samples"]],
                                                .dico[["desc_for_bigger_samples_bootstrap_t_prefered"]])
           }
