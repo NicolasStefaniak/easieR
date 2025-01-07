@@ -541,21 +541,17 @@ test.t <-
       }
 
       if(any(param==.dico[["txt_robusts"]]| any(param==.dico[["txt_robusts_tests_with_bootstraps"]])) ){
-        try(yuend(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], tr=.2),silent=T)->moy.tr
+        moy.tr<-try(yuend(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], 
+               data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], tr=.2),silent=T)
         if(class(moy.tr)!='try-error'){
-          round(unlist(moy.tr),3)->moy.tr
-          names(moy.tr)<-c(.dico[["txt_ci_inferior"]],.dico[["txt_ci_superior"]], .dico[["txt_p_dot_val"]], .dico[["txt_mean1"]], .dico[["txt_mean2"]], .dico[["txt_difference"]],"se", "Stat", "n", .dico[["txt_df"]])
-          if(n.boot>99){
-            WRS::ydbt(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X], tr=0.2, nboot=n.boot)->moy.tr.bt
-            moy.tr->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_comparison_on_truncated_means"]]]]
-            round(unlist(moy.tr.bt),4)->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_student_bootstrap_on_truncated_means"]]]]
-            if(length(data[,1])>20) {
-              try({WRS::bootdpci(data[ which(data[ ,Y]==levels(data[ ,Y])[1]) ,X], data[ which(data[ ,Y]==levels(data[ ,Y])[2]) ,X],
-                                                   nboot=n.boot, BA=T)$output[,2:6]->Mest
-                names(Mest)<-c(.dico[["txt_statistic"]], .dico[["txt_p_dot_val"]], "p.crit", "CI inf", "CI sup")
-              Mest->Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_bca_bootstrap_on_m_estimator"]]]]}
-                , silent=T)
-              }}} else Resultats[[.dico[["txt_robusts_statistics"]]]]<-.dico[["desc_robusts_statistics_could_not_be_computed"]]
+          moy.tr<-c(moy.tr$conf.int[1],moy.tr$conf.int[2], moy.tr$p.value, moy.tr$diff,moy.tr$se, 
+          moy.tr$test, moy.tr$df)
+          
+          names(moy.tr)<-c(.dico[["txt_ci_inferior"]],.dico[["txt_ci_superior"]], .dico[["txt_p_dot_val"]],
+            .dico[["txt_difference"]],"se", "Stat",  .dico[["txt_df"]])
+            Resultats[[.dico[["txt_robusts_statistics"]]]][[.dico[["txt_comparison_on_truncated_means"]]]]<-moy.tr
+
+          } else Resultats[[.dico[["txt_robusts_statistics"]]]]<-.dico[["desc_robusts_statistics_could_not_be_computed"]]
       }
 
 
