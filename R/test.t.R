@@ -433,14 +433,15 @@ test.t <-
       if(any(param=="param") | any(param==.dico[["txt_param_tests"]])){
         large$diff<--large$t2-large$t1
         Resultats[[.dico[["txt_normality_tests"]]]]<-.normalite(data=large, X="diff", Y=NULL)
-        t.test(data[,X]~data[,Y], paired = TRUE, conf.level = 0.95, alternative=alternative)->ttest
-        ttest$statistic^2/( ttest$statistic^2+ ttest$parameter)->R_carre
-        cohensD(x= large[,1], y=large[,2], method="paired")->dc
+        ttest<-t.test(large$t1,large$t2, paired = TRUE, conf.level = 0.95, alternative=alternative)
+        R_carre<-ttest$statistic^2/( ttest$statistic^2+ ttest$parameter)
+        dc<-cohensD(x= large[,1], y=large[,2], method="paired")
         data.frame("t test"= round(ttest$statistic,3), txt_df= ttest$parameter, txt_p_dot_val= round(ttest$p.value,4), txt_ci_inferior_limit_dot= ttest$conf.int[[1]],
                    txt_ci_superior_limit_dot=ttest$conf.int[[2]], txt_r_dot_square=round(R_carre,4), txt_cohen_d=round(dc,3))->ttest
         c("t test", .dico[["txt_df"]], .dico[["txt_p_dot_val"]], .dico[["txt_ci_inferior_limit_dot"]], .dico[["txt_ci_superior_limit_dot"]], .dico[["txt_r_dot_square"]], .dico[["txt_cohen_d"]])->names(ttest)
         dimnames(ttest)[1]<-" "
-        ttest->Resultats[[.dico[["txt_student_t_test_paired"]]]]}
+        Resultats[[.dico[["txt_student_t_test_paired"]]]]<-ttest
+        }
       if(any(param=="param") | any(param==.dico[["txt_param_tests"]], any(param=="Bayes") | any(param==.dico[["txt_bayesian_factors"]]))) {
         # realisation du graphique
         X1<-which(names(data)==X)
@@ -497,7 +498,7 @@ test.t <-
         ##### Debut du graphique  Bayes Factor Robustness Check
 
         # what is the t-value for the data?
-        tVal <-  t.test(data[,X]~data[,Y], paired = TRUE, conf.level = 0.95, alternative=alternative)$statistic
+        tVal <-  t.test(large$t1,large$t2, paired = TRUE, conf.level = 0.95, alternative=alternative)$statistic
         # how many points in the prior should be explored?
         nPoints <- 1000
         # what Cauchy rates should be explored?
@@ -531,7 +532,7 @@ test.t <-
 
       }
       if(any(param=="non param")| any(param==.dico[["txt_non_parametric_test"]])) {
-        WT<-wilcox.test(as.formula(paste0(X, "~",Y)), paired=T,data=data, alternative=alternative, conf.int=T, conf.level=0.95)
+        WT<-wilcox.test(large$t1,large$t2, paired=T,data=data, alternative=alternative, conf.int=T, conf.level=0.95)
         if(alternative!="two.sided")  abs(qnorm(WT$p.value))->z else abs(qnorm(WT$p.value/2))->z
         r<-z/(length(data[,X]))^0.5
         Resultats$Wilcoxon<- data.frame("Wilcoxon W"=WT$statistic, txt_p_dot_val=round(WT$p.value,4), "z"=round(z,4), "r"=round(r,4),
