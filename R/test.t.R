@@ -407,7 +407,7 @@ test.t <-
           MoM<-try(momci(x,alpha=.05,nboot=n.boot),silent=T)
           IC.robustes<-data.frame()
           if(class(trimci)!='try-error') {
-          IC.robustes<-rbind(IC.robustes,c(trimci$ci[1], trimci$ci[2]))
+          IC.robustes<-rbind(IC.robustes,c(trimci[1], trimci[2]))
           dimnames(IC.robustes)[[1]][1]<-.dico[["txt_bootstrap_t_method"]]}
           if(class(M.estimator)!='try-error') {
             IC.robustes<-rbind(IC.robustes,M.estimator)
