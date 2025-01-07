@@ -22,7 +22,6 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
               'psych', 'reshape2', 'sjstats', 'svDialogs', 'WRS2' )
   test2<-try(lapply(packages, library, character.only=T), silent=T)
   if(class(test2)== 'try-error') return(ez.install())
-  try(require(WRS), silent=T)
   .e <- environment()
   Resultats<-list()
   if(!is.null(data) & class(data)!="character") data<-deparse(substitute(data))
@@ -972,7 +971,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   if(any(param %in% c( "non param", .dico[["txt_non_param_model"]], "Non parametric"))){
     if(!is.null(between)){
-      kruskal.test(as.formula( paste0(DV, "~",between[1])), data = data)->KW
+      KW<-kruskal.test(as.formula( paste0(DV, "~",between[1])), data = data)
       round(data.frame(KW$statistic,KW$parameter,KW$p.value),4)->KW
      
         names(KW)<-c("H",.dico[["txt_df"]],.dico[["txt_p_dot_val"]])
@@ -1009,15 +1008,18 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   
   if(any(param %in% c(.dico[["txt_robust_statistics"]], "robust", "Robust statistics - might take some time"))){
     if(length(between)==1 & is.null(within)){
-      split(data[,DV], data[,between])->robuste
-      try(unlist(WRS::med1way(robuste,iter = n.boot)), silent=T)->mediane
+
+      mediane<-med1way(as.formula( paste0(DV, "~",between[1])), data = data, iter= n.boot)
+
       if(class(mediane)!='try-error'){
-        names(mediane)<-c("Test", .dico[["txt_critical_dot_val"]],.dico[["txt_p_dot_val"]])
+        mediane<-c(mediane$test, mediane$crit.val, mediane$p.value)
+        names(mediane)<-c("F", .dico[["txt_critical_dot_val"]],.dico[["txt_p_dot_val"]])
         Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-round(mediane,4)
         # revoir
         if(is.list(contrasts)){
           contrasts<-contrasts[[1]]
-          cont<-WRS::medpb(robuste,alpha=.05,nboot=n.boot,con=contrasts,bhop=FALSE)
+          robuste<-unstack(data, as.formula( paste0(DV, "~",between[1])))
+          cont<-medpb(robuste,alpha=.05,nboot=n.boot,con=contrasts,bhop=FALSE)
           dimnames(cont$output)[[2]]<-c("Num.cont",.dico[["txt_contrast_dot_val"]],
                                           .dico[["txt_p_dot_val"]],.dico[["txt_critical_p_corrected"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],
 				       .dico[["txt_adjusted_p_dot_value"]])
@@ -1043,8 +1045,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-AR1
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",32)
         
-        try(WRS::lincon(robuste, tr=.2, con=contrasts),silent=T)->cont
-        try(WRS::mcppb20(robuste, tr=.2, nboot=n.boot, con=contrasts),silent=T)->cont2
+        cont<-try(WRS2::lincon(as.formula(paste0(DV, "~",between)), data=data, tr=.2),silent=T)-
+        cont2<-try(WRS2::mcppb20(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot),silent=T)
         if(class(cont)!= 'try-error') {
           cont<-data.frame(cont$psihat[,2],cont$test[,4],cont$test[,5],cont$test[,2],cont$test[,3],cont2$psihat[,4],cont2$psihat[,5],cont2$psihat[,6])
           names(cont)<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_error_dot_standard"]],.dico[["txt_df"]],"test",.dico[["txt_critical_dot_threshold"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
@@ -1178,4 +1180,142 @@ round.ps<-function (x)
     names(output) <- rownames(aovtab)[1:n_terms]
 
     return(output)
+}
+medpb<-function(x,alpha=.05,nboot=NA,grp=NA,est=median,con=0,bhop=FALSE,method='hoch',
+                SEED=TRUE,...){
+  #
+  #   Multiple comparisons for  J independent groups using medians.
+  #
+  #   A percentile bootstrap method. 
+  #   FWE controlled via argument method
+  #   method =hoch  Hochberg;s method is used by default
+  #
+  #   The data are assumed to be stored in x
+  #   which either has list mode or is a matrix.  In the first case
+  #   x[[1]] contains the data for the first group, x[[2]] the data
+  #   for the second group, etc. Length(x)=the number of groups = J.
+  #   If stored in a matrix, the columns of the matrix correspond
+  #   to groups.
+  #
+  #   est is the measure of location and defaults to the median
+  #   ... can be used to set optional arguments associated with est
+  #
+  #   The argument grp can be used to analyze a subset of the groups
+  #   Example: grp=c(1,3,5) would compare groups 1, 3 and 5.
+  #
+  #
+  #   con can be used to specify linear contrasts; see the function lincon
+  #
+  #   Missing values are allowed.
+  #
+  con<-as.matrix(con)
+  if(is.data.frame(x))x=as.matrix(x)
+  if(is.matrix(x))x<-listm(x)
+  if(!is.list(x))stop('Data must be stored in list mode or in matrix mode.')
+  if(!is.na(sum(grp))){  # Only analyze specified groups.
+    xx<-list()
+    for(i in 1:length(grp))xx[[i]]<-x[[grp[i]]]
+    x<-xx
+  }
+  J<-length(x)
+  tempn<-0
+  mvec<-NA
+  for(j in 1:J){
+    temp<-x[[j]]
+    temp<-temp[!is.na(temp)] # Remove missing values.
+    tempn[j]<-length(temp)
+    x[[j]]<-temp
+    mvec[j]<-est(temp,...)
+  }
+  Jm<-J-1
+  #
+  # Determine contrast matrix
+  #
+  if(sum(con^2)==0){
+    ncon<-(J^2-J)/2
+    con<-matrix(0,J,ncon)
+    id<-0
+    for (j in 1:Jm){
+      jp<-j+1
+      for (k in jp:J){
+        id<-id+1
+        con[j,id]<-1
+        con[k,id]<-0-1
+      }}}
+  ncon<-ncol(con)
+  dvec<-alpha/c(1:ncon)
+  if(nrow(con)!=J)stop('Something is wrong with con; the number of rows does not match the number of groups.')
+  #  Determine nboot if a value was not specified
+  if(is.na(nboot)){
+    nboot<-5000
+    if(J <= 8)nboot<-4000
+    if(J <= 3)nboot<-2000
+  }
+  # Determine critical values
+  if(!bhop){
+    if(alpha==.05){
+      dvec<-c(.05,.025,.0169,.0127,.0102,.00851,.0073,.00639,.00568,.00511)
+      if(ncon > 10){
+        avec<-.05/c(11:ncon)
+        dvec<-c(dvec,avec)
+      }}
+    if(alpha==.01){
+      dvec<-c(.01,.005,.00334,.00251,.00201,.00167,.00143,.00126,.00112,.00101)
+      if(ncon > 10){
+        avec<-.01/c(11:ncon)
+        dvec<-c(dvec,avec)
+      }}
+    if(alpha != .05 && alpha != .01){
+      dvec<-alpha/c(1:ncon)
+    }
+  }
+  if(bhop)dvec<-(ncon-c(1:ncon)+1)*alpha/ncon
+  bvec<-matrix(NA,nrow=J,ncol=nboot)
+  if(SEED)set.seed(2) # set seed of random number generator so that
+  #             results can be duplicated.
+  for(j in 1:J){
+    data<-matrix(sample(x[[j]],size=length(x[[j]])*nboot,replace=TRUE),nrow=nboot)
+    bvec[j,]<-apply(data,1,est,...) # Bootstrapped values for jth group
+  }
+  test<-NA
+  bcon<-t(con)%*%bvec #ncon by nboot matrix
+  tvec<-t(con)%*%mvec
+  for (d in 1:ncon){
+    tv<-sum(bcon[d,]==0)/nboot
+    test[d]<-sum(bcon[d,]>0)/nboot+.5*tv
+    if(test[d]> .5)test[d]<-1-test[d]
+  }
+  test<-2*test
+  output<-matrix(0,ncon,7)
+  dimnames(output)<-list(NULL,c('con.num','psihat','p.value','p.crit','ci.lower','ci.upper','adj.p.value'))
+  temp2<-order(0-test)
+  zvec<-dvec[1:ncon]
+  sigvec<-(test[temp2]>=zvec)
+  output[temp2,4]<-zvec
+  icl<-round(dvec[ncon]*nboot/2)+1
+  icu<-nboot-icl-1
+  for (ic in 1:ncol(con)){
+    output[ic,2]<-tvec[ic,]
+    output[ic,1]<-ic
+    output[ic,3]<-test[ic]
+    temp<-sort(bcon[ic,])
+    output[ic,5]<-temp[icl]
+    output[ic,6]<-temp[icu]
+  }
+  num.sig<-sum(output[,3]<=output[,4])
+  output[,7]=p.adjust(output[,3],method=method)
+  
+  list(output=output,con=con,num.sig=num.sig)
+}
+
+listm<-function(x){
+  #
+  # Store the data in a matrix or data frame in a new
+  # R variable having list mode.
+  # Col 1 will be stored in y[[1]], col 2 in y[[2]], and so on.
+  #
+  if(is.null(dim(x)))stop("The argument x must be a matrix or data frame")
+  y<-list()
+  for(j in 1:ncol(x))y[[j]]<-x[,j]
+  y
 }
