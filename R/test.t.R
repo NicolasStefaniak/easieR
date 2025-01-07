@@ -391,7 +391,7 @@ test.t <-
       }
 
       if(any(param==.dico[["txt_robusts"]]| any(param==.dico[["txt_robusts_tests_with_bootstraps"]]))){
-        trimci<-try(trimcibt(x,nv=mu ,  tr=.2,alpha=.05,nboot=n.boot,plotit=T,op=3)$ci, silent=T)
+        trimci<-try(trimcibt(x,nv=mu ,  tr=.2,alpha=.05,nboot=n.boot,plotit=T,op=3), silent=T)
         
         if(class(trimci)!='try-error'){
           trimci<-c(trimci$ci[1], trimci$ci[2], trimci$estimate, trimci$test.stat,trimci$p.value )
