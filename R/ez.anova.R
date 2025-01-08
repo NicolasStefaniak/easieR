@@ -1083,7 +1083,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
           dimnames(cont$comp)[[1]]<-noms.out
           cont<-cont$comp
           cont<-cont[,-c(1:2)]
-          names(cont)<-c(.dico[["txt_contrast_dot_val"]].dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
+          names(cont)<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
           Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",42)]] <-cont
         }
         
