@@ -116,7 +116,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                ", within =", ifelse(is.null(within), "NULL", paste0("c('", within,"')" )), 
                ", cov=", ifelse(is.null(cov), "NULL", paste0("c('", cov,"')" )), ",id ='", id, "', param =c('", param, "'), outlier= c('",outlier ,"')",
                ", ES ='", ES, "', SumS= '", SumS, "', save =", save, ", html =", html, 
-               ", contrasts =" , cont.call,
+               ", contrasts =" , ifelse(cont.call=='comparaison 2 a 2','pairwise', cont.call),
                ", p.adjust = '", p.adjust, "', n.boot = ", n.boot, ",rscaleFixed = ", rscaleFixed, ", rscaleRandom = ", rscaleRandom, ")")
   Resultats$call<-call
   
