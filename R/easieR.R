@@ -662,7 +662,7 @@ ref1 <-
   packageStartupMessage(.dico[["desc_first_time_easier"]])
   packageStartupMessage(.dico[["desc_special_characters_have_been_removed"]])
   packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 06/24/2024")
+  packageStartupMessage("Last update 01/08/2025 - 17.00")
   packageStartupMessage("##############")
 
 }

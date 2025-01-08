@@ -1129,7 +1129,7 @@ load_fr_FR <- function() {
   assign("txt_synthesis" , "Synthèse" , envir=.dico)
   assign("txt_truncated_mean_0_2" , "Test sur la moyenne tronquée à 0.2" , envir=.dico)
   assign("txt_cramer_v_square" , "V.carre" , envir=.dico)
-  assign("txt_effect_size_dot" , "Taille.effet" , envir=.dico)
+  assign("txt_effect_size_dot" , "Taille effet" , envir=.dico)
   assign("txt_gg_p_value" , "GG.valeur.p" , envir=.dico)
   assign("txt_var_explained_dot" , "Var.expliquee" , envir=.dico)
   assign("txt_V_sq_" , "V.carre" , envir=.dico)
