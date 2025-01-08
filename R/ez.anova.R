@@ -111,12 +111,12 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     }
     cont.call<-paste0(cont.call, ")")
   }else cont.call<-paste0("'", contrasts, "'")
-  print(cont.call)
+
   call<-paste0("ez.anova(data=", nom, ", DV='", DV,"', between =", ifelse(is.null(between), "NULL", paste0("c('", between,"')" )),
                ", within =", ifelse(is.null(within), "NULL", paste0("c('", within,"')" )), 
                ", cov=", ifelse(is.null(cov), "NULL", paste0("c('", cov,"')" )), ",id ='", id, "', param =c('", param, "'), outlier= c('",outlier ,"')",
                ", ES ='", ES, "', SumS= '", SumS, "', save =", save, ", html =", html, 
-               ", contrasts =" , ifelse(cont.call=="'Comparaison 2 a 2'",'pairwise', cont.call),
+               ", contrasts =" , ifelse(cont.call=="'Comparaison 2 a 2'","'pairwise'", cont.call),
                ", p.adjust = '", p.adjust, "', n.boot = ", n.boot, ",rscaleFixed = ", rscaleFixed, ", rscaleRandom = ", rscaleRandom, ")")
   Resultats$call<-call
   
