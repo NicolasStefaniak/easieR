@@ -1131,4 +1131,8 @@ load_en_EN <- function() {
   assign("txt_gg_p_value" , "GG.p.value" , envir=.dico)
   assign("txt_var_explained_dot" , "Var.explained" , envir=.dico)
   assign("txt_V_sq_" , "V.squared" , envir=.dico)
+  assign("desc_bootstrap_percentile_anova" , "Trimmed mean anova using  a percentile t bootstrap method" , envir=.dico)
+  assign("txt_effect_size_dot_inf" , "effect size ci lower" , envir=.dico)
+  assign("txt_effect_size_dot_sup" , "effect size ci upper" , envir=.dico)
+ 
 }

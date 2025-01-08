@@ -1060,6 +1060,8 @@ load_fr_FR <- function() {
   assign("txt_df_residual" , "ddl.resid" , envir=.dico)
   assign("txt_df_residuals" , "ddl.residuels" , envir=.dico)
   assign("txt_delta_r_squared" , "Delta R.deux" , envir=.dico)
+  assign("txt_effect_size_dot_inf" , "Lim. inf. taille effet" , envir=.dico)
+  assign("txt_effect_size_dot_sup" , "Lim. inf. taille effet" , envir=.dico)
   assign("txt_error" , "Erreur" , envir=.dico)
   assign("txt_error_BP" , "Erreur.BP" , envir=.dico)
   assign("txt_error_spearman" , "Erreur.Spearman" , envir=.dico)
@@ -1131,4 +1133,5 @@ load_fr_FR <- function() {
   assign("txt_gg_p_value" , "GG.valeur.p" , envir=.dico)
   assign("txt_var_explained_dot" , "Var.expliquee" , envir=.dico)
   assign("txt_V_sq_" , "V.carre" , envir=.dico)
+  assign("desc_bootstrap_percentile_anova" , "Anova sur les moyennes tronquees utilisant la méthode de bootstrap du percentile t" , envir=.dico)
 }
