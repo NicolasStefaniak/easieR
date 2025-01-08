@@ -1058,9 +1058,9 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
           dimnames(cont$comp)[[1]]<-noms.out
           cont<-cont$comp
           cont<-cont[,-c(1:2)]
-          names(cont)<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_ci_inferior_limit_dot"]],
-          .dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
-          #Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",42)]] <-cont
+           dimnames(cont)[[2]]<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_ci_inferior_limit_dot"]],
+                 .dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
+          Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",42)]] <-cont
         }
         
       }else{
@@ -1076,14 +1076,14 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
                 Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",51)]]<-AR1
         #Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",32)
  
-        cont<-try(WRS2::mcppb20(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot),silent=T)
+        cont<-try(WRS2::mcppb20(as.formula(paste0(DV, "~",between)),data=data,  tr=.2, nboot=n.boot),silent=T)
         if(class(cont)!= 'try-error') {
           noms.out<-combn(cont$fnames, 2)
           noms.out<-paste0(noms.out[1,], " vs. ", noms.out[2,])
           dimnames(cont$comp)[[1]]<-noms.out
           cont<-cont$comp
           cont<-cont[,-c(1:2)]
-          names(cont)<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
+          dimnames(cont)[[2]]<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
           Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",42)]] <-cont
         }
         
