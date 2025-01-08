@@ -3,7 +3,6 @@ function(){
       pack.to.inst <- c('afex',
                       'akima',
                       'Amelia',
-                      'asbio',
                       'BayesFactor',
                       'bibtex',
                       'car',
