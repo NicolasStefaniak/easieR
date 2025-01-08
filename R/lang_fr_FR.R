@@ -1061,7 +1061,7 @@ load_fr_FR <- function() {
   assign("txt_df_residuals" , "ddl.residuels" , envir=.dico)
   assign("txt_delta_r_squared" , "Delta R.deux" , envir=.dico)
   assign("txt_effect_size_dot_inf" , "Lim. inf. taille effet" , envir=.dico)
-  assign("txt_effect_size_dot_sup" , "Lim. inf. taille effet" , envir=.dico)
+  assign("txt_effect_size_dot_sup" , "Lim. sup. taille effet" , envir=.dico)
   assign("txt_error" , "Erreur" , envir=.dico)
   assign("txt_error_BP" , "Erreur.BP" , envir=.dico)
   assign("txt_error_spearman" , "Erreur.Spearman" , envir=.dico)
