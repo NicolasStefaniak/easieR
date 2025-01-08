@@ -16,7 +16,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   # SumS = Type of sum of squares, one among "2" or "3". 
   # save = logical. Do you want to save the results
   # html = logical. Do you want easieR to output the results in nice html document ? 
-  # contrast = list. The names in the list corresponds to the names of the factors and the values is a matrix of coefficients for the contrasts. "pairs" or "none" are also possible
+  # contrast = list. The names in the list corresponds to the names of the factors and the values is a matrix of coefficients for the contrasts. "pairwise" or "none" are also possible
   # p.adjust = adjust p values for multiples comparisons. see <code>p.adjust</code>
   packages<-c('BayesFactor', 'car','afex', 'DescTools','emmeans','ggplot2','nortest', 'outliers', 'PMCMRplus',
               'psych', 'reshape2', 'sjstats', 'svDialogs', 'WRS2' )
