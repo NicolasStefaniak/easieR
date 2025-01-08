@@ -1070,7 +1070,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
      AR1<-try(WRS2::t1waybt(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot,data=data),silent=T)
      if(class(AR1)!='try-error'){
        AR1<- data.frame(AR1[[1]],
-        ifelse((round(AR1[[2]],3)==0, "<.001",round(AR1[[2]],3)),AR1[[3]],AR1[[4]])
+        ifelse(round(AR1[[2]],3)==0, "<.001",round(AR1[[2]],3)),AR1[[3]],AR1[[4]])
         names(AR1)<-c("Stat",.dico[["txt_p_dot_val"]],.dico[["txt_var_explained_dot"]],
         .dico[["txt_effect_size_dot"]] )
                 Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",51)]]<-AR1
