@@ -172,9 +172,14 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     )
     
     
-    title<-c(.dico[["ask_variables_type"]], .dico[["txt_repeated_measures"]],.dico[["txt_participants_id"]],.dico[["txt_independant_group_variables"]],
-             .dico[["txt_dependant_variable"]], .dico[["ask_covariables"]],
-             .dico[["txt_param_model"]], .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
+    title<-c(.dico[["ask_variables_type"]], 
+            .dico[["txt_repeated_measures"]],
+            .dico[["txt_participants_id"]],
+            .dico[["txt_independant_group_variables"]],
+             .dico[["txt_dependant_variable"]], 
+             .dico[["ask_covariables"]],
+             .dico[["txt_param_model"]], 
+             .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
              .dico[["ask_which_analysis"]],.dico[["txt_complete_dataset"]],.dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
              .dico[["ask_results_desired"]], .dico[["ask_which_size_effect"]],.dico[["ask_which_squared_sum"]],
              .dico[["ask_save"]], .dico[["txt_apriori"]],  .dico[["txt_comparison_two_by_two"]], .dico[["txt_none"]],.dico[["ask_which_contrasts"]],
@@ -188,7 +193,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
              .dico[["txt_non_param_analysis"]],.dico[["txt_kruskal_wallis_test"]],.dico[["txt_friedman_anova"]],.dico[["txt_friedman_anova_pairwise_comparison"]],
              .dico[["txt_kruskal_wallis_pairwise"]]  ,.dico[["txt_anova_on_medians"]],.dico[["txt_principal_analysis"]],.dico[["txt_anova_on_truncated_means"]],
              .dico[["txt_anova_on_m_estimator"]], .dico[["txt_anova_on_modified_huber_estimator"]],.dico[["txt_analysis_premature_abortion"]],
-             .dico[["desc_references"]]
+             .dico[["desc_references"]], .dico[["desc_bootstrap_percentile_anova"]],
+             .dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_inf"]]
              
     )
     
@@ -1034,29 +1040,55 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       }
       
       
-      try( WRS2::t1way(as.formula(paste0(DV, "~",between)), tr=.2,data=data),silent=T)->AR1
+      AR1<-try( WRS2::t1way(as.formula(paste0(DV, "~",between)), tr=.2,data=data,nboot=n.boot),silent=T)
       if(class(AR1)!='try-error'){
-        WRS2::t1way(as.formula(paste0(DV, "~",between)), tr=.2,data=data)->AR1
-        WRS2::t1waybt(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot,data=data)->AR2
-        data.frame(AR1[[2]],AR1[[3]],AR1[[1]],AR2[[2]],AR2[[3]],AR2[[4]], AR2[[5]])->AR1
-        names(AR1)<-c(.dico[["txt_df_num"]],.dico[["txt_df_denom"]],"Stat",.dico[["txt_p_dot_val"]],.dico[["txt_var_explained_dot"]],.dico[["txt_effect_size_dot"]],.dico[["txt_bootstrap_dot_number"]] )
-        
-        
+        AR1<- data.frame(AR1[[2]],AR1[[3]],AR1[[1]], ifelse(round(AR1[[4]],3)==0,"<.001", round(AR1[[4]],3) ) ,
+                 AR1[[5]], AR1[[6]][[1]], AR1[[6]][[2]])
+        names(AR1)<-c(.dico[["txt_df_num"]],.dico[["txt_df_denom"]],
+              "Stat",.dico[["txt_p_dot_val"]],
+              .dico[["txt_effect_size_dot"]],.dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]] )
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-AR1
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",32)
         
         cont<-try(WRS2::lincon(as.formula(paste0(DV, "~",between)), data=data, tr=.2),silent=T)
-        cont2<-try(WRS2::mcppb20(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot),silent=T)
+
         if(class(cont)!= 'try-error') {
-          cont<-data.frame(cont$psihat[,2],cont$test[,4],cont$test[,5],cont$test[,2],cont$test[,3],cont2$psihat[,4],cont2$psihat[,5],cont2$psihat[,6])
-          names(cont)<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_error_dot_standard"]],.dico[["txt_df"]],"test",.dico[["txt_critical_dot_threshold"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
-          Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",42)]] <-cont
+          noms.out<-combn(cont$fnames, 2)
+          noms.out<-paste0(noms.out[1,], " vs. ", noms.out[2,])
+          dimnames(cont$comp)[[1]]<-noms.out
+          cont<-cont$comp
+          cont<-cont[,-c(1:2)]
+          names(cont)<-c(.dico[["txt_contrast_dot_val"]].dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
+          #Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",42)]] <-cont
         }
         
       }else{
         Resultats[[.ez.anova.msg("title",52)]]<-.ez.anova.msg("title",33)
       }
-      
+
+     AR1<-try(WRS2::t1waybt(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot,data=data),silent=T)
+     if(class(AR1)!='try-error'){
+       AR1<- data.frame(AR1[[1]],
+        ifelse((round(AR1[[2]],3)==0, "<.001",round(AR1[[2]],3)),AR1[[3]],AR1[[4]])
+        names(AR1)<-c("Stat",.dico[["txt_p_dot_val"]],.dico[["txt_var_explained_dot"]],
+        .dico[["txt_effect_size_dot"]] )
+                Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",51)]]<-AR1
+        #Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",32)
+ 
+        cont<-try(WRS2::mcppb20(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot),silent=T)
+        if(class(cont)!= 'try-error') {
+          noms.out<-combn(cont$fnames, 2)
+          noms.out<-paste0(noms.out[1,], " vs. ", noms.out[2,])
+          dimnames(cont$comp)[[1]]<-noms.out
+          cont<-cont$comp
+          cont<-cont[,-c(1:2)]
+          names(cont)<-c(.dico[["txt_contrast_dot_val"]].dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
+          Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",42)]] <-cont
+        }
+        
+      }else{
+        Resultats[[.ez.anova.msg("title",57)]]<-.ez.anova.msg("title",33)
+      }
     }
     
     
