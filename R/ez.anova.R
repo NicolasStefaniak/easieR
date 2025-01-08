@@ -1045,7 +1045,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-AR1
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",32)
         
-        cont<-try(WRS2::lincon(as.formula(paste0(DV, "~",between)), data=data, tr=.2),silent=T)-
+        cont<-try(WRS2::lincon(as.formula(paste0(DV, "~",between)), data=data, tr=.2),silent=T)
         cont2<-try(WRS2::mcppb20(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot),silent=T)
         if(class(cont)!= 'try-error') {
           cont<-data.frame(cont$psihat[,2],cont$test[,4],cont$test[,5],cont$test[,2],cont$test[,3],cont2$psihat[,4],cont2$psihat[,5],cont2$psihat[,6])
