@@ -792,8 +792,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       data$match<-data[,id]
     }
     
-    data<-merge(x=data, y=residus, by="match")
-    Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X='residu', Y=NULL)
+    #data<-merge(x=data, y=residus, by="match")
+    Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=residus, X='residu', Y=NULL)
     
     if(!is.null(cov) & !is.null(between)){
       options(contrasts = c("contr.helmert", "contr.poly"))
