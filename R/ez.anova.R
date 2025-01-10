@@ -168,7 +168,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
            .dico[["desc_bayesian_factors_could_not_be_computed"]],
            .dico[["desc_we_could_not_compute_anova_on_medians"]],
            .dico[["desc_proba_and_IC_estimated_on_bootstrap"]],
-           .dico[["desc_we_could_not_compute_robust_anova"]], .dico[["desc_analysis_aborted"]]
+           .dico[["desc_we_could_not_compute_robust_anova"]], .dico[["desc_analysis_aborted"]],
+           .dico[["RML_and_within_not_allowed"]]
     )
     
     
@@ -479,9 +480,11 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   data<-data[[2]]
   
   type.v<-c()
-  if((!is.null(between) | !is.null(within) | !is.null(RML)) && all(c(between, within, RML) %in%
-   names(data))) dial<-F else dial<-T
-  if(!is.null(within) & !is.null(RML))  {okCancelBox(.ez.anova.msg("msg",14))
+  if((!is.null(between) | !is.null(within) | !is.null(RML)) && 
+      all(c(between, within, RML) %in% names(data))) dial<-F else dial<-T
+
+  if(!is.null(within) & !is.null(RML))  {
+    okCancelBox(.ez.anova.msg("msg",35))
     return(.ez.anova.in())}
   
   if(is.null(c(between,within, RML))) {
@@ -499,20 +502,19 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   } 
   
   if(any(type.v==.dico[["txt_repeated_measures"]]) | !is.null(within) | !is.null(RML)) {
-    if(!is.null(RML)) 
-    RML<-.var.type(X=RML, info=T, data=data, type=c("integer", "numeric"), check.prod=F, message=.ez.anova.msg("msg",3), 
-     multiple=TRUE, 
-                      title=.ez.anova.msg("title",2), out=NULL)
-    if(is.null(RML)) return(.ez.anova.in())
-    RML<-RML$X
+    if(!is.null(RML)) {
+    RML<-.var.type(X=RML, info=T, data=data, type=c("integer", "numeric"), check.prod=F,
+                  message=.ez.anova.msg("msg",3), 
+                  multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
+    if(is.null(RML)) return(.ez.anova.in()) else   RML<-RML$X
 
     idvar<-setdiff(names(data), RML)
     if(!is.null(RML.factor)) {
       IV.names<-as.list(names(RML.factor))
-    }else{
+      }else{
       IV.names<-"variable"
       RML.factor<-list("variable" = paste0("mod", 1:length(RML)))
-    }
+           }
     data<-ez.reshape(data=nom, varying= list(RML), v.names =c('value'),idvar =idvar,
                      IV.names=IV.names, IV.levels=RML.factor) 
     nom<-paste0(nom, ".long")
@@ -526,7 +528,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       data[,within]<-factor(data[,within])
     }
   
-  }
+              }
   
   if(!is.null(within)){
     if(all(sapply(data[,within], class)=="factor")) {
@@ -568,7 +570,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
 
  }
 
-    	  
+  }   	  
       
   if(any(type.v==.dico[["txt_independant_groups"]]) | !is.null(between)){
     between<-.var.type(X=between, info=T, data=data, type="factor", check.prod=F, message=.ez.anova.msg("msg",8),  multiple=TRUE, 
@@ -692,20 +694,21 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       erreur<-paste(erreur, "*", within[[i+1]])
     }
     }
-    paste(ez.principal, erreur,"|", id, ")")->pred.rep
+    pred.rep<-paste(ez.principal, erreur,"|", id, ")")
   }
   
-  if(!is.null(between) & !is.null(within)) paste(pred.ind, "*",pred.rep)->predicteurs else {
-    if(!is.null(between) & is.null(within)) paste0(pred.ind,"+Error(1|",id,")")->predicteurs else pred.rep->predicteurs
+  if(!is.null(between) & !is.null(within)) predicteurs<-paste(pred.ind, "*",pred.rep) else {
+    if(!is.null(between) & is.null(within)) {predicteurs<-paste0(pred.ind,"+Error(1|",id,")")} else 
+    {predicteurs<-pred.rep}
   }
-  paste0(DV, "~",cov1, predicteurs)->modele  
+  modele<-paste0(DV, "~",cov1, predicteurs)
   Resultats[[.ez.anova.msg("title",27)]]<-modele
-  as.formula(modele)->modele  
+  modele<-as.formula(modele)  
   
   Resultats[[.ez.anova.msg("title",26)]]<-.stat.desc.out(X=DV, groupes=c(between, within), data=data, tr=.1, type=3, plot=T)
   
   
-  list()->aov.plus.in
+  aov.plus.in<-list()
   for(i in 1:length(c(between, unlist(within)))){
     combn(c(between, unlist(within)), i)->facteurs
     for(j in 1:ncol(facteurs)){
