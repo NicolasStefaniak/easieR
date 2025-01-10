@@ -112,6 +112,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     }
     cont.call<-paste0(cont.call, ")")
   }else cont.call<-paste0("'", contrasts, "'")
+  
   call<-paste0("ez.anova(data=", nom, ", DV='", DV,"', between =", ifelse(is.null(between), "NULL", paste0("c('", between,"')" )),
                ", within =", ifelse(is.null(within), "NULL", paste0("c('", within,"')" )), 
                ", cov=", ifelse(is.null(cov), "NULL", paste0("c('", cov,"')" )), ",id ='", id, "', param =c('", param, "'), outlier= c('",outlier ,"')",
@@ -136,69 +137,69 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
 .ez.anova.msg<-function(type, number){
   # type : either "msg" or "title"
   # number : number of message 
-    msg<-c(.dico[["ask_variables_type_for_anova"]],
-           .dico[["desc_at_least_independant_variables_or_repeated_measures"]],
-           .dico[["ask_select_variables_or_modalities_of_repeated_measure_variable"]],
-           .dico[["ask_which_variable_identifies_participants"]],
-           .dico[["desc_each_participant_must_appear_only_once_"]],
-           .dico[["desc_two_cols_are_needed"]],
-           .dico[["desc_large_format_must_be_numeric_or_integer"]],
-           .dico[["ask_chose_independant_group_variables"]],
-	   .dico[["ask_you_did_not_chose_a_variable_continue_or_abort"]],
-           .dico[["ask_chose_dependant_variable"]], 
-           .dico[["desc_some_participants_have_missing_values_on_repeated_measures"]],
-           .dico[["ask_chose_covariables"]],
-	   .dico[["ask_not_enough_obs_verify_dataset"]],
-	   .dico[["desc_all_tests_description"]],
-	   .dico[["desc_complete_dataset_vs_identification_outliers_vs_without_outliers"]],
-           .dico[["desc_cannot_have_both_within_RML_arguments"]],
-	   .dico[["desc_most_common_effect_size"]],
-	   .dico[["desc_multiple_ways_to_compute_squares_sum"]],
-           .dico[["ask_save_results"]],
-           .dico[["ask_dependant_variable_with_less_than_three_val_verify_dataset"]],
-	   .dico[["desc_all_contrasts_description"]],
-           .dico[["desc_you_can_chose_predefined_or_manual_contrasts"]],
-           .dico[["ask_contrast_must_respect_ortho"]],
-           .dico[["desc_contrasts_must_be_coeff_matrices_in_list"]],
-           .dico[["desc_manual_contrast_need_coeff_matrice"]],
-           .dico[["ask_which_correction"]],
-           .dico[["desc_authorized_values_for_contrasts"]],
-           .dico[["desc_at_least_on_contrast_matrix_incorrect"]],
-	   .dico[["desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance"]],
-           .dico[["desc_bayesian_factors_could_not_be_computed"]],
-           .dico[["desc_we_could_not_compute_anova_on_medians"]],
-           .dico[["desc_proba_and_IC_estimated_on_bootstrap"]],
-           .dico[["desc_we_could_not_compute_robust_anova"]], .dico[["desc_analysis_aborted"]],
-           .dico[["RML_and_within_not_allowed"]]
-    )
-    
-    
-    title<-c(.dico[["ask_variables_type"]], 
-            .dico[["txt_repeated_measures"]],
-            .dico[["txt_participants_id"]],
-            .dico[["txt_independant_group_variables"]],
-             .dico[["txt_dependant_variable"]], 
-             .dico[["ask_covariables"]],
-             .dico[["txt_param_model"]], 
-             .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
-             .dico[["ask_which_analysis"]],.dico[["txt_complete_dataset"]],.dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
-             .dico[["ask_results_desired"]], .dico[["ask_which_size_effect"]],.dico[["ask_which_squared_sum"]],
-             .dico[["ask_save"]], .dico[["txt_apriori"]],  .dico[["txt_comparison_two_by_two"]], .dico[["txt_none"]],.dico[["ask_which_contrasts"]],
-             .dico[["txt_contrasts_for"]], .dico[["txt_specify_contrasts"]],.dico[["ask_which_baseline"]], .dico[["txt_descriptive_statistics"]],.dico[["txt_test_model"]],
-             .dico[["txt_variable_descriptive_statistics"]],.dico[["txt_descriptive_statistics_of_interaction_between_x"]],.dico[["txt_warning"]],
-             .dico[["txt_normality_tests"]],.dico[["txt_ancova_application_conditions"]],.dico[["txt_absence_of_difference_between_groups_test_on"]],
-             .dico[["txt_slopes_homogeneity_between_groups_on_dependant_variable"]],
-             .dico[["txt_levene_test_verifying_homogeneity_variances"]],.dico[["txt_mauchly_test_sphericity_covariance_matrix"]],
-             .dico[["txt_principal_analysis"]],.dico[["txt_anova_with_welch_correction"]], .dico[["txt_pairwise_comparisons"]],.dico[["txt_contrasts"]],
-             .dico[["txt_variables_coeff_matrix"]],.dico[["txt_contrasts_table"]],.dico[["txt_contrasts_table_imitating_commercial_softwares"]],.dico[["txt_bayesian_factors"]],
-             .dico[["txt_non_param_analysis"]],.dico[["txt_kruskal_wallis_test"]],.dico[["txt_friedman_anova"]],.dico[["txt_friedman_anova_pairwise_comparison"]],
-             .dico[["txt_kruskal_wallis_pairwise"]]  ,.dico[["txt_anova_on_medians"]],.dico[["txt_principal_analysis"]],.dico[["txt_anova_on_truncated_means"]],
-             .dico[["txt_anova_on_m_estimator"]], .dico[["txt_anova_on_modified_huber_estimator"]],.dico[["txt_analysis_premature_abortion"]],
-             .dico[["desc_references"]], .dico[["desc_bootstrap_percentile_anova"]],
-             .dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]]
-             
-    )
-    
+  msg<-c(.dico[["ask_variables_type_for_anova"]],
+         .dico[["desc_at_least_independant_variables_or_repeated_measures"]],
+         .dico[["ask_select_variables_or_modalities_of_repeated_measure_variable"]],
+         .dico[["ask_which_variable_identifies_participants"]],
+         .dico[["desc_each_participant_must_appear_only_once_"]],
+         .dico[["desc_two_cols_are_needed"]],
+         .dico[["desc_large_format_must_be_numeric_or_integer"]],
+         .dico[["ask_chose_independant_group_variables"]],
+         .dico[["ask_you_did_not_chose_a_variable_continue_or_abort"]],
+         .dico[["ask_chose_dependant_variable"]], 
+         .dico[["desc_some_participants_have_missing_values_on_repeated_measures"]],
+         .dico[["ask_chose_covariables"]],
+         .dico[["ask_not_enough_obs_verify_dataset"]],
+         .dico[["desc_all_tests_description"]],
+         .dico[["desc_complete_dataset_vs_identification_outliers_vs_without_outliers"]],
+         .dico[["desc_cannot_have_both_within_RML_arguments"]],
+         .dico[["desc_most_common_effect_size"]],
+         .dico[["desc_multiple_ways_to_compute_squares_sum"]],
+         .dico[["ask_save_results"]],
+         .dico[["ask_dependant_variable_with_less_than_three_val_verify_dataset"]],
+         .dico[["desc_all_contrasts_description"]],
+         .dico[["desc_you_can_chose_predefined_or_manual_contrasts"]],
+         .dico[["ask_contrast_must_respect_ortho"]],
+         .dico[["desc_contrasts_must_be_coeff_matrices_in_list"]],
+         .dico[["desc_manual_contrast_need_coeff_matrice"]],
+         .dico[["ask_which_correction"]],
+         .dico[["desc_authorized_values_for_contrasts"]],
+         .dico[["desc_at_least_on_contrast_matrix_incorrect"]],
+         .dico[["desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance"]],
+         .dico[["desc_bayesian_factors_could_not_be_computed"]],
+         .dico[["desc_we_could_not_compute_anova_on_medians"]],
+         .dico[["desc_proba_and_IC_estimated_on_bootstrap"]],
+         .dico[["desc_we_could_not_compute_robust_anova"]], .dico[["desc_analysis_aborted"]],
+         .dico[["RML_and_within_not_allowed"]], "on ne peut pas avoir  à la fois des variables qui sont des facteurs et numeriques"
+  )
+  
+  
+  title<-c(.dico[["ask_variables_type"]], 
+           .dico[["txt_repeated_measures"]],
+           .dico[["txt_participants_id"]],
+           .dico[["txt_independant_group_variables"]],
+           .dico[["txt_dependant_variable"]], 
+           .dico[["ask_covariables"]],
+           .dico[["txt_param_model"]], 
+           .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
+           .dico[["ask_which_analysis"]],.dico[["txt_complete_dataset"]],.dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
+           .dico[["ask_results_desired"]], .dico[["ask_which_size_effect"]],.dico[["ask_which_squared_sum"]],
+           .dico[["ask_save"]], .dico[["txt_apriori"]],  .dico[["txt_comparison_two_by_two"]], .dico[["txt_none"]],.dico[["ask_which_contrasts"]],
+           .dico[["txt_contrasts_for"]], .dico[["txt_specify_contrasts"]],.dico[["ask_which_baseline"]], .dico[["txt_descriptive_statistics"]],.dico[["txt_test_model"]],
+           .dico[["txt_variable_descriptive_statistics"]],.dico[["txt_descriptive_statistics_of_interaction_between_x"]],.dico[["txt_warning"]],
+           .dico[["txt_normality_tests"]],.dico[["txt_ancova_application_conditions"]],.dico[["txt_absence_of_difference_between_groups_test_on"]],
+           .dico[["txt_slopes_homogeneity_between_groups_on_dependant_variable"]],
+           .dico[["txt_levene_test_verifying_homogeneity_variances"]],.dico[["txt_mauchly_test_sphericity_covariance_matrix"]],
+           .dico[["txt_principal_analysis"]],.dico[["txt_anova_with_welch_correction"]], .dico[["txt_pairwise_comparisons"]],.dico[["txt_contrasts"]],
+           .dico[["txt_variables_coeff_matrix"]],.dico[["txt_contrasts_table"]],.dico[["txt_contrasts_table_imitating_commercial_softwares"]],.dico[["txt_bayesian_factors"]],
+           .dico[["txt_non_param_analysis"]],.dico[["txt_kruskal_wallis_test"]],.dico[["txt_friedman_anova"]],.dico[["txt_friedman_anova_pairwise_comparison"]],
+           .dico[["txt_kruskal_wallis_pairwise"]]  ,.dico[["txt_anova_on_medians"]],.dico[["txt_principal_analysis"]],.dico[["txt_anova_on_truncated_means"]],
+           .dico[["txt_anova_on_m_estimator"]], .dico[["txt_anova_on_modified_huber_estimator"]],.dico[["txt_analysis_premature_abortion"]],
+           .dico[["desc_references"]], .dico[["desc_bootstrap_percentile_anova"]],
+           .dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]]
+           
+  )
+  
   #} else {
   #  msg<-c("Which kind of variable do you want to include in the analysis ?\nYou are allowed to choose several (e.g., for mixed anova or for ancova).",
   #         "It is required that at least one variable is either an independant group variable or a repeated measure variable",
@@ -323,17 +324,17 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
                              preselect=c("Helmert"), multiple = FALSE, title=paste(.ez.anova.msg("title", 23), betweenwithin[i],"?"))$res
         
         if(length(type.cont2)==0) return(contrastes.ez())
-	## With translation, switch case can cause trouble when using variables instead of literal strings.
-	## That's why I've been converting it here too.
-	if (type.cont2=="Helmert") { contr.helmert(nlevels(data[,betweenwithin[i]])) -> contrastes[[i]] }
+        ## With translation, switch case can cause trouble when using variables instead of literal strings.
+        ## That's why I've been converting it here too.
+        if (type.cont2=="Helmert") { contr.helmert(nlevels(data[,betweenwithin[i]])) -> contrastes[[i]] }
         if (type.cont2=="Helmert reversed") { apply(contr.helmert(nlevels(data[,betweenwithin[i]])), 2, rev)  -> contrastes[[i]]}
         if (type.cont2=="poly") { emmeans:::poly.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
         if (type.cont2=="Trait.vs.contr") {
-		{ base<- dlgList(levels(data[, betweenwithin[i]]), preselect=levels(data[,betweenwithin[i]])[1],
-                        multiple = FALSE, title=.ez.anova.msg("title", 25))$res
-                        which(levels(data[, betweenwithin[i]])==base)->base
-                        emmeans:::trt.vs.ctrl1.emmc(1:nlevels(data[,betweenwithin[i]]), ref=base)
-                      } -> contrastes[[i]]  }
+          { base<- dlgList(levels(data[, betweenwithin[i]]), preselect=levels(data[,betweenwithin[i]])[1],
+                           multiple = FALSE, title=.ez.anova.msg("title", 25))$res
+          which(levels(data[, betweenwithin[i]])==base)->base
+          emmeans:::trt.vs.ctrl1.emmc(1:nlevels(data[,betweenwithin[i]]), ref=base)
+          } -> contrastes[[i]]  }
         if (type.cont2=="Eff") { emmeans:::del.eff.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
         if (type.cont2=="consec") { emmeans:::consec.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
         if (type.cont2=="mean.change") { emmeans:::mean_chg.emmc(1:nlevels(data[,betweenwithin[i]]))  -> contrastes[[i]]}
@@ -379,19 +380,19 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(any(contrasts %in% c(.dico[["txt_comparison_two_by_two"]],.dico[["txt_pairwise"]], .dico[["txt_pairwise"]], "none", .dico[["txt_none"]]))) {
       Resultats$contrastes<-contrasts
       contrastes<-contrasts
-      }else{
-    for(i in 1:length(contrasts)){
-      cont2<-contrasts[[i]]
-      cont2<-as.matrix(cont2)
-      j<-which(names(data)==names(contrasts)[[i]])
-      noms<-list()
-      noms[[1]]<-levels(data[,j])
-      noms[[2]]<-paste(.dico[["txt_contrast"]], 1:(ncol(cont2)), sep=".")
-      dimnames(cont2)<-noms
-      contrastes[[i]]<-cont2 
-    }
-    names(contrastes)<-names(contrasts)
-    Resultats$contrastes<-contrastes
+    }else{
+      for(i in 1:length(contrasts)){
+        cont2<-contrasts[[i]]
+        cont2<-as.matrix(cont2)
+        j<-which(names(data)==names(contrasts)[[i]])
+        noms<-list()
+        noms[[1]]<-levels(data[,j])
+        noms[[2]]<-paste(.dico[["txt_contrast"]], 1:(ncol(cont2)), sep=".")
+        dimnames(cont2)<-noms
+        contrastes[[i]]<-cont2 
+      }
+      names(contrastes)<-names(contrasts)
+      Resultats$contrastes<-contrastes
     }
   }
   if((dial & all(contrastes %in% c(.dico[["txt_comparison_two_by_two"]],.dico[["txt_pairwise"]], .dico[["txt_pairwise"]]))) || 
@@ -417,7 +418,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   if(dial || !any(param %in% c("param", "non param", "bayes", "robust",
                                .dico[["txt_param_model"]], .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
                                .dico[["txt_param_model"]], .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]]))){
-                               #"Parametric", "Non parametric",.dico[["txt_bayesian_factors"]], "Robust statistics - might take some time"))){
+    #"Parametric", "Non parametric",.dico[["txt_bayesian_factors"]], "Robust statistics - might take some time"))){
     writeLines(.ez.anova.msg("msg",14))
     msg<-c(.ez.anova.msg("title",7),.ez.anova.msg("title",9))
     if(is.null(cov)) {    
@@ -442,16 +443,16 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   
   if(any(param %in% c(.dico[["txt_param_model"]], "Parametric", "param"))){
     if(!ES %in% c("ges", "pes") | dial){
-    writeLines(.ez.anova.msg("msg",17))
-    ES<- dlgList(c("ges", "pes"), preselect=c("ges"),multiple = FALSE, title=.ez.anova.msg("title",16))$res
-    if(length(ES)==0) return(.options.aov(between=between, within=within, cov=cov))
+      writeLines(.ez.anova.msg("msg",17))
+      ES<- dlgList(c("ges", "pes"), preselect=c("ges"),multiple = FALSE, title=.ez.anova.msg("title",16))$res
+      if(length(ES)==0) return(.options.aov(between=between, within=within, cov=cov))
     }
     if(dial | !SumS %in% c("2", "3")){
       writeLines(.ez.anova.msg("msg",18))
       SumS<- dlgList(c(2,3), preselect=3,multiple = FALSE, title=.ez.anova.msg("title",16))$res
       if(length(SumS)==0) return(.options.aov(between=between, within=within, cov=cov))
     }
-     
+    
   }
   if(dial | class(save)!="logical"){
     writeLines(.ez.anova.msg("msg",19))
@@ -470,112 +471,151 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
 .ez.anova.in<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL, RML=NULL, 
                        RML.factor=NULL, param=c("param","bayes"),outlier=c("complete","id", "removed"), 
                        ES="ges", SumS="3", save=F, contrasts="none",p.adjust="none"){
+  #paramètres de base
   .e <- environment()
   Resultats<-list()
   reshape.data<-FALSE  
-  
-  choix.data(data=data, info=TRUE, nom=TRUE)->data
+  # choisir les données 
+  data<-easieR:::choix.data(data=data, info=TRUE, nom=TRUE)
   if(length(data)==0) return(NULL)
   nom<-data[[1]]
   data<-data[[2]]
-  
-  type.v<-c()
+  # identifier s'il faut ou non la boite de dialogue
   if((!is.null(between) | !is.null(within) | !is.null(RML)) && 
-      all(c(between, within, RML) %in% names(data))) dial<-F else dial<-T
-
+     all(c(between, within, RML) %in% names(data))) dial<-F else dial<-T
+  
+  # vérifier qu'il n'y a pas à la fois des variables dans within et RML
   if(!is.null(within) & !is.null(RML))  {
     okCancelBox(.ez.anova.msg("msg",35))
-    return(.ez.anova.in())}
+    return(.ez.anova.in())
+    }
   
- if(is.null(c(between,within, RML))) {
-
+# créer la boite de dialogue pour choisir le type de variable si between, within et rml sont nuls
+  if(is.null(c(between,within, RML))) {
     type.v<-matrix(c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]], .dico[["txt_covariables"]]
                     ))
     writeLines(.ez.anova.msg("msg", 1))
     type.v2<-dlgList(type.v, multiple = TRUE, title=.ez.anova.msg("title", 1))$res
     if(length(type.v2)==0) return(.ez.anova.in())
-    type.v<-type.v[which(type.v %in%type.v2),1]
+    type.v<-type.v[which(type.v%in%type.v2),1]
     if(!any(type.v %in% c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]]))) {
       writeLines(.ez.anova.msg("msg",2))
       return(.ez.anova.in())
     }
-  }  
+  } 
   
+  # verifier s'il y a des variables en mesures répétées et les choisir
+ 
   if(any(type.v==.dico[["txt_repeated_measures"]]) | !is.null(within) | !is.null(RML)) {
-    if(!is.null(RML)) {
-    RML<-.var.type(X=RML, info=T, data=data, type=c("integer", "numeric"), check.prod=F,
-                  message=.ez.anova.msg("msg",3), 
-                  multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
-    if(is.null(RML)) return(.ez.anova.in()) else   RML<-RML$X
-
-    idvar<-setdiff(names(data), RML)
-    if(!is.null(RML.factor)) {
-      IV.names<-as.list(names(RML.factor))
-      }else{
-      IV.names<-"variable"
-      RML.factor<-list("variable" = paste0("mod", 1:length(RML)))
-           }
-    data<-ez.reshape(data=nom, varying= list(RML), v.names =c('value'),idvar =idvar,
-                     IV.names=IV.names, IV.levels=RML.factor) 
-    nom<-paste0(nom, ".long")
-    reshape.data<-TRUE
-    DV<-.dico[["txt_value"]]
-
-    id<-"IDeasy"
-    within<-setdiff(names(data), c(idvar, .dico[["txt_value"]],"IDeasy"))
-    if(length(within)>1) {
-      data[,within]<-lapply(data[, within], factor)
-      within<-within[-which(within=="time")]
-    } else {
-      data[,within]<-factor(data[,within])
-    }
-  
-              }
-  
-  if(!is.null(within)){
-    if(all(sapply(data[,within], class)=="factor")) {
-      id<-.var.type(X=id, info=T, data=data, type=NULL, check.prod=F, message=.ez.anova.msg("msg",4),  multiple=FALSE, 
-                    title=.ez.anova.msg("title",3), out=within)
-      if(is.null(id)) return(.ez.anova.in())
-      id<-id$X
-      data[, id]<-factor(data[,id])
-      if(length(within)==1) {
-        N.modalites2<-nlevels(data[,unlist(within)])
-      } else {
-        N.modalites2<-sapply(data[,unlist(within)],nlevels)
+    # trois cas de figures doivent être envisagées
+    # 1 type.v n'est pas nul -> on utilise la boîte de dialogue
+    # 2 type.v est nul, within est nul, RML n'est pas nul
+    # 3 within n'est pas nul
+    # si type.v n'est pas nul, il faut choisir des variables et identifier si c'est un facteur ou du numérique
+    # si c'est un facteur, il faut que la variable s'appelle within 
+    # si c'est numérique, il faut la variable s'appelle RML 
+    if(!is.null(type.v)){
+      RML<-easieR:::.var.type(X=RML, info=T, data=data, type=NULL, check.prod=F,
+                              message=.ez.anova.msg("msg",3), 
+                              multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
+      if(is.null(RML)) return(.ez.anova.in()) else   RML<-RML$X
+      if(all(sapply(data[,RML], class)%in%c("character","factor"))) {
+        within<-RML
+        RML<-NULL
       }
-      if(nlevels(data[,id])*prod(N.modalites2)!=length(data[,1])) {
-        okCancelBox(.ez.anova.msg("msg",5))
-        return(.ez.anova.in())}
-    }
-  
-  
-  if(is.null(within)) return(ez.anova())
-
-
-
-
-  
-  diffs<-c(id,  within, DV)
-  if(is.null(id) || !id %in%names(data)) {
-    
-    if(length(within)==1) {
-      N.modalites2<-nlevels(data[,unlist(within)])
-    } else {
-      if(length(within)>1) N.modalites2<-sapply(data[,unlist(within)],nlevels) else N.modalites2<-1
+      if(!is.null(RML)){
+        if(any(sapply(data[,RML], class)%in%c("character","factor"))) {
+          msgBox(.ez.anova.msg("msg",36))
+          return(.ez.anova.in())
+        }
+      }
     }
     
     
-    data$IDeasy<-paste0("p", 1:(nrow(data)/prod(N.modalites2)))
-    data$IDeasy<-factor( data$IDeasy)
-    id<-"IDeasy"
-                                         }
-
-                  }   	  
+    if(!is.null(RML)) {
+      RML<-easieR:::.var.type(X=RML, info=T, data=data, type=c( "numeric"), check.prod=F,
+                     message=.ez.anova.msg("msg",3), 
+                     multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
+      if(is.null(RML)) return(.ez.anova.in()) else   RML<-RML$X
+      
+      idvar<-setdiff(names(data), RML)
+      if(!is.null(RML.factor)) {
+        IV.names<-as.list(names(RML.factor))
+      }else{
+        IV.names<-"variable"
+        RML.factor<-list("variable" = paste0("mod", 1:length(RML)))
+      }
+      data<-ez.reshape(data=nom, varying= list(RML), v.names =c('value'),idvar =idvar,
+                       IV.names=IV.names, IV.levels=RML.factor) 
+      nom<-paste0(nom, ".long")
+      reshape.data<-TRUE
+      DV<-.dico[["txt_value"]]
+      id<-"IDeasy"
+      within<-setdiff(names(data), c(idvar, .dico[["txt_value"]],"IDeasy"))
+      if(length(within)>1) {
+        data[,within]<-lapply(data[, within], factor)
+        within<-within[-which(within=="time")]
+      } else {
+        data[,within]<-factor(data[,within])
+      }
+      
+    }
+    
+    if(!is.null(within)){
+      within<-easieR:::.var.type(X=within, info=T, data=data, type=c( "factor"), check.prod=F,
+                              message=.ez.anova.msg("msg",3), 
+                              multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
+      if(is.null(within)) return(.ez.anova.in()) else   within<-within$X
+      
+      if(all(sapply(data[,within], class)=="factor")) {
+        id<-easieR:::.var.type(X=id, info=T, data=data, type=NULL, check.prod=F, message=.ez.anova.msg("msg",4),  
+                               multiple=FALSE, 
+                      title=.ez.anova.msg("title",3), out=within)
+        if(is.null(id)) return(.ez.anova.in())
+        id<-id$X
+        data[, id]<-factor(data[,id])
+        if(length(within)==1) {
+          N.modalites2<-nlevels(data[,unlist(within)])
+        } else {
+          N.modalites2<-sapply(data[,unlist(within)],nlevels)
+        }
+        if(nlevels(data[,id])*prod(N.modalites2)!=length(data[,1])) {
+          okCancelBox(.ez.anova.msg("msg",5))
+          return(.ez.anova.in())}
+      }
+      
+      
+      if(is.null(within)) return(ez.anova())
+      
+    }   
+      
+      
+      
+    
+      if(is.null(id) || !id %in%names(data)) {
+        
+        if(length(within)==1) {
+          N.modalites2<-nlevels(data[,unlist(within)])
+        } else {
+          if(length(within)>1) N.modalites2<-sapply(data[,unlist(within)],nlevels) else N.modalites2<-1
+        }
+        
+        
+        data$IDeasy<-paste0("p", 1:(nrow(data)/prod(N.modalites2)))
+        data$IDeasy<-factor( data$IDeasy)
+        id<-"IDeasy"
+      }
   }
 
+    
+  
+
+  	  
+
+  
   if(any(type.v==.dico[["txt_independant_groups"]]) | !is.null(between)){
-    between<-.var.type(X=between, info=T, data=data, type="factor", check.prod=F, message=.ez.anova.msg("msg",8),  multiple=TRUE, 
+    diffs<-c(id,  within, DV)  
+    between<-easieR:::.var.type(X=between, info=T, data=data, type="factor", check.prod=F, message=.ez.anova.msg("msg",8),  multiple=TRUE, 
                        title=.ez.anova.msg("title",4), out=diffs)
     if(is.null(between)) {
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id) else return(NULL)
@@ -586,7 +626,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   }
   
   if(is.null(DV)){
-    DV<-.var.type(X=DV, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",10),  multiple=TRUE, 
+    DV<-easieR:::.var.type(X=DV, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",10),  multiple=TRUE, 
                   title=.ez.anova.msg("title",5), out=diffs)
     if(is.null(DV)) {
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id, between=between) else return(NULL)
@@ -598,17 +638,17 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   
   if(!is.null(within)) {
     if( min(table(data[,id]))!=  max(table(data[,id])) | any(is.na(data[, DV]))) {
-        msgBox(.ez.anova.msg("msg",11))
-        NA.value<-which(is.na(data[,DV]))
-        ID.NA<- data[NA.value, id]
+      msgBox(.ez.anova.msg("msg",11))
+      NA.value<-which(is.na(data[,DV]))
+      ID.NA<- data[NA.value, id]
+      data<-data[which(!data[,id]%in% ID.NA),]
+      if(min(table(data[,id]))!=  max(table(data[,id])))   {
+        n.rep<-max(table((data[,id])))
+        id.nrep.differ<-which(table(data[,id]) !=n.rep)
+        ID.NA<-names(id.nrep.differ)
         data<-data[which(!data[,id]%in% ID.NA),]
-	if(min(table(data[,id]))!=  max(table(data[,id])))   {
-		n.rep<-max(table((data[,id])))
-		id.nrep.differ<-which(table(data[,id]) !=n.rep)
-                ID.NA<-names(id.nrep.differ)
-	        data<-data[which(!data[,id]%in% ID.NA),]
-	} 
-   data[,id]<-factor(data[,id])
+      } 
+      data[,id]<-factor(data[,id])
     }       
   }
   
@@ -616,7 +656,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   
   if(any(type.v==.dico[["txt_covariables"]])) {
     
-    cov<-.var.type(X=cov, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",12),  multiple=TRUE, 
+    cov<-easieR:::.var.type(X=cov, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",12),  multiple=TRUE, 
                    title=.ez.anova.msg("title",6), out=diffs)
     if(is.null(cov)) {
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id, between=between, DV=DV) else return(NULL)
@@ -630,17 +670,17 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(length(between)==1 & is.null(within)) nlevels(data[,unlist(between)])->N.modalites2 else sapply(data[,c(between, unlist(within))],nlevels)->N.modalites2 }
   
   options.out<-.options.aov(between=between, within=within, cov=cov, dial=dial, outlier=outlier, param=param, ES=ES, SumS=SumS, save=save)
-#print(options.out)  
+  #print(options.out)  
   if(is.null(options.out)) return(.ez.anova.in())
   
   
   
   data<-data[complete.cases(data[,c(between,unlist(within), DV, cov)]),]
   if(min(table(data[,id])) !=max(table(data[,id]))){
-     id.out<-which(table(data[,id])!=max(table(data[,id])))
-     data<-data[which(!data[,id]%in% names(id.out)), ]
-     }
-
+    id.out<-which(table(data[,id])!=max(table(data[,id])))
+    data<-data[which(!data[,id]%in% names(id.out)), ]
+  }
+  
   ftable(data[,c(between,unlist(within))])->aov.check
   if(any(is.na(aov.check)) || min(aov.check)<3) {
     msgBox(.ez.anova.msg("msg",13))
@@ -650,7 +690,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     msgBox(.ez.anova.msg("msg",13))
     return(NULL)
   }
-#if(any(param %in% c(.dico[["txt_param_model"]], "Parametric", "param")))  
+  #if(any(param %in% c(.dico[["txt_param_model"]], "Parametric", "param")))  
   if(any(options.out$param %in% c("param", .dico[["txt_param_model"]], "Parametric", "param"))){
     contrasts<-.contrastes.ez(data=data, between=between, within=within, contrasts=contrasts, dial=dial, p.adjust=p.adjust)
     if(is.null(contrasts)) return(.ez.anova.in()) 
@@ -739,19 +779,19 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     residus<-data.frame(aov.out$lm$residuals)
     residus[,"match"] <-aov.out$data$wide[,id]
     if(!is.null(within)){ residus<-melt(residus, id.vars="match") 
-                         names(residus)[3]<-'residu'
-                          residus$match<-paste0(residus[,1], residus[,2])
-                          data$match<-paste0(data[,id], data[,within[1]])
-                          if(length(within)>1){
-                             for(i in 2:length(within)){
-                                 data$match<-paste0(data$match, "_", data[,within[i]])
-                                                        }
-                                               }
-                          }else{
+    names(residus)[3]<-'residu'
+    residus$match<-paste0(residus[,1], residus[,2])
+    data$match<-paste0(data[,id], data[,within[1]])
+    if(length(within)>1){
+      for(i in 2:length(within)){
+        data$match<-paste0(data$match, "_", data[,within[i]])
+      }
+    }
+    }else{
       names(residus)<-c('residu', "match")
       data$match<-data[,id]
-      }
-
+    }
+    
     data<-merge(x=data, y=residus, by="match")
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=data, X='residu', Y=NULL)
     
@@ -781,15 +821,15 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     }
     
     c(unlist(within), between)->withinbetween
-      
-      if(length(withinbetween)==1) graph.modele<-paste0("~",withinbetween[1]) else{
+    
+    if(length(withinbetween)==1) graph.modele<-paste0("~",withinbetween[1]) else{
       graph.modele<-paste0(withinbetween[1],"~",withinbetween[2])}
-      if(length(withinbetween)>2){paste0(graph.modele, "|",withinbetween[3] )->graph.modele
-        if(length(withinbetween)>3){ for(i in 4:length(withinbetween)){paste0(graph.modele, "*",withinbetween[i] )->graph.modele} 
-          
-        }} 
-      
-     try( Resultats$Figure<-emmip(aov.out,as.formula(graph.modele),CIs=T), silent=T)
+    if(length(withinbetween)>2){paste0(graph.modele, "|",withinbetween[3] )->graph.modele
+      if(length(withinbetween)>3){ for(i in 4:length(withinbetween)){paste0(graph.modele, "*",withinbetween[i] )->graph.modele} 
+        
+      }} 
+    
+    try( Resultats$Figure<-emmip(aov.out,as.formula(graph.modele),CIs=T), silent=T)
     
     
     
@@ -800,7 +840,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       dimnames(aov.out2b)<-list(dimnames(aov.out2$sphericity.test)[[1]], c("Stat", .dico[["txt_p_dot_val"]]))
       Resultats[[.ez.anova.msg("title",36)]]<-aov.out2b
     }
-
+    
     aov.out3<-aov.out[[1]]
     aov.out3<-data.frame(aov.out3)
     names(aov.out3)<-c(.dico[["txt_df_num"]], .dico[["txt_df_denom"]], "CME", "F", ES, .dico[["txt_p_dot_val"]] )
@@ -880,14 +920,14 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       table.cont<-summary(emmean.out)
       Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",41)]]<-contrasts
       table.cont$R.2<-round(table.cont$t.ratio^2/(table.cont$t.ratio^2+table.cont$df),4)
-        if(!is.null(between)) {
+      if(!is.null(between)) {
         grepl(paste(between,collapse = "|"),  table.cont[,1])->table.cont$d.Cohen
-       round( ifelse(table.cont$d.Cohen==T, (2*table.cont$t.ratio)/(nlevels(data[,id])^0.5), table.cont$t.ratio/(nlevels(data[,id])^0.5)),4)->table.cont$d.Cohen}else{
+        round( ifelse(table.cont$d.Cohen==T, (2*table.cont$t.ratio)/(nlevels(data[,id])^0.5), table.cont$t.ratio/(nlevels(data[,id])^0.5)),4)->table.cont$d.Cohen}else{
           round(table.cont$t.ratio/((nlevels(data[,id]))^0.5),4)->table.cont$d.Cohen}
       
-        names(table.cont)<-c(.dico[["txt_contrast"]],.dico[["txt_estimation"]], .dico[["txt_error_dot_standard_short"]], .dico[["txt_df"]],"t", .dico[["txt_p_dot_val"]], .dico[["txt_r_square"]], "d Cohen")
-
-    
+      names(table.cont)<-c(.dico[["txt_contrast"]],.dico[["txt_estimation"]], .dico[["txt_error_dot_standard_short"]], .dico[["txt_df"]],"t", .dico[["txt_p_dot_val"]], .dico[["txt_r_square"]], "d Cohen")
+      
+      
       
       
       Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",42)]]<-table.cont
@@ -945,7 +985,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       } 
     }
   }
-
+  
   ##### Bayes 
   if(any(param %in% c("bayes",.dico[["txt_bayesian_factors"]], .dico[["txt_bayesian_factors"]])) )  {
     modeleBF<-paste0(DV,"~")
@@ -980,21 +1020,21 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     if(!is.null(between)){
       KW<-kruskal.test(as.formula( paste0(DV, "~",between[1])), data = data)
       round(data.frame(KW$statistic,KW$parameter,KW$p.value),4)->KW
-     
-        names(KW)<-c("H",.dico[["txt_df"]],.dico[["txt_p_dot_val"]])
+      
+      names(KW)<-c("H",.dico[["txt_df"]],.dico[["txt_p_dot_val"]])
       
       round((KW$H-nlevels(data[,between])+1)/(length(data[,1])-nlevels(data[,between])),4)->eta
       if(eta<0.0001) "<0.001"->KW$eta.2.H else KW$eta.2.H
       KW$espilon.2<-round(KW$H/((length(data[,1])^2-1)/(length(data[,1])+1)),4)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",46)]]<-KW
-       ans <- kwAllPairsConoverTest(as.formula( paste0(DV, "~",between[1])), data = data,p.adjust.method = p.adjust)
-       comp<-expand.grid(dimnames(ans$p.value))
-       comp<- paste0(comp[,1],"-", comp[,2])
-       KW.MC<-data.frame(stat=c(ans$statistic), p=c(ans$p.value))
-       dimnames(KW.MC)[[1]]<-comp
-       KW.MC<-KW.MC[complete.cases(KW.MC),]
+      ans <- kwAllPairsConoverTest(as.formula( paste0(DV, "~",between[1])), data = data,p.adjust.method = p.adjust)
+      comp<-expand.grid(dimnames(ans$p.value))
+      comp<- paste0(comp[,1],"-", comp[,2])
+      KW.MC<-data.frame(stat=c(ans$statistic), p=c(ans$p.value))
+      dimnames(KW.MC)[[1]]<-comp
+      KW.MC<-KW.MC[complete.cases(KW.MC),]
       KW.MC$p<-round.ps(KW.MC$p)
-       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",49)]]<- KW.MC
+      Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",49)]]<- KW.MC
     }else{
       friedman<-friedman.test(as.formula(paste0(DV,"~", within[[1]], "|", id )),data=data)
       friedman<-round(data.frame(friedman$statistic,friedman$parameter,friedman$p.value),4)
@@ -1005,9 +1045,9 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       comp<-expand.grid(dimnames(ans$p.value))
       comp<- paste0(comp[,1],"-", comp[,2])
       F.MC<-data.frame(D.exact.test=c(ans$statistic), valeur.p=c(ans$p.value))
-       dimnames(F.MC)[[1]]<-comp
-       F.MC<-F.MC[complete.cases(F.MC),]
-#      F.MC$p<-round.ps(F.MC$p)
+      dimnames(F.MC)[[1]]<-comp
+      F.MC<-F.MC[complete.cases(F.MC),]
+      #      F.MC$p<-round.ps(F.MC$p)
       Resultats[[.ez.anova.msg("title",45)]][[.ez.anova.msg("title",48)]]<-F.MC
     }
   }
@@ -1015,9 +1055,9 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   
   if(any(param %in% c(.dico[["txt_robust_statistics"]], "robust", "Robust statistics - might take some time"))){
     if(length(between)==1 & is.null(within)){
-
+      
       mediane<-med1way(as.formula( paste0(DV, "~",between[1])), data = data, iter= n.boot)
-
+      
       if(class(mediane)!='try-error'){
         mediane<-c(mediane$test, mediane$crit.val, mediane$p.value)
         names(mediane)<-c("F", .dico[["txt_critical_dot_val"]],.dico[["txt_p_dot_val"]])
@@ -1028,8 +1068,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
           robuste<-unstack(data, as.formula( paste0(DV, "~",between[1])))
           cont<-medpb(robuste,alpha=.05,nboot=n.boot,con=contrasts,bhop=FALSE)
           dimnames(cont$output)[[2]]<-c("Num.cont",.dico[["txt_contrast_dot_val"]],
-                                          .dico[["txt_p_dot_val"]],.dico[["txt_critical_p_corrected"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],
-				       .dico[["txt_adjusted_p_dot_value"]])
+                                        .dico[["txt_p_dot_val"]],.dico[["txt_critical_p_corrected"]],.dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]],
+                                        .dico[["txt_adjusted_p_dot_value"]])
           
           Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",42)]]<-cont$output
         }
@@ -1044,39 +1084,39 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       AR1<-try( WRS2::t1way(as.formula(paste0(DV, "~",between)), tr=.2,data=data,nboot=n.boot),silent=T)
       if(class(AR1)!='try-error'){
         AR1<- data.frame(AR1[[2]],AR1[[3]],AR1[[1]], ifelse(round(AR1[[4]],3)==0,"<.001", round(AR1[[4]],3) ) ,
-                 AR1[[5]], AR1[[6]][[1]], AR1[[6]][[2]])
+                         AR1[[5]], AR1[[6]][[1]], AR1[[6]][[2]])
         names(AR1)<-c(.dico[["txt_df_num"]],.dico[["txt_df_denom"]],
-              "Stat",.dico[["txt_p_dot_val"]],
-              .dico[["txt_effect_size_dot"]],.dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]] )
+                      "Stat",.dico[["txt_p_dot_val"]],
+                      .dico[["txt_effect_size_dot"]],.dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]] )
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]]<-AR1
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",32)
         
         cont<-try(WRS2::lincon(as.formula(paste0(DV, "~",between)), data=data, tr=.2),silent=T)
-
+        
         if(class(cont)!= 'try-error') {
           noms.out<-combn(cont$fnames, 2)
           noms.out<-paste0(noms.out[1,], " vs. ", noms.out[2,])
           dimnames(cont$comp)[[1]]<-noms.out
           cont<-cont$comp
           cont<-cont[,-c(1:2)]
-           dimnames(cont)[[2]]<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_ci_inferior_limit_dot"]],
-                 .dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
+          dimnames(cont)[[2]]<-c(.dico[["txt_contrast_dot_val"]],.dico[["txt_ci_inferior_limit_dot"]],
+                                 .dico[["txt_ci_superior_limit_dot"]],.dico[["txt_p_dot_val"]])
           Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",42)]] <-cont
         }
         
       }else{
         Resultats[[.ez.anova.msg("title",52)]]<-.ez.anova.msg("title",33)
       }
-
-     AR1<-try(WRS2::t1waybt(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot,data=data),silent=T)
-     if(class(AR1)!='try-error'){
-       AR1<- data.frame(AR1[[1]],
-        ifelse(round(AR1[[2]],3)==0, "<.001",round(AR1[[2]],3)),AR1[[3]],AR1[[4]])
+      
+      AR1<-try(WRS2::t1waybt(as.formula(paste0(DV, "~",between)), tr=.2, nboot=n.boot,data=data),silent=T)
+      if(class(AR1)!='try-error'){
+        AR1<- data.frame(AR1[[1]],
+                         ifelse(round(AR1[[2]],3)==0, "<.001",round(AR1[[2]],3)),AR1[[3]],AR1[[4]])
         names(AR1)<-c("Stat",.dico[["txt_p_dot_val"]],.dico[["txt_var_explained_dot"]],
-        .dico[["txt_effect_size_dot"]] )
-                Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",51)]]<-AR1
+                      .dico[["txt_effect_size_dot"]] )
+        Resultats[[.ez.anova.msg("title",57)]][[.ez.anova.msg("title",51)]]<-AR1
         #Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",30)]]<-.ez.anova.msg("msg",32)
- 
+        
         cont<-try(WRS2::mcppb20(as.formula(paste0(DV, "~",between)),data=data,  tr=.2, nboot=n.boot),silent=T)
         if(class(cont)!= 'try-error') {
           noms.out<-combn(cont$fnames, 2)
@@ -1108,21 +1148,21 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       if(class(mom)!='try-error')  {
         mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
         dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(.dico[["txt_p_dot_val"]]))
-         Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
+        Resultats[[.ez.anova.msg("title",53)]][[.ez.anova.msg("title",51)]]<-mom
       }
-     
-       mom<-try(
-     WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "median", nboot = n.boot),silent=T)
-  if(class(mom)!='try-error')  {
-    mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
-    dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(.dico[["txt_p_dot_val"]]))
-    Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-mom
-  }
+      
+      mom<-try(
+        WRS2::pbad2way(as.formula(paste0(DV, "~",between[1],"*",between[2])),data=data, est = "median", nboot = n.boot),silent=T)
+      if(class(mom)!='try-error')  {
+        mom<-matrix(unlist(mom[c(2,4,6)]), ncol=1)
+        dimnames(mom)<-list(c(between, paste0(between[1], ":",between[2])),c(.dico[["txt_p_dot_val"]]))
+        Resultats[[.ez.anova.msg("title",50)]][[.ez.anova.msg("title",51)]]<-mom
+      }
       
       try(WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "mom", nboot = n.boot), silent=T)->mediane
       if(class(mediane)!='try-error') {
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
-                 valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
+                         valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
         names(med)<-c("psihat", .dico[["txt_p_dot_val"]], .dico[["txt_inferior_limit"]],.dico[["txt_ci_superior_limit"]])
         dimnames(med)[[1]]<-names(mediane[[2]])
@@ -1132,7 +1172,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       try(mediane<-WRS2::mcp2a(as.formula(paste0(DV, "~",between[1],"*",between[2])), data=data, est = "median", nboot = n.boot), silent=T)
       if(class(mediane)!='try-error') {
         comp<-data.frame(psihat=c(mediane[[1]][[1]][[1]], mediane[[1]][[2]][[1]] , mediane[[1]][[3]][[1]]), 
-                 valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
+                         valeur.p=c(mediane[[1]][[1]][[3]], mediane[[1]][[2]][[3]] , mediane[[1]][[3]][[3]]))
         med<-cbind(comp, matrix(c(mediane[[1]][[1]][[2]], mediane[[1]][[2]][[2]] , mediane[[1]][[3]][[2]]), ncol=2, byrow=T))
         names(med)<-c("psihat", .dico[["txt_p_dot_val"]], .dico[["txt_inferior_limit"]],.dico[["txt_ci_superior_limit"]])
         dimnames(med)[[1]]<-names(mediane[[2]])
@@ -1179,7 +1219,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         WRS2::sppbb(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMb
         WRS2::sppbi(modeleR, data[,id], data=data, est = "mom", nboot = n.boot)->MoMi 
         MoM<-data.frame("effet"= c(between,within[[1]],"interaction"), txt_p_dot_val=c(MoMa$p.value,MoMb$p.value, MoMi$p.value) )
-	names(MoM) <- c(.dico[["txt_effect"]],.dico[["txt_p_dot_val"]])
+        names(MoM) <- c(.dico[["txt_effect"]],.dico[["txt_p_dot_val"]])
         Resultats[[.ez.anova.msg("title",54)]][[.ez.anova.msg("title",51)]]  <-MoM
       }else Resultats[[.ez.anova.msg("title",10)]]<-.ez.anova.msg("msg",33)
     }
@@ -1191,29 +1231,29 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
 
 round.ps<-function (x) 
 {
-    substr(as.character(ifelse(x < 0.0001, " <.0001", ifelse(round(x, 
-        2) == 1, " >.99", formatC(x, digits = 4, format = "f")))), 
-        2, 7)
+  substr(as.character(ifelse(x < 0.0001, " <.0001", ifelse(round(x, 
+                                                                 2) == 1, " >.99", formatC(x, digits = 4, format = "f")))), 
+         2, 7)
 }
-  
-  
-  
-  omega_sq <- function(aov_in, neg2zero=T){
-    aovtab <- summary(aov_in)[[1]]
-    n_terms <- length(aovtab[["Sum Sq"]]) - 1
-    output <- rep(-1, n_terms)
-    SSr <- aovtab[["Sum Sq"]][n_terms + 1]
-    MSr <- aovtab[["Mean Sq"]][n_terms + 1]
-    SSt <- sum(aovtab[["Sum Sq"]])
-    for(i in 1:n_terms){
-        SSm <- aovtab[["Sum Sq"]][i]
-        DFm <- aovtab[["Df"]][i]
-        output[i] <- (SSm-DFm*MSr)/(SSt+MSr)
-        if(neg2zero & output[i] < 0){output[i] <- 0}
-    }
-    names(output) <- rownames(aovtab)[1:n_terms]
 
-    return(output)
+
+
+omega_sq <- function(aov_in, neg2zero=T){
+  aovtab <- summary(aov_in)[[1]]
+  n_terms <- length(aovtab[["Sum Sq"]]) - 1
+  output <- rep(-1, n_terms)
+  SSr <- aovtab[["Sum Sq"]][n_terms + 1]
+  MSr <- aovtab[["Mean Sq"]][n_terms + 1]
+  SSt <- sum(aovtab[["Sum Sq"]])
+  for(i in 1:n_terms){
+    SSm <- aovtab[["Sum Sq"]][i]
+    DFm <- aovtab[["Df"]][i]
+    output[i] <- (SSm-DFm*MSr)/(SSt+MSr)
+    if(neg2zero & output[i] < 0){output[i] <- 0}
+  }
+  names(output) <- rownames(aovtab)[1:n_terms]
+  
+  return(output)
 }
 medpb<-function(x,alpha=.05,nboot=NA,grp=NA,est=median,con=0,bhop=FALSE,method='hoch',
                 SEED=TRUE,...){
@@ -1353,4 +1393,3 @@ listm<-function(x){
   for(j in 1:ncol(x))y[[j]]<-x[,j]
   y
 }
-
