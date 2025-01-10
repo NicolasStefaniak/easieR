@@ -792,7 +792,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       data$match<-data[,id]
     }
     
-    #data<-merge(x=data, y=residus, by="match")
+    data<-base::merge(x=data, y=residus, by="match", no.dups=T)
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=residus, X='residu', Y=NULL)
     
     if(!is.null(cov) & !is.null(between)){
