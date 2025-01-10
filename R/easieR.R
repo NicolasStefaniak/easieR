@@ -310,7 +310,7 @@ VI.multiples<-function(data, X){
       return(Resultats)
     }
   }
-  if(!is.null(type) && all(type %in%c("numeric", "integer"){
+  if(!is.null(type) && all(type %in%c("numeric", "integer"))){
     if(length(X)==1) moy<-is.na(mean(data[,X],na.rm=T)) else moy<-any(is.na(sapply(data[,X], mean, na.rm=T)))
     if(any(moy!=0) || any(var(data[,X],na.rm=T)==0)){
       okCancelBox(.dico[["desc_variable_must_be_numeric_and_of_non_null_variance"]])
