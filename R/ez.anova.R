@@ -479,7 +479,8 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   data<-data[[2]]
   
   type.v<-c()
-  if((!is.null(between) | !is.null(within) | !is.null(RML)) && all(c(between, within, RML) %in% names(data))) dial<-F else dial<-T
+  if((!is.null(between) | !is.null(within) | !is.null(RML)) && all(c(between, within, RML) %in%
+   names(data))) dial<-F else dial<-T
   if(!is.null(within) & !is.null(RML))  {okCancelBox(.ez.anova.msg("msg",14))
     return(.ez.anova.in())}
   
@@ -498,11 +499,33 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
   } 
   
   if(any(type.v==.dico[["txt_repeated_measures"]]) | !is.null(within) | !is.null(RML)) {
-    if(!is.null(RML)) within<-RML
-    within<-.var.type(X=within, info=T, data=data, type=NULL, check.prod=F, message=.ez.anova.msg("msg",3),  multiple=TRUE, 
+    if(!is.null(RML)) 
+    RML<-.var.type(X=RML, info=T, data=data, type=c("integer", "numeric"), check.prod=F, message=.ez.anova.msg("msg",3), 
+     multiple=TRUE, 
                       title=.ez.anova.msg("title",2), out=NULL)
-    if(is.null(within)) return(.ez.anova.in())
-    within<-within$X
+    if(is.null(RML)) return(.ez.anova.in())
+    RML<-RML$X
+
+    idvar<-setdiff(names(data), RML)
+    if(!is.null(RML.factor)) {
+      IV.names<-as.list(names(RML.factor))
+    }else{
+      IV.names<-"variable"
+      RML.factor<-list("variable" = paste0("mod", 1:length(RML)))
+    }
+    data<-ez.reshape(data=nom, varying= list(RML), v.names =c('value'),idvar =idvar,
+                     IV.names=IV.names, IV.levels=RML.factor) 
+    nom<-paste0(nom, ".long")
+    reshape.data<-TRUE
+    DV<-.dico[["txt_value"]]
+    within<-setdiff(names(data), c(idvar, .dico[["txt_value"]],"IDeasy"))
+    if(length(within)>1) {
+      data[,within]<-lapply(data[, within], factor)
+      within<-within[-which(within=="time")]
+    } else {
+      data[,within]<-factor(data[,within])
+    }
+  
   }
   
   if(!is.null(within)){
@@ -520,41 +543,14 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
       if(nlevels(data[,id])*prod(N.modalites2)!=length(data[,1])) {
         okCancelBox(.ez.anova.msg("msg",5))
         return(.ez.anova.in())}
-    }else {
-      if(length(within)==1) {
-        writeLines(.ez.anova.msg("msg",5))
-        return(.ez.anova.in(data=NULL))}
-      if(!any(sapply(data[,within], class) %in% c("numeric","integer"))){ 
-        writeLines(.ez.anova.msg("msg",6))
-        return(.ez.anova.in(data=NULL))
-      }
+    }
+  
+  
+  
 
-      RML<-within
-    }
-  } 
-  
-  
-  
-  if(!is.null(RML)) {
-    idvar<-setdiff(names(data), RML)
-    if(!is.null(RML.factor)) {
-      IV.names<-as.list(names(RML.factor))
-    }else{
-      IV.names<-NULL
-    }
-    data<-ez.reshape(data=nom, varying= list(RML), v.names =c('value'),idvar =idvar,
-                     IV.names=IV.names, IV.levels=RML.factor) 
-    nom<-paste0(nom, ".long")
-    reshape.data<-TRUE
-    DV<-.dico[["txt_value"]]
-    within<-setdiff(names(data), c(idvar, .dico[["txt_value"]],"IDeasy"))
-    if(length(within)>1) {
-      data[,within]<-lapply(data[, within], factor)
-      within<-within[-which(within=="time")]
-    } else {
-      data[,within]<-factor(data[,within])
-    }
-  }
+
+
+
   
   diffs<-c(id,  within, DV)
   if(is.null(id) || !id %in%names(data)) {
