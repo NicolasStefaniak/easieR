@@ -487,19 +487,19 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     okCancelBox(.ez.anova.msg("msg",35))
     return(.ez.anova.in())}
   
-  if(is.null(c(between,within, RML))) {
-    index<-1 # From when language was hard coded in easieR. TODO 
-    type.v<-matrix(c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]], .dico[["txt_covariables"]],
-	             .dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]], .dico[["txt_covariables"]]), ncol=2)
+ if(is.null(c(between,within, RML))) {
+
+    type.v<-matrix(c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]], .dico[["txt_covariables"]]
+                    ))
     writeLines(.ez.anova.msg("msg", 1))
-    type.v2<-dlgList(type.v[,index], multiple = TRUE, title=.ez.anova.msg("title", 1))$res
+    type.v2<-dlgList(type.v, multiple = TRUE, title=.ez.anova.msg("title", 1))$res
     if(length(type.v2)==0) return(.ez.anova.in())
-    type.v<-type.v[which(type.v[, index]%in%type.v2),1]
+    type.v<-type.v[which(type.v %in%type.v2),1]
     if(!any(type.v %in% c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]]))) {
       writeLines(.ez.anova.msg("msg",2))
       return(.ez.anova.in())
     }
-  } 
+  }  
   
   if(any(type.v==.dico[["txt_repeated_measures"]]) | !is.null(within) | !is.null(RML)) {
     if(!is.null(RML)) {
