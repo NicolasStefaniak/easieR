@@ -1354,4 +1354,3 @@ listm<-function(x){
   y
 }
 
->>>>>>> 2d942ff4680d7b188c3dab76846efa742a05cd60
