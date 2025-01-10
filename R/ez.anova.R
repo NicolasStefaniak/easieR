@@ -502,7 +502,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       writeLines(.ez.anova.msg("msg",2))
       return(.ez.anova.in())
     }
-  } else type.v<-NULL
+  } else type.v<-c(within, RML, cov, between)
   
   # verifier s'il y a des variables en mesures répétées et les choisir
  
