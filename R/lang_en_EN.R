@@ -1,4 +1,3 @@
-
 load_en_EN <- function() {
   .dico <<- new.env(parent=emptyenv())
   assign("ask_2x2_table" , "Table 2x2?" , envir=.dico)
