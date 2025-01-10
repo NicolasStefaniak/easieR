@@ -548,7 +548,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     }
   
   
-  
+  if(is.null(within)) return(ez.anova())
 
 
 
