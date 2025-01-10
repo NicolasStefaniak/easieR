@@ -1212,7 +1212,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       if(class(tronquees)!='try-error'){
         tronquees2<-matrix(unlist(unlist(tronquees)[c(1:12)]),ncol=4, byrow=T)
         tronquees2<-data.frame(tronquees2)
-        rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
+        rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], 
+        paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
         names(tronquees2)<-c("F", .dico[["txt_p_dot_val"]], .dico[["txt_df1"]], .dico[["txt_df2"]])
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees2
         WRS2::sppba(modeleR, data[,id], data=data, est = "mom", avg = TRUE, nboot = n.boot, MDIS = FALSE)->MoMa 
