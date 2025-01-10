@@ -791,7 +791,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       names(residus)<-c('residu', "match")
       data$match<-data[,id]
     }
-    
+    residus<-residus[,!names(residus) %in% c(within, between, cov1)]
     data<-base::merge(x=data, y=residus, by="match", no.dups=T)
     Resultats[[.ez.anova.msg("title",31)]]<-.normalite(data=residus, X='residu', Y=NULL)
     
