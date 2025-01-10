@@ -408,7 +408,7 @@ load_fr_FR <- function() {
   assign("desc_variable_must_be_numeric_and_of_non_null_variance" , "la variable doit etre numerique et avoir une variance non nulle." , envir=.dico)
   assign("desc_variable_must_be_positive_int" , "la variable doit etre un entier *integer* positif" , envir=.dico)
   assign("desc_variables_are_in" , "les variables selectionnees sont dans" , envir=.dico)
-  assign("desc_we_could_not_compute_anova_on_medians" , "Desole, nous n'avons pas pu calcule l'anova sur les medianes, possiblement en raison d'un nombre important d'ex aequo." , envir=.dico)
+  assign("desc_we_could_not_compute_anova_on_medians" , "Desole, nous n'avons pas pu calculer l'anova sur les medianes, possiblement en raison d'un nombre important d'ex aequo." , envir=.dico)
   assign("desc_we_could_not_compute_robust_anova" , "Desole, nous n'avons pas pu calcule l'anova robuste." , envir=.dico)
   assign("desc_working_dir_is_now" , "Le repertoire de travail est a present" , envir=.dico)
   assign("desc_you_can_chose_predefined_or_manual_contrasts" , "Vous pouvez choisir les contrastes predefinis ou les specifier manuellement. Dans ce dernier cas, veuillez choisir specifier les contrastes" , envir=.dico)
