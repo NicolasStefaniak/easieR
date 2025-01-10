@@ -1,117 +1,6 @@
-ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NULL, RML=NULL, 
-                   RML.factor=NULL, param=c("param","bayes"),outlier=c("complete","id", "removed"), 
-                   ES="ges", SumS="3", save=F , html=T, contrasts="none",p.adjust="none", n.boot=1000, rscaleFixed = 0.5, rscaleRandom = 1 ){
-  # data = a data frame
-  # between = character. Names of the between-participant variables 
-  # within = character.  Names of the within-participant variables. Must be factor. Use for data in long format. 
-  # id = character. Name of the variable that identify multiple records from the same individual. Required only if within is not NULL
-  # cov = character. names of the covarables. 
-  # RML = character with length >= 2. Repeated measure levels. All the columns that corresponds to repeated measures in the wide format
-  # RML.factor = list. The names in the list corresponds to the names of the factors and the values 
-  #              at each level correspond to the levels of each factor. The product of the number of levels must equal the length of RML. 
-  #              If RML is not NULL and RML.factor is NULL, it is assumed that there is only one factor and the name of the factor is "variable.1"
-  # param = character. One or several among "param", "bayes", non param", and "robust"
-  # outlier = character. One or several among "complete", "id", or "removed"
-  # ges = one among "ges" or "pes"
-  # SumS = Type of sum of squares, one among "2" or "3". 
-  # save = logical. Do you want to save the results
-  # html = logical. Do you want easieR to output the results in nice html document ? 
-  # contrast = list. The names in the list corresponds to the names of the factors and the values is a matrix of coefficients for the contrasts. "pairwise" or "none" are also possible
-  # p.adjust = adjust p values for multiples comparisons. see <code>p.adjust</code>
-  packages<-c('BayesFactor', 'car','afex', 'DescTools','emmeans','ggplot2','nortest', 'outliers', 'PMCMRplus',
-              'psych', 'reshape2', 'sjstats', 'svDialogs', 'WRS2' )
-  test2<-try(lapply(packages, library, character.only=T), silent=T)
-  if(class(test2)== 'try-error') return(ez.install())
-  .e <- environment()
-  Resultats<-list()
-  if(!is.null(data) & class(data)!="character") data<-deparse(substitute(data))
-   try( windows(record=T), silent=T)->win
-   if(class(win)=='try-error') quartz()
-  ez.aov.out<-.ez.anova.in(data=data, DV=DV, between=between, within=within,id=id, cov=cov, RML=RML, 
-                           RML.factor= RML.factor, param=param,outlier=outlier, 
-                           ES=ES, SumS=SumS, save=save, contrasts=contrasts,p.adjust=p.adjust)
-  data<-ez.aov.out$data
-  DV<-ez.aov.out$DV
-  between<-ez.aov.out$between
-  within<-ez.aov.out$within
-  cov<-ez.aov.out$cov
-  id<-ez.aov.out$id
-  param<-ez.aov.out$param
-  outlier<-ez.aov.out$outlier
-  ES<-ez.aov.out$ES
-  SumS<-ez.aov.out$SumS
-  nom<-ez.aov.out$nom
-  save<-ez.aov.out$save
-  contrasts<-ez.aov.out$contrastes$contrastes
-  p.adjust<-ez.aov.out$contrastes$p.adjust
-  reshape.data<-ez.aov.out$reshape.data
-  list(ez.aov.out)->aov.plus.list
-  
-  
-  complet<-.ez.anova.out(data=data, DV=DV, between=between, within=within,id=id, cov=cov,  
-                         ES=ES, SumS=SumS, contrasts=contrasts,p.adjust=p.adjust, rscaleFixed=rscaleFixed , rscaleRandom= rscaleRandom, n.boot=n.boot, param=param) 
-  data<-complet[["data"]]
-  aov.plus.in<-complet[["aov.plus.in"]]
-  complet[["data"]]<-NULL
-  complet[["aov.plus.in"]]<-NULL
-  
-  
-  if(any(outlier %in% c("complete", .dico[["txt_complete_dataset"]],.dico[["txt_complete_dataset"]]))){
-    Resultats[[.ez.anova.msg("title", 12)]]<-complet
-    aov.plus.in->aov.plus.list[[.dico[["txt_complete_dataset"]]]]}
-  
-  if(any(outlier %in% c("id", "removed" , .dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
-                        .dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]]))) { 
-    if(is.null(data$'residu')) {
-      Resultats[[.ez.anova.msg("title", 55)]]<-.ez.anova.msg("msg", 34)
-      return(Resultats)}
-    valeurs.influentes(X='residu', critere="Grubbs",z=3.26, data=data)->influentes
-    
-    if(any(outlier %in% c(.dico[["txt_identifying_outliers"]],"id",.dico[["txt_identifying_outliers"]] ))) Resultats[[.ez.anova.msg("title", 13)]]<-influentes
-    if(any(outlier %in% c( .dico[["txt_without_outliers"]],  .dico[["txt_without_outliers"]],"removed" ))){
-      
-      #if(!is.null(influentes[[.dico[["txt_outliers"]]]][,id])){
-      #  setdiff(data[,as.character(id)],influentes[[.dico[["txt_outliers"]]]][,as.character(id)])->diffs
-      #if(influentes[[.dico[["txt_outliers_synthesis"]]]]$Synthese[1]!=0){
-      if(influentes[[.dico[["txt_outliers_synthesis"]]]][[.dico[["txt_synthesis"]]]][1]!=0){
-        setdiff(data[,as.character(id)],influentes[[.dico[["txt_outliers"]]]][,as.character(id)])->diffs
-        data[which(data[,id] %in% diffs), ]->nettoyees
-        factor(nettoyees[,id])->nettoyees[,id]
-        nett<-.ez.anova.out(data=nettoyees, DV=DV, between=between, within=within,id=id, cov=cov,  
-                            ES=ES, SumS=SumS, contrasts=contrasts,p.adjust=p.adjust, rscaleFixed=rscaleFixed , rscaleRandom= rscaleRandom, n.boot=n.boot, param=param) 
-        aov.plus.in<-nett[["aov.plus.in"]]
-        nett[["data"]]<-NULL
-        nett[["aov.plus.in"]]<-NULL
-        Resultats[[.ez.anova.msg("title", 14)]]<-nett
-        aov.plus.in->aov.plus.list[[.dico[["txt_without_outliers"]]]]
-      }
-      print(!all(outlier %in% c("complete", .dico[["txt_complete_dataset"]],.dico[["txt_complete_dataset"]])))
-    if(!any(outlier %in% c("complete", .dico[["txt_complete_dataset"]],.dico[["txt_complete_dataset"]])))   Resultats[[.ez.anova.msg("title", 14)]]<-complet
-      
-    }
-    
-  }
-  
-  class(aov.plus.list)<-"aovplus"
-  assign("aov.plus.in", aov.plus.list,envir=.GlobalEnv) 
-  
-  
-if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.history)]][[2]])
-  
-  if(!is.null(between)) between<-paste(unique(between), collapse="','", sep="") 
-  if(!is.null(within)) within<-paste(unique(within), collapse="','", sep="") 
-  if(!is.null(cov)) cov<-paste(unique(cov), collapse="','", sep="") 
-  param<-paste(unique(param), collapse="','", sep="") 
-  outlier<-paste(unique(outlier), collapse="','", sep="")
-  if(!any(contrasts%in%c("none", .dico[["txt_none"]], .dico[["txt_pairwise"]], .dico[["txt_comparison_two_by_two"]]))){
-    cont.call<-"list("
-    for(i in 1:length(contrasts)){
-      if(i>1) cont.call<-paste0(cont.call, ",")
-      cont.call<- paste0(cont.call, names(contrasts)[i], "=matrix(c(", paste0(contrasts[[i]], collapse=","), "), ncol=", ncol(contrasts[[i]]),")" )
-    }
-    cont.call<-paste0(cont.call, ")")
-  }else cont.call<-paste0("'", contrasts, "'")
 
+<<<<<<< HEAD
+=======
   call<-paste0("ez.anova(data=", nom, ", DV='", DV,"', between =", ifelse(is.null(between), "NULL", paste0("c('", between,"')" )),
                ", within =", ifelse(is.null(within), "NULL", paste0("c('", within,"')" )), 
                ", cov=", ifelse(is.null(cov), "NULL", paste0("c('", cov,"')" )), ",id ='", id, "', param =c('", param, "'), outlier= c('",outlier ,"')",
@@ -520,6 +409,7 @@ if(reshape.data) Resultats$call.reshape<-as.character(ez.history[[length(ez.hist
     nom<-paste0(nom, ".long")
     reshape.data<-TRUE
     DV<-.dico[["txt_value"]]
+    id<-"IDeasy"
     within<-setdiff(names(data), c(idvar, .dico[["txt_value"]],"IDeasy"))
     if(length(within)>1) {
       data[,within]<-lapply(data[, within], factor)
@@ -1351,3 +1241,5 @@ listm<-function(x){
   for(j in 1:ncol(x))y[[j]]<-x[,j]
   y
 }
+
+>>>>>>> 2d942ff4680d7b188c3dab76846efa742a05cd60

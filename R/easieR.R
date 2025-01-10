@@ -278,7 +278,7 @@ VI.multiples<-function(data, X){
     subset(listes, listes[,1] %in% X)[,2]->X
     as.character(X)->X}
 
-  if(!is.null(type) && type=="factor"){
+  if(!is.null(type) && all(type=="factor")){
     if(all(sapply(data[,X], class)%in% c("factor", "character"))!=T ) {
       res<-okCancelBox(.dico[["ask_transform_numerical_to_categorial_variables"]])
       if(res==F) {X<-NULL
@@ -302,7 +302,7 @@ VI.multiples<-function(data, X){
 
 
   }
-  if(!is.null(type) && type=="integer"){
+  if(!is.null(type) && all(type%in%c("integer"))){
     if((any(data[,X]%%1==0) %in% c(FALSE, NA)) || min(data[,X])<0) {
       okCancelBox(.dico[["desc_variable_must_be_positive_int"]])
       X<-NULL
@@ -310,7 +310,7 @@ VI.multiples<-function(data, X){
       return(Resultats)
     }
   }
-  if(!is.null(type) && type=="numeric"){
+  if(!is.null(type) && all(type %in%c("numeric", "integer"){
     if(length(X)==1) moy<-is.na(mean(data[,X],na.rm=T)) else moy<-any(is.na(sapply(data[,X], mean, na.rm=T)))
     if(any(moy!=0) || any(var(data[,X],na.rm=T)==0)){
       okCancelBox(.dico[["desc_variable_must_be_numeric_and_of_non_null_variance"]])
@@ -318,7 +318,7 @@ VI.multiples<-function(data, X){
       .var.type(X=NULL, info=info, data=data, type=type,message=message, multiple=multiple, title=title, out=out)->Resultats
       return(Resultats)
     }
-  }
+  } 
   Resultats<-list()
   Resultats$X<-X
   Resultats$data<-data
