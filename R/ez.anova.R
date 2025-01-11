@@ -488,12 +488,12 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   if(!is.null(within) & !is.null(RML))  {
     okCancelBox(.ez.anova.msg("msg",35))
     return(.ez.anova.in())
-    }
+  }
   
-# créer la boite de dialogue pour choisir le type de variable si between, within et rml sont nuls
+  # créer la boite de dialogue pour choisir le type de variable si between, within et rml sont nuls
   if(is.null(c(between,within, RML))) {
     type.v<-matrix(c(.dico[["txt_independant_groups"]], .dico[["txt_repeated_measures"]], .dico[["txt_covariables"]]
-                    ))
+    ))
     writeLines(.ez.anova.msg("msg", 1))
     type.v2<-dlgList(type.v, multiple = TRUE, title=.ez.anova.msg("title", 1))$res
     if(length(type.v2)==0) return(.ez.anova.in())
@@ -502,10 +502,10 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       writeLines(.ez.anova.msg("msg",2))
       return(.ez.anova.in())
     }
-  } else type.v<-c(within, RML, cov,between)
+  } else type.v<-NULL
   
   # verifier s'il y a des variables en mesures répétées et les choisir
- 
+  
   if(any(type.v==.dico[["txt_repeated_measures"]]) | !is.null(within) | !is.null(RML)) {
     # trois cas de figures doivent être envisagées
     # 1 type.v n'est pas nul -> on utilise la boîte de dialogue
@@ -534,8 +534,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     
     if(!is.null(RML)) {
       RML<-easieR:::.var.type(X=RML, info=T, data=data, type=c( "numeric"), check.prod=F,
-                     message=.ez.anova.msg("msg",3), 
-                     multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
+                              message=.ez.anova.msg("msg",3), 
+                              multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
       if(is.null(RML)) return(.ez.anova.in()) else   RML<-RML$X
       
       idvar<-setdiff(names(data), RML)
@@ -563,14 +563,14 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     
     if(!is.null(within)){
       within<-easieR:::.var.type(X=within, info=T, data=data, type=c( "factor"), check.prod=F,
-                              message=.ez.anova.msg("msg",3), 
-                              multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
+                                 message=.ez.anova.msg("msg",3), 
+                                 multiple=TRUE,  title=.ez.anova.msg("title",2), out=NULL)
       if(is.null(within)) return(.ez.anova.in()) else   within<-within$X
       
       if(all(sapply(data[,within], class)=="factor")) {
         id<-easieR:::.var.type(X=id, info=T, data=data, type=NULL, check.prod=F, message=.ez.anova.msg("msg",4),  
                                multiple=FALSE, 
-                      title=.ez.anova.msg("title",3), out=within)
+                               title=.ez.anova.msg("title",3), out=within)
         if(is.null(id)) return(.ez.anova.in())
         id<-id$X
         data[, id]<-factor(data[,id])
@@ -588,35 +588,34 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       if(is.null(within)) return(ez.anova())
       
     }   
-      
-      
-      
     
-      if(is.null(id) || !id %in%names(data)) {
-        
-        if(length(within)==1) {
-          N.modalites2<-nlevels(data[,unlist(within)])
-        } else {
-          if(length(within)>1) N.modalites2<-sapply(data[,unlist(within)],nlevels) else N.modalites2<-1
-        }
-        
-        
-        data$IDeasy<-paste0("p", 1:(nrow(data)/prod(N.modalites2)))
-        data$IDeasy<-factor( data$IDeasy)
-        id<-"IDeasy"
-      }
+    
+    
+    
   }
-
-    
   
-
-  	  
-
+  if(is.null(id) || !id %in%names(data)) {
+    
+    if(length(within)==1) {
+      N.modalites2<-nlevels(data[,unlist(within)])
+    } else {
+      if(length(within)>1) N.modalites2<-sapply(data[,unlist(within)],nlevels) else N.modalites2<-1
+    }
+    
+    
+    data$IDeasy<-paste0("p", 1:(nrow(data)/prod(N.modalites2)))
+    data$IDeasy<-factor( data$IDeasy)
+    id<-"IDeasy"
+  }  
+  
+  
+  
+  
   
   if(any(type.v==.dico[["txt_independant_groups"]]) | !is.null(between)){
     diffs<-c(id,  within, DV)  
     between<-easieR:::.var.type(X=between, info=T, data=data, type="factor", check.prod=F, message=.ez.anova.msg("msg",8),  multiple=TRUE, 
-                       title=.ez.anova.msg("title",4), out=diffs)
+                                title=.ez.anova.msg("title",4), out=diffs)
     if(is.null(between)) {
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id) else return(NULL)
     }
@@ -627,7 +626,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   
   if(is.null(DV)){
     DV<-easieR:::.var.type(X=DV, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",10),  multiple=TRUE, 
-                  title=.ez.anova.msg("title",5), out=diffs)
+                           title=.ez.anova.msg("title",5), out=diffs)
     if(is.null(DV)) {
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id, between=between) else return(NULL)
     }
@@ -657,7 +656,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
   if(any(type.v==.dico[["txt_covariables"]])) {
     
     cov<-easieR:::.var.type(X=cov, info=T, data=data, type="numeric", check.prod=F, message=.ez.anova.msg("msg",12),  multiple=TRUE, 
-                   title=.ez.anova.msg("title",6), out=diffs)
+                            title=.ez.anova.msg("title",6), out=diffs)
     if(is.null(cov)) {
       if(okCancelBox(.ez.anova.msg("msg",9))) .ez.anova.in(data=data, within= within, id=id, between=between, DV=DV) else return(NULL)
     }
@@ -1213,7 +1212,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         tronquees2<-matrix(unlist(unlist(tronquees)[c(1:12)]),ncol=4, byrow=T)
         tronquees2<-data.frame(tronquees2)
         rownames(tronquees2)<-c(tronquees$varnames[2] , tronquees$varnames[3], 
-        paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
+                                paste0(tronquees$varnames[2],":",tronquees$varnames[3]))
         names(tronquees2)<-c("F", .dico[["txt_p_dot_val"]], .dico[["txt_df1"]], .dico[["txt_df2"]])
         Resultats[[.ez.anova.msg("title",52)]][[.ez.anova.msg("title",51)]] <-tronquees2
         WRS2::sppba(modeleR, data[,id], data=data, est = "mom", avg = TRUE, nboot = n.boot, MDIS = FALSE)->MoMa 
