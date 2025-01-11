@@ -196,7 +196,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
            .dico[["txt_kruskal_wallis_pairwise"]]  ,.dico[["txt_anova_on_medians"]],.dico[["txt_principal_analysis"]],.dico[["txt_anova_on_truncated_means"]],
            .dico[["txt_anova_on_m_estimator"]], .dico[["txt_anova_on_modified_huber_estimator"]],.dico[["txt_analysis_premature_abortion"]],
            .dico[["desc_references"]], .dico[["desc_bootstrap_percentile_anova"]],
-           .dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]]
+           .dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]],
+           .dico[["RML_and_within_not_allowed"]]
            
   )
   
