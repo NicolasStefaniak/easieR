@@ -543,9 +543,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       if(!is.null(RML.factor)) {
         IV.names<-as.list(names(RML.factor))
       }else{
-        IV.names<-"variable"
-        RML.factor<-list("variable" = paste0("mod", 1:length(RML)))
-      }
+        IV.names<-NULL
+             }
       data<-ez.reshape(data=nom, varying= list(RML), v.names =c('value'),idvar =idvar,
                        IV.names=IV.names, IV.levels=RML.factor) 
       nom<-paste0(nom, ".long")
