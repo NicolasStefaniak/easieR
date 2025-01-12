@@ -777,7 +777,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
     aov.out<-aov_4(as.formula(modele),data=data, es_aov=ES, type=SumS,factorize=factorize)
     residus<-data.frame(aov.out$lm$residuals)
     residus[,"match"] <-aov.out$data$wide[,id]
-    if(!is.null(within)){ residus<-melt(residus, id.vars="match") 
+    if(!is.null(within)){ residus<-reshape2::melt(residus, id.vars="match") 
     names(residus)[3]<-'residu'
     residus$match<-paste0(residus[,1], residus[,2])
     data$match<-paste0(data[,id], data[,within[1]])
