@@ -58,7 +58,6 @@ function(){
                       'svDialogs',
                       'TeachingDemos',
                       'textclean',
-                      'WRS',
                       'WRS2'
     )
 
