@@ -17,11 +17,7 @@ library("devtools")
 install_github("NicolasStefaniak/easieR")
 </pre>
 
-3) Given that easieR also uses the WRS package, you must install it 
-(see https://github.com/nicebread/WRS/blob/master/README.md in case of trouble)
-<pre class="prettyprint lang-r">
-install_github("nicebread/WRS", subdir="pkg")
-</pre>
+
 
 Finally, easieR requires pandoc. For mac users, you can download and install pandoc here :
  <a href="https://github.com/jgm/pandoc/releases/tag/2.2.3.2" target="_blank" rel="noopener noreferrer">https://github.com/jgm/pandoc/releases/tag/2.2.3.2</a>
