@@ -240,7 +240,7 @@ regressions.log <-
           glm.r1->mod[[i]]}
       }
 
-      anova(mod[[length(mod)]])->Amelioration_du_MV
+      Amelioration_du_MV<-anova(mod[[length(mod)]])
 
       summary(mod[[length(mod)]])->resultats
       as(resultats$call,"character")->texte
@@ -250,17 +250,18 @@ regressions.log <-
       dimnames(MC)[[2]]<-c(.dico[["txt_inflation_variance_factor"]], .dico[["txt_tolerance"]])
       round(MC,4)->Resultats[[.dico[["txt_multicolinearity_test"]]]]
 
-      sum(Amelioration_du_MV$Df[2:length(Amelioration_du_MV$Df)])->ddl
-      Amelioration_du_MV$`Resid. Dev`[1]-Amelioration_du_MV$`Resid. Dev`[length(Amelioration_du_MV$`Resid. Dev`)]->chi.carre.modele
-      round(1-pchisq(chi.carre.modele,ddl),4)->valeur.p
-      logisticPseudoR2s(mod[[length(mod)]])->Pseudo.R.carre
-      data.frame(chi.carre.modele, ddl, valeur.p,Pseudo.R.carre[1],Pseudo.R.carre[2],Pseudo.R.carre[3])->mod.glob
-      names(mod.glob)<-c(.dico[["txt_chi_dot_squared_model"]], .dico[["txt_df"]], .dico[["txt_p_dot_val"]],.dico[["txt_hosmer_lemeshow_r_2"]],.dico[["txt_cox_snell_r_2"]],"Nagelkerke R^2")
-      mod.glob->Resultats[[.dico[["txt_model_significance"]]]]
+      ddl<-sum(Amelioration_du_MV$Df[2:length(Amelioration_du_MV$Df)])
+      chi.carre.modele<-Amelioration_du_MV$`Resid. Dev`[1]-Amelioration_du_MV$`Resid. Dev`[length(Amelioration_du_MV$`Resid. Dev`)]
+      valeur.p<-round(1-pchisq(chi.carre.modele,ddl),4)
+      Pseudo.R.carre<-logisticPseudoR2s(mod[[length(mod)]])
+      mod.glob<-data.frame(chi.carre.modele, ddl, valeur.p,Pseudo.R.carre[1],Pseudo.R.carre[2],Pseudo.R.carre[3])
+      names(mod.glob)<-c(.dico[["txt_chi_dot_squared_model"]], .dico[["txt_df"]], .dico[["txt_p_dot_val"]],.dico[["txt_hosmer_lemeshow_r_2"]],
+                        .dico[["txt_cox_snell_r_2"]],"Nagelkerke R^2")
+      Resultats[[.dico[["txt_model_significance"]]]]<-mod.glob
 
 
-      Amelioration_du_MV$chi.deux.prob<-1-pchisq(Amelioration_du_MV$Deviance, Amelioration_du_MV$Df)
-      round(Amelioration_du_MV,4)->Amelioration_du_MV
+      #Amelioration_du_MV$chi.deux.prob<-1-pchisq(Amelioration_du_MV$Deviance, Amelioration_du_MV$Df)
+      Amelioration_du_MV<-round(Amelioration_du_MV,4)
       names(Amelioration_du_MV)<-c(.dico[["txt_df_predictor"]], "MV",.dico[["txt_df_residuals"]],"MV residuel",.dico[["txt_p_dot_val"]])
       Resultats[[.dico[["desc_improve_likelihood_for_each_variable"]]]]<-data.frame(Amelioration_du_MV)
 
