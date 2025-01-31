@@ -214,7 +214,10 @@ corr.matrice <-
     corr.matrice.out<-function(data, X, Y, Z, p.adjust, method,save, rscale, n.boot, param){
       Resultats<-list()
       Resultats[[.dico[["txt_descriptive_statistics"]]]]<-.stat.desc.out(X=c(X,Y,Z), groupes=NULL, data=data, tr=.1, type=3, plot=F)
+      if(method == "pearson"){
       Resultats[[.dico[["txt_multivariate_normality"]]]]<-.normalite(data, c(X,Y,Z))
+      }
+
 
       if(is.null(Z)){
         if(is.null(Y)) { Y1<-NULL
