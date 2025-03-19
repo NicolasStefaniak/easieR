@@ -232,7 +232,7 @@ corr.matrice <-
 	plot<-ggcorrplot(r1, hc.order = F, type = "upper",  lab = TRUE)
         if(is.null(Y)) r1[which(lower.tri(r1, diag = T))]<-"-"
         Resultats[[.dico[["txt_correlations_matrix"]]]]<-as.data.frame(r1)
-	Resultats[["plot"]]]<-plot
+	Resultats[["plot"]]<-plot
 
       } else{
         data[,c(X,Z)]->d2
@@ -240,11 +240,11 @@ corr.matrice <-
         matrice<-corr.p(matrice, adjust=p.adjust, n=length(data[,1])-length(Z))
 
         r1<-round(matrice$r, 3)
-        plot<-ggcorrplot(r1, hc.order = F, type = "upper",  lab = TRUE))
+        plot<-ggcorrplot(r1, hc.order = F, type = "upper",  lab = TRUE)
         class(r1)<-"matrix"
         r1[which(lower.tri(r1, diag = T))]<-"-"
         Resultats[[.dico[["txt_partial_correlations_matrix"]]]] <-as.data.frame(r1)
-	Resultats[["plot"]]]<-plot      
+	Resultats[["plot"]]<-plot      
       }
 
       class(r1)<-"matrix"
