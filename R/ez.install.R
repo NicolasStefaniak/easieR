@@ -93,19 +93,12 @@ ez.install <-
 
 
     flush.console()
-    vef.pack( pack.to.inst)->Resultats
-   return(Resultats)
+    Resultats<- list()
+    Resultats[[.dico[["desc_install_correct_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
+    Resultats[[.dico[["desc_install_bad_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
+    return(Resultats)
   }
 
 
 
 
-vef.pack <-
-function(pack.to.inst){
-      
-
-         Resultats<- list()
-    Resultats[[.dico[["desc_install_correct_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
-    Resultats[[.dico[["desc_install_bad_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
-    return(Resultats)
-}
