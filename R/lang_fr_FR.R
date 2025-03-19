@@ -1137,6 +1137,7 @@ load_fr_FR <- function() {
   assign("RML_and_within_not_allowed" , "Si RML est non null, within doit etre null" , envir=.dico) 
     assign("txt_bp1" , "Asymetrie multivariee de Mardia" , envir=.dico) 
     assign("txt_bp2" , "Aplatissement multivariee de Mardia" , envir=.dico) 
-    assign("txt_Mardia_statistic" , "SStatistique de Mardia" , envir=.dico) 
+assign("txt_small" , "Asymetrie multivariee de Mardia pour petits echantillons" , envir=.dico) 
+    assign("txt_Mardia_statistic" , "Statistique de Mardia" , envir=.dico) 
   
 }
