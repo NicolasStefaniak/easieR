@@ -234,7 +234,9 @@ corr.matrice <-
 
         if(is.null(Y)) r1[which(lower.tri(r1, diag = T))]<-"-"
         Resultats[[.dico[["txt_correlations_matrix"]]]]<-as.data.frame(r1)
-	Resultats[["plot"]]<-plot
+	
+	      
+	      Resultats[["plot"]]<-plot
 
       } else{
         data[,c(X,Z)]->d2
@@ -242,11 +244,11 @@ corr.matrice <-
         matrice<-corr.p(matrice, adjust=p.adjust, n=length(data[,1])-length(Z))
 
         r1<-round(matrice$r, 3)
-        plot<-ggcorrplot(r1, hc.order = F, type = "upper",  lab = TRUE)
+
         class(r1)<-"matrix"
         r1[which(lower.tri(r1, diag = T))]<-"-"
         Resultats[[.dico[["txt_partial_correlations_matrix"]]]] <-as.data.frame(r1)
-	Resultats[["plot"]]<-plot      
+
       }
 
       class(r1)<-"matrix"
@@ -260,7 +262,9 @@ corr.matrice <-
 		r2<-round(matrice$p.adj,3)
 	}
         class(r2)<-c("matrix", "p.value")
+	plot<-ggcorrplot(matrice$r, hc.order = F,  lab = TRUE,  p.mat= r2)
         Resultats[[.dico[["txt_probability_matrix"]]]]<-r2
+	Resultats[["Figure"]]<-plot      
         dimnames(r2)[[1]]<-paste0(dimnames(r2)[[1]], ".p")
         if(is.null(Y)) r2[which(lower.tri(r2, diag = T))]<-NA
         r1<-rbind(r1,r2)
