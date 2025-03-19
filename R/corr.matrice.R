@@ -220,8 +220,7 @@ corr.matrice <-
 
 
       if(is.null(Z)){
-        if(is.null(Y)) { Y1<-NULL
-        pairs.panels(data[,X], density=T, lm=T, digits=3, ellipses=F, method=method, cor=T, jiggle=F, smoother=F, stars=T, pch=".")}else {
+        if(!is.null(Y))  {
           Y1<-as.data.frame(data[,Y])
           names(Y1)<-Y
         }
@@ -229,8 +228,11 @@ corr.matrice <-
         names(X1)<-X
         corr.test(x=X1, y=Y1, use = .dico[["txt_pairwise"]],method=method,adjust=p.adjust, alpha=.05,ci=TRUE)->matrice
         r1<-round(matrice$r,3)
+
+	plot<-ggcorrplot(r1, hc.order = F, type = "upper",  lab = TRUE))
         if(is.null(Y)) r1[which(lower.tri(r1, diag = T))]<-"-"
         Resultats[[.dico[["txt_correlations_matrix"]]]]<-as.data.frame(r1)
+	Resultats[["plot"]]]<-plot
 
       } else{
         data[,c(X,Z)]->d2
@@ -238,9 +240,11 @@ corr.matrice <-
         matrice<-corr.p(matrice, adjust=p.adjust, n=length(data[,1])-length(Z))
 
         r1<-round(matrice$r, 3)
+        plot<-ggcorrplot(r1, hc.order = F, type = "upper",  lab = TRUE))
         class(r1)<-"matrix"
         r1[which(lower.tri(r1, diag = T))]<-"-"
         Resultats[[.dico[["txt_partial_correlations_matrix"]]]] <-as.data.frame(r1)
+	Resultats[["plot"]]]<-plot      
       }
 
       class(r1)<-"matrix"
