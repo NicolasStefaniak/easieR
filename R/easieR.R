@@ -527,7 +527,7 @@ VI.multiples<-function(data, X){
                  Test =c(.dico[["txt_bp1"]],.dico[["txt_bp2"]],.dico[["txt_small"]] ),
                  stat = c( mardia.results$b1p,mardia.results$b2p,mardia.results$small.skew),
                   p = round(c(mardia.results$p.skew, mardia.results$p.kurt,mardia.results$p.small ),3))
-      names(n2)c("n", "test", .dico[["txt_Mardia_statistic"]], .dico[["txt_p_dot_val"]])
+      names(n2)=c("n", "test", .dico[["txt_Mardia_statistic"]], .dico[["txt_p_dot_val"]])
     } else {
       msgBox(.dico[["desc_matrix_is_singular_mardia_cannot_be_performed"]])
       n2<-data.frame(txt_shapiro_wilk=NULL, txt_p_dot_val_sw=NULL, txt_lilliefors_d=NULL, txt_p_dot_val_lilliefors=NULL)
