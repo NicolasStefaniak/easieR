@@ -1,6 +1,6 @@
 ez.install <-
   function(){
-    require(tcltk)
+
 
     # # 2. installer les packages necessaires et MAJ des packages installes
     # # 2a. packages a installer, par ordre alphabetique
@@ -93,7 +93,7 @@ ez.install <-
 
 
     flush.console()
-    vef.pack()->Resultats
+    vef.pack( pack.to.inst)->Resultats
    return(Resultats)
   }
 
@@ -101,71 +101,10 @@ ez.install <-
 
 
 vef.pack <-
-function(){
-      pack.to.inst <- c('afex',
-                      'akima',
-                      'Amelia',
-                      'BayesFactor',
-                      'bibtex',
-                      'car',
-                      'cobs',
-                      'corpcor',
-                      'deldir',
-                      'DescTools',
-                      'doBy',
-                      'dplyr',
-                      'emmeans',
-                      'epitools',
-                      'foreign',
-                      'ggcorrplot',
-                      'ggmosaic',
-                      'ggplot2',
-                      "ggplotgui",
-                      'gmodels',
-                      'GPArotation',
-                      'gsl',
-                      'huxtable',
-                      'knitr',
-                      'lars',
-                      'lsr',
-                      'MBESS',
-                      'mc2d',
-                      'mgcv',
-                      'mlogit',
-                      'nFactors',
-                      'nortest',
-                      'olsrr',
-                      'outliers',
-                      'pander',
-                      "PMCMRplus",
-                      'plyr',
-                      'ppcor',
-                      'psych',
-                      'pwr',
-                      'quantreg',
-                      'Rcpp',
-                      'readxl',
-                      'reshape2',
-                      'Rfit',
-                      'rmarkdown',
-                      'rms',
-                      'robustbase',
-                      'rpivotTable',
-                      'rrcov',
-                      'scatterplot3d',
-                      'semPlot',
-                      "sjstats",
-                      'sos',
-                      'sp',
-                      'stringi',
-                      'stringr',
-                      'svDialogs',
-                      'TeachingDemos',
-                      'textclean',
-                      'WRS2'
-    )
+function(pack.to.inst){
+      
 
-          list()->Resultats
+         Resultats<- list()
     Resultats[[.dico[["desc_install_correct_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==TRUE) ]
     Resultats[[.dico[["desc_install_bad_packages"]]]]<-pack.to.inst[ which(lapply(pack.to.inst, require, character.only=T)==FALSE) ]
     return(Resultats)
