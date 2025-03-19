@@ -523,9 +523,10 @@ VI.multiples<-function(data, X){
     try(mardia(data[,X],na.rm = TRUE, plot=TRUE), silent=TRUE)->mardia.results
     
     if(any(class(mardia.results)=="mardia")) {
-      data.frame("n"=mardia.results$n.obs, "N.var"=mardia.results$n.obs, "b1p"=mardia.results$b1p,"b2p"=mardia.results$b2p,
-                 "skew"=mardia.results$skew,"p.skew"=ifelse(round(mardia.results$p.skew,3)==0,"<.001" ,round(mardia.results$p.skew,3)),"small.skew"= mardia.results$small.skew,"p.small"= mardia.results$p.small,
-                 "kurtosis"=mardia.results$kurtosis,"p.kurtosis"=ifelse(round(mardia.results$p.kurt,3)==0,"<.001", round(mardia.results$p.kurt,3)) )->n2
+      data.frame("n"=rep(mardia.results$n.obs),
+                 Test =c(.dico[["txt_bp1"]],.dico[["txt_bp2"]],.dico[["txt_small"]] ),
+                 .dico[["txt_bp1"]]=c( mardia.results$b1p,mardia.results$b2p,mardia.results$small.skew),
+                 .dico[["txt_p_dot_val"]] = round(c(mardia.results$p.skew, mardia.results$p.kurt,mardia.results$p.small ),3))
     } else {
       msgBox(.dico[["desc_matrix_is_singular_mardia_cannot_be_performed"]])
       n2<-data.frame(txt_shapiro_wilk=NULL, txt_p_dot_val_sw=NULL, txt_lilliefors_d=NULL, txt_p_dot_val_lilliefors=NULL)
