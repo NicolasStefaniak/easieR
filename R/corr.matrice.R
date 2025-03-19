@@ -231,7 +231,7 @@ corr.matrice <-
         corr.test(x=X1, y=Y1, use = .dico[["txt_pairwise"]],method=method,adjust=p.adjust, alpha=.05,ci=TRUE)->matrice
         r1<-round(matrice$r,3)
 
-	plot<-ggcorrplot(r1, hc.order = F, type = "upper",  lab = TRUE)
+
         if(is.null(Y)) r1[which(lower.tri(r1, diag = T))]<-"-"
         Resultats[[.dico[["txt_correlations_matrix"]]]]<-as.data.frame(r1)
 	Resultats[["plot"]]<-plot
@@ -269,7 +269,7 @@ corr.matrice <-
         r2<-round(sin(0.5*pi*matrice$r)^2,3) # from David A. Walker 2003 JMASM9: Converting Kendall's Tau For Correlational Or Meta-Analytic Analyses
         Resultats[[.dico[["txt_information"]]]]<-.dico[["desc_effect_size_by_walker"]]
       } else r2<-round(matrice$r^2,3)
-
+	plot<-ggcorrplot(r1, hc.order = F,  lab = TRUE, p.mat=r2)
 
 
       if(!is.null(rscale)){
