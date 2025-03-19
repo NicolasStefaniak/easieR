@@ -273,7 +273,7 @@ corr.matrice <-
         r2<-round(sin(0.5*pi*matrice$r)^2,3) # from David A. Walker 2003 JMASM9: Converting Kendall's Tau For Correlational Or Meta-Analytic Analyses
         Resultats[[.dico[["txt_information"]]]]<-.dico[["desc_effect_size_by_walker"]]
       } else r2<-round(matrice$r^2,3)
-	plot<-ggcorrplot(r1, hc.order = F,  lab = TRUE, p.mat=r2)
+
 
 
       if(!is.null(rscale)){
