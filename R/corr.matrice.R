@@ -306,7 +306,7 @@ corr.matrice <-
     }
 
     options (warn=-1)
-    packages<-c('BayesFactor','nortest', 'psych', 'svDialogs', 'ggplot2', 'ggcorplot')
+    packages<-c('BayesFactor','nortest', 'psych', 'svDialogs', 'ggplot2', 'ggcorrplot')
 
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== 'try-error') return(ez.install())
