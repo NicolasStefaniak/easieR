@@ -1134,8 +1134,9 @@ load_en_EN <- function() {
   assign("desc_bootstrap_percentile_anova" , "Trimmed mean anova using  a percentile t bootstrap method" , envir=.dico)
   assign("txt_effect_size_dot_inf" , "effect size ci lower" , envir=.dico)
   assign("txt_effect_size_dot_sup" , "effect size ci upper" , envir=.dico)
- assign("RML_and_within_not_allowed" , "If RML is not null, within must be null" , envir=.dico) 
- assign("txt_bp1" , "Mardia’s estimate of multivariate skew", envir=.dico) 
-assign("txt_bp2" , "Mardia’s  estimate of multivariate kurtosis", envir=.dico) 
-assign("txt_Mardia_statistic" , "Mardia s statistic", envir=.dico) 
+  assign("RML_and_within_not_allowed" , "If RML is not null, within must be null" , envir=.dico) 
+  assign("txt_bp1" , "Mardia’s estimate of multivariate skew", envir=.dico) 
+  assign("txt_bp2" , "Mardia’s  estimate of multivariate kurtosis", envir=.dico) 
+  assign("txt_small" , "Mardia s small sample skew statistic" , envir=.dico) 
+  assign("txt_Mardia_statistic" , "Mardia s statistic", envir=.dico) 
 }
