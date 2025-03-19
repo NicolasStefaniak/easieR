@@ -1135,5 +1135,8 @@ load_fr_FR <- function() {
   assign("txt_V_sq_" , "V.carre" , envir=.dico)
   assign("desc_bootstrap_percentile_anova" , "Anova sur les moyennes tronquees utilisant la méthode de bootstrap du percentile t" , envir=.dico)
   assign("RML_and_within_not_allowed" , "Si RML est non null, within doit etre null" , envir=.dico) 
+    assign("txt_bp1" , "Asymetrie multivariee de Mardia" , envir=.dico) 
+    assign("txt_bp2" , "Aplatissement multivariee de Mardia" , envir=.dico) 
+    assign("txt_Mardia_statistic" , "SStatistique de Mardia" , envir=.dico) 
   
 }
