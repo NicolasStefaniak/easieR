@@ -525,7 +525,7 @@ VI.multiples<-function(data, X){
     if(any(class(mardia.results)=="mardia")) {
       data.frame("n"=rep(mardia.results$n.obs),
                  Test =c(.dico[["txt_bp1"]],.dico[["txt_bp2"]],.dico[["txt_small"]] ),
-                 .dico[["txt_bp1"]]=c( mardia.results$b1p,mardia.results$b2p,mardia.results$small.skew),
+                 .dico[["txt_Mardia_statistic"]]=c( mardia.results$b1p,mardia.results$b2p,mardia.results$small.skew),
                  .dico[["txt_p_dot_val"]] = round(c(mardia.results$p.skew, mardia.results$p.kurt,mardia.results$p.small ),3))
     } else {
       msgBox(.dico[["desc_matrix_is_singular_mardia_cannot_be_performed"]])
