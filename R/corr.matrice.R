@@ -223,7 +223,9 @@ corr.matrice <-
         if(!is.null(Y))  {
           Y1<-as.data.frame(data[,Y])
           names(Y1)<-Y
-        }
+        }else{
+	Y1<-NULL	
+	}
         X1<-as.data.frame(data[,X])
         names(X1)<-X
         corr.test(x=X1, y=Y1, use = .dico[["txt_pairwise"]],method=method,adjust=p.adjust, alpha=.05,ci=TRUE)->matrice
