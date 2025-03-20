@@ -977,7 +977,7 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
         round(Table.contrasts,4)->Table.contrasts
         data.frame(Table.contrasts)->Table.contrasts  
         names(Table.contrasts)<-c(.dico[["txt_estimator"]], .dico[["txt_df"]],"t", .dico[["txt_p_dot_val"]])
-        Table.contrasts[,.dico[["txt_estimator"]]^2/(Table.contrasts[,.dico[["txt_estimator"]]^2+Table.contrasts[,.dico[["txt_df"]]^2)->Table.contrasts$R.2
+        Table.contrasts[,.dico[["txt_estimator"]]]^2/(Table.contrasts[,.dico[["txt_estimator"]]]^2+Table.contrasts[,.dico[["txt_df"]]]^2)->Table.contrasts$R.2
         round(Table.contrasts[,.dico[["txt_estimator"]]/(nlevels(data[,id]))^0.5,4)->Table.contrasts$D.Cohen 
         dimnames(Table.contrasts)[[1]]<-table.cont[,1]
         Resultats[[.ez.anova.msg("title",40)]][[.ez.anova.msg("title",43)]]<-Table.contrasts
