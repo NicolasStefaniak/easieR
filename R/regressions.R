@@ -675,7 +675,7 @@ regressions <-
 
     if(!is.null(step) ){
       st1<-unlist(step)
-      if(any(table(st1>1))) st1<-.dico[["txt_error"]]
+      if(any(table(st1)>1)) st1<-.dico[["txt_error"]]
       if(any(!st1%in%step1 ))st1<-.dico[["txt_error"]]
       if(st1==.dico[["txt_error"]]){
         msgBox(.dico[["desc_issue_in_hierarchical_regression"]])
