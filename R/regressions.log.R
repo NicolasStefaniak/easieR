@@ -262,7 +262,7 @@ regressions.log <-
 
       #Amelioration_du_MV$chi.deux.prob<-1-pchisq(Amelioration_du_MV$Deviance, Amelioration_du_MV$Df)
       Amelioration_du_MV<-round(Amelioration_du_MV,4)
-      names(Amelioration_du_MV)<-c(.dico[["txt_df_predictor"]], "MV",.dico[["txt_df_residuals"]],"MV residuel",.dico[["txt_p_dot_val"]])
+      names(Amelioration_du_MV)[1:4]<-c(.dico[["txt_df_predictor"]], "MV",.dico[["txt_df_residuals"]],"MV residuel",.dico[["txt_p_dot_val"]])
       Resultats[[.dico[["desc_improve_likelihood_for_each_variable"]]]]<-data.frame(Amelioration_du_MV)
 
       data.frame(resultats$coefficients)->table
