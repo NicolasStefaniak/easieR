@@ -7,7 +7,7 @@ load_fr_FR <- function() {
   assign("ask_analysis_by_group" , "Analyse par groupe?" , envir=.dico)
   assign("ask_analysis_on_complete_data_or_remove_outliers" , "Desirez-vous l'analyse sur les donnees completes ou sur les donnees pour lesquelles les valeurs influentes ont ete enlevees ?" , envir=.dico)
   assign("ask_analysis_type" , "Quelle analyse voulez-vous realiser?" , envir=.dico)
-  assign("ask_are_frequences_free_parameters" , "est-ce que les frequences des differents group est un parametre libre ? " , envir=.dico)
+  assign("ask_are_frequences_free_parameters" , "est-ce que les frequences des differents groupes est un parametre libre ? " , envir=.dico)
   assign("ask_are_there_inversed_items" , "Y a-t-il des items inverses ?" , envir=.dico)
   assign("ask_are_you_ready" , "etes-vous pret?" , envir=.dico)
   assign("ask_baseline" , "Quelle est la ligne de base?" , envir=.dico)
