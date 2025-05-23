@@ -1,0 +1,50 @@
+---
+title: "Introduction to easieR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to easieR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(easieR)
+
+Overview
+
+easieR is designed to simplify statistical analyses by providing user-friendly functions for common tasks such as mediation analysis, repeated measures, and handling missing data.
+Installation
+
+You can install the development version of easieR from GitHub:
+
+# install.packages("remotes")
+remotes::install_github("NicolasStefaniak/easieR", build_vignettes = TRUE)
+
+Basic Usage
+
+Here's a simple example of how to perform a mediation analysis using easieR:
+
+# Example code for mediation analysis
+# easieR::mediation_analysis(data, mediator, outcome, predictors)
+
+Handling Missing Data
+
+easieR provides functions to detect and handle missing values efficiently:
+
+# Example code for handling missing data
+# easieR::handle_missing(data, method = "mean_imputation")
+
+Repeated Measures Analysis
+
+Perform repeated measures analysis with ease:
+
+# Example code for repeated measures
+# easieR::repeated_measures(data, subject_id, time_variable, outcome)
+
+Conclusion
+
+easieR aims to make statistical analyses more accessible and straightforward. For more detailed information, refer to the function documentation and additional vignettes.
