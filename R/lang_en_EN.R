@@ -939,7 +939,7 @@ assign("ask_positive_val_variable_or_value", "Are the positive values variable(s
   assign("ask_which_analysis" , "Which analysis do you want to perform?" , envir=.dico)
   assign("desc_all_contrasts_description" , "a priori contrasts testing hypothses defined beforehand. Pairwise contrasts allow comparing all pairs, with or without p-value adjustment." , envir=.dico)
   assign("desc_contrasts_must_be_coeff_matrices_in_list" , "Contracts must be coefficients matrices placed in a list where  each level name corresponds to a factor" , envir=.dico)
-  assign("desc_percentage_outliers" , percentage of observations considered influential" , envir=.dico)
+  assign("desc_percentage_outliers" , "percentage of observations considered influential" , envir=.dico)
   assign("desc_robusts_statistics_could_not_be_computed_verify_WRS" , "robust statistics could not be computed. Please verify the installation of the WRS package" , envir=.dico)
   assign("desc_some_participants_have_missing_values_on_repeated_measures" , "Some participants have missing values for repeted measures. They will be removed from the analyses." , envir=.dico)
   assign("txt_absence_of_difference_between_groups_test_on" , "Test for absence of difference between groups on " , envir=.dico)
