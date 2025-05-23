@@ -99,7 +99,7 @@ ez.cfa <-
         if(info) writeLines(.dico[["ask_which_options_to_specify"]])
         options<-dlgList(c(.dico[["txt_keep_default_values"]], options), preselect=c(.dico[["txt_cfa_estimator_ml_default"]],.dico[["txt_cfa_test_standard_default"]], .dico[["txt_cfa_standard_error_default"]]), multiple = TRUE, title=.dico[["ask_which_options"]])$res
         if(length(options)==0) return(NULL)
-        if(options==.dico[["txt_keep_default_values"]]) return(list(mimic="default", fixed.x="default", missing="default",information="default", zero.keep.margins="default",zero.add=c(0.5,0),
+        if(any(options==.dico[["txt_keep_default_values"]])) return(list(mimic="default", fixed.x="default", missing="default",information="default", zero.keep.margins="default",zero.add=c(0.5,0),
                                                                  estimator="ml",group=NULL, test="standard",se="standard",std.ov=T, orthogonal=F, likelihood="default",
                                                                  link="probit",int.ov.free=FALSE, int.lv.free=FALSE,fixed.x="default", std.lv=FALSE, n.boot=1000, group.w.free=F,
                                                                  group.equal=c("loadings", "intercepts", "means", "thresholds", .dico[["txt_regressions"]], "residuals", "residual.covariances",
