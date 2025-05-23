@@ -920,7 +920,7 @@ assign("ask_positive_val_variable_or_value", "Are the positive values variable(s
   assign("desc_bayesian_factors_chosen_in" , "Baysian factors is chosen in " , envir=.dico)
   assign("desc_cross_validation_issues" , "cross validation encountered some issues" , envir=.dico)
   assign("desc_easier_metapackage" , "easieR: An R metapackage. Retrieved from https://github.com/NicolasStefaniak/easieR" , envir=.dico)
-  assign("desc_first_time_easier" , " If you are using easieR for the first time, please use the ez.install function to ensure that easieR works properly. 
+  assign("desc_first_time_easier" , " If you are using easieR for the first time, please use the ez.install function to ensure that easieR works properly."  , envir=.dico)
   assign("ask_chose_variables" , "please choose the variable(s)" , envir=.dico)
   assign("ask_correlations_type" , "Type of correlations?" , envir=.dico)
   assign("ask_dependant_variable_name" , "What is the name of the dependent variable?" , envir=.dico)
