@@ -1,13 +1,10 @@
 ---
-title: "Formation easieR à Bruxelles"
-author: "Nicolas Stefaniak"
-date: "25 octobre 2021"
-output: 
- html_document:
-               toc: true
-               toc_float: true
-               toc_depth: 5
-logo: URCA.png
+title: "Introduction to easieR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to easieR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, eval = T, echo=F}
