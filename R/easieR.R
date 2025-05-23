@@ -1,4 +1,19 @@
-
+.onAttach <- function(libname, pkgname) {
+  load_language(lang='auto')
+  textVersion =
+    paste(.dico[["desc_how_to_cite_easier"]],
+          .dico[["desc_easier_metapackage"]],
+          sep = "")
+  
+  packageStartupMessage("##############")
+  packageStartupMessage(.dico[["desc_welcome_in_easieR"]])
+  packageStartupMessage(.dico[["desc_first_time_easier"]])
+  packageStartupMessage(.dico[["desc_special_characters_have_been_removed"]])
+  packageStartupMessage(textVersion)
+  packageStartupMessage("Last update 05/23/2025 - 15.20")
+  packageStartupMessage("##############")
+  
+}
 easieR <-
   function(info=TRUE, html=T, lang=NULL){
     
@@ -653,19 +668,4 @@ ref1 <-
 
 
 
-.onAttach <- function(libname, pkgname) {
-  load_language(lang='auto')
-  textVersion =
-    paste(.dico[["desc_how_to_cite_easier"]],
-          .dico[["desc_easier_metapackage"]],
-          sep = "")
-  
-  packageStartupMessage("##############")
-  packageStartupMessage(.dico[["desc_welcome_in_easieR"]])
-  packageStartupMessage(.dico[["desc_first_time_easier"]])
-  packageStartupMessage(.dico[["desc_special_characters_have_been_removed"]])
-  packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 03/19/2025 - 14.30")
-  packageStartupMessage("##############")
-  
-}
+
