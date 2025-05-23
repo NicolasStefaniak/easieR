@@ -423,7 +423,7 @@ assign("ask_positive_val_variable_or_value", "Are the positive values variable(s
   assign("desc_z_must_be_a_number" , "z must be a number" , envir=.dico)
   assign("desc_author" , "author: 'Generate automatically by easieR'" , envir=.dico)
   assign("desc_title" , "title: 'Results of your analyses'" , envir=.dico)
-  assign("txt_absolute_value" , "absolute value , envir=.dico)
+  assign("txt_absolute_value" , "absolute value" , envir=.dico)
   assign("txt_added_variables_graph" , "Added variable plot" , envir=.dico)
   assign("txt_additions" , "Additions" , envir=.dico)
   assign("txt_additive_effects" , "Additive effects" , envir=.dico)
