@@ -119,7 +119,7 @@ assign("ask_positive_val_variable_or_value", "Are the positive values variable(s
   assign("ask_f_value" , "What f-value do you want to use?" , envir=.dico)
   assign("ask_group_variable" , "Group variable?" , envir=.dico)
   assign("ask_headers_in_database" , "Is the name of the variables on the first line of your database? Choose TRUE if so" , envir=.dico)
-  assign("ask_hierarchical_analysis" , "Does it have to make a hierarchical analysis?" , envir=.dico)( Do you want to perform a hierarchical analysis?  pas sûre du changement de phrase)
+  assign("ask_hierarchical_analysis" , "Do you want to perform a hierarchical analysis? " , envir=.dico)
   assign("ask_how_many_modalities" , "How many modalities" , envir=.dico)
   assign("ask_how_standard_error_must_be_estimated" , "How should the standard error be estimated?" , envir=.dico)
   assign("ask_how_to_remove" , "How do you want to remove them?" , envir=.dico)
