@@ -16,6 +16,8 @@ Description: easieR aims to provide a flexible graphic user interface (GUI), all
     checked, user can choose between parametric, non parametric and robust statistics (based on WRS and WRS2 packages). 
     It also allows user to easily identify and remove outliers from the analyses and to save results in nice output. 
 Depends: R (>= 4.3.0), 
+VignetteBuilder: knitr
+Suggests: knitr, rmarkdown
 Imports: afex,
          akima,  
          Amelia, 
