@@ -691,7 +691,7 @@ assign("ask_positive_val_variable_or_value", "Are the positive values variable(s
   assign("txt_means_comparison" , "Comparison of means " , envir=.dico)
   assign("txt_mean_sd_for_adjusted_data" , " Mean and standard deviation for adjusted data" , envir=.dico)
   assign("txt_mean_sd_for_non_adjusted_data" , " Mean and standard deviation for unadjusted data" , envir=.dico)
-  assign("txt_mean_sd" , "" Mean and standard deviation " , envir=.dico)
+  assign("txt_mean_sd" , "Mean and standard deviation" , envir=.dico)
   assign("txt_measured_variable_name" , " name of the measured variable " , envir=.dico)
   assign("txt_median" , "Median" , envir=.dico)
   assign("txt_mediation_effect" , "Mediation Effect" , envir=.dico)
