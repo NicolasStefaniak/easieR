@@ -785,7 +785,7 @@ GeomMosaicJitter <- ggplot2::ggproto(
   #                            linewidth=.1, weight = 1, x = NULL, y = NULL, conds = NULL),
   required_aes = c("x", "y"),
   non_missing_aes = c("size", "shape", "colour"),
-  default_aes = aes(
+  default_aes =  ggplot2::aes(
     shape = 19, colour = "grey30", size = 1, fill = NA,
     alpha = NA, stroke = 1, linewidth=.1, weight = 1
   ),
