@@ -1220,7 +1220,7 @@ scale_y_productlist <- function(name = ggplot2::waiver(), breaks = product_break
 
 #' @rdname scale_x_productlist
 #' @export
-ScaleContinuousProduct <- ggproto(
+ScaleContinuousProduct <- ggplot::ggproto(
   "ScaleContinuousProduct", ScaleContinuousPosition,
   train =function(self, x) {
     #cat("train in ScaleContinuousProduct\n")
