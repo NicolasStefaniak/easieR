@@ -400,3 +400,1610 @@ chi <-
     if(html) try(ez.html(Resultats))
     return(Resultats)
     }
+
+prodcalc <- function(data, formula, divider = mosaic(), cascade = 0, scale_max = TRUE, na.rm = FALSE, offset = offset) {
+
+  vars <- parse_product_formula(stats::as.formula(formula))
+#browser()
+  if (length(vars$wt) == 1) {
+    data$.wt <- data[[vars$wt]]
+  } else {
+    data$.wt <- 1
+  }
+  margin <- getFromNamespace("margin", "productplots")
+
+  wt <- margin(data, vars$marg, vars$cond)
+  wt2 <- margin(data, c(vars$marg, vars$cond)) # getting margins
+  #browser()
+  #wt$.n <- wt2$.wt
+
+  if (na.rm) {
+    wt <- wt[stats::complete.cases(wt), ]
+  }
+
+
+  if (is.function(divider)) divider <- divider(ncol(wt) - 1)
+  if (is.character(divider)) divider <- lapply(divider, match.fun)
+
+  max_wt <- if (scale_max) NULL else 1
+
+  df <- divide(wt, divider = rev(divider), cascade = cascade, max_wt = max_wt, offset = offset)
+#  browser()
+  wt2 <- dplyr::rename(wt2, .n=".wt")
+  dplyr::left_join(df, wt2, by = setdiff(names(wt2), ".n"))
+}
+partd <- function(x) {
+  d <- attr(x, "d")
+  if (!is.null(d)) d else 1
+}
+
+# Convenience function to create bounds
+bound <- function(t = 1, r = 1, b = 0, l = 0) {
+  data.frame(t = t, r = r, b = b, l = l)
+}
+
+
+divide <- function(data, bounds = bound(), divider = list(productplots::hbar), level = 1, cascade = 0, max_wt = NULL, offset = offset) {
+  d <- partd(divider[[1]])
+  if (ncol(data) == d + 1) {
+    return(divide_once(data, bounds, divider[[1]], level, max_wt, offset))
+  }
+  # In divide we work with the opposite order of variables to margin -
+  # so we flip and then flip back
+  margin <- getFromNamespace("margin", "productplots")
+
+  parent_data <- margin(data, rev(seq_len(d)))
+  parent_data <- parent_data[, c(rev(seq_len(d)), d + 1)]
+
+  parent <- divide_once(parent_data, bounds, divider[[1]], level, max_wt, offset)
+  parentc <- parent
+  parentc$l <- parent$l + cascade
+  parentc$b <- parent$b + cascade
+  parentc$r <- parent$r + cascade
+  parentc$t <- parent$t + cascade
+
+  if (is.null(max_wt)) {
+    max_wt <- max(margin(data, d + 1, seq_len(d))$.wt, na.rm = TRUE)
+  }
+
+#  browser()
+#  pieces <- split(data, data[,seq_len(d)]) # this one doesn't deal well with NAs
+  pieces <- as.list(getFromNamespace("dlply", asNamespace("plyr"))(data, seq_len(d))) #
+
+
+
+  children <- purrr::map_df(seq_along(pieces), function(i) {
+    piece <- pieces[[i]]
+    partition <- divide(piece[, -seq_len(d)], parentc[i, ], divider[-1],
+                        level = level + 1, cascade = cascade, max_wt = max_wt, offset = offset)
+
+    labels <- piece[rep(1, nrow(partition)), 1:d, drop = FALSE]
+    cbind(labels, partition)
+  })
+
+  # children <- plyr::ldply(seq_along(pieces), function(i) {
+  #   piece <- pieces[[i]]
+  #   partition <- divide(piece[, -seq_len(d)], parentc[i, ], divider[-1],
+  #                       level = level + 1, cascade = cascade, max_wt = max_wt, offset = offset)
+  #
+  #   labels <- piece[rep(1, nrow(partition)), 1:d, drop = FALSE]
+  #   cbind(labels, partition)
+  # })
+  dplyr::bind_rows(parent, children)
+}
+
+# @param data data frame giving partitioning variables and weights.  Final
+#   column should be called .wt and contain weights
+divide_once <- function(data, bounds, divider, level = 1, max_wt = NULL, offset) {
+  d <- partd(divider)
+  # Convert into vector/matrix/array for input to divider function
+  if (d > 1) {
+    data[-ncol(data)] <- lapply(data[-ncol(data)], addNA, ifany = TRUE)
+    wt <- tapply(data$.wt, data[-ncol(data)], identity)
+    # This ensures that the order of the data matches the order tapply uses
+    data <- as.data.frame.table(wt, responseName = ".wt")
+  } else {
+    wt <- data$.wt
+  }
+
+  wt <- wt / sum(wt, na.rm = TRUE)
+  if (is.null(max_wt)) max_wt <- max(wt, na.rm = TRUE)
+
+  partition <- divider(wt, bounds, offset, max = max_wt)
+  cbind(data, partition, level = level)
+}
+																
+squeeze <- function(pieces, bounds = bound()) {
+  scale_x <- function(x) x * (bounds$r - bounds$l) + bounds$l
+  scale_y <- function(y) y * (bounds$t - bounds$b) + bounds$b
+
+  pieces$l <- scale_x(pieces$l)
+  pieces$r <- scale_x(pieces$r)
+  pieces$b <- scale_y(pieces$b)
+  pieces$t <- scale_y(pieces$t)
+  pieces
+}
+
+
+rotate <- function(data) {
+   l <- b <- t <- r <- NULL # visible binding
+   dplyr::rename(data, b=l, t=r, l=b, r=t)
+ }
+
+#' Spine partition: divide longest dimension.
+#'
+#' @param data bounds data frame
+#' @param bounds bounds of space to partition
+#' @param offset space between spines
+#' @param max maximum value
+#' @export
+spine <- function(data, bounds, offset = offset, max = NULL) {
+  w <- bounds$r - bounds$l
+  h <- bounds$t - bounds$b
+
+  if (w > h) {
+    hspine(data, bounds, offset, max)
+  } else {
+    vspine(data, bounds, offset, max)
+  }
+}
+
+
+#' Horizontal spine partition: height constant, width varies.
+#'
+#' @param data bounds data frame
+#' @param bounds bounds of space to partition
+#' @param offset space between spines
+#' @param max maximum value
+#' @export
+hspine <- function(data, bounds, offset = offset, max = NULL) {
+  n <- length(data)
+  # n + 1 offsets
+
+  if (ncol(bounds)>4)  offsets <- ((c(0, rep(1, n - 1), 0) * offset))/sqrt((bounds$level+.1))
+  else offsets <- (c(0, rep(1, n - 1), 0) * offset)
+
+  data <- data * (1 - sum(offsets))
+
+  widths <- as.vector(t(cbind(data, offsets[-1])))
+  widths[is.na(widths)] <- 0
+
+  pos <- c(offsets[1], cumsum(widths)) / sum(widths)
+  locations <- data.frame(
+    l = pos[seq(1, 2 * n - 1, by = 2)],
+    r = pos[seq(2, 2 * n, by = 2)],
+    b = 0,
+    t = 1
+  )
+  squeeze(locations, bounds)
+}
+
+#' Vertical spine partition: width constant, height varies.
+#'
+#' @param data bounds data frame
+#' @param bounds bounds of space to partition
+#' @param offset space between spines
+#' @param max maximum value
+#' @export
+vspine <- function(data, bounds, offset = offset, max = NULL) {
+  rotate(hspine(data, rotate(bounds), offset, max = max))
+}
+
+#' Horizontal bar partition: width constant, height varies.
+#'
+#' @param data bounds data frame
+#' @param bounds bounds of space to partition
+#' @param offset space between spines
+#' @param max maximum value
+#' @export
+hbar <- function(data, bounds, offset = 0.02, max = NULL) {
+  if (is.null(max)) max <- 1
+
+  n <- length(data)
+  # n + 1 offsets
+  offsets <- c(0, rep(1, n - 1), 0) * offset
+
+  width <- (1 - sum(offsets)) / n
+  heights <- data / max
+
+  widths <- as.vector(t(cbind(width, offsets[-1])))
+  pos <- c(offsets[1], cumsum(widths)) / sum(widths)
+  locations <- data.frame(
+    l = pos[seq(1, 2 * n - 1, by = 2)],
+    r = pos[seq(2, 2 * n, by = 2)],
+    b = 0,
+    t = heights
+  )
+  squeeze(locations, bounds)
+}
+
+#' Vertical bar partition: height constant, width varies.
+#'
+#' @param data bounds data frame
+#' @param bounds bounds of space to partition
+#' @param offset space between spines
+#' @param max maximum value
+#' @export
+vbar <- function(data, bounds, offset = 0.02, max = NULL) {
+ rotate(hbar(data, rotate(bounds), offset, max = max))
+}
+
+
+
+.directions <- c("vertical", "horizontal")
+
+#' Template for a mosaic plot.
+#' A mosaic plot is composed of spines in alternating directions.
+#'
+#' @param direction direction of first split
+#' @export
+mosaic <- function(direction = "h") {
+  direction <- match.arg(direction, .directions)
+  if (direction == "horizontal") {
+    splits <- c("hspine", "vspine")
+  } else {
+    splits <- c("vspine", "hspine")
+  }
+
+  function(n) rev(rep(splits, length = n))
+}
+
+
+#' Template for a double decker plot.
+#' A double decker plot is composed of a sequence of spines in the same
+#' direction, with the final spine in the opposite direction.
+#'
+#' @param direction direction of first split
+#' @export
+ddecker <- function(direction = "h") {
+  direction <- match.arg(direction, .directions)
+  if (direction == "horizontal") {
+    splits <- c("hspine", "vspine")
+  } else {
+    splits <- c("vspine", "hspine")
+  }
+
+  function(n) c(splits[2], rep(splits[1], length = n - 1))
+}
+
+
+																geom_mosaic_jitter <- function(mapping = NULL, data = NULL, stat = "mosaic_jitter",
+                               position = "identity", na.rm = FALSE,  divider = mosaic(),
+                               offset = 0.01, drop_level = FALSE, seed = NA,
+                               show.legend = NA, inherit.aes = FALSE, ...)
+{
+  if (!is.null(mapping$y)) {
+    stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+  } else mapping$y <- structure(1L, class = "productlist")
+
+    #browser()
+
+  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    aes_x <- rlang::eval_tidy(mapping$x)
+    var_x <- paste0("x__", as.character(aes_x))
+  }
+
+  aes_fill <- mapping$fill
+  var_fill <- ""
+  if (!is.null(aes_fill)) {
+    aes_fill <- rlang::quo_text(mapping$fill)
+    var_fill <- paste0("x__fill__", aes_fill)
+    if (aes_fill %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_fill)
+      var_x[idx] <- var_fill
+    } else {
+      mapping[[var_fill]] <- mapping$fill
+    }
+  }
+
+  aes_alpha <- mapping$alpha
+  var_alpha <- ""
+  if (!is.null(aes_alpha)) {
+    aes_alpha <- rlang::quo_text(mapping$alpha)
+    var_alpha <- paste0("x__alpha__", aes_alpha)
+    if (aes_alpha %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_alpha)
+      var_x[idx] <- var_alpha
+    } else {
+      mapping[[var_alpha]] <- mapping$alpha
+    }
+  }
+
+  aes_colour <- mapping$colour
+  var_colour <- ""
+  if (!is.null(aes_colour)) {
+    aes_colour <- rlang::quo_text(mapping$colour)
+    var_colour <- paste0("x__colour__", aes_colour)
+    if (aes_colour %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_colour)
+      var_x[idx] <- var_colour
+    } else {
+      mapping[[var_colour]] <- mapping$colour
+    }
+  }
+
+
+  #  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    mapping$x <- structure(1L, class = "productlist")
+
+    for (i in seq_along(var_x)) {
+      mapping[[var_x[i]]] <- aes_x[[i]]
+    }
+  }
+
+
+  aes_conds <- mapping$conds
+  if (!is.null(aes_conds)) {
+    aes_conds <- rlang::eval_tidy(mapping$conds)
+    mapping$conds <- structure(1L, class = "productlist")
+    var_conds <- paste0("conds", seq_along(aes_conds), "__", as.character(aes_conds))
+    for (i in seq_along(var_conds)) {
+      mapping[[var_conds[i]]] <- aes_conds[[i]]
+    }
+  }
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomMosaicJitter,
+    position = position,
+    show.legend = show.legend,
+    check.aes = FALSE,
+    inherit.aes = FALSE, # only FALSE to turn the warning off
+    params = list(
+      na.rm = na.rm,
+      divider = divider,
+      offset = offset,
+      drop_level = drop_level,
+      seed = seed,
+      ...
+    )
+  )
+}
+
+#' Geom proto
+#'
+#' @format NULL
+#' @usage NULL
+#' @export
+#' @importFrom grid grobTree
+#' @importFrom tidyr nest unnest
+#' @importFrom dplyr mutate select
+GeomMosaicJitter <- ggplot2::ggproto(
+  "GeomMosaicJitter", ggplot2::Geom,
+  setup_data = function(data, params) {
+    #cat("setup_data in GeomMosaic\n")
+    #browser()
+    data
+  },
+  # required_aes = c("xmin", "xmax", "ymin", "ymax"),
+  # default_aes = ggplot2::aes(width = 0.1, linetype = "solid", fontsize=5,
+  #                            shape = 19, colour = NA,
+  #                            size = 1, fill = "grey30", alpha = 1, stroke = 0.1,
+  #                            linewidth=.1, weight = 1, x = NULL, y = NULL, conds = NULL),
+  required_aes = c("x", "y"),
+  non_missing_aes = c("size", "shape", "colour"),
+  default_aes = aes(
+    shape = 19, colour = "grey30", size = 1, fill = NA,
+    alpha = NA, stroke = 1, linewidth=.1, weight = 1
+  ),
+
+  draw_panel = function(data, panel_scales, coord) {
+    #cat("draw_panel in GeomMosaic\n")
+    # browser()
+    # if (all(is.na(data$colour)))
+    #   data$colour <- scales::alpha(data$fill, data$alpha) # regard alpha in colour determination
+
+    # adjust the point placement for the size of the points.
+    # .pt is defined in ggplot2 as 72.27 / 25.4
+    dx <- grid::convertX(unit(.pt, "points"), "npc", valueOnly = TRUE)
+    dy <- grid::convertY(unit(.pt, "points"), "npc", valueOnly = TRUE)
+    # check out stroke and .stroke
+    # mapping shape?
+    #browser()
+    # scale x and y coordinates to the correct place between (xmin+dx, xmax-dx) and
+    # (ymin+dy, ymax-dy)
+    scale_01_to_xy <- function(value, min_val, max_val) {
+      # assumes that value is between 0 and 1
+      value*(max_val-min_val) + min_val
+    }
+    data <- mutate(data,
+      # could give some bit of space between any outline of a point and the
+      # end of the interval
+      x = scale_01_to_xy(x, xmin+1*(size)*dx, xmax-1*(size)*dx),
+      y = scale_01_to_xy(y, ymin+1*(size)*dy, ymax-1*(size)*dy)
+    )
+
+    # points <- tidyr::unnest(points, coords)
+
+    # sub$fill <- NA
+    # sub$size <- sub$size/10
+
+      ggplot2:::ggname("geom_mosaic_jitter", grobTree(
+      #GeomRect$draw_panel(sub, panel_scales, coord),
+      GeomPoint$draw_panel(data, panel_scales, coord)
+    ))
+  },
+
+  check_aesthetics = function(x, n) {
+    #browser()
+    ns <- vapply(x, length, numeric(1))
+    good <- ns == 1L | ns == n
+
+
+    if (all(good)) {
+      return()
+    }
+
+    stop(
+      "Aesthetics must be either length 1 or the same as the data (", n, "): ",
+      paste(names(!good), collapse = ", "),
+      call. = FALSE
+    )
+  },
+
+  draw_key = ggplot2::draw_key_point
+)
+
+																
+#' Mosaic plots.
+#'
+#' @export
+#'
+#' @description
+#' A mosaic plot is a convenient graphical summary of the conditional distributions
+#' in a contingency table and is composed of spines in alternating directions.
+#'
+#'
+#' @inheritParams ggplot2::layer
+#' @param divider Divider function. The default divider function is mosaic() which will use spines in alternating directions. The four options for partitioning:
+#' \itemize{
+#' \item \code{vspine} Vertical spine partition: width constant, height varies.
+#' \item \code{hspine}  Horizontal spine partition: height constant, width varies.
+#' \item \code{vbar} Vertical bar partition: height constant, width varies.
+#' \item \code{hbar}  Horizontal bar partition: width constant, height varies.
+#' }
+#' @param offset Set the space between the first spine
+#' @param na.rm If \code{FALSE} (the default), removes missing values with a warning. If \code{TRUE} silently removes missing values.
+#' @param ... other arguments passed on to \code{layer}. These are often aesthetics, used to set an aesthetic to a fixed value, like \code{color = 'red'} or \code{size = 3}. They may also be parameters to the paired geom/stat.
+#' @examples
+#'
+#' data(titanic)
+#'
+#' ggplot(data = titanic) +
+#'   geom_mosaic(aes(x = product(Class), fill = Survived))
+#' # good practice: use the 'dependent' variable (or most important variable)
+#' # as fill variable
+#'
+#' # if there is only one variable inside `product()`,
+#' # `product()` can be omitted
+#' ggplot(data = titanic) +
+#'   geom_mosaic(aes(x = Class, fill = Survived))
+#'
+#' ggplot(data = titanic) +
+#'   geom_mosaic(aes(x = product(Class, Age), fill = Survived))
+#'
+#' ggplot(data = titanic) +
+#'   geom_mosaic(aes(x = product(Class), conds = product(Age), fill = Survived))
+#'
+#' # if there is only one variable inside `product()`,
+#' # `product()` can be omitted
+#' ggplot(data = titanic) +
+#'   geom_mosaic(aes(x = Class, conds = Age, fill = Survived))
+#'
+#' ggplot(data = titanic) +
+#'   geom_mosaic(aes(x = product(Survived, Class), fill = Age))
+#'
+#' # Just excluded for timing. Examples are included in testing to make sure they work
+#' \dontrun{
+#' data(happy)
+#'
+#' ggplot(data = happy) + geom_mosaic(aes(x = product(happy)), divider="hbar")
+#'
+#' ggplot(data = happy) + geom_mosaic(aes(x = product(happy))) +
+#'   coord_flip()
+#'
+#' # weighting is important
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(happy)))
+#'
+#' ggplot(data = happy) + geom_mosaic(aes(weight=wtssall, x=product(health), fill=happy)) +
+#'   theme(axis.text.x=element_text(angle=35))
+#'
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(health), fill=happy), na.rm=TRUE)
+#'
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(health, sex, degree), fill=happy),
+#'   na.rm=TRUE)
+#'
+#' # here is where a bit more control over the spacing of the bars is helpful:
+#' # set labels manually:
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(age), fill=happy), na.rm=TRUE, offset=0) +
+#'   scale_x_productlist("Age", labels=c(17+1:72))
+#'
+#' # thin out labels manually:
+#' labels <- c(17+1:72)
+#' labels[labels %% 5 != 0] <- ""
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(age), fill=happy), na.rm=TRUE, offset=0) +
+#'   scale_x_productlist("Age", labels=labels)
+#'
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(age), fill=happy, conds = product(sex)),
+#'   divider=mosaic("v"), na.rm=TRUE, offset=0.001) +
+#'   scale_x_productlist("Age", labels=labels)
+#'
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(age), fill=happy), na.rm=TRUE, offset = 0) +
+#'   facet_grid(sex~.) +
+#'   scale_x_productlist("Age", labels=labels)
+#'
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight = wtssall, x = product(happy, finrela, health)),
+#'   divider=mosaic("h"))
+#'
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight = wtssall, x = product(happy, finrela, health)), offset=.005)
+#'
+#' # Spine example
+#' ggplot(data = happy) +
+#'  geom_mosaic(aes(weight = wtssall, x = product(health), fill = health)) +
+#'  facet_grid(happy~.)
+#' } # end of don't run
+
+geom_mosaic <- function(mapping = NULL, data = NULL, stat = "mosaic",
+                        position = "identity", na.rm = FALSE,  divider = mosaic(), offset = 0.01,
+                        show.legend = NA, inherit.aes = FALSE, ...)
+{
+  if (!is.null(mapping$y)) {
+    stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+  } else mapping$y <- structure(1L, class = "productlist")
+
+  # browser()
+
+  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    if (grepl("product", rlang::quo_text(mapping$x))) {
+      aes_x <- rlang::eval_tidy(mapping$x)
+    } else aes_x <- list(rlang::quo_get_expr(mapping$x))
+    var_x <- paste0("x__", as.character(aes_x))
+  }
+
+  aes_fill <- mapping$fill
+  var_fill <- ""
+  if (!is.null(aes_fill)) {
+    aes_fill <- rlang::quo_text(mapping$fill)
+    var_fill <- paste0("x__fill__", aes_fill)
+    if (aes_fill %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_fill)
+      var_x[idx] <- var_fill
+    } else {
+      mapping[[var_fill]] <- mapping$fill
+    }
+  }
+
+  aes_alpha <- mapping$alpha
+  var_alpha <- ""
+  if (!is.null(aes_alpha)) {
+    aes_alpha <- rlang::quo_text(mapping$alpha)
+    var_alpha <- paste0("x__alpha__", aes_alpha)
+    if (aes_alpha %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_alpha)
+      var_x[idx] <- var_alpha
+    } else {
+      mapping[[var_alpha]] <- mapping$alpha
+    }
+  }
+
+  if (!is.null(aes_x)) {
+    mapping$x <- structure(1L, class = "productlist")
+    for (i in seq_along(var_x)) {
+      mapping[[var_x[i]]] <- aes_x[[i]]
+    }
+  }
+
+  aes_conds <- mapping$conds
+  if (!is.null(aes_conds)) {
+    if (grepl("product", rlang::quo_text(mapping$conds))) {
+      aes_conds <- rlang::eval_tidy(mapping$conds)
+    } else aes_conds <- list(rlang::quo_get_expr(mapping$conds))
+    var_conds <- paste0("conds", seq_along(aes_conds), "__", as.character(aes_conds))
+
+    mapping$conds <- structure(1L, class = "productlist")
+    for (i in seq_along(var_conds)) {
+      mapping[[var_conds[i]]] <- aes_conds[[i]]
+    }
+  }
+
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomMosaic,
+    position = position,
+    show.legend = show.legend,
+    check.aes = FALSE,
+    inherit.aes = FALSE, # only FALSE to turn the warning off
+    params = list(
+      na.rm = na.rm,
+      divider = divider,
+      offset = offset,
+      ...
+    )
+  )
+}
+
+#' Geom proto
+#'
+#' @format NULL
+#' @usage NULL
+#' @export
+#' @importFrom grid grobTree
+GeomMosaic <- ggplot2::ggproto(
+  "GeomMosaic", ggplot2::Geom,
+  setup_data = function(data, params) {
+    #cat("setup_data in GeomMosaic\n")
+    #browser()
+    data
+  },
+  required_aes = c("xmin", "xmax", "ymin", "ymax"),
+  default_aes = ggplot2::aes(width = 0.75, linetype = "solid", fontsize=5,
+                             shape = 19, colour = NA,
+                             size = .1, fill = "grey30", alpha = .8, stroke = 0.1,
+                             linewidth=.1, weight = 1, x = NULL, y = NULL, conds = NULL),
+
+  draw_panel = function(data, panel_scales, coord) {
+    #cat("draw_panel in GeomMosaic\n")
+    #browser()
+    if (all(is.na(data$colour)))
+      data$colour <- scales::alpha(data$fill, data$alpha) # regard alpha in colour determination
+
+    GeomRect$draw_panel(subset(data, level==max(data$level)), panel_scales, coord)
+  },
+
+  check_aesthetics = function(x, n) {
+    #browser()
+    ns <- vapply(x, length, numeric(1))
+    good <- ns == 1L | ns == n
+
+
+    if (all(good)) {
+      return()
+    }
+
+    stop(
+      "Aesthetics must be either length 1 or the same as the data (", n, "): ",
+      paste(names(!good), collapse = ", "),
+      call. = FALSE
+    )
+  },
+
+  draw_key = ggplot2::draw_key_polygon
+)	
+
+																squeeze <- getFromNamespace("squeeze", "productplots")
+
+# #' Internal helper function
+# #'
+# #' function copied directly from the productplots package
+# #' @param table data table
+# #' @param marginals variables used in margins of mosaic specification
+# #' @param conditionals variables conditioned upon in mosaic specification
+# #' @return weighted data table
+# #' @author Hadley Wickham
+# margin <- function(table, marginals = c(), conditionals = c()) {
+#   if (is.numeric(marginals))    marginals    <- names(table)[marginals]
+#   if (is.numeric(conditionals)) conditionals <- names(table)[conditionals]
+#
+#   marginals <- rev(marginals)
+#   conditionals <- rev(conditionals)
+#
+#   weighted.table <- getFromNamespace("weighted.table", "productplots")
+#
+#
+#   marg <- weighted.table(table[c(conditionals, marginals)], table$.wt)
+#
+#   if (length(conditionals) > 0) {
+#     # Work around bug in ninteraction
+#     cond <- marg[conditionals]
+#     cond[] <- lapply(cond, addNA, ifany = TRUE)
+#     marg$.wt <- stats::ave(marg$.wt, id(cond), FUN = function(x) x / sum(x, na.rm=TRUE))
+#   }
+#
+#   marg$.wt[is.na(marg$.wt)] <- 0
+#   marg
+# }
+
+# #' Internal helper function
+# #'
+# #' function copied directly from the productplots package
+# #' @param vars data frame
+# #' @param wt vector of weights
+# #' @author Hadley Wickham
+# weighted.table <- function(vars, wt = NULL) {
+#   # If no weight column, give constant weight
+#   if (is.null(wt)) {
+#     wt <- rep(1, nrow(vars))
+#     wt <- wt/sum(wt, na.rm= TRUE)
+#   }
+#
+#   # Ensure missing values are counted
+#   vars[] <- lapply(vars, addNA, ifany = TRUE)
+#
+#   # Need to reverse order of variables because as.data.frame works in the
+#   # opposite way to what I want
+#   sums <- tapply(wt, rev(vars), sum, na.rm = TRUE)
+#
+#   df <- as.data.frame.table(sums, responseName = ".wt")
+#   # Missing values represent missing combinations in the original dataset,
+#   # i.e. they have zero weight
+#   df$.wt[is.na(df$.wt)] <- 0
+#   df[, c(rev(seq_len(ncol(df) - 1)), ncol(df)) ]
+# }
+																
+																
+	#' Helper function for determining scales
+#'
+#' Used internally to determine class of variable x
+#' @param x variable
+#' @return character string "productlist"
+#' @importFrom ggplot2 scale_type
+#' @export
+scale_type.productlist <- function(x) {
+  #  cat("checking for type productlist\n")
+  #browser()
+  "productlist"
+}
+
+
+
+
+#' Determining scales for mosaics
+#'
+#' @param name set to pseudo waiver function `product_names` by default.
+#' @inheritParams ggplot2::continuous_scale
+#' @export
+scale_x_productlist <- function(name = ggplot2::waiver(), breaks = product_breaks(),
+                                minor_breaks = NULL, labels = product_labels(),
+                                limits = NULL, expand = ggplot2::waiver(), oob = scales::censor,
+                                na.value = NA_real_, transform = "identity",
+                                position = "bottom", sec.axis = ggplot2::waiver()) {
+  #browser()
+  sc <- ggplot2::continuous_scale(
+    c("x", "xmin", "xmax", "xend", "xintercept", "xmin_final", "xmax_final", "xlower", "xmiddle", "xupper"),
+    palette = identity, name = name, breaks = breaks,
+    minor_breaks = minor_breaks, labels = labels, limits = limits,
+    expand = expand, oob = oob, na.value = na.value, transform = transform,
+    guide = ggplot2::waiver(), position = position, super = ScaleContinuousProduct
+  )
+
+#browser()
+  # if (!ggplot2::waiver(sec.axis)) {
+  #   if (is.formula(sec.axis)) sec.axis <- ggplot2::sec_axis(sec.axis)
+  #   is.sec_axis = getFromNamespace("is.sec_axis", "ggplot2")
+  #   if (is.sec_axis(sec.axis)) stop("Secondary axes must be specified using 'sec_axis()'")
+  #   sc$secondary.axis <- sec.axis
+  # }
+  sc
+}
+
+#' @rdname scale_x_productlist
+#' @param sec.axis specify a secondary axis
+#' @export
+scale_y_productlist <- function(name = ggplot2::waiver(), breaks = product_breaks(),
+                                minor_breaks = NULL, labels = product_labels(),
+                                limits = NULL, expand = ggplot2::waiver(), oob = scales::censor,
+                                na.value = NA_real_, transform = "identity",
+                                position = "left", sec.axis = ggplot2::waiver()) {
+  #browser()
+  sc <- ggplot2::continuous_scale(
+    c("y", "ymin", "ymax", "yend", "yintercept", "ymin_final", "ymax_final", "ylower", "ymiddle", "yupper"),
+    palette = identity, name = name, breaks = breaks,
+    minor_breaks = minor_breaks, labels = labels, limits = limits,
+    expand = expand, oob = oob, na.value = na.value, transform = transform,
+    guide = ggplot2::waiver(), position = position, super = ScaleContinuousProduct
+  )
+
+  if (!is.waive(sec.axis)) {
+    if (is.formula(sec.axis)) sec.axis <- ggplot2::sec_axis(sec.axis)
+    is.sec_axis = getFromNamespace("is.sec_axis", "ggplot2")
+    if (is.sec_axis(sec.axis)) stop("Secondary axes must be specified using 'sec_axis()'")
+    sc$secondary.axis <- sec.axis
+  }
+  sc
+}
+
+
+#' @rdname scale_x_productlist
+#' @export
+ScaleContinuousProduct <- ggproto(
+  "ScaleContinuousProduct", ScaleContinuousPosition,
+  train =function(self, x) {
+    #cat("train in ScaleContinuousProduct\n")
+    #cat("class of variable: ")
+    #cat(class(x))
+    #browser()
+    if (is.list(x)) {
+      x <- x[[1]]
+      if ("Scale" %in% class(x)) {
+        #browser()
+        # re-assign the scale values now that we have the information - but only if necessary
+        if (is.function(self$breaks)) self$breaks <- x$breaks
+        if (is.function(self$labels)) self$labels <- x$labels
+        if (is.waive(self$name)) {
+          self$product_name <- gsub("x__alpha__", "", x$name)
+          self$product_name <- gsub("x__fill__", "", self$product_name)
+          self$product_name <- gsub("x__", "", self$product_name)
+          self$product_name <- gsub("conds\\d__", "", self$product_name)
+        }
+        #cat("\n")
+        return()
+      }
+    }
+    if (is.discrete(x)) {
+      self$range$train(x=c(0,1))
+      #cat("\n")
+      return()
+    }
+    self$range$train(x)
+    #cat("\n")
+  },
+  map = function(self, x, limits = self$get_limits()) {
+    #cat("map in ScaleContinuousProduct\n")
+    #browser()
+    if (is.discrete(x)) return(x)
+    if (is.list(x)) return(0) # need a number
+    scaled <- as.numeric(self$oob(x, limits))
+    ifelse(!is.na(scaled), scaled, self$na.value)
+  },
+  dimension = function(self, expand = c(0, 0)) {
+    #cat("dimension in ScaleContinuousProduct\n")
+    c(-0.05,1.05)
+  },
+  make_title = function(..., self) {
+    title <- ggproto_parent(ScaleContinuousPosition, self)$make_title(...)
+    if (isTRUE(title %in% self$aesthetics)) {
+      title <- self$product_name
+    }
+    else title
+  }
+)		
+
+
+																#' @rdname geom_mosaic_jitter
+#' @inheritParams ggplot2::stat_identity
+#' @section Computed variables:
+#' \describe{
+#' \item{xmin}{location of bottom left corner}
+#' \item{xmax}{location of bottom right corner}
+#' \item{ymin}{location of top left corner}
+#' \item{ymax}{location of top right corner}
+#' }
+#' @export
+stat_mosaic_jitter <- function(mapping = NULL, data = NULL, geom = "mosaic_jitter",
+                               position = "identity", na.rm = FALSE,  divider = mosaic(),
+                               show.legend = NA, inherit.aes = TRUE, offset = 0.01,
+                               drop_level = FALSE, seed = NA, ...)
+{
+  if (!is.null(mapping$y)) {
+    stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+  } else mapping$y <- structure(1L, class = "productlist")
+
+  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    aes_x <- rlang::eval_tidy(mapping$x)
+    var_x <- paste0("x__", as.character(aes_x))
+  }
+
+  aes_fill <- mapping$fill
+  var_fill <- ""
+  if (!is.null(aes_fill)) {
+    aes_fill <- rlang::quo_text(mapping$fill)
+    var_fill <- paste0("x__fill__", aes_fill)
+    if (aes_fill %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_fill)
+      var_x[idx] <- var_fill
+    } else {
+      mapping[[var_fill]] <- mapping$fill
+    }
+  }
+
+  aes_alpha <- mapping$alpha
+  var_alpha <- ""
+  if (!is.null(aes_alpha)) {
+    aes_alpha <- rlang::quo_text(mapping$alpha)
+    var_alpha <- paste0("x__alpha__", aes_alpha)
+    if (aes_alpha %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_alpha)
+      var_x[idx] <- var_alpha
+    } else {
+      mapping[[var_alpha]] <- mapping$alpha
+    }
+  }
+
+
+  #  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    mapping$x <- structure(1L, class = "productlist")
+
+    for (i in seq_along(var_x)) {
+      mapping[[var_x[i]]] <- aes_x[[i]]
+    }
+  }
+
+
+  aes_conds <- mapping$conds
+  if (!is.null(aes_conds)) {
+    aes_conds <- rlang::eval_tidy(mapping$conds)
+    mapping$conds <- structure(1L, class = "productlist")
+    var_conds <- paste0("conds", seq_along(aes_conds), "__", as.character(aes_conds))
+    for (i in seq_along(var_conds)) {
+      mapping[[var_conds[i]]] <- aes_conds[[i]]
+    }
+  }
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = StatMosaicJitter,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    check.aes = FALSE,
+    params = list(
+      na.rm = na.rm,
+      divider = divider,
+      offset = offset,
+      drop_level = drop_level,
+      seed = seed,
+      ...
+    )
+  )
+}
+
+
+#' Geom proto
+#'
+#' @format NULL
+#' @usage NULL
+#' @export
+StatMosaicJitter <- ggplot2::ggproto(
+  "StatMosaicJitter", ggplot2::Stat,
+  #required_aes = c("x"),
+  non_missing_aes = c("weight", "size", "shape", "colour"),
+  default_aes = aes(
+    shape = 19, colour = "black", size = 1.5, fill = NA,
+    alpha = NA, stroke = 0.5
+  ),
+
+  setup_params = function(data, params) {
+    #cat("setup_params from StatMosaic\n")
+    #browser()
+    # if (!is.null(data$y)) {
+    #   stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+    # }
+    params
+  },
+
+  setup_data = function(data, params) {
+    #cat("setup_data from StatMosaic\n")
+    #browser()
+
+    data
+  },
+
+  compute_panel = function(self, data, scales, na.rm=FALSE, drop_level=FALSE, seed = NA, divider, offset) {
+    #cat("compute_panel from StatMosaic\n")
+    #browser()
+
+    #    vars <- names(data)[grep("x[0-9]+__", names(data))]
+    vars <- names(data)[grep("x__", names(data))]
+    conds <- names(data)[grep("conds[0-9]+__", names(data))]
+
+
+    if (length(vars) == 0) formula <- "1"
+    else formula <-  paste(vars, collapse="+")
+
+
+
+    formula <- paste("weight~", formula)
+
+    if (length(conds) > 0) formula <- paste(formula, paste(conds, collapse="+"), sep="|")
+
+    df <- data
+    if (!in_data(df, "weight")) {
+      df$weight <- 1
+    }
+
+
+    res <- prodcalc(df, formula=as.formula(formula),
+                    divider = divider, cascade=0, scale_max = TRUE,
+                    na.rm = na.rm, offset = offset)
+
+    # browser()
+
+    # consider 2nd weight for points
+    if (in_data(df, "weight2")) {
+      formula2 <- str_replace(formula, "weight", "weight2")
+      res2 <- prodcalc(df, formula = as.formula(formula2), divider = divider,
+                       cascade = 0, scale_max = TRUE, na.rm = na.rm, offset = offset)
+      res$.n2 <- res2$.n
+    }
+
+
+    # need to set x variable - I'd rather set the scales here.
+    prs <- parse_product_formula(as.formula(formula))
+    p <- length(c(prs$marg, prs$cond))
+    if (is.function(divider)) divider <- divider(p)
+
+    # the level at which things are labelled could be made a parameter.
+    # At the moment the deepest level is being labelled.
+    dflist <- list(data=subset(res, level==max(res$level)), formula=as.formula(formula), divider=divider)
+    scx <- productplots::scale_x_product(dflist)
+    scy <- productplots::scale_y_product(dflist)
+
+
+    # res is data frame that has xmin, xmax, ymin, ymax
+    res <- dplyr::rename(res, xmin=l, xmax=r, ymin=b, ymax=t)
+    # res <- subset(res, level==max(res$level))
+
+    # export the variables with the data - terrible hack
+    # res$x <- list(scale=scx)
+    # if (!is.null(scales$y)) {
+    #   # only set the y scale if it is a product scale, otherwise leave it alone
+    #   if ("ScaleContinuousProduct" %in% class(scales$y))
+    #     res$y <- list(scale=scy)
+    # }
+
+    # XXXX add label for res
+    cols <- c(prs$marg, prs$cond)
+
+    if (length(cols) > 1) {
+      df <- res[,cols]
+      df <- tidyr::unite(df, "label", cols, sep="\n")
+
+      res$label <- df$label
+    } else res$label <- as.character(res[,cols])
+
+
+    res$x <- list(scale=scx)
+    if (!is.null(scales$y)) {
+      # only set the y scale if it is a product scale, otherwise leave it alone
+      if ("ScaleContinuousProduct" %in% class(scales$y))
+        res$y <- list(scale=scy)
+    }
+
+    # merge res with data:
+    # is there a fill/alpha/color variable?
+    fill_idx <- grep("x__fill", names(data))
+    if (length(fill_idx) > 0) {
+      fill_res_idx <- grep("x__fill", names(res))
+      res$fill <- res[[fill_res_idx]]
+    }
+    alpha_idx <- grep("x__alpha", names(data))
+    if (length(alpha_idx) > 0) {
+      alpha_res_idx <- grep("x__alpha", names(res))
+      res$alpha <- res[[alpha_res_idx]]
+    }
+    colour_idx <- grep("x__colour", names(data))
+    if (length(colour_idx) > 0) {
+      colour_res_idx <- grep("x__colour", names(res)) # find what comes after __colour
+      res$colour <- res[[colour_res_idx]]
+    }
+
+    res$group <- 1 # unique(data$group) # ignore group variable
+    res$PANEL <- unique(data$PANEL)
+    # browser()
+
+    # generate points
+    # consider 2nd weight for point
+    if (in_data(res, ".n2")) {
+      res$.n <- res$.n2
+    }
+
+    sub <- subset(res, level==max(res$level))
+    if(drop_level) {
+      ll <- subset(res, level==max(res$level)-1)
+      sub <- dplyr::left_join(select(sub, -(xmin:ymax)), select(ll, contains("x__"), xmin:ymax, -contains("col")))
+    }
+
+
+# create a set of uniformly spread points between 0 and 1 once, when the plot is created.
+# the transformation to the correct scale happens in compute panel.
+
+    # altered from ggrepel:
+    # Make reproducible if desired.
+    if (!is.null(seed) && is.na(seed)) {
+      seed <- sample.int(.Machine$integer.max, 1L)
+    }
+
+    points <- subset(sub, sub$.n>=1)
+    points <- tidyr::nest(points, data = -label)
+    points <- with_seed_null(seed,
+      dplyr::mutate(
+        points,
+        coords = purrr::map(data, .f = function(d) {
+          data.frame(
+            x = runif(d$.n, min = 0, max = 1),
+            y = runif(d$.n, min = 0, max = 1),
+            dplyr::select(d, -x, -y)
+          )
+        })
+      ))
+
+    points <- tidyr::unnest(points, coords)
+    # browser()
+
+    points
+  }
+)
+
+
+																#' @rdname geom_mosaic
+#' @inheritParams ggplot2::stat_identity
+#' @section Computed variables:
+#' \describe{
+#' \item{x}{location of center of the rectangle}
+#' \item{y}{location of center of the rectangle}
+#' }
+#' @export
+stat_mosaic_text <- function(mapping = NULL, data = NULL, geom = "Text",
+                        position = "identity", na.rm = FALSE,  divider = mosaic(),
+                        show.legend = NA, inherit.aes = TRUE, offset = 0.01, ...)
+{
+  if (!is.null(mapping$y)) {
+    stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+  } else mapping$y <- structure(1L, class = "productlist")
+
+  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    aes_x <- rlang::eval_tidy(mapping$x)
+    var_x <- paste0("x__", as.character(aes_x))
+  }
+
+  aes_fill <- mapping$fill
+  var_fill <- ""
+  if (!is.null(aes_fill)) {
+    aes_fill <- rlang::quo_text(mapping$fill)
+    var_fill <- paste0("x__fill__", aes_fill)
+    if (aes_fill %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_fill)
+      var_x[idx] <- var_fill
+    } else {
+      mapping[[var_fill]] <- mapping$fill
+    }
+  }
+
+  aes_alpha <- mapping$alpha
+  var_alpha <- ""
+  if (!is.null(aes_alpha)) {
+    aes_alpha <- rlang::quo_text(mapping$alpha)
+    var_alpha <- paste0("x__alpha__", aes_alpha)
+    if (aes_alpha %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_alpha)
+      var_x[idx] <- var_alpha
+    } else {
+      mapping[[var_alpha]] <- mapping$alpha
+    }
+  }
+
+
+  #  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    mapping$x <- structure(1L, class = "productlist")
+
+    for (i in seq_along(var_x)) {
+      mapping[[var_x[i]]] <- aes_x[[i]]
+    }
+  }
+
+
+  aes_conds <- mapping$conds
+  if (!is.null(aes_conds)) {
+    aes_conds <- rlang::eval_tidy(mapping$conds)
+    mapping$conds <- structure(1L, class = "productlist")
+    var_conds <- paste0("conds", seq_along(aes_conds), "__", as.character(aes_conds))
+    for (i in seq_along(var_conds)) {
+      mapping[[var_conds[i]]] <- aes_conds[[i]]
+    }
+  }
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = StatMosaicText,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    check.aes = FALSE,
+    params = list(
+      na.rm = na.rm,
+      divider = divider,
+      offset = offset,
+      ...
+    )
+  )
+}
+
+#' Geom proto
+#'
+#' @format NULL
+#' @usage NULL
+#' @export
+StatMosaicText <- ggplot2::ggproto(
+  "StatMosaicText", ggplot2::Stat,
+  #required_aes = c("x"),
+  non_missing_aes = "weight",
+
+  setup_params = function(data, params) {
+    #cat("setup_params from StatMosaic\n")
+    #browser()
+    # if (!is.null(data$y)) {
+    #   stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+    # }
+    params
+  },
+
+  setup_data = function(data, params) {
+    #cat("setup_data from StatMosaic\n")
+    #browser()
+
+    data
+  },
+
+  compute_panel = function(self, data, scales, na.rm=FALSE, divider, offset) {
+
+    first_stage <- StatMosaic$compute_panel(data, scales, na.rm=FALSE, divider, offset)
+
+     # if (all(is.na(first_stage$colour)))
+       # first_stage$colour <- scales::alpha(first_stage$fill, first_stage$alpha) # regard alpha in colour determination
+
+     # browser()
+     sub <- subset(first_stage, level==max(first_stage$level))
+       text <- subset(sub, .n > 0) # do not label the obs with weight 0
+     text <- tidyr::nest(text, data = -label)
+
+     text <-
+       dplyr::mutate(
+         text,
+         coords = purrr::map(data, .f = function(d) {
+           data.frame(
+             x = (d$xmin + d$xmax)/2,
+             y = (d$ymin + d$ymax)/2,
+             #size = 2.88,
+             angle = 0,
+             hjust = 0.5,
+             vjust = 0.5,
+             alpha = NA,
+             family = "",
+             fontface = 1,
+             lineheight = 1.2,
+             dplyr::select(d, -any_of(c("x", "y", "alpha")))
+           )
+         })
+       )
+
+     text <- tidyr::unnest(text, coords)
+
+     # sub$fill <- NA
+     # sub$colour <- NA
+     # sub$size <- sub$size/10
+
+     text
+
+  }
+)
+
+																#' @rdname geom_mosaic
+#' @inheritParams ggplot2::stat_identity
+#' @section Computed variables:
+#' \describe{
+#' \item{xmin}{location of bottom left corner}
+#' \item{xmax}{location of bottom right corner}
+#' \item{ymin}{location of top left corner}
+#' \item{ymax}{location of top right corner}
+#' }
+#' @export
+stat_mosaic <- function(mapping = NULL, data = NULL, geom = "mosaic",
+                        position = "identity", na.rm = FALSE,  divider = mosaic(),
+                        show.legend = NA, inherit.aes = TRUE, offset = 0.01, ...)
+{
+  if (!is.null(mapping$y)) {
+    stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+  } else mapping$y <- structure(1L, class = "productlist")
+
+  aes_x <- mapping$x
+  if (!is.null(aes_x)) {
+    if (grepl("product", rlang::quo_text(mapping$x))) {
+      aes_x <- rlang::eval_tidy(mapping$x)
+    } else aes_x <- list(rlang::quo_get_expr(mapping$x))
+    var_x <- paste0("x__", as.character(aes_x))
+  }
+
+  aes_fill <- mapping$fill
+  var_fill <- ""
+  if (!is.null(aes_fill)) {
+    aes_fill <- rlang::quo_text(mapping$fill)
+    var_fill <- paste0("x__fill__", aes_fill)
+    if (aes_fill %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_fill)
+      var_x[idx] <- var_fill
+    } else {
+      mapping[[var_fill]] <- mapping$fill
+    }
+  }
+
+  aes_alpha <- mapping$alpha
+  var_alpha <- ""
+  if (!is.null(aes_alpha)) {
+    aes_alpha <- rlang::quo_text(mapping$alpha)
+    var_alpha <- paste0("x__alpha__", aes_alpha)
+    if (aes_alpha %in% as.character(aes_x)) {
+      idx <- which(aes_x == aes_alpha)
+      var_x[idx] <- var_alpha
+    } else {
+      mapping[[var_alpha]] <- mapping$alpha
+    }
+  }
+
+  if (!is.null(aes_x)) {
+    mapping$x <- structure(1L, class = "productlist")
+    for (i in seq_along(var_x)) {
+      mapping[[var_x[i]]] <- aes_x[[i]]
+    }
+  }
+
+  aes_conds <- mapping$conds
+  if (!is.null(aes_conds)) {
+    if (grepl("product", rlang::quo_text(mapping$conds))) {
+      aes_conds <- rlang::eval_tidy(mapping$conds)
+    } else aes_conds <- list(rlang::quo_get_expr(mapping$conds))
+    var_conds <- paste0("conds", seq_along(aes_conds), "__", as.character(aes_conds))
+
+    mapping$conds <- structure(1L, class = "productlist")
+    for (i in seq_along(var_conds)) {
+      mapping[[var_conds[i]]] <- aes_conds[[i]]
+    }
+  }
+
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = StatMosaic,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    check.aes = FALSE,
+    params = list(
+      na.rm = na.rm,
+      divider = divider,
+      offset = offset,
+      ...
+    )
+  )
+}
+
+
+#' Geom proto
+#'
+#' @format NULL
+#' @usage NULL
+#' @export
+StatMosaic <- ggplot2::ggproto(
+  "StatMosaic", ggplot2::Stat,
+  #required_aes = c("x"),
+  non_missing_aes = "weight",
+
+  setup_params = function(data, params) {
+    #cat("setup_params from StatMosaic\n")
+    #browser()
+    # if (!is.null(data$y)) {
+    #   stop("stat_mosaic() must not be used with a y aesthetic.", call. = FALSE)
+    # }
+    params
+  },
+
+  setup_data = function(data, params) {
+    #cat("setup_data from StatMosaic\n")
+    #browser()
+
+    data
+  },
+
+  compute_panel = function(self, data, scales, na.rm=FALSE, divider, offset) {
+#    cat("compute_panel from StatMosaic\n")
+#       browser()
+
+    #    vars <- names(data)[grep("x[0-9]+__", names(data))]
+    vars <- names(data)[grep("x__", names(data))]
+    conds <- names(data)[grep("conds[0-9]+__", names(data))]
+
+
+    if (length(vars) == 0) formula <- "1"
+    else formula <-  paste(vars, collapse="+")
+
+
+
+    formula <- paste("weight~", formula)
+
+    if (length(conds) > 0) formula <- paste(formula, paste(conds, collapse="+"), sep="|")
+
+    df <- data
+    if (!in_data(df, "weight")) {
+      df$weight <- 1
+    }
+
+
+    res <- prodcalc(df, formula=as.formula(formula),
+                    divider = divider, cascade=0, scale_max = TRUE,
+                    na.rm = na.rm, offset = offset)
+
+
+    # need to set x variable - I'd rather set the scales here.
+    prs <- parse_product_formula(as.formula(formula))
+    p <- length(c(prs$marg, prs$cond))
+    if (is.function(divider)) divider <- divider(p)
+
+    # the level at which things are labelled could be made a parameter.
+    # At the moment the deepest level is being labelled.
+    dflist <- list(data=subset(res, level==max(res$level)), formula=as.formula(formula), divider=divider)
+    #browser()
+    scx <- productplots::scale_x_product(dflist)
+    scy <- productplots::scale_y_product(dflist)
+
+
+    # res is data frame that has xmin, xmax, ymin, ymax
+    res <- dplyr::rename(res, xmin=l, xmax=r, ymin=b, ymax=t)
+    res <- subset(res, level==max(res$level))
+
+    # export the variables with the data - terrible hack
+    # res$x <- list(scale=scx)
+    # if (!is.null(scales$y)) {
+    #   # only set the y scale if it is a product scale, otherwise leave it alone
+    #   if ("ScaleContinuousProduct" %in% class(scales$y))
+    #     res$y <- list(scale=scy)
+    # }
+    # XXXX add label for res
+    cols <- c(prs$marg, prs$cond)
+
+
+    if (length(cols) > 1) {
+      df <- res[,cols]
+      df <- tidyr::unite(df, "label", cols, sep="\n")
+
+      res$label <- df$label
+    } else res$label <- as.character(res[,cols])
+    #   browser()
+
+    res$x <- list(scale=scx)
+    if (!is.null(scales$y)) {
+      # only set the y scale if it is a product scale, otherwise leave it alone
+      if ("ScaleContinuousProduct" %in% class(scales$y))
+        res$y <- list(scale=scy)
+    }
+
+    # merge res with data:
+    # is there a fill variable?
+    fill_idx <- grep("x__fill", names(data))
+    if (length(fill_idx) > 0) {
+      fill_res_idx <- grep("x__fill", names(res))
+      res$fill <- res[[fill_res_idx]]
+    }
+    alpha_idx <- grep("x__alpha", names(data))
+    if (length(alpha_idx) > 0) {
+      alpha_res_idx <- grep("x__alpha", names(res))
+      res$alpha <- res[[alpha_res_idx]]
+    }
+
+
+    res$group <- 1 # unique(data$group) # ignore group variable
+    res$PANEL <- unique(data$PANEL)
+    res
+  }
+)
+
+																#' Theme for mosaic plots
+#'
+#' Themes set the general aspect of the plot such as the colour of the
+#' background, gridlines, the size and colour of fonts.
+#' \code{theme_mosaic} provides access to the regular ggplot2 theme, but removes any
+#' background, most of the gridlines, and ensures an aspect ratio of 1 for better
+#' viewing of the mosaics.
+#'
+#' @param base_size base font size
+#' @param base_family base font family
+#'
+#' @examples
+#' library(ggmosaic)
+#' data(happy)
+#' ggplot(data = happy) +
+#'   geom_mosaic(aes(weight=wtssall, x=product(health), fill=happy), na.rm=TRUE) +
+#'   theme_mosaic()
+#'
+#' @name theme_mosaic
+NULL
+#' @export
+#' @import ggplot2
+theme_mosaic <- function (base_size = 11, base_family = "")
+{
+  theme_grey(base_size = base_size, base_family = base_family) %+replace%
+    theme(
+      panel.grid = element_blank(),
+      panel.background = element_blank(),
+      aspect.ratio = 1
+    )
+}
+
+
+																
+"%||%" <- function(a, b) {
+  if (!is.null(a)) a else b
+}
+
+in_data <- function(data, variable) {
+  length(intersect(names(data), variable)) > 0
+}
+
+parse_product_formula <- getFromNamespace("parse_product_formula", "productplots")
+
+#' Wrapper for a list
+#'
+#' @param ... Unquoted variables going into the product plot.
+#' @export
+#' @examples
+#' data(titanic)
+#' ggplot(data = titanic) +
+#'   geom_mosaic(aes(x = product(Survived, Class), fill = Survived))
+product <- function(...) {
+  rlang::exprs(...)
+}
+
+is.formula <- function (x) inherits(x, "formula")
+
+is.discrete <- function(x) {
+  is.factor(x) || is.character(x) || is.logical(x)
+}
+
+product_names <- function() {
+  function(x) {
+    #cat(" in product_breaks\n")
+    #browser()
+    unique(x)
+  }
+}
+
+product_breaks <- function() {
+  function(x) {
+    #cat(" in product_breaks\n")
+    #browser()
+    unique(x)
+  }
+}
+
+product_labels <- function() {
+  function(x) {
+    #cat(" in product_labels\n")
+    #browser()
+
+    unique(x)
+  }
+}
+
+is.waive <- function(x) inherits(x, "waiver")
+
+
+
+
+## copied from ggplot2
+with_seed_null <- function(seed, code) {
+  if (is.null(seed)) {
+    code
+  } else {
+    withr::with_seed(seed, code)
+  }
+}
