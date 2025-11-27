@@ -339,7 +339,7 @@ chi <-
       return(Resultats)
     }
 
-    c('svDialogs', 'epitools', 'BayesFactor', 'ggplot2','ggmosaic')->packages
+    c('svDialogs', 'epitools', 'BayesFactor', 'ggplot2')->packages
     try(lapply(packages, library, character.only=T), silent=T)->test2
     if(class(test2)== 'try-error') return(ez.install())
     .e <- environment()
