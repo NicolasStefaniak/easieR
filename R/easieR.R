@@ -10,7 +10,7 @@
   packageStartupMessage(.dico[["desc_first_time_easier"]])
   packageStartupMessage(.dico[["desc_special_characters_have_been_removed"]])
   packageStartupMessage(textVersion)
-  packageStartupMessage("Last update 05/23/2025 - 15.20")
+  packageStartupMessage("Last update 12/11/2025 - 11.30")
   packageStartupMessage("##############")
   
 }
