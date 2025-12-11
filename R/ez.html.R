@@ -16,6 +16,7 @@ ez.html <-
                if(html) {
                  c("output:",
                    "  html_document:",
+                   "    theme: null",
                    "    toc: true",
                    "    toc_float: true",
                    "    toc_depth: 5")
