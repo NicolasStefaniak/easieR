@@ -98,21 +98,20 @@ ez.html <-
     
     
     # remove from the easieR directory the ez plots. 
-    if(Sys.info()[[1]]=='Windows'){
-      directory<-paste0(tempdir(), "\\easieR")
-    } else {
+if(Sys.info()[[1]]=='Windows'){
+  directory<-paste0(tempdir(), "\\easieR")
+} else {
+  
+  directory<-paste0(tempdir(), "/easieR")
+}
 
-      directory<-paste0(tempdir(), "/easieR")
-    }
-    
-    dire<-dir(directory)
-    if(any(str_detect(dire, "ezplot"))) {
-      ezplot<-str_detect(dire, "ezplot")
-      ezplot<-dire[which(ezplot==TRUE)]
-      ezplot<-paste0(directory,ezplot)
-      file.remove(ezplot)
-    }
-  }
+dire<-dir(directory)
+if(any(str_detect(dire, "ezplot"))) {
+  ezplot<-str_detect(dire, "ezplot")
+  ezplot<-dire[which(ezplot==TRUE)]
+  ezplot<-paste0(directory,"\\",ezplot)
+  file.remove(ezplot)
+}
 
 
 
