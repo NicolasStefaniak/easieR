@@ -36,7 +36,6 @@ ez.html <-
           "library('pander')",
           "library('knitr')",
           "library('bibtex')",
-          "library('huxtable')",
           "library('tibble')",
           "data.results<-dget('ez.results.txt')",
           "i<-0",
