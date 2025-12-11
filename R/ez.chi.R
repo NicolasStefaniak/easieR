@@ -161,7 +161,7 @@ ez.chi <-
     .add.history(data=chi.options$data, command=Resultats$Call, nom=chi.options$nom)
     .add.result(Resultats=Resultats, name =paste(chi.options$analyse, Sys.time() ))
     
-    
+     packages <- c("svDialogs", "epitools", "BayesFactor", "ggplot2")
     ref1(packages)->Resultats[[.dico[["txt_references"]]]]
     ### Obtenir les Resultats
     if(html) try(ez.html(Resultats))
