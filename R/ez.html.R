@@ -258,7 +258,8 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "}",
 
 "# Construction du tableau huxtable",
-"ht <- huxtable::as_hux(tableau, add_colnames = TRUE))|> set_align(everywhere, everywhere, 'center') ",
+"ht <- huxtable::as_hux(tableau, add_colnames = TRUE))",
+ "ht <- huxtable::set_align(ht,everywhere, everywhere, 'center') ",
 
 "# 3. Ajout de padding pour lisibilité",
 "huxtable::padding(ht) <- 4",
@@ -274,6 +275,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "if (any(class(table) == 'p.value')) {",
 "  for (j in seq_len(ncol(tableau))) {",
 "    ht <- huxtable::set_text_color(ht, row = is, col = huxtable::everywhere, value = 'red') |> set_align(everywhere, everywhere, 'center') ",
+    "ht <- huxtable::set_align(ht,everywhere, everywhere, 'center') ",       
 "  }",
 "}",
 
