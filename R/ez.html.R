@@ -308,7 +308,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))+1",
                  "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
                  paste0("is<-which(tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<0.05)"),
-                 "is<-is+1",
+                 "is<-is",
                  paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
                  "ft <- flextable::flextable(tableau)",
                 
@@ -319,7 +319,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  
                  "for(j in 1:ncol(tableau)){",
                  "is<-which(tableau[,j]<.05)",
-                 "is<-is+1",
+                 "is<-is",
                  "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","}}",
                  "ft",
                  "```")
