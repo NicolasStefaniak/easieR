@@ -218,6 +218,8 @@ to.html<-function(Resultats, X=1){
                    "is<-is+1",
                    paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
                    " ht <- as_hux(tableau,  add_colnames = TRUE)",
+                   "width(ht) <- 1 / ncol(ht)  "   , 
+                   "padding(ht) <- 2 ",  
                    "number_format(ht) <- list(function(x) prettyNum(x, big.mark = ' ', scientific = FALSE) )",
                    "bottom_border(ht)[1,]<-1",
                    "top_border(ht)[1,]<-1",
