@@ -27,11 +27,11 @@ ez.html <-
     )
     # put general options 
     
-    a<-c("```{r global options, include = FALSE}",
+    a<-c("```{r globaloptions, include = FALSE, message=F, warning=F}",
          "knitr::opts_chunk$set(echo=FALSE, include=TRUE, warning=FALSE, message=FALSE)",
          "```")
   # load packages for the rmarkdown document   
-    im<-c("```{r, echo=F}","options(digits = 4)",
+    im<-c("```{r, echo=F, message=F, warning=F}","options(digits = 4)",
           "library('pander')",
           "library('knitr')",
           "library('bibtex')",
@@ -158,7 +158,7 @@ to.html<-function(Resultats, X=1){
       # if resultats are bibentry create the bibliography 
       if(any(class(Resultats[[i]])=="bibentry")) {
         listes[[length(listes)+1]]<-Resultats[[i]]
-        essai<-c("```{r, echo=F, results='asis'}","i<-i+1",
+        essai<-c("```{r, echo=F, results='asis', message=F, warning=F}","i<-i+1",
                  "invisible(write.bib(data.results[[i]], file='references'))",
                  "bibtex::read.bib('references.bib')",
                  "invisible(file.remove('references.bib'))","```")
@@ -234,7 +234,7 @@ to.html<-function(Resultats, X=1){
       #             "ht",
       #             "```")
           essai <- c(
-"```{r, echo=FALSE, results='asis'}",
+"```{r, echo=FALSE,  message=F, warning=F}",
 "i <- i + 1",
 "tableau <- data.results[[i]]",
 "tableau <- as.data.frame(tableau)",
