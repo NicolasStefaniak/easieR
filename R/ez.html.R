@@ -259,7 +259,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 
 
 "ft <- flextable::flextable(tableau)",
-"color(ft, i = is, j = NULL, color='red', part = 'body')",
+"ft<-color(ft, i = is, j = NULL, color='red', part = 'body')",
 "# 6. Si objet 'table' (certaines statistiques), idem",
 "if (any(class(table) == 'p.value')) {",
 "  for (j in seq_len(ncol(tableau))) {",
@@ -310,21 +310,18 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  paste0("is<-which(tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<0.05)"),
                  "is<-is+1",
                  paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
-                 " ht <- as_hux(tableau,  add_colnames = TRUE)|> set_width(0.8)|>set_align(1, everywhere, 'center')",
-                 "number_format(ht) <- list(function(x) prettyNum(x, big.mark = ' ', scientific = FALSE) )",
-                 "bottom_border(ht)[1,]<-1",
-                 "top_border(ht)[1,]<-1",
-                 " bottom_border(ht)[dim(ht)[1],]<-1",
+                 "ft <- flextable::flextable(tableau)",
+                
                  paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-                 "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')",
+                "ft<-color(ft, i = is, j = NULL, color='red', part = 'body')",
                  "}",
                  "if(prob){",
                  
                  "for(j in 1:ncol(tableau)){",
                  "is<-which(tableau[,j]<.05)",
                  "is<-is+1",
-                 "ht<-set_text_color(ht, row = is,col =j ,  value='red')}}",
-                 "ht",
+                 "ft<-color(ft, i = is, j = NULL, color='red', part = 'body')",
+                 "ft",
                  "```")
         output<-c(output, essai)
       }
