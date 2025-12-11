@@ -259,13 +259,13 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 
 
 "ft <- flextable::flextable(tableau)",
-"ft<-color(ft, i = is, j = NULL, color='red', part = 'body')",
+"ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')",
 "# 6. Si objet 'table' (certaines statistiques), idem",
 "if (any(class(table) == 'p.value')) {",
 "  for (j in seq_len(ncol(tableau))) {",
 
 "ft <- flextable::flextable(table)",
-"color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
+"flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
 "}",
 "ft",
 
@@ -313,14 +313,14 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  "ft <- flextable::flextable(tableau)",
                 
                  paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-                "ft<-color(ft, i = is, j = NULL, color='red', part = 'body')",
+                "ft<-flextablecolor(ft, i = is, j = NULL, color='red', part = 'body')",
                  "}",
                  "if(prob){",
                  
                  "for(j in 1:ncol(tableau)){",
                  "is<-which(tableau[,j]<.05)",
                  "is<-is+1",
-                 "ft<-color(ft, i = is, j = NULL, color='red', part = 'body')",
+                 "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","}}",
                  "ft",
                  "```")
         output<-c(output, essai)
