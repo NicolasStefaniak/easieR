@@ -205,34 +205,89 @@ to.html<-function(Resultats, X=1){
           names(essai)<-names(Resultats[[i]])
           listes[[length(listes)+1]]<-essai # we must add the data.frame to the ez.results.txt
           
-          essai<-c("```{r, echo=F, results='asis'}",
-                   "i<-i+1",
-                   "tableau<-data.results[[i]]",
-                   "tableau<-as.data.frame(tableau)",
-                   "if(!is.null(dimnames(tableau)[[1]])) tableau<-data.frame(' '=dimnames(tableau)[[1]], tableau, check.names=F)",
-                   paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-                   paste0("col<-which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))"),
-                   "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))+1",
-                   "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
-                   paste0("is<-which(tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<0.05)"),
-                   "is<-is+1",
-                   paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
-                   " ht <- as_hux(tableau,  add_colnames = TRUE)|> set_width(0.8)|>set_align(1, everywhere, 'center') ",
-                   "width(ht) <- 1 / ncol(ht)  "   , 
-                   "padding(ht) <- 2 ",  
-                   "number_format(ht) <- list(function(x) prettyNum(x, big.mark = ' ', scientific = FALSE) )",
-                   "bottom_border(ht)[1,]<-1",
-                   "top_border(ht)[1,]<-1",
-                   " bottom_border(ht)[dim(ht)[1],]<-1",
-                   paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-                   "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')",
-                   "}",
-                   "if(any(class(table)=='p.value')){",
-                   "for(j in 1:ncol(tableau)){",
-                   "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')}}",
-                   "ht",
-                   "```")
-          
+       #   essai<-c("```{r, echo=F, results='asis'}",
+       #            "i<-i+1",
+       #            "tableau<-data.results[[i]]",
+       #            "tableau<-as.data.frame(tableau)",
+       #            "if(!is.null(dimnames(tableau)[[1]])) tableau<-data.frame(' '=dimnames(tableau)[[1]], tableau, check.names=F)",
+       #            paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
+       #            paste0("col<-which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))"),
+       #            "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))+1",
+       #            "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
+       #            paste0("is<-which(tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<0.05)"),
+       #            "is<-is+1",
+       #            paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
+       #            " ht <- as_hux(tableau,  add_colnames = TRUE)|> set_width(0.8)|>set_align(1, everywhere, 'center') ",
+       #            "width(ht) <- 1 / ncol(ht)  "   , 
+      #             "padding(ht) <- 2 ",  
+      #             "number_format(ht) <- list(function(x) prettyNum(x, big.mark = ' ', scientific = FALSE) )",
+      #             "bottom_border(ht)[1,]<-1",
+      #             "top_border(ht)[1,]<-1",
+      #             " bottom_border(ht)[dim(ht)[1],]<-1",
+      #             paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
+      #             "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')",
+      #             "}",
+      #             "if(any(class(table)=='p.value')){",
+      #             "for(j in 1:ncol(tableau)){",
+      #             "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')}}",
+      #             "ht",
+      #             "```")
+          essai <- c(
+"```{r, echo=FALSE, results='asis'}",
+"i <- i + 1",
+"tableau <- data.results[[i]]",
+"tableau <- as.data.frame(tableau)",
+
+"# Ajout des noms de lignes si présents",
+"if (!is.null(dimnames(tableau)[[1]]))",
+"  tableau <- data.frame(' ' = dimnames(tableau)[[1]], tableau, check.names = FALSE)",
+
+"# Détection des colonnes de p-valeur",
+paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
+
+"# Mise en forme des p-valeurs",
+"if (length(col_p) > 0) {",
+"  if (length(col_p) > 1) {",
+"    is <- unique(unlist(apply(tableau[, col_p], 2, myf))) + 1",
+"    tableau[, col_p] <- apply(tableau[, col_p], 2, round.ps)",
+"  } else {",
+"    is <- which(tableau[, col_p] < 0.05) + 1",
+"    tableau[, col_p] <- round.ps(tableau[, col_p])",
+"  }",
+"}",
+
+"# Construction du tableau huxtable",
+"ht <- huxtable::as_hux(tableau, add_colnames = TRUE)",
+
+"# ---- Améliorations pour stabiliser le rendu HTML ----",
+
+"# 1. Largeur totale fixée pour éviter que les colonnes se compressent",
+"huxtable::width(ht) <- 1,",
+
+"# 2. Largeur équilibrée entre colonnes",
+"huxtable::col_width(ht) <- rep(1 / ncol(ht), ncol(ht))",
+
+"# 3. Ajout de padding pour lisibilité",
+"huxtable::padding(ht) <- 4",
+
+"# 4. Bordures haut/bas pour structurer visuellement",
+"huxtable::top_border(ht)[1, ] <- 1",
+"huxtable::bottom_border(ht)[nrow(ht), ] <- 1",
+
+"# 5. Coloration des p-valeurs",
+"if (length(col_p) > 0) ht <- huxtable::set_text_color(ht, row = is, col = huxtable::everywhere, value = 'red')",
+
+"# 6. Si objet 'table' (certaines statistiques), idem",
+"if (any(class(table) == 'p.value')) {",
+"  for (j in seq_len(ncol(tableau))) {",
+"    ht <- huxtable::set_text_color(ht, row = is, col = huxtable::everywhere, value = 'red')",
+"  }",
+"}",
+
+"ht",
+"```"
+)
+
           output<-c(output, essai) # add to output
         }
       }
