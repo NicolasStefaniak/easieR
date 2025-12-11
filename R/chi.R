@@ -338,7 +338,7 @@ chi <-
 
     c('svDialogs', 'epitools', 'BayesFactor', 'ggplot2')->packages
     try(sapply(packages, library, character.only=T), silent=T)->test2
-    if(class(test2)== 'try-error') return(ez.install())
+    if(any(class(test2)== 'try-error')) return(ez.install())
     .e <- environment()
     Resultats<-list()
 
