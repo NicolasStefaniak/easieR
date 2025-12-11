@@ -258,7 +258,8 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "}",
 
 "# Construction du tableau huxtable",
-"ht <- huxtable::as_hux(tableau, add_colnames = TRUE))",
+            "ft <- flextable::flextable(tableau)",
+"ht <- huxtable::as_hux(tableau, add_colnames = TRUE)",
  "ht <- huxtable::set_align(ht,everywhere, everywhere, 'center') ",
 "ht<-set_padding(everywhere, everywhere, 8)",
 
@@ -280,7 +281,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
     "ht<-set_padding(everywhere, everywhere, 8)",        
 "  }",
 "}",
-
+"ft",
 "ht",
 "```"
 )
