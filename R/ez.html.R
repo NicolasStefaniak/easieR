@@ -1,4 +1,4 @@
-ultez.html <-
+ez.html <-
   function(ez.results=NULL, html=T){
     # Loading packages
     packages<-c('rmarkdown', 'knitr','ggplot2','stringr','reshape2', 'readr','stringi')
