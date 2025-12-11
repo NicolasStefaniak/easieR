@@ -112,7 +112,7 @@ if(any(str_detect(dire, "ezplot"))) {
   ezplot<-paste0(directory,"\\",ezplot)
   file.remove(ezplot)
 }
-
+}
 
 
 to.html<-function(Resultats, X=1){
