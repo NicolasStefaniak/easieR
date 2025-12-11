@@ -256,40 +256,26 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "# Mise en forme des p-valeurs",
 "if (length(col_p) > 0) {",
 "  if (length(col_p) > 1) {",
-"    is <- unique(unlist(apply(tableau[, col_p], 2, myf))) + 1",
+"    is <- unique(unlist(apply(tableau[, col_p], 2, myf))) ",
 "    tableau[, col_p] <- apply(tableau[, col_p], 2, round.ps)",
 "  } else {",
-"    is <- which(tableau[, col_p] < 0.05) + 1",
+"    is <- which(tableau[, col_p] < 0.05) ",
 "    tableau[, col_p] <- round.ps(tableau[, col_p])",
 "  }",
 "}",
 
-"# Construction du tableau huxtable",
-            "ft <- flextable::flextable(tableau)",
-"ht <- huxtable::as_hux(tableau, add_colnames = TRUE)",
- "ht <- huxtable::set_align(ht,everywhere, everywhere, 'center') ",
-"ht<-set_padding(everywhere, everywhere, 8)",
 
-"# 3. Ajout de padding pour lisibilité",
-"huxtable::padding(ht) <- 4",
-
-"# 4. Bordures haut/bas pour structurer visuellement",
-"huxtable::top_border(ht)[1, ] <- 1",
-"huxtable::bottom_border(ht)[nrow(ht), ] <- 1",
-
-"# 5. Coloration des p-valeurs",
-"if (length(col_p) > 0) ht <- huxtable::set_text_color(ht, row = is, col = huxtable::everywhere, value = 'red')",
-
+"ft <- flextable::flextable(tableau)",
+"color(ft, i = is, j = NULL, color='red', part = 'body')",
 "# 6. Si objet 'table' (certaines statistiques), idem",
 "if (any(class(table) == 'p.value')) {",
 "  for (j in seq_len(ncol(tableau))) {",
-"    ht <- huxtable::set_text_color(ht, row = is, col = huxtable::everywhere, value = 'red') |> set_align(everywhere, everywhere, 'center') ",
-    "ht <- huxtable::set_align(ht,everywhere, everywhere, 'center') ",     
-    "ht<-set_padding(everywhere, everywhere, 8)",        
-"  }",
+
+"ft <- flextable::flextable(table)",
+"color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
 "}",
 "ft",
-"ht",
+
 "```"
 )
 
