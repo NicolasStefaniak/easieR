@@ -24,6 +24,13 @@ ez.html <-
                  "output: word_document"
                },
                "---"
+               'cat("',
+'<style>',
+'.huxtable td, .huxtable th {',
+  'padding: 8px !important;',
+'}'
+'</style>'
+'")'
     )
     # put general options 
     
