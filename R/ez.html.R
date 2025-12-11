@@ -313,7 +313,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  "ft <- flextable::flextable(tableau)",
                 
                  paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-                "ft<-flextablecolor(ft, i = is, j = NULL, color='red', part = 'body')",
+                "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')",
                  "}",
                  "if(prob){",
                  
