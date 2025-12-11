@@ -398,7 +398,6 @@ chi <-
     return(Resultats)
     }
 
-ggMMplot <- function(var1, var2, nom1, nom2){
   levVar1 <- length(levels(var1))
   levVar2 <- length(levels(var2))
   
@@ -406,13 +405,17 @@ ggMMplot <- function(var1, var2, nom1, nom2){
   plotData <- as.data.frame(jointTable)
   plotData$marginVar1 <- prop.table(table(var1))
   plotData$var2Height <- plotData$Freq / plotData$marginVar1
-  plotData$var1Center <- c(0, cumsum(plotData$marginVar1)[1:levVar1 -1]) +
+  plotData$var1Center <- c(0, cumsum(plotData$marginVar1)[1:levVar1 - 1]) +
     plotData$marginVar1 / 2
   
-  ggplot(plotData, aes(var1Center, var2Height)) +
-    geom_bar(stat = "identity", aes(width = marginVar1, fill = var2), col = "Black") +
-    geom_text(aes(label = as.character(var1), x = var1Center, y = 1.05)) +
-   labs(x = nom1,
-    y = nom2, fill = nom2)
-}
+  p <- ggplot2::ggplot(plotData, ggplot2::aes(var1Center, var2Height)) +
+    ggplot2::geom_bar(stat = "identity",
+                      ggplot2::aes(width = marginVar1, fill = var2),
+                      col = "black") +
+    ggplot2::geom_text(ggplot2::aes(label = as.character(var1),
+                                    x = var1Center, y = 1.05)) +
+    ggplot2::labs(x = nom1, y = nom2, fill = nom2)
+
+  return(p)}
+																
 
