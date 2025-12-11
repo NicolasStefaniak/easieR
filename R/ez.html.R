@@ -109,6 +109,7 @@ ez.html <-
     if(any(str_detect(dire, "ezplot"))) {
       ezplot<-str_detect(dire, "ezplot")
       ezplot<-dire[which(ezplot==TRUE)]
+      ezplot<-paste0(directory,ezplot)
       file.remove(ezplot)
     }
   }
