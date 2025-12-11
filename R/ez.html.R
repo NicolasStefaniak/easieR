@@ -1,4 +1,4 @@
-ez.html <-
+ultez.html <-
   function(ez.results=NULL, html=T){
     # Loading packages
     packages<-c('rmarkdown', 'knitr','ggplot2','stringr','reshape2', 'readr','stringi')
@@ -16,7 +16,7 @@ ez.html <-
                if(html) {
                  c("output:",
                    "  html_document:",
-                   "    theme: null",
+                   "    theme: default",
                    "    toc: true",
                    "    toc_float: true",
                    "    toc_depth: 5")
