@@ -504,19 +504,18 @@ VI.multiples<-function(data, X){
   try(lapply(packages, library, character.only=T), silent=T)->test2
   if(length(X)==1){
     if(is.null(Y)){
-      scale(data[,X], center=T, scale=F)->res
-      res[1:length(res),]->data$res
+     res<- scale(data[,X], center=T, scale=F)
+      data$res<-res[1:length(res),]
     } else {
-      tapply(data[,X], data[,Y], scale, center=T, scale=F)->res
-      data$res<-unlist(res)
+     res<- tapply(data[,X], data[,Y], scale, center=T, scale=F)
+     data$res<-unlist(res)
     }
     n2<-list()
     if(length(data[,"res"])<5000){
-      shapiro.test(data[,"res"])->Shapiro_Wilk # realise le Shapiro-Wilk
-      lillie.test(data[,"res"])->Lilliefors  # realise le Lilliefors
-      round(data.frame(Shapiro_Wilk$statistic,Shapiro_Wilk$p.value, Lilliefors$statistic, Lilliefors$p.value),4)->normalite
+      Shapiro_Wilk <-shapiro.test(data[,"res"])# realise le Shapiro-Wilk
+      Lilliefors<-lillie.test(data[,"res"])  # realise le Lilliefors
+      normalite<-round(data.frame(Shapiro_Wilk$statistic,Shapiro_Wilk$p.value, Lilliefors$statistic, Lilliefors$p.value),4)
       names(normalite)<-c(.dico[["txt_shapiro_wilk"]], .dico[["txt_p_dot_val_sw"]], .dico[["txt_lilliefors_d"]], .dico[["txt_p_dot_val_lilliefors"]])
-      dimnames(normalite)[1]<-" "
       #      format(normalite, width = max(sapply(names(normalite), nchar)), justify = "centre")->normalite
       n2[[.dico[["txt_normality_tests"]]]]<-normalite}
     
