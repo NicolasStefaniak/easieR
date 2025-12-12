@@ -8,7 +8,7 @@ ez.html <-
     dir.create(path= paste0(tempdir(),"\\easieR") , showWarnings = FALSE)
     
     # create metadata for the output document
-    
+
     outputb<-c("---",
                .dico[["desc_title"]],
                .dico[["desc_author"]],
@@ -259,12 +259,14 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 
 
 "ft <- flextable::flextable(tableau)",
+"ft<-flextable::align(ft, align = 'center, part = 'all')",
 "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')",
 "# 6. Si objet 'table' (certaines statistiques), idem",
 "if (any(class(table) == 'p.value')) {",
 "  for (j in seq_len(ncol(tableau))) {",
 
 "ft <- flextable::flextable(table)",
+"ft<-flextable::align(ft, align = 'center, part = 'all')",
 "flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
 "}",
 "ft",
@@ -311,6 +313,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  "is<-is",
                  paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
                  "ft <- flextable::flextable(tableau)",
+                 "ft<-flextable::align(ft, align = 'center, part = 'all')",
                 
                  paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
                 "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')",
