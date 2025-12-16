@@ -37,7 +37,7 @@ ez.html <-
           "library('knitr')",
           "library('bibtex')",
           "library('tibble')",
-          "library(flextable)"
+          "library(flextable)",
           "data.results<-dget('ez.results.txt')",
           "i<-0",
           "```")
