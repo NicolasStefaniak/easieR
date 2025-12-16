@@ -270,7 +270,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "ft<-flextable::align(ft, align = 'center', part = 'all')",
 "flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
 "}",
-"ft"
+"ft",
 
 "```"
 )
@@ -325,7 +325,10 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  "is<-which(tableau[,j]<.05)",
                  "is<-is",
                  "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","}}",
-                 "ft"
+                 "ft",
+                 "```"
+)
+
         output<-c(output, essai)
       }
 
