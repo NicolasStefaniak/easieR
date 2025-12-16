@@ -20,7 +20,6 @@ ez.install <-
                       'epitools',
                       'foreign',
                        'ggcorrplot',
-                      'ggmosaic',
                       'ggplot2',
                       "ggplotgui",
                       'gmodels',
