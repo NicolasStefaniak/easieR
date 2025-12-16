@@ -316,14 +316,14 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  "ft<-  kableExtra::kable_classic(ft, full_width = F, html_font = 'Cambria')",
 
                  paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-                "ft<-kableExtra::row_spec(ft, row = is, color='red')",
+                "ft<-row_spec(ft, row = is, color='red')",
                  "}",
                  "if(prob){",
 
                  "for(j in 1:ncol(tableau)){",
                  "is<-which(tableau[,j]<.05)",
                  "is<-is",
-                 "ft<-kableExtra::row_spec(ft, row = is, color='red')","}}",
+                 "ft<-row_spec(ft, row = is, color='red')","}}",
                  "ft",
                  "```")
         output<-c(output, essai)
