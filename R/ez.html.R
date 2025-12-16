@@ -77,7 +77,7 @@ ez.html <-
 
     # render the rmarkdown document document
     writeLines(enc2utf8(output), file.nameRmd, useBytes = TRUE)
-    render(file.nameRmd, quiet=T, encoding="UTF-8")
+    render(file.nameRmd, quiet=T, run_pandoc = TRUE)
     if (Sys.info()[[1]]=='Darwin') {
       options(browser = 'open')
     } else if (Sys.info()[[1]]=='Linux') {
