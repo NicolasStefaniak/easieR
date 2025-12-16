@@ -234,7 +234,7 @@ to.html<-function(Resultats, X=1){
       #             "ht",
       #             "```")
           essai <- c(
-"```{r, echo=FALSE,  message=F, warning=F}",
+"```{r, echo=FALSE,  message=F, warning=F, results='asis'}",
 "i <- i + 1",
 "tableau <- data.results[[i]]",
 "tableau <- as.data.frame(tableau)",
