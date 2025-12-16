@@ -269,7 +269,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "ft<-flextable::align(ft, align = 'center', part = 'all')",
 "flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
 "}",
-"ft",
+"cat(flextable::as_raw_html(ft))",
 
 "```"
 )
