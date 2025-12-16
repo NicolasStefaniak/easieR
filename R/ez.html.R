@@ -37,6 +37,7 @@ ez.html <-
           "library('knitr')",
           "library('bibtex')",
           "library('tibble')",
+          "library(flextable)"
           "data.results<-dget('ez.results.txt')",
           "i<-0",
           "```")
@@ -234,7 +235,7 @@ to.html<-function(Resultats, X=1){
       #             "ht",
       #             "```")
           essai <- c(
-"```{r, echo=FALSE,  message=F, warning=F}",
+"```{r, echo=FALSE,  message=F, warning=F, results='asis'}",
 "i <- i + 1",
 "tableau <- data.results[[i]]",
 "tableau <- as.data.frame(tableau)",
@@ -269,7 +270,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "ft<-flextable::align(ft, align = 'center', part = 'all')",
 "flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
 "}",
-"ft",
+"ft"
 
 "```"
 )
@@ -324,8 +325,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  "is<-which(tableau[,j]<.05)",
                  "is<-is",
                  "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","}}",
-                 "ft",
-                 "```")
+                 "ft"
         output<-c(output, essai)
       }
 
