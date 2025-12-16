@@ -6,7 +6,7 @@ ez.html <-
       require(packages)}
     # create the easieR directory so that resultats can be saved
     dir.create(path= paste0(tempdir(),"\\easieR") , showWarnings = FALSE)
-    
+
     # create metadata for the output document
 
     outputb<-c("---",
@@ -24,14 +24,14 @@ ez.html <-
                  "output: word_document"
                },
                "---"
-               
+
     )
-    # put general options 
-    
+    # put general options
+
     a<-c("```{r globaloptions, include = FALSE, message=F, warning=F}",
          "knitr::opts_chunk$set(echo=FALSE, include=TRUE, warning=FALSE, message=FALSE)",
          "```")
-  # load packages for the rmarkdown document   
+  # load packages for the rmarkdown document
     im<-c("```{r, echo=F, message=F, warning=F}","options(digits = 4)",
           "library('pander')",
           "library('knitr')",
@@ -40,22 +40,22 @@ ez.html <-
           "data.results<-dget('ez.results.txt')",
           "i<-0",
           "```")
-   # create a function to round p values 
-    
+   # create a function to round p values
+
     round<-c("```{r, echo=F}",
              "round.ps<-function (x) { substr(as.character(ifelse(x < 0.0001, ' <.0001', ifelse(round(x, 2) == 1, ' >.99', formatC(x, digits = 4, format = 'f')))), 2, 7)}",
              "myf<-function(x){which(x<0.05)}",
              "```")
-   # combine the different previous elements  
+   # combine the different previous elements
     outputb<-c(outputb,a, im,round)
-    
-   # add the different results from z.results 
+
+   # add the different results from z.results
     output2<-to.html(Resultats=ez.results)
-    
-    # create a file in the temp dir/easieR with all the results 
+
+    # create a file in the temp dir/easieR with all the results
     listes<-c(output2$listes)
-    
-    
+
+
     if(Sys.info()[[1]]=='Windows'){
       file.nametxt<-paste0(tempdir(), "\\easieR\\ez.results.txt")
     } else {
@@ -63,18 +63,18 @@ ez.html <-
       file.nametxt<-paste0(tempdir(), "/easieR/ez.results.txt")
     }
     dput(listes, file.nametxt )
-    
-    
-    # Combine the rmarkdown metadata document with the results from easieR 
+
+
+    # Combine the rmarkdown metadata document with the results from easieR
     output<-c(outputb, output2$output)
-    # create the Rmd document 
+    # create the Rmd document
     if(Sys.info()[[1]]=='Windows'){
       file.nameRmd<-paste0(tempdir(), "\\easieR\\Rapport.easieR.Rmd")
     } else {
       file.nameRmd<-paste0(tempdir(), "/easieR/Rapport.easieR.Rmd")
     }
-    
-    # render the rmarkdown document document 
+
+    # render the rmarkdown document document
     writeLines(enc2utf8(output), file.nameRmd, useBytes = TRUE)
     render(file.nameRmd, quiet=T, encoding="UTF-8")
     if (Sys.info()[[1]]=='Darwin') {
@@ -82,7 +82,7 @@ ez.html <-
     } else if (Sys.info()[[1]]=='Linux') {
       options(browser = 'xdg-open')
     }
-    # open the html or docx document 
+    # open the html or docx document
     if(html){
       if(Sys.info()[[1]]=='Windows'){
         browseURL(file.path("file:\\", tempdir(), "easieR\\Rapport.easieR.html"))
@@ -96,13 +96,13 @@ ez.html <-
         browseURL(file.path("file:/", tempdir(), "easieR/Rapport.easieR.docx"))
       }
     }
-    
-    
-    # remove from the easieR directory the ez plots. 
+
+
+    # remove from the easieR directory the ez plots.
 if(Sys.info()[[1]]=='Windows'){
   directory<-paste0(tempdir(), "\\easieR")
 } else {
-  
+
   directory<-paste0(tempdir(), "/easieR")
 }
 
@@ -123,7 +123,7 @@ to.html<-function(Resultats, X=1){
     if(length(Resultats[[i]])!=0){
       names(Resultats)[[i]]->titres
       level<-paste0(rep("#", times=X+1), collapse="")
-      
+
       # Convert "titres" to its correct "string" in the report
       #print("------TRANSLATION_START-------")
       #print(titres)
@@ -146,26 +146,26 @@ to.html<-function(Resultats, X=1){
           output<-c(output, " ",paste(level, titres) , " ")
         }
       }
-      
+
       #print(Resultats[[i]])
       #print(class(Resultats[[i]]))
       #print("------TRANSLATION_END---------")
-      
+
       # if results are character, they are probably information to report
       if(any(class(Resultats[[i]])=="chr")|any(class(Resultats[[i]])=="character")) {
         output<-c(output, Resultats[[i]])
       }
-      # if resultats are bibentry create the bibliography 
+      # if resultats are bibentry create the bibliography
       if(any(class(Resultats[[i]])=="bibentry")) {
         listes[[length(listes)+1]]<-Resultats[[i]]
         essai<-c("```{r, echo=F, results='asis', message=F, warning=F}","i<-i+1",
                  "invisible(write.bib(data.results[[i]], file='references'))",
                  "bibtex::read.bib('references.bib')",
                  "invisible(file.remove('references.bib'))","```")
-        
+
         output<-c(output, essai)
       }
-      # if resultats is a plot, create the plot in the directory and import it in the document 
+      # if resultats is a plot, create the plot in the directory and import it in the document
       if(any(class(Resultats[[i]])%in%c("ggplot","arrangelist"))) {
         essai<-Resultats[[i]]
         if(Sys.info()[[1]]=="Windows"){
@@ -190,22 +190,22 @@ to.html<-function(Resultats, X=1){
           essai<-paste0("![](", basename(nom),")")
           output<-c(output, essai)
         }
-        
+
       }
-      
+
       # if the result is a numeric the value can be added to the output
-      # but if there are several values, they should be processed like a data.frame a data.frame 
+      # but if there are several values, they should be processed like a data.frame a data.frame
       if(any(class(Resultats[[i]])=="numeric") ) {
         if(length(Resultats[[i]])==1) {
           output<-c(output, Resultats[[i]])
         }else{
-          
+
           round(matrix(Resultats[[i]],nrow=1),4)->essai
           essai<-data.frame(essai)
-          
+
           names(essai)<-names(Resultats[[i]])
           listes[[length(listes)+1]]<-essai # we must add the data.frame to the ez.results.txt
-          
+
        #   essai<-c("```{r, echo=F, results='asis'}",
        #            "i<-i+1",
        #            "tableau<-data.results[[i]]",
@@ -219,8 +219,8 @@ to.html<-function(Resultats, X=1){
        #            "is<-is+1",
        #            paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
        #            " ht <- as_hux(tableau,  add_colnames = TRUE)|> set_width(0.8)|>set_align(1, everywhere, 'center') ",
-       #            "width(ht) <- 1 / ncol(ht)  "   , 
-      #             "padding(ht) <- 2 ",  
+       #            "width(ht) <- 1 / ncol(ht)  "   ,
+      #             "padding(ht) <- 2 ",
       #             "number_format(ht) <- list(function(x) prettyNum(x, big.mark = ' ', scientific = FALSE) )",
       #             "bottom_border(ht)[1,]<-1",
       #             "top_border(ht)[1,]<-1",
@@ -258,16 +258,16 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
 "}",
 
 
-"ft <- flextable::flextable(tableau)",
-"ft<-flextable::align(ft, align = 'center', part = 'all')",
-"ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')",
+"ft <- kableExtra::kbl(tableau)",
+"ft<-kableExtra::kable_classic(ft, full_width = F, html_font = 'Cambria')",
+"ft<-kableExtra::row_spec(ft, row = is, color='red')",
 "# 6. Si objet 'table' (certaines statistiques), idem",
 "if (any(class(table) == 'p.value')) {",
 "  for (j in seq_len(ncol(tableau))) {",
 
-"ft <- flextable::flextable(table)",
-"ft<-flextable::align(ft, align = 'center', part = 'all')",
-"flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","  }",
+"ft <- kableExtra::kbl(table)",
+"ft<- kableExtra::kable_classic(full_width = F, html_font = 'Cambria')",
+"ft<-kableExtra::row_spec(ft, row = is, color='red')","  }",
 "}",
 "ft",
 
@@ -277,14 +277,14 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
           output<-c(output, essai) # add to output
         }
       }
-      
-      if(any(class(Resultats[[i]])=="matrix") | any(class(Resultats[[i]])=="table") |  any(class(Resultats[[i]])=="data.frame")|  
+
+      if(any(class(Resultats[[i]])=="matrix") | any(class(Resultats[[i]])=="table") |  any(class(Resultats[[i]])=="data.frame")|
          any(class(Resultats[[i]])=="ftable")) {
-        
+
         essai<-Resultats[[i]]
         if(any(class(essai)=="ftable")) {
           if(length(attributes(essai[[1]])$row.vars)!=0 & length(attributes(essai[[1]])$col.vars)!=0) {
-            essai<-dcast(as.data.frame(essai), as.formula(paste(paste(names(attr(essai, 'row.vars')), collapse='+'), '~', 
+            essai<-dcast(as.data.frame(essai), as.formula(paste(paste(names(attr(essai, 'row.vars')), collapse='+'), '~',
                                                                 paste(names(attr(essai, 'col.vars'))))))
           }else{  essai<-as.data.frame(essai)
           }
@@ -296,7 +296,7 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
           essai<-data.frame(essai)
         }
         listes[[length(listes)+1]]<-essai
-        
+
         essai<-c("```{r, echo=F, results='asis'}",
                  "i<-i+1",
                  "tableau<-data.results[[i]]",
@@ -312,25 +312,25 @@ paste0("col_p <- grep('", .dico[['txt_p_dot_val']], "', names(tableau))"),
                  paste0("is<-which(tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<0.05)"),
                  "is<-is",
                  paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
-                 "ft <- flextable::flextable(tableau)",
-                 "ft<-flextable::align(ft, align = 'center', part = 'all')",
-                
+                 "ft <- kableExtra::kbl(tableau)",
+                 "ft<-  kableExtra::kable_classic(ft, full_width = F, html_font = 'Cambria')",
+
                  paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-                "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')",
+                "ft<-row_spec(ft, row = is, color='red')",
                  "}",
                  "if(prob){",
-                 
+
                  "for(j in 1:ncol(tableau)){",
                  "is<-which(tableau[,j]<.05)",
                  "is<-is",
-                 "ft<-flextable::color(ft, i = is, j = NULL, color='red', part = 'body')","}}",
+                 "ft<-row_spec(ft, row = is, color='red')","}}",
                  "ft",
                  "```")
         output<-c(output, essai)
       }
-      
-      # if Resultats is a list, to.html must extract the list by using the function recurvively 
-      
+
+      # if Resultats is a list, to.html must extract the list by using the function recurvively
+
       if(any(class(Resultats[[i]])=="list") ){
         Resultats[[i]]->Y
         output2<-to.html(Y, X=X+1)

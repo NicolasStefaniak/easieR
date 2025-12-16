@@ -7,6 +7,7 @@ comp.corr <-
     # n2 : sample size for the correlation xz.
     # twotailed : logical. Should the estimation of p be one(FALSE) or twotailed (TRUE).
 
+
     c('psych', 'svDialogs')->packages
     if(any(lapply(packages, require, character.only=T))==FALSE)  {install.packages(packages)
       require(packages)}
