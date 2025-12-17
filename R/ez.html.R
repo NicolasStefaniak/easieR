@@ -207,33 +207,7 @@ to.html<-function(Resultats, X=1){
           names(essai)<-names(Resultats[[i]])
           listes[[length(listes)+1]]<-essai # we must add the data.frame to the ez.results.txt
 
-       #   essai<-c("```{r, echo=F, results='asis'}",
-       #            "i<-i+1",
-       #            "tableau<-data.results[[i]]",
-       #            "tableau<-as.data.frame(tableau)",
-       #            "if(!is.null(dimnames(tableau)[[1]])) tableau<-data.frame(' '=dimnames(tableau)[[1]], tableau, check.names=F)",
-       #            paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-       #            paste0("col<-which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))"),
-       #            "if(length(col)>1) {is<-unique(unlist(apply(tableau[,col], 2,myf )))+1",
-       #            "tableau[,col]<-apply(tableau[,col], 2, round.ps) }else{",
-       #            paste0("is<-which(tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<0.05)"),
-       #            "is<-is+1",
-       #            paste0("tableau[, which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))]<-round.ps(tableau[,  which(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))])}}"),
-       #            " ht <- as_hux(tableau,  add_colnames = TRUE)|> set_width(0.8)|>set_align(1, everywhere, 'center') ",
-       #            "width(ht) <- 1 / ncol(ht)  "   ,
-      #             "padding(ht) <- 2 ",
-      #             "number_format(ht) <- list(function(x) prettyNum(x, big.mark = ' ', scientific = FALSE) )",
-      #             "bottom_border(ht)[1,]<-1",
-      #             "top_border(ht)[1,]<-1",
-      #             " bottom_border(ht)[dim(ht)[1],]<-1",
-      #             paste0("if(any(grepl('",.dico[["txt_p_dot_val"]],"', names(tableau)))) {"),
-      #             "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')",
-      #             "}",
-      #             "if(any(class(table)=='p.value')){",
-      #             "for(j in 1:ncol(tableau)){",
-      #             "ht<-set_text_color(ht, row = is,col =everywhere ,  value='red')}}",
-      #             "ht",
-      #             "```")
+
           essai <- c(
 "```{r, echo=FALSE,  message=F, warning=F, results='asis'}",
 "i <- i + 1",
