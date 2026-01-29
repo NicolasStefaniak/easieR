@@ -15,7 +15,7 @@
 #' }
 #'
 #' When weighting is used, the variable supplied in \code{Effectifs} must
-#' contain strictly positive integers.  
+#' contain strictly positive integers.
 #'
 #' The argument \code{choix} must match one of:
 #' \itemize{
@@ -26,13 +26,13 @@
 #'
 #' @section Required packages:
 #' This function uses dialog utilities from the \pkg{svDialogs} package but
-#' does not attach the package.  
+#' does not attach the package.
 #' All calls to \pkg{svDialogs} functions must use the \code{svDialogs::} prefix.
 #'
-#' @param X A character string or a factor.  
+#' @param X A character string or a factor.
 #'   The first categorical variable (rows of the contingency table).
 #'
-#' @param Y A character string or a factor.  
+#' @param Y A character string or a factor.
 #'   The second categorical variable (columns of the contingency table).
 #'
 #' @param Effectifs A character string giving the name of a weighting variable in
@@ -42,10 +42,10 @@
 #'   Its length must match the number of levels of \code{X}. Used only for
 #'   specific variants of the chi-square test.
 #'
-#' @param choix A character string selecting the test to perform.  
+#' @param choix A character string selecting the test to perform.
 #'   Should be one of the internal dictionary values:
-#'   \code{.dico[["txt_chi_adjustement"]]},  
-#'   \code{.dico[["txt_chi_independance"]]},  
+#'   \code{.dico[["txt_chi_adjustement"]]},
+#'   \code{.dico[["txt_chi_independance"]]},
 #'   \code{.dico[["txt_mcnemar_test"]]}.
 #'
 #' @param data A data.frame containing all variables specified in the other
@@ -58,7 +58,7 @@
 #'   (default \code{1}) for Bayesian contingency table tests. See
 #'   \code{\link[BayesFactor]{contingencyTableBF}}.
 #'
-#' @param SampleType Character string specifying the sampling plan.  
+#' @param SampleType Character string specifying the sampling plan.
 #'   See the documentation of \code{contingencyTableBF()} for details.
 #'
 #' @param fixedMargin For independent multinomial sampling plans, either
@@ -104,31 +104,31 @@ ez.chi <-
     # SampleType : the sampling plan (see details)
     # fixedMargin : for the independent multinomial sampling plan, which margin is fixed ("rows" or "cols")
     # rscale : prior scale. A number of preset values can be given as strings
-  
 
-    
+
+
    # c('svDialogs')->packages
 
     .e <- environment()
     Resultats<-list()
-    
-    
+
+
     if(!is.null(data) & class(data)!="character") deparse(substitute(data))->data
-    
+
     chi.in(X=X, Y=Y, Effectifs=Effectifs,p=p, choix=choix, data=data, info=info, n.boot=n.boot, SampleType=SampleType, FM=fixedMargin, choix2=choix2)->chi.options
     if(is.null(chi.options)) return(analyse())
     if(chi.options$analyse!=.dico[["txt_chi_adjustement"]]){
       try( windows(record=T), silent=T)->win
       if(class(win)=='try-error') quartz()
     }
-    
-    
+
+
     if(class(chi.options$Variables)=="data.frame") {
       X<- chi.options$Variables[,1]
       Y<- chi.options$Variables[,2]
     } else {X<-chi.options$Variables
     Y<-NULL}
-    
+
     if(length(X)>1) Resultats[[.dico[["txt_alpha_warning"]]]]<-paste(.dico[["desc_alpha_increased_with_value_equals_to"]], 100*(1-0.95^length(X)), "%", sep=" ")
     for(i in 1:length(X)) {
       as.character(X[i])->Xi
@@ -144,7 +144,7 @@ ez.chi <-
                                                                       .dico[["desc_and_variable_y"]], Yi,sep=" ")
       names(Resultats)[i]<-nom
     }
-    
+
     paste(unique(X), collapse="','", sep="")->X
     if(!is.null(Y)) paste(unique(Y), collapse="','", sep="")->Y
     paste(chi.options$choix, collapse="','", sep="")->choix2
@@ -160,7 +160,7 @@ ez.chi <-
            "'),rscale=", round(rscale,3), ")")->Resultats$Call
     .add.history(data=chi.options$data, command=Resultats$Call, nom=chi.options$nom)
     .add.result(Resultats=Resultats, name =paste(chi.options$analyse, Sys.time() ))
-    
+
      packages <- c("svDialogs", "epitools", "BayesFactor", "ggplot2")
     ref1(packages)->Resultats[[.dico[["txt_references"]]]]
     ### Obtenir les Resultats
@@ -174,7 +174,7 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
     choix<- dlgList(c(.dico[["txt_chi_adjustement"]], .dico[["txt_chi_independance"]], .dico[["txt_mcnemar_test"]]), preselect=.dico[["txt_chi_independance"]], multiple = FALSE, title=.dico[["txt_chi_squared_type"]])$res
     if(length(choix)==0) return(NULL)
   }
-  
+
   choix.data(data=data, info=info, nom=T)->data
   if(length(data)==0) return(NULL)
   data[[1]]->nom
@@ -187,7 +187,7 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
     return(Resultats)}
   X$data->data
   X$X->X
-  
+
   if(choix!=.dico[["txt_chi_adjustement"]]){
     msg4<-.dico[["ask_second_categorical_set"]]
     Y<-.var.type(X=Y, info=info, data=data, type="factor", check.prod=F, message=msg4,  multiple=multiple, title=.dico[["txt_variables"]], out=NULL)
@@ -203,7 +203,7 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
       return(Resultats)
     }
   }
-  
+
   if(dial){
     if(info==T) writeLines(.dico[["ask_ponderate_analysis_by_a_sample_var"]])
     Effectifs<-dlgList(c(.dico[["txt_yes"]], .dico[["txt_no"]]), multiple = F, preselect=.dico[["txt_no"]], title=.dico[["ask_specify_sample"]])$res
@@ -211,7 +211,7 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
       chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
       return(Resultats)}
     if(Effectifs==.dico[["txt_no"]]) Effectifs<-NULL}
-  
+
   if(!is.null(Effectifs)){
     msg5<-.dico[["ask_chose_sample_variables"]]
     .var.type(X=Effectifs, info=T, data=data, type="integer", message=msg5,multiple=F, title=.dico[["ask_specify_sample_variable"]], out=c(X, Y))->Effectifs
@@ -220,7 +220,7 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
       return(Resultats)}
     Effectifs$X->Effectifs
   }
-  
+
   # check variable
   if(!is.null(Effectifs)) sum(data[,Effectifs])->tot else length(data[,1])->tot
   if(choix!=.dico[["txt_chi_adjustement"]]) {
@@ -239,11 +239,11 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
       }
     }
   }
-  
+
   if(choix==.dico[["txt_chi_adjustement"]]) {
     if(dial==F & is.null(p)) rep(1/nlevels(data[,X]),times=nlevels(data[,X]))->p
     if(sum(p)!=1 | any(p)>1 | any(p)<0) p<-NULL
-    
+
     while(is.null(p)){
       if(info==T) writeLines(.dico[["ask_probabilities_for_modalities"]])
       dlgForm(setNames(as.list(rep(1/nlevels(data[,X]),times=nlevels(data[,X]))), levels(data[,X])), .dico[["desc_probabilities_vector_please_no_fraction"]])$res->niveaux
@@ -262,16 +262,16 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
   if(is.null(Options)){  chi.in(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, info=T, n.boot=NULL, SampleType=NULL, FM=NULL, choix2=NULL)->Resultats
     return(Resultats)}
   if(dial==T || any(SampleType %in% c("poisson", "jointMulti","hypergeom", "indepMulti"))==F || SampleType=="indepMulti" & any(fixedMargin %in% c("rows","cols"))==F){
-    
+
     if(any(Options$choix==.dico[["txt_bayesian_factors"]]) && choix== .dico[["txt_chi_independance"]] ){
       if(info==T) {
         writeLines(.dico[["ask_sampling_type"]])
         cat(.dico[["desc_if_non_fixed_sample_poisson_law"]])
         print(matrix(c(100,50,200,100), nrow=2, ncol=2, dimnames=list(c("A.1", "A.2"), c("B.1", "B.2")) ))
-        
+
         writeLines(.dico[["desc_distribution_is_joint_multinomial"]])
         print(matrix(c(100,100,100,100), nrow=2, ncol=2, dimnames=list(c("A.1", "A.2"), c("B.1", "B.2")) ))
-        
+
         writeLines(.dico[["desc_distribution_is_independant_multinomial"]])
         print(matrix(c(15,40,55, 85,60,145, 100,100,200), nrow=3, ncol=3, dimnames=list(c("A.1", "A.2", "total"), c("B.1", "B.2", "total")) ))
         writeLines(.dico[["desc_identical_option_total_sample"]])
@@ -281,7 +281,7 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
       SampleType<-c()
       FM<-c()
       for(i in 1:length(comb[,1])){
-        
+
         if(nlevels(data[,as.character(comb[i,1])])==2 && nlevels(data[,as.character(comb[i,2])])==2) possible<- c(.dico[["txt_poisson_total_not_fixed_sample"]], .dico[["txt_jointmulti_total_fixed_sample"]],
                                                                                                                   paste(.dico[["txt_indepmulti_total_fixed_rows_cols"]], comb[i,1]),
                                                                                                                   paste(.dico[["txt_indepmulti_fixed_sample_rows_cols"]], comb[i,2]),
@@ -306,10 +306,10 @@ chi.in<-function(X=NULL, Y=NULL, Effectifs=NULL, p=NULL, choix=NULL, data=NULL, 
         if(SampleType1==paste(.dico[["txt_indepmulti_fixed_sample_rows_cols"]], comb[i,2])) ST<-"indepMulti"
         SampleType<-c(SampleType, ST)
       }
-      
+
     }
   }
-  
+
   list()->Resultats
   Resultats$analyse<-choix
   Resultats$data<-data
@@ -341,11 +341,11 @@ chi.out<-function(data=NULL, X=NULL, Y=NULL, p=NULL, choix=NULL, Effectifs=NULL,
     if(any(choix2== .dico[["txt_non_parametric_test"]])) Resultats[[.dico[["txt_chi_dot_squared_adjustment"]]]][[.dico[["txt_p_dot_val"]]]]<-round(chi$p.value,4)
     if(!is.null(n.boot) && n.boot>1){
       Resultats[[.dico[["txt_chi_dot_squared_adjustment"]]]][[.dico[["txt_p_estimation_with_monter_carlo"]]]]<-round(chisq.test(tab, B=n.boot, simulate.p.value=T, correct=F)$p.value,4)}
-    
+
   }
   if((choix!=.dico[["txt_chi_adjustement"]])){
     if (is.null(Effectifs)) {
-      tab<-table(data[,X],data[ ,Y], dnn=c(X, Y)) 
+      tab<-table(data[,X],data[ ,Y], dnn=c(X, Y))
       V1<<-data[,X]
       V2<<-data[,Y]
     }else {
@@ -357,19 +357,19 @@ chi.out<-function(data=NULL, X=NULL, Y=NULL, p=NULL, choix=NULL, Effectifs=NULL,
       data<-data[rep(1:nrow(data),times = data[,Effectifs]),1:2]
       V1<<-data[,X]
       V2<<-data[,Y]
-      
+
     }
     # graphique
-    
-    
-    
-    Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
-    
+
+
+
+    Resultats[[.dico[["txt_observed_sample"]]]]<-epitools::table.margins(tab)
+
     local( {
       graph<<-ggMMplot(V1, V2, X, Y)
     })
     Resultats[[.dico[["txt_mosaic_plot"]]]]<-graph
-    
+
     if(choix==.dico[["txt_chi_independance"]]){
       mon.chi<-chisq.test(tab, B=n.boot, correct=F)
       Resultats[[.dico[["txt_expected_sample"]]]]<-mon.chi$expected
@@ -383,14 +383,14 @@ chi.out<-function(data=NULL, X=NULL, Y=NULL, p=NULL, choix=NULL, Effectifs=NULL,
         if(any(choix2==.dico[["txt_non_parametric_test"]])) SY[[.dico[["txt_p_dot_val"]]]]<-round(mon.chi$p.value,4)
         try(fisher.test(tab),silent=T)->fisher
         if(class(fisher)!='try-error') SY$Fisher.Exact.Test=round(fisher$p.value,4)
-        SY<-cbind(SY, Cramer(mon.chi))		 
-        
+        SY<-cbind(SY, Cramer(mon.chi))
+
         if(all(dim(tab)==2)){
           mon.chi<-chisq.test(tab, B=n.boot, correct=T)
           AY<-data.frame(txt_chi_dot_squared=round(mon.chi$statistic,4),txt_df=mon.chi$parameter,
                          valeur.p=round(mon.chi$p.value,4) ,Fisher.Exact.Test="" )
           names(AY)<-c(.dico[["txt_chi_dot_squared"]],.dico[["txt_df"]], .dico[["txt_p_dot_val"]],"Fisher.Exact.Test")
-          AY<-cbind(AY, Cramer(mon.chi))   
+          AY<-cbind(AY, Cramer(mon.chi))
           SY<-rbind(SY, AY)
           dimnames(SY)[[1]]<-c(.dico[["txt_without_yates_correction"]], .dico[["txt_with_yates_correction"]])
         } else dimnames(SY)[[1]][1]<-c(.dico[["txt_without_yates_correction"]])
@@ -412,17 +412,17 @@ chi.out<-function(data=NULL, X=NULL, Y=NULL, p=NULL, choix=NULL, Effectifs=NULL,
       # facteur bayesien
       if(any(choix2==.dico[["txt_bayesian_factors"]])) {
         if(!is.null(fixedMargin) && fixedMargin==0) fixedMargin<-NULL
-        bf<-BayesFactor::contingencyTableBF(tab, sampleType = SampleType, 
+        bf<-BayesFactor::contingencyTableBF(tab, sampleType = SampleType,
                                             fixedMargin = fixedMargin, priorConcentration=priorConcentration)
-        bf<-ifelse(BayesFactor::extractBF(bf, onlybf=T)>1000, ">1000", 
-                   ifelse(BayesFactor::extractBF(bf, onlybf=T)<.001, 
+        bf<-ifelse(BayesFactor::extractBF(bf, onlybf=T)>1000, ">1000",
+                   ifelse(BayesFactor::extractBF(bf, onlybf=T)<.001,
                           "<0.001",round(BayesFactor::extractBF(bf, onlybf=T),4)))
         bf<-data.frame(txt_bayesian_factor=c(bf, ifelse(class(bf)=="character", "<0.001", round(1/bf,4)),SampleType))
         names(bf) <- c(.dico[["txt_bayesian_factor"]])
         dimnames(bf)[[1]]<-c(.dico[["txt_supports_alternative"]], .dico[["txt_supports_null"]], .dico[["txt_type"]])
         Resultats[[.dico[["txt_bayesian_factor"]]]]<-bf
       }
-      
+
       # Odd ratio
       as.matrix(tab)->tab
       if(all(dim(tab)>2) |any(mon.chi$observed==0)) {
@@ -446,7 +446,7 @@ chi.out<-function(data=NULL, X=NULL, Y=NULL, p=NULL, choix=NULL, Effectifs=NULL,
       round(table.margins(prop.table(mon.chi$observed))*100,1)->Resultats[[.dico[["txt_percentage_total"]]]]
       round(sweep(addmargins(mon.chi$observed, 1, list(list(All = sum, N = function(x) sum(x)^2/100))), 2,apply(mon.chi$observed, 2, sum)/100, "/"), 1)->Resultats[[.dico[["txt_percentage_col"]]]]
       round(sweep(addmargins(mon.chi$observed, 2, list(list(All = sum, N = function(x) sum(x)^2/100))), 1,apply(mon.chi$observed, 1, sum)/100, "/"), 1)->Resultats[[.dico[["txt_percentage_row"]]]]
-      
+
     }
     if(choix==.dico[["txt_mcnemar_test"]]){
       if(any(choix2== .dico[["txt_non_parametric_test"]]))    {
@@ -474,30 +474,30 @@ chi.out<-function(data=NULL, X=NULL, Y=NULL, p=NULL, choix=NULL, Effectifs=NULL,
         dimnames(bf)[[1]]<-c(.dico[["txt_supports_alternative"]], .dico[["txt_supports_null"]], .dico[["txt_error"]], "rscale")
         Resultats[[.dico[["txt_bayesian_factors"]]]]<-bf
       }
-      
+
       if( all(dimnames(tab)[[1]]==dimnames(tab)[[2]])) {
         Resultats$Avertissement<- .dico[["desc_cells_for_mcnemar"]]
       } else {
         Resultats$Avertissement<-.dico[["ask_mcnemar_repeated_measure"]]
       }
     }
-    
+
   }
   return(Resultats)
 }
 
 
-ggMMplot <- function(var1, var2, nom1, nom2){																
+ggMMplot <- function(var1, var2, nom1, nom2){
   levVar1 <- length(levels(var1))
   levVar2 <- length(levels(var2))
-  
+
   jointTable <- prop.table(table(var1, var2))
   plotData <- as.data.frame(jointTable)
   plotData$marginVar1 <- prop.table(table(var1))
   plotData$var2Height <- plotData$Freq / plotData$marginVar1
   plotData$var1Center <- c(0, cumsum(plotData$marginVar1)[1:levVar1 - 1]) +
     plotData$marginVar1 / 2
-  
+
   p <- ggplot2::ggplot(plotData, ggplot2::aes(var1Center, var2Height)) +
     ggplot2::geom_bar(stat = "identity",
                       ggplot2::aes(width = marginVar1, fill = var2),
@@ -505,7 +505,7 @@ ggMMplot <- function(var1, var2, nom1, nom2){
     ggplot2::geom_text(ggplot2::aes(label = as.character(var1),
                                     x = var1Center, y = 1.05)) +
     ggplot2::labs(x = nom1, y = nom2, fill = nom2)
-  
+
   return(p)}
 
 Cramer<-function(chi.r){

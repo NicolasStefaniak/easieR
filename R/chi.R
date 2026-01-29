@@ -198,7 +198,7 @@ chi <-
       }
       if((choix!=.dico[["txt_chi_adjustement"]])){
         if (is.null(Effectifs)) {
-          tab<-table(data[,X],data[ ,Y], dnn=c(X, Y)) 
+          tab<-table(data[,X],data[ ,Y], dnn=c(X, Y))
            V1<<-data[,X]
 	         V2<<-data[,Y]
           }else {
@@ -215,8 +215,8 @@ chi <-
         # graphique
 
 
-	
-        Resultats[[.dico[["txt_observed_sample"]]]]<-table.margins(tab)
+
+        Resultats[[.dico[["txt_observed_sample"]]]]<-epitools::table.margins(tab)
 
        local( {
         graph<<-ggMMplot(V1, V2, X, Y)
@@ -236,14 +236,14 @@ chi <-
 		        if(any(choix2==.dico[["txt_non_parametric_test"]])) SY[[.dico[["txt_p_dot_val"]]]]<-round(mon.chi$p.value,4)
             try(fisher.test(tab),silent=T)->fisher
             if(class(fisher)!='try-error') SY$Fisher.Exact.Test=round(fisher$p.value,4)
-            SY<-cbind(SY, Cramer(mon.chi))		 
-            
+            SY<-cbind(SY, Cramer(mon.chi))
+
             if(all(dim(tab)==2)){
               mon.chi<-chisq.test(tab, B=n.boot, correct=T)
               AY<-data.frame(txt_chi_dot_squared=round(mon.chi$statistic,4),txt_df=mon.chi$parameter,
               valeur.p=round(mon.chi$p.value,4) ,Fisher.Exact.Test="" )
               names(AY)<-c(.dico[["txt_chi_dot_squared"]],.dico[["txt_df"]], .dico[["txt_p_dot_val"]],"Fisher.Exact.Test")
-              AY<-cbind(AY, Cramer(mon.chi))   
+              AY<-cbind(AY, Cramer(mon.chi))
               SY<-rbind(SY, AY)
               dimnames(SY)[[1]]<-c(.dico[["txt_without_yates_correction"]], .dico[["txt_with_yates_correction"]])
             } else dimnames(SY)[[1]][1]<-c(.dico[["txt_without_yates_correction"]])
@@ -293,7 +293,7 @@ chi <-
               round(valeur.p,4)->Resultats[[.dico[["txt_residues_significativity_holm_correction"]]]]
             }
           }
-          round(table.margins(prop.table(mon.chi$observed))*100,1)->Resultats[[.dico[["txt_percentage_total"]]]]
+          round(epitools::table.margins(prop.table(mon.chi$observed))*100,1)->Resultats[[.dico[["txt_percentage_total"]]]]
           round(sweep(addmargins(mon.chi$observed, 1, list(list(All = sum, N = function(x) sum(x)^2/100))), 2,apply(mon.chi$observed, 2, sum)/100, "/"), 1)->Resultats[[.dico[["txt_percentage_col"]]]]
           round(sweep(addmargins(mon.chi$observed, 2, list(list(All = sum, N = function(x) sum(x)^2/100))), 1,apply(mon.chi$observed, 1, sum)/100, "/"), 1)->Resultats[[.dico[["txt_percentage_row"]]]]
 
@@ -398,17 +398,17 @@ chi <-
     return(Resultats)
     }
 
-ggMMplot <- function(var1, var2, nom1, nom2){																
+ggMMplot <- function(var1, var2, nom1, nom2){
   levVar1 <- length(levels(var1))
   levVar2 <- length(levels(var2))
-  
+
   jointTable <- prop.table(table(var1, var2))
   plotData <- as.data.frame(jointTable)
   plotData$marginVar1 <- prop.table(table(var1))
   plotData$var2Height <- plotData$Freq / plotData$marginVar1
   plotData$var1Center <- c(0, cumsum(plotData$marginVar1)[1:levVar1 - 1]) +
     plotData$marginVar1 / 2
-  
+
   p <- ggplot2::ggplot(plotData, ggplot2::aes(var1Center, var2Height)) +
     ggplot2::geom_bar(stat = "identity",
                       ggplot2::aes(width = marginVar1, fill = var2),
@@ -418,5 +418,5 @@ ggMMplot <- function(var1, var2, nom1, nom2){
     ggplot2::labs(x = nom1, y = nom2, fill = nom2)
 
   return(p)}
-																
+
 
