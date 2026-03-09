@@ -42,7 +42,7 @@ ez.reshape<-function(data=NULL, varying = NULL, v.names = NULL,
                             IV.names=IV.names,IV.levels=IV.levels, N.modalites2=N.modalites2 )
 
   assign(paste0(nom, ".long"),longdata, envir = .GlobalEnv)
-  View(longdata)
+  try(View(longdata), silent=T)
   if(length(IV.names)>1 & dostop){
     cat (.ez.reshape.msg("msg",9))
     line <- readline()

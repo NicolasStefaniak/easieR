@@ -78,7 +78,7 @@ aov.plus <-
         ref1(packages)->Resultats[[.dico[["desc_references"]]]]
         .add.result(Resultats=Resultats, name =paste(.dico[["txt_anova_plus"]], Sys.time() ))
 #    if(sauvegarde==T) save(Resultats=Resultats ,choix ="Resultats.aov.plus", env=.e)
-     if(html) ez.html(Resultats)
+     if(html) try(ez.html(Resultats), silent=T)
       return(Resultats)
 
   }

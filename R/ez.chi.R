@@ -443,7 +443,7 @@ chi.out<-function(data=NULL, X=NULL, Y=NULL, p=NULL, choix=NULL, Effectifs=NULL,
           round(valeur.p,4)->Resultats[[.dico[["txt_residues_significativity_holm_correction"]]]]
         }
       }
-      round(table.margins(prop.table(mon.chi$observed))*100,1)->Resultats[[.dico[["txt_percentage_total"]]]]
+      round(epitools::table.margins(prop.table(mon.chi$observed))*100,1)->Resultats[[.dico[["txt_percentage_total"]]]]
       round(sweep(addmargins(mon.chi$observed, 1, list(list(All = sum, N = function(x) sum(x)^2/100))), 2,apply(mon.chi$observed, 2, sum)/100, "/"), 1)->Resultats[[.dico[["txt_percentage_col"]]]]
       round(sweep(addmargins(mon.chi$observed, 2, list(list(All = sum, N = function(x) sum(x)^2/100))), 1,apply(mon.chi$observed, 1, sum)/100, "/"), 1)->Resultats[[.dico[["txt_percentage_row"]]]]
 

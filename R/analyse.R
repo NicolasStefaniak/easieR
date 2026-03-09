@@ -7,7 +7,7 @@ analyse <-
               .dico[["txt_analysis_factor_component"]],
               .dico[["txt_fiability_analysis"]]), preselect=NULL, multiple = FALSE, title=.dico[["ask_analysis_type"]])$res->choix
     if(length(choix)==0) return(easieR())
-    if(choix==.dico[["txt_chi_squared"]]) Resultats<-ez.chi(html=html)
+    if(choix==.dico[["txt_chi_squared"]]) Resultats<-chi(html=html)
     if(choix==.dico[["txt_student_t"]]) Resultats<-test.t(html=html)
     if(choix==.dico[["txt_anova_ancova"]]) {
       Filter( function(x) 'aovplus' %in% class( get(x) ), ls(envir=.GlobalEnv))->nom1
