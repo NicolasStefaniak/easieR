@@ -1217,3 +1217,78 @@ listm<-function(x){
   for(j in 1:ncol(x))y[[j]]<-x[,j]
   y
 }
+
+
+
+.ez.anova.msg<-function(type, number){
+  # type : either "msg" or "title"
+  # number : number of message
+  msg<-c(.dico[["ask_variables_type_for_anova"]],
+         .dico[["desc_at_least_independant_variables_or_repeated_measures"]],
+         .dico[["ask_select_variables_or_modalities_of_repeated_measure_variable"]],
+         .dico[["ask_which_variable_identifies_participants"]],
+         .dico[["desc_each_participant_must_appear_only_once_"]],
+         .dico[["desc_two_cols_are_needed"]],
+         .dico[["desc_large_format_must_be_numeric_or_integer"]],
+         .dico[["ask_chose_independant_group_variables"]],
+         .dico[["ask_you_did_not_chose_a_variable_continue_or_abort"]],
+         .dico[["ask_chose_dependant_variable"]],
+         .dico[["desc_some_participants_have_missing_values_on_repeated_measures"]],
+         .dico[["ask_chose_covariables"]],
+         .dico[["ask_not_enough_obs_verify_dataset"]],
+         .dico[["desc_all_tests_description"]],
+         .dico[["desc_complete_dataset_vs_identification_outliers_vs_without_outliers"]],
+         .dico[["desc_cannot_have_both_within_RML_arguments"]],
+         .dico[["desc_most_common_effect_size"]],
+         .dico[["desc_multiple_ways_to_compute_squares_sum"]],
+         .dico[["ask_save_results"]],
+         .dico[["ask_dependant_variable_with_less_than_three_val_verify_dataset"]],
+         .dico[["desc_all_contrasts_description"]],
+         .dico[["desc_you_can_chose_predefined_or_manual_contrasts"]],
+         .dico[["ask_contrast_must_respect_ortho"]],
+         .dico[["desc_contrasts_must_be_coeff_matrices_in_list"]],
+         .dico[["desc_manual_contrast_need_coeff_matrice"]],
+         .dico[["ask_which_correction"]],
+         .dico[["desc_authorized_values_for_contrasts"]],
+         .dico[["desc_at_least_on_contrast_matrix_incorrect"]],
+         .dico[["desc_biased_results_risk_because_of_low_number_of_obs_or_zero_variance"]],
+         .dico[["desc_bayesian_factors_could_not_be_computed"]],
+         .dico[["desc_we_could_not_compute_anova_on_medians"]],
+         .dico[["desc_proba_and_IC_estimated_on_bootstrap"]],
+         .dico[["desc_we_could_not_compute_robust_anova"]], .dico[["desc_analysis_aborted"]],
+         .dico[["RML_and_within_not_allowed"]], "on ne peut pas avoir  à la fois des variables qui sont des facteurs et numeriques"
+  )
+
+
+  title<-c(.dico[["ask_variables_type"]],
+           .dico[["txt_repeated_measures"]],
+           .dico[["txt_participants_id"]],
+           .dico[["txt_independant_group_variables"]],
+           .dico[["txt_dependant_variable"]],
+           .dico[["ask_covariables"]],
+           .dico[["txt_param_model"]],
+           .dico[["txt_non_param_model"]],.dico[["txt_bayesian_factors"]], .dico[["txt_robust_statistics"]],
+           .dico[["ask_which_analysis"]],.dico[["txt_complete_dataset"]],.dico[["txt_identifying_outliers"]], .dico[["txt_without_outliers"]],
+           .dico[["ask_results_desired"]], .dico[["ask_which_size_effect"]],.dico[["ask_which_squared_sum"]],
+           .dico[["ask_save"]], .dico[["txt_apriori"]],  .dico[["txt_comparison_two_by_two"]], .dico[["txt_none"]],.dico[["ask_which_contrasts"]],
+           .dico[["txt_contrasts_for"]], .dico[["txt_specify_contrasts"]],.dico[["ask_which_baseline"]], .dico[["txt_descriptive_statistics"]],.dico[["txt_test_model"]],
+           .dico[["txt_variable_descriptive_statistics"]],.dico[["txt_descriptive_statistics_of_interaction_between_x"]],.dico[["txt_warning"]],
+           .dico[["txt_normality_tests"]],.dico[["txt_ancova_application_conditions"]],.dico[["txt_absence_of_difference_between_groups_test_on"]],
+           .dico[["txt_slopes_homogeneity_between_groups_on_dependant_variable"]],
+           .dico[["txt_levene_test_verifying_homogeneity_variances"]],.dico[["txt_mauchly_test_sphericity_covariance_matrix"]],
+           .dico[["txt_principal_analysis"]],.dico[["txt_anova_with_welch_correction"]], .dico[["txt_pairwise_comparisons"]],.dico[["txt_contrasts"]],
+           .dico[["txt_variables_coeff_matrix"]],.dico[["txt_contrasts_table"]],.dico[["txt_contrasts_table_imitating_commercial_softwares"]],.dico[["txt_bayesian_factors"]],
+           .dico[["txt_non_param_analysis"]],.dico[["txt_kruskal_wallis_test"]],.dico[["txt_friedman_anova"]],.dico[["txt_friedman_anova_pairwise_comparison"]],
+           .dico[["txt_kruskal_wallis_pairwise"]]  ,.dico[["txt_anova_on_medians"]],.dico[["txt_principal_analysis"]],.dico[["txt_anova_on_truncated_means"]],
+           .dico[["txt_anova_on_m_estimator"]], .dico[["txt_anova_on_modified_huber_estimator"]],.dico[["txt_analysis_premature_abortion"]],
+           .dico[["desc_references"]], .dico[["desc_bootstrap_percentile_anova"]],
+           .dico[["txt_effect_size_dot_inf"]], .dico[["txt_effect_size_dot_sup"]],
+           .dico[["RML_and_within_not_allowed"]]
+
+  )
+
+
+
+ifelse(type=="msg", r<-msg, r<-title)
+r<-r[number]
+return(r)}
