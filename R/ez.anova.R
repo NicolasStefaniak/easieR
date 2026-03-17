@@ -793,7 +793,8 @@ ez.anova<-function(data=NULL, DV=NULL, between=NULL, within=NULL,id=NULL, cov=NU
       table.cont$R.2<-round(table.cont$t.ratio^2/(table.cont$t.ratio^2+table.cont$df),4)
       if(!is.null(between)) {
         grepl(paste(between,collapse = "|"),  table.cont[,1])->table.cont$d.Cohen
-        round( ifelse(table.cont$d.Cohen==T, (2*table.cont$t.ratio)/(nlevels(data[,id])^0.5), table.cont$t.ratio/(nlevels(data[,id])^0.5)),4)->table.cont$d.Cohen}else{
+        round( ifelse(table.cont$d.Cohen==T, (2*table.cont$t.ratio)/(nlevels(data[,id])^0.5),
+                      table.cont$t.ratio/(nlevels(data[,id])^0.5)),4)->table.cont$d.Cohen}else{
           round(table.cont$t.ratio/((nlevels(data[,id]))^0.5),4)->table.cont$d.Cohen}
 
       names(table.cont)<-c(.dico[["txt_contrast"]],.dico[["txt_estimation"]], .dico[["txt_error_dot_standard_short"]], .dico[["txt_df"]],"t", .dico[["txt_p_dot_val"]], .dico[["txt_r_square"]], "d Cohen")
