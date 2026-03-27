@@ -1,56 +1,78 @@
-#import_dict <- function(lang) {
-#  .dico <<- new.env(parent=emptyenv())
-#  if (lang=='Français') {
-#    dictionnary <- file("./Dict_FR.txt","r")
-#    lines <- readLines(dictionnary)
-#    for (line in lines) {
-#      s <- strsplit(line, " ::::: ")
-#      if (length(s[[1]]) == 2) { assign(s[[1]][[1]], s[[1]][[2]], envir=.dico) }
-#    }
-#  } else if (lang=='English') {
-#    dictionnary <- file("./Dict_EN.txt","r")
-#    lines <- readLines(dictionnary)
-#    for (line in lines) {
-#      s <- strsplit(line, " ::::: ")
-#      if (length(s[[1]]) == 2) { assign(s[[1]][[1]], s[[1]][[2]], envir=.dico) }
-#    }
-#  } else {
-#    dictionnary <- file("./Dict_EN.txt","r")
-#    lines <- readLines(dictionnary)
-#    for (line in lines) {
-#      s <- strsplit(line, " ::::: ")
-#      if (length(s[[1]]) == 2) { assign(s[[1]][[1]], s[[1]][[2]], envir=.dico) }
-#    }
-#  }
-#}
-
-load_language <- function(lang='auto') {
-  if (lang=='auto') {
-    if(grepl('=fr_',Sys.getlocale()) | grepl('French',Sys.getlocale())) {
-	    #import_dict("Français")
-	    load_fr_FR()
-            print('[INFO] Version française chargée.')
+load_language <- function(lang = "auto") {
+  
+  detect_lang <- function() {
+    
+    # 1. Essai LANG (Mac/Linux)
+    lang_env <- Sys.getenv("LANG")
+    if (nzchar(lang_env)) return(lang_env)
+    
+    # 2. Essai LC_MESSAGES
+    loc_msg <- Sys.getlocale("LC_MESSAGES")
+    if (!is.na(loc_msg) && nzchar(loc_msg)) return(loc_msg)
+    
+    # 3. Fallback Windows (le plus fiable ici)
+    return(Sys.getlocale())
+  }
+  
+  if (lang == "auto") {
+    
+    loc <- detect_lang()
+    
+    # debug utile
+    # print(loc)
+    
+    if (grepl("fr", loc, ignore.case = TRUE)) {
+      load_fr_FR()
+      message("[INFO] Version française chargée.")
     } else {
-	    #import_dict("English")
-	    load_en_EN()
-            print('[INFO] English language loaded (default).')
+      load_en_EN()
+      message("[INFO] English language loaded (default).")
     }
+    
   } else {
-	if (lang=='Français') {
-	    load_fr_FR()
-	    #import_dict("Français")
-            print('Version française chargée.')
-	} else if (lang=='English') {
-	    load_en_EN()
-	    #import_dict("English")
-            print('English language loaded (default).')
-	} else {
-	    load_en_EN()
-	    #import_dict("English")
-	    print('Not available. English language loaded (default).')
-	}
+    
+    if (lang == "Français") {
+      load_fr_FR()
+      message("Version française chargée.")
+      
+    } else if (lang == "English") {
+      load_en_EN()
+      message("English language loaded.")
+      
+    } else {
+      load_en_EN()
+      message("Not available. English language loaded (default).")
+    }
   }
 }
+
+#load_language <- function(lang='auto') {
+#  if (lang=='auto') {
+#    if(grepl('=fr_',Sys.getlocale()) | grepl('French',Sys.getlocale())) {
+#	    #import_dict("Français")
+#	    load_fr_FR()
+ #           print('[INFO] Version française chargée.')
+ #   } else {
+#	    #import_dict("English")
+#	    load_en_EN()
+#            print('[INFO] English language loaded (default).')
+v    }
+#  } else {
+#	if (lang=='Français') {
+#	    load_fr_FR()
+#	    #import_dict("Français")
+#           print('Version française chargée.')
+#	} else if (lang=='English') {
+#	    load_en_EN()
+#	    #import_dict("English")
+ #           print('English language loaded (default).')
+#	} else {
+#	    load_en_EN()
+#	    #import_dict("English")
+#	    print('Not available. English language loaded (default).')
+#	}
+# }
+#}
 
 select_language <- function() {
   require(svDialogs)
