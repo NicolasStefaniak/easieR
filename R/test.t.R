@@ -535,6 +535,8 @@ test.t <-
         WT<-wilcox.test(large$t1,large$t2, paired=T,data=data, alternative=alternative, conf.int=T, conf.level=0.95)
         if(alternative!="two.sided")  abs(qnorm(WT$p.value))->z else abs(qnorm(WT$p.value/2))->z
         r<-z/(nrow(large))^0.5
+		#Robert Rosenthal (1991)
+#Meta-Analytic Procedures for Social Research  
         Resultats$Wilcoxon<- data.frame("Wilcoxon W"=WT$statistic, txt_p_dot_val=round(WT$p.value,4), "z"=round(z,4), "r"=round(r,4),
                                         txt_ci_inferior_limit_dot=WT$conf.int[1],txt_ci_superior_limit_dot=WT$conf.int[2])
         names(Resultats$Wilcoxon)<- c("Wilcoxon W", .dico[["txt_p_dot_val"]], "z", "r", .dico[["txt_ci_inferior_limit_dot"]],.dico[["txt_ci_superior_limit_dot"]])
