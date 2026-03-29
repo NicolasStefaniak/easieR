@@ -56,7 +56,7 @@ load_language <- function(lang = "auto") {
 #	    #import_dict("English")
 #	    load_en_EN()
 #            print('[INFO] English language loaded (default).')
-v    }
+#    }
 #  } else {
 #	if (lang=='Français') {
 #	    load_fr_FR()
